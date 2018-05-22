@@ -1,0 +1,104 @@
+<app-card>
+  <form class="form-horizontal">
+    <div class="form-group row">
+      <div class="col-sm-3">
+        <h2>Nuevo Pedido</h2>
+      </div>
+      <div class="col-sm-2">
+        <p>Fecha: {{today | date}}</p>
+      </div>
+      <div class="col-sm-6">
+        <a class="btn btn-primary" routerLink="/clientes/clientes">Buscar Cliente</a>
+        <a class="btn btn-primary" routerLink="/clientes/clientes">Ver Historial</a>
+        <a class="btn btn-primary" routerLink="/clientes/clientes">Detalle Tallas</a>
+      </div>
+    </div>
+    <app-card>
+      <h4>Datos Cliente</h4>
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <label for="rut">Fecha entrega</label>
+          <div class='input-group date' id='datetimepicker1'>
+            <input type='text' class="form-control"/>
+            <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <label for="rut">Rut</label>
+          <input type="text" class="form-control" id="rut" placeholder="">
+        </div>
+        <div class="col-sm-4">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nombre" placeholder="">
+        </div>
+        <div class="col-sm-4">
+          <label for="direccion">Direccion</label>
+          <input type="text" class="form-control" id="direccion" placeholder="">
+        </div>
+        <div class="col-sm-2">
+          <label for="direccion">Ciudad</label>
+          <input type="text" class="form-control" id="direccion" placeholder="">
+        </div>
+        <div class="col-sm-2">
+          <label for="direccion">Comuna</label>
+          <input type="text" class="form-control" id="direccion" placeholder="">
+        </div>
+        <div class="col-sm-2">
+          <label for="direccion">Telefono</label>
+          <input type="text" class="form-control" id="direccion" placeholder="">
+        </div>
+      </div>
+    </app-card>
+    <!--DATOS PEDIDO-->
+    <app-card>
+      <h4>Datos Pedido</h4>
+      <div class="form-group row">
+        <div class="col-sm-2 selectContainer">
+          <select class="form-control" name="size">
+            <option value="">Producto...</option>
+            <option value="s">Poleras</option>
+            <option value="m">Poleron</option>
+            <option value="l">Pantalon</option>
+            <option value="xl">Cortaviento</option>
+          </select>
+        </div>
+        <div class="col-sm-2 selectContainer">
+          <select class="form-control" name="size">
+            <option value="">Tipo Producto...</option>
+            <option value="s">Recto</option>
+            <option value="m">Raglan</option>
+            <option value="l">Recta Capucha</option>
+          </select>
+        </div>
+        <div class="col-sm-2 selectContainer">
+          <select class="form-control" name="size">
+            <option value="">Tipo Tela...</option>
+            <option value="s">Recto</option>
+            <option value="m">Raglan</option>
+            <option value="l">Recta Capucha</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="cantidad" placeholder="Cantidad">
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="cantidad" placeholder="valor unit.">
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="cantidad" placeholder="Precio">
+        </div>
+        <div class="col-sm-3">
+          <a class="btn btn-success" routerLink="/clientes/clientes">Detalle tela</a>
+          <a class="btn btn-primary" routerLink="/clientes/clientes">Añadir</a>
+        </div>
+      </div>
+
+    </app-card>
+    <div class="form-group">
+      <button type="reset" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </div>
+  </form>
+</app-card>
