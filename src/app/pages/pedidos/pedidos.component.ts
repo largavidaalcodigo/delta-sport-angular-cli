@@ -11,15 +11,13 @@ import { Component, OnInit} from "@angular/core";
 })
 export class PedidosComponent implements OnInit {
   listaPedidos: any;
-/*   listaProductos:any;
-  listaTipoProductos:any;
- */
   pedido: Pedido;
-  verLista: boolean = true;
-  verForm: boolean;
+  verListaPedidos: boolean = true;
+  verForm: boolean = false;
   tipoForm: string;
 
-  constructor(private pedidosService: PedidosService) {}
+  constructor(private pedidosService: PedidosService) {
+  }
 
   ngOnInit() {
     //lista de pedidos
@@ -34,23 +32,23 @@ export class PedidosComponent implements OnInit {
   //Cierre con boton Volver
   public volver() {
     this.verForm = false;
-    this.verLista = true;
+    this.verListaPedidos = true;
   }
 
   //Nuevo Pedido
   nuevo() {
     this.verForm = true;
-    this.verLista = false;
+    this.verListaPedidos = false;
 
     this.pedido = new Pedido();
     this.tipoForm = "Nuevo";
-    console.log("presiona nuevo..");
+    console.log("verListaPedidos->"+this.verListaPedidos);
   }
 
   //Ver o Editar Cliente
   editarPedido(pedido: Pedido) {
     this.verForm = true;
-    this.verLista = false;
+    this.verListaPedidos = false;
 
     this.pedido=pedido;
     this.tipoForm = "Ver";

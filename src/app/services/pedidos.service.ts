@@ -46,23 +46,23 @@ export class PedidosService {
     ];
   }
 
-  public getRangoPrecios(){
+  public getRangoPrecios() {
     return [
-      { id: 1, idTipoProducto: 1, desc: '4 a 14', valor: 3500},
-      { id: 10, idTipoProducto: 1, desc: 'XL - xxl', valor: 4500},
-      { id: 5, idTipoProducto: 1, desc: ' 16 a L', valor: 4000},
-      { id: 2, idTipoProducto: 2, desc: '4 a 14', valor: 3700},
-      { id: 6, idTipoProducto: 2, desc: ' 16 a L', valor: 4200},
-      { id: 11, idTipoProducto: 2, desc: 'XL - xxl', valor: 4700},
-      { id: 3, idTipoProducto: 3, desc: '4 a 14', valor: 4500},
-      { id: 7, idTipoProducto: 3, desc: ' 16 a L', valor: 5500},
-      { id: 12, idTipoProducto: 3, desc: 'XL - xxl', valor: 6000},
-      { id: 4, idTipoProducto: 4, desc: '4 a 14', valor: 4700},
-      { id: 8, idTipoProducto: 4, desc: ' 16 a L', valor: 5700},
-      { id: 13, idTipoProducto: 4, desc: 'XL - xxl', valor: 6700},
-      { id: 9, idTipoProducto: 5, desc: ' 16 a L', valor: 3800},
-      { id: 14, idTipoProducto: 5, desc: 'XL - xxl', valor: 4200}
-    ]
+      { id: 1, idTipoProducto: 1, desc: "4 a 14", valor: 3500 },
+      { id: 10, idTipoProducto: 1, desc: "XL - xxl", valor: 4500 },
+      { id: 5, idTipoProducto: 1, desc: " 16 a L", valor: 4000 },
+      { id: 2, idTipoProducto: 2, desc: "4 a 14", valor: 3700 },
+      { id: 6, idTipoProducto: 2, desc: " 16 a L", valor: 4200 },
+      { id: 11, idTipoProducto: 2, desc: "XL - xxl", valor: 4700 },
+      { id: 3, idTipoProducto: 3, desc: "4 a 14", valor: 4500 },
+      { id: 7, idTipoProducto: 3, desc: " 16 a L", valor: 5500 },
+      { id: 12, idTipoProducto: 3, desc: "XL - xxl", valor: 6000 },
+      { id: 4, idTipoProducto: 4, desc: "4 a 14", valor: 4700 },
+      { id: 8, idTipoProducto: 4, desc: " 16 a L", valor: 5700 },
+      { id: 13, idTipoProducto: 4, desc: "XL - xxl", valor: 6700 },
+      { id: 9, idTipoProducto: 5, desc: " 16 a L", valor: 3800 },
+      { id: 14, idTipoProducto: 5, desc: "XL - xxl", valor: 4200 }
+    ];
   }
 
   public getPedidos() {
