@@ -32,40 +32,11 @@
     <app-card>
       <h4>Detalle Productos</h4>
       <div class="form-group row">
-        <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="producto" [(ngModel)]="productoSeleccionado"
-          (change)="onSelect($event.target.value)">
-            <option [value]="">[Producto]</option>
-            <option *ngFor="let producto of listaProductos" [value]="producto.idProducto">{{producto.desc}}</option>
-          </select>
-        </div>
-        <div class="col-sm-2 selectContainer">
-           <select class="form-control" name="tipoProducto" [(ngModel)]="tipoProductoSeleccionado">
-            <option [value]="">[Tipo Producto]</option>
-            <option *ngFor="let tipoProducto of listaTipoProducto" [value]="tipoProducto.id">{{tipoProducto.desc}}</option>
-           </select>
-        </div>
-        <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="size">
-            <option value="">[Rango de tallas]</option>
-            <option value="s">Recto</option>
-            <option value="m">Raglan</option>
-            <option value="l">Recta Capucha</option>
-          </select>
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="cantidad" placeholder="Cantidad">
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="cantidad" placeholder="valor unit.">
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="precio" placeholder="Precio">
-        </div>
-        <div class="col-sm-3">
-          <a class="btn btn-success" routerLink="/clientes/clientes">Detalle tela</a>
-          <a class="btn btn-primary" routerLink="/clientes/clientes">Añadir</a>
-        </div>
+          <a class="btn btn-primary" (click)="addDetallePedido()">Añadir</a>
+      </div>
+      <!-- Formulario detalle Pedido -->
+      <div class="container" ng-repeat="itemProducto of listaDetallePedido">
+        <app-form-pedido-detalle></app-form-pedido-detalle>
       </div>
 
     </app-card>

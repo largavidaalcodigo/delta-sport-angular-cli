@@ -1,0 +1,33 @@
+<form #detallePedidoForm="ngForm" class="form-horizontal">
+  <div class="form-group row">
+    <div class="col-sm-2 selectContainer">
+      <select class="form-control" name="producto" [(ngModel)]="productoSeleccionado" (change)="onSelectProducto($event.target.value)">
+        <option [value]="">[Producto]</option>
+        <option *ngFor="let producto of listaProductos" [value]="producto.idProducto">{{producto.desc}}</option>
+      </select>
+    </div>
+    <div class="col-sm-2 selectContainer">
+      <select class="form-control" name="tipoProducto" [(ngModel)]="tipoProductoSeleccionado" (change)="onSelectTipoProducto($event.target.value)">
+        <option [value]="">[Tipo Producto]</option>
+        <option *ngFor="let tipoProducto of listaTipoProducto" [value]="tipoProducto.id">{{tipoProducto.desc}}</option>
+      </select>
+    </div>
+    <div class="col-sm-2 selectContainer">
+      <select class="form-control" name="rangoPrecio" [(ngModel)]="rangoPrecioSeleccionado" (change)="onSelectRangoPrecio($event.target.value)">
+        <option [value]="">[Tallas]</option>
+        <option *ngFor="let rangoPrecio of listaRangoPrecios" [value]="rangoPrecio.id">{{rangoPrecio.desc}}</option>
+      </select>
+      {{valorUnitario}}
+    </div>
+    <div class="col-sm-2">
+      <input type="number" class="form-control" id="cantidad" [(ngModel)]="cantidad" placeholder="Cantidad" (input)="onChangeCalculaTotal($event.target.value)">
+    </div>
+    <div class="col-sm-2">
+      <input type="text" readonly class="form-control-plaintext" class="form-control" id="valorUnitario" [(ngModel)]="itemProducto.valor"
+        [ngModelOptions]="{standalone: true}" (change)="onChangeCalculaTotal($event.target.value)">
+    </div>
+    <div class="col-sm-2">
+      <input type="text" readonly class="form-control-plaintext" class="form-control" id="total" [(ngModel)]="total" [ngModelOptions]="{standalone: true}">
+    </div>
+  </div>
+</form>
