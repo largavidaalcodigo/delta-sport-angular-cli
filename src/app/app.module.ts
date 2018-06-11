@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutes} from './app.routing';
 
@@ -12,6 +14,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BreadcrumbsComponent} from './layout/admin/breadcrumbs/breadcrumbs.component';
 import {TitleComponent} from './layout/admin/title/title.component';
 import {AuthComponent} from './layout/auth/auth.component';
+import { LayoutModulosDirective } from './layout-modulos.directive';
 
 
 @NgModule({
@@ -20,9 +23,12 @@ import {AuthComponent} from './layout/auth/auth.component';
     AdminComponent,
     BreadcrumbsComponent,
     TitleComponent,
-    AuthComponent
+    AuthComponent,
+    LayoutModulosDirective
   ],
   imports: [
+    HttpClientModule,
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(AppRoutes),

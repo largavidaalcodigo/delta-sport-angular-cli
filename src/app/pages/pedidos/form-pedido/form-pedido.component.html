@@ -1,4 +1,4 @@
-<app-card>
+<app-card *ngIf="verForm==true">
   <form class="form-horizontal">
     <div class="form-group row">
       <div class="col-sm-3">
@@ -8,73 +8,46 @@
         <p>Fecha: {{today | date}}</p>
       </div>
       <div class="col-sm-6">
+        <!--
+        <a class="btn btn-primary" routerLink="/clientes/form-cliente">Nuevo Cliente</a>
+        <button class="btn btn-lg btn-outline-primary" (click)="open()">Nuevo Cliente</button>
+-->
         <a class="btn btn-primary" routerLink="/clientes/clientes">Buscar Cliente</a>
-        <a class="btn btn-primary" routerLink="/clientes/clientes">Ver Historial</a>
-        <a class="btn btn-primary" routerLink="/clientes/clientes">Detalle Tallas</a>
       </div>
     </div>
     <app-card>
-      <h4>Datos Cliente</h4>
+      <h4>Datos de pedido</h4>
       <div class="form-group row">
         <div class="col-sm-2">
           <label for="rut">Fecha entrega</label>
-          <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control"/>
-            <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+          <input class="form-control" placeholder="dd-mm-yyyy" name="dp" ng-model="model" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+            </button>
           </div>
-        </div>
-        <div class="col-sm-2">
-          <label for="rut">Rut</label>
-          <input type="text" class="form-control" id="rut" placeholder="">
-        </div>
-        <div class="col-sm-4">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" placeholder="">
-        </div>
-        <div class="col-sm-4">
-          <label for="direccion">Direccion</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
-        </div>
-        <div class="col-sm-2">
-          <label for="direccion">Ciudad</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
-        </div>
-        <div class="col-sm-2">
-          <label for="direccion">Comuna</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
-        </div>
-        <div class="col-sm-2">
-          <label for="direccion">Telefono</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
         </div>
       </div>
     </app-card>
-    <!--DATOS PEDIDO-->
     <app-card>
-      <h4>Datos Pedido</h4>
+      <h4>Detalle Productos</h4>
       <div class="form-group row">
         <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="size">
-            <option value="">Producto...</option>
-            <option value="s">Poleras</option>
-            <option value="m">Poleron</option>
-            <option value="l">Pantalon</option>
-            <option value="xl">Cortaviento</option>
+          <select class="form-control" name="producto" [(ngModel)]="productoSeleccionado"
+          (change)="onSelect($event.target.value)">
+            <option [value]="">[Producto]</option>
+            <option *ngFor="let producto of listaProductos" [value]="producto.idProducto">{{producto.desc}}</option>
           </select>
         </div>
         <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="size">
-            <option value="">Tipo Producto...</option>
-            <option value="s">Recto</option>
-            <option value="m">Raglan</option>
-            <option value="l">Recta Capucha</option>
-          </select>
+           <select class="form-control" name="tipoProducto" [(ngModel)]="tipoProductoSeleccionado">
+            <option [value]="">[Tipo Producto]</option>
+            <option *ngFor="let tipoProducto of listaTipoProducto" [value]="tipoProducto.id">{{tipoProducto.desc}}</option>
+           </select>
         </div>
         <div class="col-sm-2 selectContainer">
           <select class="form-control" name="size">
-            <option value="">Tipo Tela...</option>
+            <option value="">[Rango de tallas]</option>
             <option value="s">Recto</option>
             <option value="m">Raglan</option>
             <option value="l">Recta Capucha</option>
@@ -87,7 +60,7 @@
           <input type="text" class="form-control" id="cantidad" placeholder="valor unit.">
         </div>
         <div class="col-sm-2">
-          <input type="text" class="form-control" id="cantidad" placeholder="Precio">
+          <input type="text" class="form-control" id="precio" placeholder="Precio">
         </div>
         <div class="col-sm-3">
           <a class="btn btn-success" routerLink="/clientes/clientes">Detalle tela</a>

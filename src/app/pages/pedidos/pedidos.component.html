@@ -1,17 +1,25 @@
-<div class="row">
+<div class="row" *ngIf="verLista">
   <div class="col-sm-12">
     <app-card>
-      <a class="btn btn-primary" routerLink="/pedidos/addPedido">Nuevo Pedido</a>
+      <a class="btn btn-primary" (click)="nuevo()" routerLinkActive="active">Nuevo Pedido</a>
     </app-card>
   </div>
 </div>
 
-<div class="row">
+<!-- Formulario  -->
+<div class="container">
+  <app-form-pedido
+  [verForm]="verForm"
+  [tipoForm]="tipoForm"
+  [pedido]="pedido"
+  (salir)="volver($event)"></app-form-pedido>
+</div>
+
+<!-- Lista  -->
+<div class="row" *ngIf="verLista">
+
   <div class="col-sm-12">
-    <!-- Basic table card start -->
-    <!-- Basic table card start -->
     <app-card [title]="'Pedidos'" [classHeader]="false" [blockClass]="'table-border-style'">
-      <span class="code-header">use class <code>table</code> inside table element</span>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -23,18 +31,17 @@
             <th>Monto Total</th>
           </tr>
           </thead>
-          <tbody>
-          <tr><th scope="row">1</th><td>Tomas Gonzalez</td><td>24/05/2018</td><td>31/05/2018</td><td>$13.000</td></tr>
-          <tr><th scope="row">1</th><td>Tomas Gonzalez</td><td>24/05/2018</td><td>31/05/2018</td><td>$13.000</td></tr>
-          <tr><th scope="row">1</th><td>Tomas Gonzalez</td><td>24/05/2018</td><td>31/05/2018</td><td>$13.000</td></tr>
-          <tr><th scope="row">1</th><td>Tomas Gonzalez</td><td>24/05/2018</td><td>31/05/2018</td><td>$13.000</td></tr>
-          <tr><th scope="row">1</th><td>Tomas Gonzalez</td><td>24/05/2018</td><td>31/05/2018</td><td>$13.000</td></tr>
-          <tr><th scope="row">1</th><td>Tomas Gonzalez</td><td>24/05/2018</td><td>31/05/2018</td><td>$13.000</td></tr>
+          <tbody *ngFor="let pedido of listaPedidos">
+            <tr (click)="editarPedido(pedido)">
+              <td></td>
+              <td>{{pedido.rutCliente}}</td>
+              <td>{{cliente.razonSocialCliente}}</td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </app-card>
-    <!-- Background Utilities table end -->
   </div>
 </div>
 

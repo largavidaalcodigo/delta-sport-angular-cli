@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "guru-new-able"
+    "name": "delta-sport-angular-front"
   },
   "apps": [
     {

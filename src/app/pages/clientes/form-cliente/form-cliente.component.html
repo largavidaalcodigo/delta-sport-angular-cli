@@ -1,104 +1,56 @@
-<app-card>
-  <form class="form-horizontal">
+<app-card *ngIf="verForm==true">
+  <!--<form class="form-horizontal">-->
+    <form (ngSubmit)="onSubmit(cliente);" #clienteForm="ngForm" class="form-horizontal">
     <div class="form-group row">
       <div class="col-sm-3">
-        <h2>Nuevo Pedido</h2>
+        <h2>{{tipoForm}} Cliente</h2>
       </div>
-      <div class="col-sm-2">
-        <p>Fecha: {{today | date}}</p>
-      </div>
-      <div class="col-sm-6">
-        <a class="btn btn-primary" routerLink="/clientes/clientes">Buscar Cliente</a>
-        <a class="btn btn-primary" routerLink="/clientes/clientes">Ver Historial</a>
-        <a class="btn btn-primary" routerLink="/clientes/clientes">Detalle Tallas</a>
-      </div>
-    </div>
     <app-card>
       <h4>Datos Cliente</h4>
       <div class="form-group row">
         <div class="col-sm-2">
-          <label for="rut">Fecha entrega</label>
-          <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control"/>
-            <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <label for="rut">Rut</label>
-          <input type="text" class="form-control" id="rut" placeholder="">
+          <label>Rut</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.rutCliente" name="rutCliente" required>
         </div>
         <div class="col-sm-4">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" placeholder="">
+          <label>Razón social</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.razonSocialCliente" name="razonSocialCliente">
         </div>
         <div class="col-sm-4">
-          <label for="direccion">Direccion</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
+          <label>Nombres</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.nombresCliente" name="nombresCliente">
+        </div>
+        <div class="col-sm-4">
+          <label>Ap. paterno</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.apellidoPaternoCliente" name="apellidoPaternoCliente">
+        </div>
+        <div class="col-sm-4">
+          <label>Ap. Materno</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.apellidoMaternoCliente" name="apellidoMaternoCliente">
+        </div>
+        <div class="col-sm-4">
+          <label>Email</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.emailCliente" name="emailCliente">
+        </div>
+        <div class="col-sm-4">
+          <label>Direccion</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.direccionCliente" name="direccionCliente">
         </div>
         <div class="col-sm-2">
-          <label for="direccion">Ciudad</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
+          <label>Comuna</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.comunaCliente" name="comunaCliente">
         </div>
         <div class="col-sm-2">
-          <label for="direccion">Comuna</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
-        </div>
-        <div class="col-sm-2">
-          <label for="direccion">Telefono</label>
-          <input type="text" class="form-control" id="direccion" placeholder="">
+          <label>Telefono</label>
+          <input type="text" class="form-control" [(ngModel)]="cliente.fonoCliente" name="fonoCliente">
         </div>
       </div>
     </app-card>
-    <!--DATOS PEDIDO-->
-    <app-card>
-      <h4>Datos Pedido</h4>
-      <div class="form-group row">
-        <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="size">
-            <option value="">Producto...</option>
-            <option value="s">Poleras</option>
-            <option value="m">Poleron</option>
-            <option value="l">Pantalon</option>
-            <option value="xl">Cortaviento</option>
-          </select>
-        </div>
-        <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="size">
-            <option value="">Tipo Producto...</option>
-            <option value="s">Recto</option>
-            <option value="m">Raglan</option>
-            <option value="l">Recta Capucha</option>
-          </select>
-        </div>
-        <div class="col-sm-2 selectContainer">
-          <select class="form-control" name="size">
-            <option value="">Tipo Tela...</option>
-            <option value="s">Recto</option>
-            <option value="m">Raglan</option>
-            <option value="l">Recta Capucha</option>
-          </select>
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="cantidad" placeholder="Cantidad">
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="cantidad" placeholder="valor unit.">
-        </div>
-        <div class="col-sm-2">
-          <input type="text" class="form-control" id="cantidad" placeholder="Precio">
-        </div>
-        <div class="col-sm-3">
-          <a class="btn btn-success" routerLink="/clientes/clientes">Detalle tela</a>
-          <a class="btn btn-primary" routerLink="/clientes/clientes">Añadir</a>
-        </div>
-      </div>
-
-    </app-card>
-    <div class="form-group">
-      <button type="reset" class="btn btn-default">Cancelar</button>
-      <button type="submit" class="btn btn-primary">Crear</button>
+  </div>
+  <div class="form-group">
+      <a class="btn btn-primary" (click)="emiteVolver()">Cancelar</a>
+      <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </form>
+  {{cliente|json}}
 </app-card>

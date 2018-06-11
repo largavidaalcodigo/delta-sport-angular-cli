@@ -1,31 +1,41 @@
-<div class="row">
+<div class="row" *ngIf="verLista">
   <div class="col-sm-12">
     <app-card>
-      <a class="btn btn-primary" routerLink="/clientes/addCliente">Nuevo Cliente</a>
+      <a class="btn btn-primary" (click)="nuevo()" routerLinkActive="active">Nuevo Cliente</a>
     </app-card>
   </div>
 </div>
 
-<div class="row">
+<!-- Formulario  -->
+<div class="container">
+  <app-form-cliente [verForm]="verForm" [tipoForm]="tipoForm" [cliente]="cliente" (salir)="volver($event)"></app-form-cliente>
+</div>
+
+<!-- Lista  -->
+<div class="row" *ngIf="verLista">
   <div class="col-sm-12">
-    <!-- Basic table card start -->
-    <!-- Basic table card start -->
-    <app-card [title]="'Clientes'" [classHeader]="false" [blockClass]="'table-border-style'">
-      <span class="code-header">use class <code>table</code> inside table element</span>
+    <app-card [classHeader]="false" [blockClass]="'table-border-style'">
       <div class="table-responsive">
-        <table class="table">
+        <table *ngIf="listaClientes" class="table table-hover">
           <thead>
-          <tr>
-            <th>#</th>
-            <th>Rut</th>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th>Ciudad</th>
-            <th>Comuna</th>
-          </tr>
+            <tr>
+              <th>#</th>
+              <th>Rut </th>
+              <th>Razón Social</th>
+              <th>Nombre</th>
+              <th>Estado</th>
+              <th>Opciones</th>
+            </tr>
           </thead>
-          <tbody>
-          <tr><th scope="row">1</th><td>15.661.426-2</td></td><td>Tomas Gonzalez</td><td>Primera Avenida 1252</td><td>31/05/2018</td><td>Santiago</td><td>San Miguel</td></tr>
+          <tbody *ngFor="let cliente of listaClientes">
+            <tr (click)="editarCliente(cliente)">
+              <td></td>
+              <td>{{cliente.rutCliente}}</td>
+              <td>{{cliente.razonSocialCliente}}</td>
+              <td>{{cliente.apellidoPaternoCliente + ' ' + cliente.apellidoMaternoCliente + ' ' + cliente.nombresCliente}}</td>
+              <td>{{cliente.estadoCliente}}</td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -33,4 +43,3 @@
     <!-- Background Utilities table end -->
   </div>
 </div>
-
