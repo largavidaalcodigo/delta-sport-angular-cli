@@ -1,6 +1,6 @@
 import { ClientesService } from "./../../../services/clientes.service";
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
-import { Cliente } from "../../../model/cliente.model";
+import { Cliente } from "../../../model/cliente/cliente.model";
 import { NgForm } from "@angular/forms";
 
 @Component({
@@ -11,7 +11,7 @@ export class FormClienteComponent implements OnInit {
 
   @ViewChild("clienteForm") clienteForm: NgForm; //captura el valor del formulario
   @Input() verForm: boolean;
-  @Input() cliente : Cliente; //Puede venir con datos
+  @Input() cliente: Cliente; //Puede venir con datos
   @Input() tipoForm: string;
 
   @Output() public salir = new EventEmitter();

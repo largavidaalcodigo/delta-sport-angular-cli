@@ -1,11 +1,11 @@
-import { ClientesService } from "./../../services/clientes.service";
-import { Cliente } from "./../../model/cliente.model";
-import { Component, OnInit} from "@angular/core";
+import { ClientesService } from './../../services/clientes.service';
+import { Cliente } from '../../model/cliente/cliente.model';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: "app-clientes",
-  templateUrl: "./clientes.component.html",
-  styleUrls: ["./clientes.component.css"]
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit {
   listaClientes: any;

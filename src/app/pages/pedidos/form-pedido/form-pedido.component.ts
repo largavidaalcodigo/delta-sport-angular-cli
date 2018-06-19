@@ -1,7 +1,12 @@
-import { RangoPrecioProducto } from "./../../../model/rangoPrecioProducto";
-import { TipoProducto } from "./../../../model/tipoProducto.model";
-import { Producto } from "./../../../model/producto.model";
-import { PedidosService } from "./../../../services/pedidos.service";
+import { Color } from './../../../model/producto/color.model';
+import { TipoProducto } from './../../../model/producto/tipoProducto.model';
+import { RangoPrecioProducto } from '../../../model/producto/rangoPrecioProducto.model';
+import { DetallePedido } from './../../../model/pedido/detallePedido';
+import { Pedido } from '../../../model/pedido/pedido.model';
+import { PedidosService } from './../../../services/pedidos.service';
+import { NgForm } from '@angular/forms';
+import {FormControl} from '@angular/forms';
+
 import {
   Component,
   OnInit,
@@ -9,108 +14,96 @@ import {
   Input,
   Output,
   EventEmitter
-} from "@angular/core";
-import { Pedido } from "../../../model/pedido.model";
-import { NgForm } from "@angular/forms";
+} from '@angular/core';
 
 @Component({
-  selector: "app-form-pedido",
-  templateUrl: "./form-pedido.component.html"
+  selector: 'app-form-pedido',
+  templateUrl: './form-pedido.component.html'
 })
+
 export class FormPedidoComponent implements OnInit {
-  @ViewChild("pedidoForm") pedidoForm: NgForm; //captura el valor del formulario
+  toppings = new FormControl();
+  toppingList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+  @ViewChild('encabezadoPedidoForm') encabezadoPedidoForm: NgForm;
+  @ViewChild('detallePedidoForm') detallePedidoForm: NgForm;
   @Input() verForm: boolean;
   @Input() tipoForm: string;
   @Input() pedido: Pedido; //Puede venir con datos
   @Output() public salir = new EventEmitter();
 
+  //Lista Detalle pedido
+  detallePedido: DetallePedido;
+  listaDetallePedido: DetallePedido[];
+  rangoPrecioProducto: RangoPrecioProducto;
   //Listas producto
   listaProductos: any;
-  listaTipoProducto: any;
-  listaRangoPrecios: any;
+  listaTipoProducto: TipoProducto[];
+  listaRangoPrecios: RangoPrecioProducto[];
+  listaColores: Color[];
 
-  //Detalle producto
-  itemProducto: RangoPrecioProducto;
-  cantidad: number = 1;
-  total: number;
-
-  //Detalle Pedido
-  fechaPedido: string;
-  totalPedido: number;
-
-  //Valores seleccionados
-  productoSeleccionado = 0;
-  tipoProductoSeleccionado = 0;
-  rangoPrecioSeleccionado = 0;
-
-  constructor(private pedidosService: PedidosService) {
-    //Lista de productos
-    this.listaProductos = this.pedidosService.getProductos();
-
-    console.log("<<<<<< Form pedido >>>>>>");
-    console.log("tipoForm->" + this.tipoForm);
-  }
+  constructor(private pedidosService: PedidosService) {}
 
   ngOnInit() {
-    this.itemProducto = new RangoPrecioProducto(0, 0, '', 0);
+    //Lista de productos
+    this.listaProductos = this.pedidosService.getProductos();
+    this.detallePedido = new DetallePedido();
+    this.detallePedido.llevaDiseno = 0;
+    this.rangoPrecioProducto = new RangoPrecioProducto();
+    this.listaColores = this.pedidosService.getColores();
   }
 
   onSelectProducto(productoId: number) {
-    this.productoSeleccionado = productoId;
-    this.listaTipoProducto = this.pedidosService
-      .getTipoProductos()
+    this.detallePedido.idProducto = productoId;
+    this.listaTipoProducto = this.pedidosService.getTipoProductos()
       .filter(item => item.idProducto == productoId);
-    console.log("tipos de producto" + JSON.stringify(this.listaTipoProducto));
+    console.log('productoId-> ' + productoId);
+    //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
   }
 
   onSelectTipoProducto(tipoProductoId: number) {
-    this.tipoProductoSeleccionado = tipoProductoId;
-    this.listaRangoPrecios = this.pedidosService
-      .getRangoPrecios()
+    this.detallePedido.idTipoProducto = tipoProductoId;
+    this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
       .filter(item => item.idTipoProducto == tipoProductoId);
-    console.log("rango de precios" + JSON.stringify(this.listaRangoPrecios));
+      console.log('tipoProductoId->'+tipoProductoId);
+    //console.log('rango de precios->' + JSON.stringify(this.listaRangoPrecios));
   }
 
   onSelectRangoPrecio(rangoPrecioId: number) {
-    console.log("rangoPrecioId->" + rangoPrecioId);
-    this.itemProducto = this.listaRangoPrecios.find(
-      item => item.id == rangoPrecioId
-    );
+    this.detallePedido.idRangoPrecio = rangoPrecioId;
+    this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
+    console.log('rangoPrecioId->' + rangoPrecioId);
   }
 
   onChangeCalculaTotal(cantidad: number) {
-    this.total = cantidad * this.itemProducto.valor;
-    console.log(
-      "cantidad->" +
-        cantidad +
-        "valor->" +
-        this.itemProducto.valor +
-        "/ total->" +
-        this.total
-    );
+    this.detallePedido.total = cantidad * this.rangoPrecioProducto.valor;
+  }
+
+  onSelectSinDiseno(llevaDiseño: number){
+      console.log('llevaDiseño->'+llevaDiseño);
   }
 
   emiteVolver() {
-    this.pedidoForm.reset();
+    //this.pedidoForm.reset();
     this.salir.emit();
   }
 
   onSubmit() {
-    this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
+    //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
     // this.pedido.estadoPedido = 1; //0= inactivo , 1=activo
 
     // add
-    if (this.tipoForm == "Nuevo") {
+    if (this.tipoForm == 'Nuevo') {
       this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
         this.pedido = pedido;
-        console.log("nuevo  insertado->" + pedido);
+        console.log('nuevo  insertado->' + pedido);
       });
 
       //update
-    } else if (this.tipoForm == "Ver") {
+    } else if (this.tipoForm == 'Ver') {
       this.pedidosService.putPedido(this.pedido).subscribe(pedido => {
         this.pedido = pedido;
-        console.log("pedido actualizado->" + pedido);
+        console.log('pedido actualizado->' + pedido);
       });
     }
     this.emiteVolver();

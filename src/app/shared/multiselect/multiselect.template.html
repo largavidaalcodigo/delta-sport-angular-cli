@@ -1,0 +1,27 @@
+<div class='en-multiselect-container'>
+
+    <div class='en-ms-input'>
+
+        <div>
+<!--               <input type='text' #input  [formControl]='search' (focus)='onInputFocus()' (blur)='onInputBlur()'>
+ -->              <input type='text' #input  (focus)='onInputFocus()' (blur)='onInputBlur()'>
+        </div>
+        <div class='en-ms-preview' [class.en-ms-preview-hidden]='hidePreviewItems'>
+            <div *ngFor='let prev of previewItems' (click)='onItemSelect(prev)'>
+                <span class='icon-add'></span>
+                <span>{{ prev.display }}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class='en-ms-output'>
+        <div [hidden]='selected.length > 0' class='en-ms-default-all'>
+            <span>All Items</span>
+        </div>
+        <div *ngFor='let sel of selected' (click)='onItemDeselect(sel)'>
+            <span>{{ sel.display }}</span>
+        </div>
+    </div>
+
+</div>

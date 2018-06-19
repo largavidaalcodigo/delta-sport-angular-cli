@@ -1,7 +1,7 @@
-<div class="row" *ngIf='verListaPedidos'>
+<div class="row" *ngIf='verLista'>
   <div class="col-sm-12">
     <app-card>
-      <a class="btn btn-primary" (click)="nuevo()" routerLinkActive="active">Nuevo Pedido</a>
+      <a class="btn btn-primary" (click)="nuevoPedido()" routerLinkActive="active">Nuevo Pedido</a>
     </app-card>
   </div>
 </div>
@@ -9,14 +9,14 @@
 <!-- Formulario  -->
 <div class="container">
   <app-form-pedido
-  [verForm]="verForm"
+  [verForm]="!verLista"
   [tipoForm]="tipoForm"
   [pedido]="pedido"
   (salir)="volver($event)"></app-form-pedido>
 </div>
 
 <!-- Lista  -->
-<div class="row" *ngIf='verListaPedidos'>
+<div class="row" *ngIf='verLista'>
   <div class="col-sm-12">
     <app-card [title]="'Pedidos'" [classHeader]="false" [blockClass]="'table-border-style'">
       <div class="table-responsive">
@@ -24,10 +24,11 @@
           <thead>
           <tr>
             <th>#</th>
-            <th>Nombre</th>
+            <th>Nombre Cliente</th>
             <th>Fecha pedido</th>
             <th>Fecha Entrega</th>
             <th>Monto Total</th>
+            <th>Estado</th>
           </tr>
           </thead>
           <tbody *ngFor="let pedido of listaPedidos">
@@ -35,6 +36,7 @@
               <td></td>
               <td>{{pedido.rutCliente}}</td>
               <td>{{cliente.razonSocialCliente}}</td>
+              <td></td>
               <td></td>
             </tr>
           </tbody>

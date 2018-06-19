@@ -1,20 +1,20 @@
-import { PedidosService } from "./../../services/pedidos.service";
-import { Pedido } from "./../../model/pedido.model";
-import { TipoProducto } from './../../model/tipoProducto.model';
-  import { Producto } from './../../model/producto.model';
-import { Component, OnInit} from "@angular/core";
+import { PedidosService } from './../../services/pedidos.service';
+import { Pedido } from '../../model/pedido/pedido.model';
+/* import { TipoProducto } from '../../model/producto/tipoProducto.model';
+import { Producto } from '../../model/producto/producto.model';
+ */import { Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: "app-pedidos",
-  templateUrl: "./pedidos.component.html",
-  styleUrls: ["./pedidos.component.css"]
+  selector: 'app-pedidos',
+  templateUrl: './pedidos.component.html',
+  styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent implements OnInit {
   listaPedidos: any;
   pedido: Pedido;
-  verListaPedidos: boolean = true;
-  verForm: boolean = false;
-  tipoForm: string;
+  verLista: boolean = true;
+  //verForm: boolean = false;
+  tipoForm: string = 'Nuevo';
 
   constructor(private pedidosService: PedidosService) {
   }
@@ -31,27 +31,27 @@ export class PedidosComponent implements OnInit {
 
   //Cierre con boton Volver
   public volver() {
-    this.verForm = false;
-    this.verListaPedidos = true;
+    //this.verForm = false;
+    this.toggleLista();
+  }
+  public toggleLista(){
+    this.verLista = !this.verLista;
+    console.log('this.verLista ->'+ this.verLista);
   }
 
   //Nuevo Pedido
-  nuevo() {
-    this.verForm = true;
-    this.verListaPedidos = false;
-
-    this.pedido = new Pedido();
+  nuevoPedido() {
     this.tipoForm = "Nuevo";
-    console.log("verListaPedidos->"+this.verListaPedidos);
+    this.pedido = new Pedido();
+
+    this.toggleLista();
   }
 
   //Ver o Editar Cliente
   editarPedido(pedido: Pedido) {
-    this.verForm = true;
-    this.verListaPedidos = false;
 
     this.pedido=pedido;
     this.tipoForm = "Ver";
-    console.log("Viendo ");
+    this.toggleLista();
   }
 }
