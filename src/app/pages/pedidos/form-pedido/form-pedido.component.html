@@ -1,5 +1,139 @@
-<mat-form-field>
-  <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
-    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-  </mat-select>
-</mat-form-field>
+<div *ngIf='verForm'>
+  <div class='col-sm-3'>
+    <h2>Nuevo Pedido</h2>
+  </div>
+  <div class='col-sm-2'>
+    <!-- <p>Fecha: {{today | date}}</p> -->
+  </div>
+  <div class='col-sm-6'>
+    <!--
+        <a class='btn btn-primary' routerLink='/clientes/form-cliente'>Nuevo Cliente</a>
+        <button class='btn btn-lg btn-outline-primary' (click)='open()'>Nuevo Cliente</button>
+-->
+    <a class='btn btn-primary' routerLink='/clientes/clientes'>Buscar Cliente</a>
+    <app-card>
+      <h4>Datos de pedido</h4>
+      <form #encabezadoPedidoForm='ngForm' class='form-inline'>
+        <div class='form-group'>
+            <input type='text' readonly class='form-control-plaintext form-control' name='valor' [(ngModel)]='rangoPrecioProducto.valor'
+              [ngModelOptions]='{standalone: true}' (change)='onChangeCalculaTotal($event.target.value)'>
+        </div>
+      </form>
+    </app-card>
+    <app-card>
+      <h4>Datos de pedido</h4>
+      <form #encabezadoPedidoForm='ngForm' class='form-inline'>
+        <div class='form-group'>
+          <div class='input-group'>
+            <!-- Fecha entrega -->
+            <label for='dp'>Fecha entrega</label>
+            <input class='form-control' size='10' name='dp' [(ngModel)]='pedido.fechaEntrega' (ngModelChange)='pedido.fechaEntrega=$event'
+              ngbDatepicker #d='ngbDatepicker'>
+            <div class='input-group'>
+              <button (click)='d.toggle()' type='button'>
+                <img src=' ./assets/icon/calendar.svg' style='cursor: pointer;' />
+              </button>
+            </div>
+            <!-- Fecha entrega -->
+            <pre>Fecha: {{ fechaPedido | json }}</pre>
+          </div>
+        </div>
+      </form>
+    </app-card>
+    <app-card>
+      <h4>Seleccione Producto</h4>
+      <!-- Formulario detalle Pedido -->
+      <form #detallePedidoForm='ngForm' class='form-horizontal'>
+        <table class="form-table-bordered">
+          <thead class="thead-light">
+            <td>Categoria</td>
+            <td>Producto</td>
+            <td>Talla</td>
+            <td>Cantidad</td>
+            <td>Valor</td>
+            <td>Detalles</td>
+            <td>Diseño?</td>
+            <td>Total</td>
+          </thead>
+          <tbody>
+            <td class="col-xs-1" style="width:120px;">
+              <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto' (change)='onSelectProducto($event.target.value)'>
+                <option [value]=''>[Producto]</option>
+                <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>
+              </select>
+            </td>
+            <td style="width:120px;">
+              <select class='form-control' name='tipoProducto' [(ngModel)]='detallePedido.idTipoProducto' (change)='onSelectTipoProducto($event.target.value)'>
+                <option [value]=''>[Tipo Producto]</option>
+                <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>
+              </select>
+            </td>
+            <td style="width:70px;">
+              <select class='form-control' name='rangoPrecio' [(ngModel)]='detallePedido.idRangoPrecio' (change)='onSelectRangoPrecio($event.target.value)'>
+                <option [value]=''>[Tallas]</option>
+                <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>
+              </select>
+            </td>
+            <td style="width:90px;">
+              <input type='number' class='form-control' name='cantidad' [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotal($event.target.value)'>
+            </td>
+            <td style="width:100px;">
+              <input type='text' readonly class='form-control-plaintext form-control' name='valor' [(ngModel)]='rangoPrecioProducto.valor'
+                [ngModelOptions]='{standalone: true}' (change)='onChangeCalculaTotal($event.target.value)'>
+            </td>
+            <td style="width:100px;">detalles</td>
+            <td style="width:100px;" *ngIf='detallePedido.llevaDiseno==1'>
+              <select class='form-control' name='color' [(ngModel)]='detallePedido.idColor' (change)='onSelectColor($event.target.value)'>
+                <option [value]=''>[Color]</option>
+                <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+              </select>
+            </td>
+            <td class="btn-group btn-group-toggle" style="width:120px;" ngbRadioGroup name='llevaDiseno' [(ngModel)]='detallePedido.llevaDiseno'>
+              <!--               <div class="col-sm-2 btn-group btn-group-toggle" ngbRadioGroup name='llevaDiseno' [(ngModel)]='detallePedido.llevaDiseno'>
+ -->
+              <label ngbButtonLabel class="btn-primary">
+                <input ngbButton type="radio" [value]="0">No
+              </label>
+              <label ngbButtonLabel class="btn-primary">
+                <input ngbButton type="radio" [value]="1">Si
+              </label>
+              <!--               </div>
+ -->
+            </td>
+            <td style="width:100px;">
+              <input type='text' readonly class='form-control-plaintext form-control' name='total' [(ngModel)]='detallePedido.total' [ngModelOptions]='{standalone: true}'>
+            </td>
+            <td>
+              <a class='btn btn-primary'>Añadir</a>
+            </td>
+
+          </tbody>
+          <tfoot>
+            <td colspan="7">
+              Total:
+            </td>
+            <td style="width:100px;">
+              <input type='text' readonly class='form-control-plaintext form-control' name='valor' [(ngModel)]='rangoPrecioProducto.valor'
+                [ngModelOptions]='{standalone: true}' (change)='onChangeCalculaTotal($event.target.value)'>
+            </td>
+
+          </tfoot>
+        </table>
+
+        <!--           <div ngbDropdown>
+            <button class="btn btn-outline-primary" id="dropdownConfig" ngbDropdownToggle>Toggle</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+              <button class="dropdown-item">Action - 1</button>
+              <button class="dropdown-item">Another Action</button>
+              <button class="dropdown-item">Something else is here</button>
+            </div>
+          </div>
+ -->
+      </form>
+    </app-card>
+    <div class='form-group'>
+      <button type='reset' class='btn btn-default'>Cancelar</button>
+      <button type='submit' class='btn btn-primary'>Crear</button>
+    </div>
+
+  </div>

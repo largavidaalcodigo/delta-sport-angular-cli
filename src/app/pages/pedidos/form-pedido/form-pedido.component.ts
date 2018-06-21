@@ -4,6 +4,7 @@ import { RangoPrecioProducto } from '../../../model/producto/rangoPrecioProducto
 import { DetallePedido } from './../../../model/pedido/detallePedido';
 import { Pedido } from '../../../model/pedido/pedido.model';
 import { PedidosService } from './../../../services/pedidos.service';
+import { ClientesService } from './../../../services/clientes.service';
 import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 
@@ -42,7 +43,9 @@ export class FormPedidoComponent implements OnInit {
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
 
-  constructor(private pedidosService: PedidosService) {}
+  queryCliente:string;
+
+  constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
 
   ngOnInit() {
     //Lista de productos
@@ -51,6 +54,14 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido.llevaDiseno = 0;
     this.rangoPrecioProducto = new RangoPrecioProducto();
     this.listaColores = this.pedidosService.getColores();
+  }
+
+  getListaCliente(cadena:string) {
+    return = this.clientesService.getClientes()
+    .filter(item => item.idProducto == productoId);
+    console.log('productoId-> ' + productoId);
+    //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
+    //https://codeburst.io/create-a-search-pipe-to-dynamically-filter-results-with-angular-4-21fd3a5bec5c
   }
 
   onSelectProducto(productoId: number) {
