@@ -2,23 +2,56 @@
   <div class='col-sm-3'>
     <h2>Nuevo Pedido</h2>
   </div>
-  <div class='col-sm-2'>
+  <div><!-- class='col-sm-2'> -->
     <!-- <p>Fecha: {{today | date}}</p> -->
   </div>
-  <div class='col-sm-6'>
+  <div><!--  class='col-sm-6'> -->
     <!--
         <a class='btn btn-primary' routerLink='/clientes/form-cliente'>Nuevo Cliente</a>
         <button class='btn btn-lg btn-outline-primary' (click)='open()'>Nuevo Cliente</button>
 -->
-    <a class='btn btn-primary' routerLink='/clientes/clientes'>Buscar Cliente</a>
+
     <app-card>
-      <h4>Datos de pedido</h4>
+      <h4>Seleccione Cliente</h4>
       <form #encabezadoPedidoForm='ngForm' class='form-inline'>
-        <div class='form-group'>
-            <input type='text' readonly class='form-control-plaintext form-control' name='valor' [(ngModel)]='rangoPrecioProducto.valor'
-              [ngModelOptions]='{standalone: true}' (change)='onChangeCalculaTotal($event.target.value)'>
+<!--         <div class='form-group'>
+            <input type='text' class='form-control-plaintext form-control' name='valor'
+            (change)='onChangeCalculaTotal($event.target.value)'>
         </div>
-      </form>
+        <div>
+          <ul>
+            <li *ngFor="let c of characters">
+              {{c}}
+            </li>
+          </ul>
+        </div>
+ -->
+      <div>
+        <table border =1>
+          <thead>
+            <tr>
+              <th colspan="4">Search :
+                <input type="text" [(ngModel)]="queryString">
+              </th>
+            </tr>
+            <tr>
+              <th style="width:40px;max-width:40px;">#</th>
+              <th style="width:60px;max-width:100px;">Name</th>
+              <th style="width:60px;max-width:50px;">Age</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--https://seegatesite.com/custom-filter-pipe-angular-4-example/-->
+            <tr *ngFor="let ex of  listaClientes| filterdata: queryString : 'name' ; let i = index ">
+              <td>{{i+1}}</td>
+              <td>{{ex.name}}</td>
+              <td>{{ex.age}}</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+     </form>
     </app-card>
     <app-card>
       <h4>Datos de pedido</h4>

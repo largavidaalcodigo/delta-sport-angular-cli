@@ -37,13 +37,15 @@ export class FormPedidoComponent implements OnInit {
   detallePedido: DetallePedido;
   listaDetallePedido: DetallePedido[];
   rangoPrecioProducto: RangoPrecioProducto;
+
   //Listas producto
   listaProductos: any;
   listaTipoProducto: TipoProducto[];
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
+  listaClientes: any;
 
-  queryCliente:string;
+  //queryCliente:string;
 
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
 
@@ -54,12 +56,13 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido.llevaDiseno = 0;
     this.rangoPrecioProducto = new RangoPrecioProducto();
     this.listaColores = this.pedidosService.getColores();
+    this.listaClientes = this.clientesService.getClientes();
   }
 
   getListaCliente(cadena:string) {
-    return = this.clientesService.getClientes()
+    /* = this.clientesService.getClientes()
     .filter(item => item.idProducto == productoId);
-    console.log('productoId-> ' + productoId);
+    console.log('productoId-> ' + productoId); */
     //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
     //https://codeburst.io/create-a-search-pipe-to-dynamically-filter-results-with-angular-4-21fd3a5bec5c
   }
