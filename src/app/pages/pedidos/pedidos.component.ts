@@ -14,7 +14,7 @@ export class PedidosComponent implements OnInit {
   pedido: Pedido;
   verLista: boolean = true;
   //verForm: boolean = false;
-  tipoForm: string = 'Nuevo';
+  tipoForm: string = 'Nuevo'; // puede ser NUEVO o EDITAR
 
   constructor(private pedidosService: PedidosService) {
   }

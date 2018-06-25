@@ -38,18 +38,20 @@ export class FormPedidoComponent implements OnInit {
   listaDetallePedido: DetallePedido[];
   rangoPrecioProducto: RangoPrecioProducto;
 
-  //Listas producto
+  //Listas
   listaProductos: any;
   listaTipoProducto: TipoProducto[];
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
   listaClientes: any;
 
-  //queryCliente:string;
+  queryBuscaCliente: string; //input text search del Cliente
 
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
 
   ngOnInit() {
+    //Lista de productos
+    this.listaClientes = this.clientesService.getClientes();
     //Lista de productos
     this.listaProductos = this.pedidosService.getProductos();
     this.detallePedido = new DetallePedido();
@@ -57,6 +59,11 @@ export class FormPedidoComponent implements OnInit {
     this.rangoPrecioProducto = new RangoPrecioProducto();
     this.listaColores = this.pedidosService.getColores();
     this.listaClientes = this.clientesService.getClientes();
+  }
+
+  verCliente(cliente: any) {
+    this.queryBuscaCliente=cliente.desc;
+      console.log('cliente->' + cliente.desc);
   }
 
   getListaCliente(cadena:string) {

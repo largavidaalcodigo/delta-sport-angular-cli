@@ -8,7 +8,7 @@ import { FormPedidoComponent } from './form-pedido/form-pedido.component';
 import { HttpModule } from '@angular/http';
 import { PedidosService } from '../../services/pedidos.service';
 import { ClientesService } from '../../services/clientes.service';
-import { FilterdataPipe } from '../../pages/pedidos/form-pedido/filterdata.pipe';
+import { FilterDataPipe } from '../../pages/pedidos/form-pedido/filterdata.pipe';
 
 export const pedidosRoutes: Routes = [
   {
@@ -28,10 +28,16 @@ export const pedidosRoutes: Routes = [
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forChild(pedidosRoutes),
-    SharedModule,
-    FilterdataPipe
+    SharedModule
   ],
-  providers: [PedidosService, ClientesService],
-  declarations: [PedidosComponent, FormPedidoComponent]
+  providers: [
+    PedidosService,
+    ClientesService
+  ],
+  declarations: [
+    PedidosComponent,
+    FormPedidoComponent,
+    FilterDataPipe
+  ]
 })
 export class PedidosModule {}

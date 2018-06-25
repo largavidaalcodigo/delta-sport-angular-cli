@@ -6,9 +6,12 @@ h4{
   padding-right: 4px;
 }
 
-table {
-  //border-collapse: collapse;
-}
 th, td {
   padding: 2px;
 }
+
+.dataFilter {
+  position: fixed;
+  top:0;
+  right:0;
+ }
