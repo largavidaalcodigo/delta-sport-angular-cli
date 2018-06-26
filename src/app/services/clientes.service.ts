@@ -7,10 +7,9 @@ import { Cliente } from '../model/cliente/cliente.model';
 export class ClientesService {
   baseUrl: string = 'http://localhost:8081';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  public getClientes(){
+  public getClientes(): any {
     return this.http.get(this.baseUrl + '/clientes');
   }
 

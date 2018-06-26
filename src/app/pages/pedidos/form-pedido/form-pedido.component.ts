@@ -1,10 +1,13 @@
+import { Observable } from 'rxjs';
+import { Cliente } from './../../../model/cliente/cliente.model';
 import { Color } from './../../../model/producto/color.model';
 import { TipoProducto } from './../../../model/producto/tipoProducto.model';
 import { RangoPrecioProducto } from '../../../model/producto/rangoPrecioProducto.model';
-import { DetallePedido } from './../../../model/pedido/detallePedido';
+import { DetallePedido } from '../../../model/pedido/detallePedido.model';
 import { Pedido } from '../../../model/pedido/pedido.model';
-import { PedidosService } from './../../../services/pedidos.service';
+
 import { ClientesService } from './../../../services/clientes.service';
+import { PedidosService } from './../../../services/pedidos.service';
 import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 
@@ -16,6 +19,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
+import { Producto } from '../../../model/producto/producto.model';
 
 @Component({
   selector: 'app-form-pedido',
@@ -39,18 +43,18 @@ export class FormPedidoComponent implements OnInit {
   rangoPrecioProducto: RangoPrecioProducto;
 
   //Listas
-  listaProductos: any;
+  listaProductos: Producto[];
   listaTipoProducto: TipoProducto[];
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
-  listaClientes: any;
+  listaClientes: Cliente[];
 
   queryBuscaCliente: string; //input text search del Cliente
 
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
 
   ngOnInit() {
-    //Lista de productos
+    //Lista de clientes
     this.listaClientes = this.clientesService.getClientes();
     //Lista de productos
     this.listaProductos = this.pedidosService.getProductos();
@@ -58,11 +62,10 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido.llevaDiseno = 0;
     this.rangoPrecioProducto = new RangoPrecioProducto();
     this.listaColores = this.pedidosService.getColores();
-    this.listaClientes = this.clientesService.getClientes();
   }
 
   verCliente(cliente: any) {
-    this.queryBuscaCliente=cliente.desc;
+    this.queryBuscaCliente = cliente.desc;
       console.log('cliente->' + cliente.desc);
   }
 
