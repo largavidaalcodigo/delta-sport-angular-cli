@@ -7,6 +7,7 @@
         <a class='btn btn-primary' routerLink='/clientes/form-cliente'>Nuevo Cliente</a>
         <button class='btn btn-lg btn-outline-primary' (click)='open()'>Nuevo Cliente</button>
 -->
+{{ pedido | json }}
     <a class='btn btn-primary' routerLink='/clientes/clientes'>Buscar Cliente</a>
     <app-card>
       <h4>Datos de pedido</h4>
@@ -17,7 +18,7 @@
           <div style='position:fixed; z-index:1000;'>
             <div class='list-group' *ngIf='queryBuscaCliente'>
               <a class='list-group-item  list-group-item-action'
-                  *ngFor='let c of listaClientes | dataFilter: queryBuscaCliente : "razonSocialCliente"'
+                  *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"'
                   (click)='verCliente(c)'>
                 {{c.desc}}
               </a>

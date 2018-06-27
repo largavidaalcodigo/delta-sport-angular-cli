@@ -51,9 +51,15 @@ export class FormPedidoComponent implements OnInit {
 
   queryBuscaCliente: string; //input text search del Cliente
 
-  constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
+  constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
+  }
 
   ngOnInit() {
+    if (this.pedido == null) {
+      this.pedido = new Pedido();
+    }
+    this.pedido.numeroPedido=1212;
+    this.pedido.fechaCreacion = new Date();
     //Lista de clientes
     this.listaClientes = this.clientesService.getClientes();
     //Lista de productos

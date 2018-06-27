@@ -2,7 +2,8 @@ import { Cliente } from './../cliente/cliente.model';
 import { DetallePedido } from './detallePedido.model';
 export class Pedido {
   public numeroPedido: number; //pk
-  public fechaEntrega: string;
+  public fechaCreacion: Date;
+  public fechaEntrega: Date;
   public listaProductos: DetallePedido[];
   public total: number;
   public cliente: Cliente; //fk
