@@ -5,8 +5,9 @@ export class DetallePedido {
   public cantidad: number;
   public total: number;
   public llevaDiseno: number; // 0 = no / 1 = si
-  public idColor: number; // solo si lleva diseño
+  public idColor: number; // solo si llevaDiseño = 0
   public listaAdicionales: any;
   public listaDetalleTallas: any;
+  public comentarios: string;
   constructor() {}
 }

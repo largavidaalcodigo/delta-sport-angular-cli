@@ -42,14 +42,11 @@ export class PedidosComponent implements OnInit {
   //Nuevo Pedido
   nuevoPedido() {
     this.tipoForm = "Nuevo";
-    this.pedido = new Pedido();
-
     this.toggleLista();
   }
 
   //Ver o Editar Cliente
   editarPedido(pedido: Pedido) {
-
     this.pedido=pedido;
     this.tipoForm = "Ver";
     this.toggleLista();

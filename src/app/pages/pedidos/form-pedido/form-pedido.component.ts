@@ -27,9 +27,9 @@ import { Producto } from '../../../model/producto/producto.model';
 })
 
 export class FormPedidoComponent implements OnInit {
-  toppings = new FormControl();
+/*   toppings = new FormControl();
   toppingList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
+ */
   @ViewChild('encabezadoPedidoForm') encabezadoPedidoForm: NgForm;
   @ViewChild('detallePedidoForm') detallePedidoForm: NgForm;
   @Input() verForm: boolean;
@@ -39,7 +39,7 @@ export class FormPedidoComponent implements OnInit {
 
   //Lista Detalle pedido
   detallePedido: DetallePedido;
-  listaDetallePedido: DetallePedido[];
+  listaDetallePedido: DetallePedido[] = new Array();
   rangoPrecioProducto: RangoPrecioProducto;
 
   //Listas
@@ -48,26 +48,31 @@ export class FormPedidoComponent implements OnInit {
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
   listaClientes: Cliente[];
-
+  cantidadProductos:number;
   queryBuscaCliente: string; //input text search del Cliente
 
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
   }
 
   ngOnInit() {
-    if (this.pedido == null) {
+     if (this.pedido == null) {
       this.pedido = new Pedido();
     }
-    this.pedido.numeroPedido=1212;
+
+    this.listaColores = this.pedidosService.getColores();
     this.pedido.fechaCreacion = new Date();
+    this.pedido.subTotal = 0;
+    this.pedido.descuento = 0;
+
     //Lista de clientes
     this.listaClientes = this.clientesService.getClientes();
     //Lista de productos
     this.listaProductos = this.pedidosService.getProductos();
     this.detallePedido = new DetallePedido();
-    this.detallePedido.llevaDiseno = 0;
+    this.detallePedido.llevaDiseno = 1;
+
+    //this.pedido.listaProductos.push(this.detallePedido);
     this.rangoPrecioProducto = new RangoPrecioProducto();
-    this.listaColores = this.pedidosService.getColores();
   }
 
   verCliente(cliente: any) {
@@ -105,9 +110,16 @@ export class FormPedidoComponent implements OnInit {
     console.log('rangoPrecioId->' + rangoPrecioId);
   }
 
-  onChangeCalculaTotal(cantidad: number) {
+  onChangeCalculaTotalDetalle(cantidad: number) {
     this.detallePedido.total = cantidad * this.rangoPrecioProducto.valor;
   }
+
+  onChangeCalculaTotal(descuento: number) {
+    this.pedido.subTotalNeto = this.pedido.subTotal - (this.pedido.subTotal * descuento) / 100;
+    this.pedido.iva = this.pedido.subTotalNeto*0,19;
+    this.pedido.total = this.pedido.subTotalNeto + this.pedido.iva;
+  }
+
 
   onSelectSinDiseno(llevaDiseño: number){
       console.log('llevaDiseño->'+llevaDiseño);
@@ -118,12 +130,19 @@ export class FormPedidoComponent implements OnInit {
     this.salir.emit();
   }
 
-  onSubmit() {
+  onSubmitDetalle() {
     //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
-    // this.pedido.estadoPedido = 1; //0= inactivo , 1=activo
+    this.pedido.idEstado = 1; //0= inactivo , 1=activo
+    this.cantidadProductos = this.listaDetallePedido.push(this.detallePedido);
 
+    //Calcula el total
+    this.pedido.subTotal += this.detallePedido.total;
+    this.onChangeCalculaTotal(0);
+
+    this.pedido.listaProductos = this.listaDetallePedido;
+    this.detallePedido = new DetallePedido();
     // add
-    if (this.tipoForm == 'Nuevo') {
+/*     if (this.tipoForm == 'Nuevo') {
       this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
         this.pedido = pedido;
         console.log('nuevo  insertado->' + pedido);
@@ -136,6 +155,7 @@ export class FormPedidoComponent implements OnInit {
         console.log('pedido actualizado->' + pedido);
       });
     }
-    this.emiteVolver();
+        this.emiteVolver();
+ */
   }
 }
