@@ -14,6 +14,7 @@ export class Pedido {
   public subTotalNeto: number;
   public iva: number;
   public total: number;
+  public comentarios: string;
 
   constructor(){}
 }

@@ -1,3 +1,5 @@
+import { DetalleAdicional } from './../../../model/producto/detalleAdicional.model';
+import { MedioPago } from './../../../model/pedido/medioPago.model';
 import { Observable } from 'rxjs';
 import { Cliente } from './../../../model/cliente/cliente.model';
 import { Color } from './../../../model/producto/color.model';
@@ -48,8 +50,13 @@ export class FormPedidoComponent implements OnInit {
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
   listaClientes: Cliente[];
+  listaDetallesAdicionales: DetalleAdicional[];
+
   cantidadProductos:number;
   queryBuscaCliente: string; //input text search del Cliente
+
+  //Medio pago
+  listaMediosPago: any[] = new Array();
 
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
   }
@@ -60,6 +67,9 @@ export class FormPedidoComponent implements OnInit {
     }
 
     this.listaColores = this.pedidosService.getColores();
+    this.listaMediosPago = this.pedidosService.getMediosPago();
+    this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
+
     this.pedido.fechaCreacion = new Date();
     this.pedido.subTotal = 0;
     this.pedido.descuento = 0;
@@ -77,6 +87,8 @@ export class FormPedidoComponent implements OnInit {
 
   verCliente(cliente: any) {
     this.queryBuscaCliente = cliente.desc;
+    //TODO asignar el objeto cliente al pedido
+
       console.log('cliente->' + cliente.desc);
   }
 
@@ -114,9 +126,9 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido.total = cantidad * this.rangoPrecioProducto.valor;
   }
 
-  onChangeCalculaTotal(descuento: number) {
-    this.pedido.subTotalNeto = this.pedido.subTotal - (this.pedido.subTotal * descuento) / 100;
-    this.pedido.iva = this.pedido.subTotalNeto*0,19;
+  onChangeCalculaTotal() {
+    this.pedido.subTotalNeto = this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100;
+    this.pedido.iva = this.pedido.subTotalNeto*0.19;
     this.pedido.total = this.pedido.subTotalNeto + this.pedido.iva;
   }
 
@@ -137,7 +149,7 @@ export class FormPedidoComponent implements OnInit {
 
     //Calcula el total
     this.pedido.subTotal += this.detallePedido.total;
-    this.onChangeCalculaTotal(0);
+    this.onChangeCalculaTotal();
 
     this.pedido.listaProductos = this.listaDetallePedido;
     this.detallePedido = new DetallePedido();
