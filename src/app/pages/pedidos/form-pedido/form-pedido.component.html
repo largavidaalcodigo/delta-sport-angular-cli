@@ -49,109 +49,211 @@
         <app-card>
           <h4>Seleccione Producto</h4>
           <!-- Formulario detalle Pedido -->
-          <form #detallePedidoForm='ngForm' (ngSubmit)="onSubmitDetalle(detallePedido);" class='form-horizontal'>
+          <form #detallePedidoForm='ngForm' (ngSubmit)="onSubmitDetalle(detallePedido);"
+          class='form-horizontal'>
             <table class="form-table-bordered">
               <thead class="thead-light">
-                <td>Categoria</td>
-                <td>Producto</td>
-                <td>Talla</td>
-                <td>Cantidad</td>
-                <td>Valor</td>
-                <!--           <td>Detalles</td>
-                <td>Diseño</td>
-       -->
-                <td>Total</td>
+                <tr>
+                  <td>Categoria</td>
+                  <td>Producto</td>
+                  <td>Talla</td>
+                  <td>Cantidad</td>
+                  <td>Valor</td>
+                  <!--           <td>Detalles</td>
+        -->
+                  <td><b>Total</b></td>
+                </tr>
               </thead>
               <tbody>
-                <td class="col-xs-1" style="width:120px;">
-                  <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto' (change)='onSelectProducto($event.target.value)'>
-                    <option [value]=''>[Producto]</option>
-                    <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>
-                  </select>
-                </td>
-                <td style="width:120px;">
-                  <select class='form-control' name='tipoProducto' [(ngModel)]='detallePedido.idTipoProducto' (change)='onSelectTipoProducto($event.target.value)'>
-                    <option [value]=''>[Tipo Producto]</option>
-                    <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>
-                  </select>
-                </td>
-                <td style="width:70px;">
-                  <select class='form-control' name='rangoPrecio' [(ngModel)]='detallePedido.idRangoPrecio' (change)='onSelectRangoPrecio($event.target.value)'>
-                    <option [value]=''>[Talla]</option>
-                    <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>
-                  </select>
-                </td>
-                <td style="width:90px;">
-                  <input type='number' class='form-control' name='cantidad' [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle($event.target.value)'>
-                </td>
-                <td style="width:100px;">
-                  <input type='text' readonly class='form-control-plaintext form-control' name='valor' [(ngModel)]='rangoPrecioProducto.valor'
-                    [ngModelOptions]='{standalone: true}' (change)='onChangeCalculaTotalDetalle($event.target.value)'>
-                </td>
-                <td style="width:100px;">
-                  <input type='text' readonly class='form-control-plaintext form-control' name='total' [(ngModel)]='detallePedido.total' [ngModelOptions]='{standalone: true}'>
-                </td>
-                <td>
-                  <button type="submit" class="btn btn-primary">Añadir</button>
-                  <button type="reset" class="btn btn-primary">Borrar</button>
-                </td>
+                <tr>
+                  <td class="col-xs-1" style="width:120px;">
+                    <select class='form-control' name='producto' [ngModel]='detallePedido.idProducto' (change)='onSelectProducto($event.target.value)'>
+                      <option [value]=''>[Producto]</option>
+                      <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>
+                    </select>
+                  </td>
+                  <td style="width:120px;">
+                    <select class='form-control' name='tipoProducto'
+                     [ngModel]='detallePedido.idTipoProducto'
+                     (change)='onSelectTipoProducto($event.target.value)'
+                     placeholder="[Tipo Producto]">
+                      <option [value]=''>[Tipo Producto]</option>
+                      <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>
+                    </select>
+                  </td>
+                  <td style="width:70px;">
+                    <select class='form-control' name='rangoPrecio'
+                    [ngModel]='detallePedido.idRangoPrecio'
+                    (change)='onSelectRangoPrecio($event.target.value)'>
+                      <option [value]=''>[Talla]</option>
+                      <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>
+                    </select>
+                  </td>
+                  <td style="width:90px;">
+                    <input type='number' class='form-control' name='cantidad'
+                    [ngModel]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle($event.target.value)'>
+                  </td>
+                  <td style="width:100px;">
+                    <input type='text' readonly class='form-control-plaintext form-control'
+                     name='valor' [ngModel]='rangoPrecioProducto.valor'
+                      [ngModelOptions]='{standalone: true}'>
+                  </td>
+                  <td style="width:100px;">
+                    <input type='text' readonly class='form-control-plaintext form-control' name='total'
+                    [ngModel]='detallePedido.total' [ngModelOptions]='{standalone: true}'>
+                  </td>
+                  <td>
+                    <button type="submit" class="btn btn-primary">
+                        Añadir
+                      <!-- <label *ngIf="!editando">Añadir</label>
+                      <label *ngIf="editando">Modificar</label> -->
+                    </button>
+                    <button type="reset" class="btn btn-primary">Borrar</button>
+                  </td>
+                </tr>
               </tbody>
               <tfoot>
               </tfoot>
             </table>
+            {{detallePedido | json}}
           </form>
         </app-card>
       </div>
     </div>
-    <div class="row" *ngIf="listaProductos">
+    <div class="row">
       <div class="col-sm-12">
         <app-card>
-          <h4>Lista de productos</h4>
-          <div class="container">
-            <ul class="list-group">
+          <h4>Lista de productos
+              <p *ngIf="cantidadProductos"
+              style="display:inline"
+              class="badge badge-secondary">{{cantidadProductos}}</p>
+          </h4>
+<!--             <ul class="list-group">
               <li class="list-group-item" *ngFor='let c of pedido.listaProductos'>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseDetalle"
-                  role="button">
-                  <p *ngFor='let d of listaProductos | dataFilter: c.idProducto : "idProducto"'>
-                    <b>{{d.desc}}</b>
-                  </p>
-                  <p *ngFor='let d of listaTipoProducto | dataFilter: c.idTipoProducto : "id"'>
-                      [{{d.desc}}]
-                  </p>
-                </a>
-<!--                 <button class="btn" data-toggle="collapse" data-target="#collapseDetalle"
-                  *ngFor='let d of listaProductos | dataFilter: c.idProducto : "idProducto"'>
-                  {{d.desc}}
-                  <p *ngFor='let d of listaTipoProducto | dataFilter: c.idTipoProducto : "id"'>
-                      [{{d.desc}}]
-                  </p>
-                  /
-                  {{ c.cantidad}}, <b>${{ c.total}}</b>
-                </button>
- -->                <div class="collapse" id="collapseDetalle">
-                  <div class="card card-body">
-                    Detalles:
-                    <a href="#" class="badge badge-info" *ngFor='let d of listaDetallesAdicionales'>
-                      {{d.desc}}
-                    </a>
+ -->
+              <div class="container">
+                <div class="row">
+                  <table class="table table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                      <th scope="col">Descricpión</th>
+                      <th scope="col">Diseño</th>
+                      <th scope="col">Total Extras</th>
+                      <th scope="col">Monto Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let c of pedido.listaProductos'>
+                      <td class="fila" style="width:45%">
+                        <button type="button" (click)="verProducto(c)" class="btn btn-outline-secondar text-left"
+                          style="width:100%;">
+                          <p *ngFor='let d of listaProductos | dataFilter: c.idProducto : "idProducto"'
+                            style="display:inline">
+                              {{d.desc}}
+                            </p>
+                          <p *ngFor='let d of listaTipoProducto | dataFilter: c.idTipoProducto : "id"'
+                            style="display:inline">
+                                [{{d.desc}}]
+                          </p>
+                          <h1 style="display:inline" class="badge badge-secondary">${{c.valor}}</h1>
+                          x {{c.cantidad}} =
+                          <h1 style="display:inline" class="badge badge-secondary">${{c.total}}</h1>
+                        </button>
+                      </td>
+                      <td class="fila" style="width:25%">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+<!--  GRUPO BOTONES DISEÑO -->
+                            <div class="btn-group btn-group-toggle"
+                              ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>
+
+                              <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                                <input ngbButton type="radio" [value]="0"><b>No</b>
+                              </label>
+                              <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                                <input ngbButton type="radio" [value]="1"><b>Si</b>
+                              </label>
+                            </div>
+                          </div>
+<!--  SELECT DISEÑO -->
+                          <select class='form-control' name='color' [(ngModel)]='c.idColor'
+                            *ngIf='c.llevaDiseno==0'>
+                            <option [value]=''>[Color]</option>
+                            <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+                          </select>
+                        </div>
+<!--                         <div style="display: inline;" *ngIf='c.llevaDiseno==0'>
+                          <select class='form-control' name='color' [(ngModel)]='c.idColor'>
+                            <option [value]=''>[Color]</option>
+                            <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+                          </select>
+                        </div>
+ --><!--                           <div *ngIf='c.llevaDiseno==1'>
+                            <a href="#" class="btn-primary">Añadir Tallas</a>
+                          </div>
+ -->
+                     </td>
+                     <td class="fila" style="width:15%">
+
+                     </td>
+                     <td class="fila" style="width:15%">
+
+                     </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+        <!--
+                <div class="col-sm-5" (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                    <p *ngFor='let d of listaProductos | dataFilter: c.idProducto : "idProducto"'>
+                        {{d.desc}}
+                      </p>
+                      <p *ngFor='let d of listaTipoProducto | dataFilter: c.idTipoProducto : "id"'>
+                          [{{d.desc}}]
+                      </p>
+                      <span class="badge badge-secondary">${{c.total}}</span>
+
+                </div>
+                <div class="col-sm-5">
+                  <div class="btn-group btn-group-toggle"
+                    ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>
+
+                    <label ngbButtonLabel class="btn-primary">
+                      <input ngbButton type="radio" [value]="0">Color
+                    </label>
+                    <label ngbButtonLabel class="btn-primary">
+                      <input ngbButton type="radio" [value]="1">Diseño
+                    </label>
+                    <div *ngIf='c.llevaDiseno==0'>
+                      <select class='form-control' name='color' [(ngModel)]='c.idColor'>
+                        <option [value]=''>[Color]</option>
+                        <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+                      </select>
+                    </div>
+                    <div *ngIf='c.llevaDiseno==1'>
+                      <a href="#" class="btn-primary">Añadir Tallas</a>
+                    </div>
                   </div>
                 </div>
-<!--                 <div class="col-sm-3 btn-group btn-group-toggle" ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>
-                  <label ngbButtonLabel class="btn-primary">
-                    <input ngbButton type="radio" [value]="0">Color
-                  </label>
-                  <label ngbButtonLabel class="btn-primary">
-                    <input ngbButton type="radio" [value]="1">Diseño
-                  </label>
-                </div>
-                <div class="col-sm-2" *ngIf='c.llevaDiseno==0'>
-                  <select class='form-control' name='color' [(ngModel)]='c.idColor'>
-                    <option [value]=''>[Color]</option>
-                    <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
-                  </select>
-                </div>
- -->              </li>
+                <div id="collapseExample" [ngbCollapse]="!isCollapsed">
+                    <div class="card">
+                        <a href="#" (click)="isCollapsed = !isCollapsed">Cerrar</a>
+                        <div class="card-body">
+                        <div class="col-sm-5" id="collapseDetalle">
+                          <select class='form-control' name='listaDetalles'
+                          [(ngModel)]='detallePedido.listaAdicionales' (change)='addDetalleAdicional(c, $event.target.value)'>
+                              <option [value]=''>[Talla]</option>
+                              <option *ngFor='let detalleAdicional of listaDetallesAdicionales' [value]='detalleAdicional.id'>{{detalleAdicional.desc}}</option>
+                            </select>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+
+            </li>
             </ul>
+-->
           </div>
         </app-card>
       </div>

@@ -1,3 +1,4 @@
+import { MedioPago } from './medioPago.model';
 import { Cliente } from './../cliente/cliente.model';
 import { DetallePedido } from './detallePedido.model';
 export class Pedido {
@@ -15,6 +16,7 @@ export class Pedido {
   public iva: number;
   public total: number;
   public comentarios: string;
+  public listaMediosPago: MedioPago[];
 
   constructor(){}
 }
