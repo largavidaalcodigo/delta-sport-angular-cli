@@ -22,6 +22,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { Producto } from '../../../model/producto/producto.model';
+import { Comentario } from '../../../model/pedido/comentario.model';
 
 @Component({
   selector: 'app-form-pedido',
@@ -53,6 +54,7 @@ export class FormPedidoComponent implements OnInit {
   listaDetallesAdicionales: DetalleAdicional[] = new Array();
 
   cantidadProductos: number;
+  cantidadComentarios: number;
   queryBuscaCliente: string; //input text search del Cliente
 
   //Medio pago
@@ -63,6 +65,9 @@ export class FormPedidoComponent implements OnInit {
   }
 
   ngOnInit() {
+
+/*     this.cantidadComentarios = this.pedido.listaComentarios.push(new Comentario());
+ */
      if (this.pedido == null) {
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //0= inactivo , 1=activo
@@ -127,8 +132,8 @@ export class FormPedidoComponent implements OnInit {
     console.log('onSelectRangoPrecio rangoPrecioId->' + rangoPrecioId);
   }
 
-  onChangeCalculaTotalDetalle(cantidad: number) {
-    this.detallePedido.total = cantidad * this.rangoPrecioProducto.valor;
+  onChangeCalculaTotalDetalle() {
+    this.detallePedido.total = (this.detallePedido.cantidad * this.detallePedido.valor) + this.detallePedido.totalAdicionales;
   }
 
   onChangeCalculaTotal() {
@@ -161,15 +166,13 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
 
     this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
-    //this.rangoPrecioProducto = new RangoPrecioProducto();
+
     //Calcula el total
     this.pedido.subTotal += this.detallePedido.total;
     this.onChangeCalculaTotal();
 
     //this.pedido.listaProductos = this.listaDetallePedido;
     this.detallePedido = new DetallePedido();
-    this.detallePedido.cantidad = 1;
-    console.log("fin nuevo item");
     // add
 /*     if (this.tipoForm == 'Nuevo') {
       this.pedidosService.addPedido(this.pedido).subscribe(pedido => {

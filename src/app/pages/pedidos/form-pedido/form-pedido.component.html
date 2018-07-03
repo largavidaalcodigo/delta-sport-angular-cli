@@ -97,7 +97,7 @@
                   </td>
                   <td style="width:90px;">
                     <input type='number' class='form-control' name='cantidad'
-                    [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle($event.target.value)'>
+                    [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle()'>
                   </td>
                   <td style="width:100px;">
                     <input type='text' readonly class='form-control-plaintext form-control'
@@ -121,7 +121,7 @@
               <tfoot>
               </tfoot>
             </table>
-            {{detallePedido | json}}
+            <!-- {{detallePedido | json}} -->
           </form>
         </app-card>
       </div>
@@ -129,82 +129,72 @@
     <div class="row">
       <div class="col-sm-12">
         <app-card>
-          <h4>Lista de productos&nbsp;
+          <h4 style="display:inline;">Lista de productos&nbsp;
               <span *ngIf="cantidadProductos"
               class="badge badge-danger">{{cantidadProductos}}</span>
-            </h4>
-              <div class="container">
-                <div class="row">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                      <th scope="col" style="width:45%">Descricpión</th>
-                      <th scope="col">Subtotal</th>
-                      <th scope="col">Diseño</th>
-                      <th scope="col">Total Extras</th>
-                      <th scope="col">Monto Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor='let c of pedido.listaProductos'>
-                      <td class="fila">
-                          <button type="button" (click)="verProducto(c)"
-                            class="btn btn-outline-secondar text-left"
-                            style="width:100%;">
-                                {{c.descProducto}}<br>
-                                  [{{c.descTipoProducto}}]
-                                / Tallas: [{{c.descRangoPrecio}}]
-                          </button>
-                      </td>
+
+          </h4>
+          <!-- <span style="display:inline;" class="badge badge-success">Eliminar todo</span> -->
+          <div class="container">
+            <div class="row">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                  <th scope="col" style="width:45%">Descricpión</th>
+                  <th scope="col">Subtotal</th>
+                  <th scope="col">Diseño</th>
+                  <th scope="col">Total Extras</th>
+                  <th scope="col">Monto Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let c of pedido.listaProductos'>
+                  <td class="fila" style="padding:1px;">
+                      <button type="button" (click)="verProducto(c)"
+                        class="btn btn-outline-success text-left"
+                        aria-pressed="true"
+                        style="width:100%;">
+                            {{c.descProducto}}<br>
+                              [{{c.descTipoProducto}}]
+                            / Tallas: [{{c.descRangoPrecio}}]
+                      </button>
+                  </td>
 <!--  GRUPO SUBTOTAL ITEM -->
-                      <td class="fila" style="width:15%">
-                        <h1 class="badge badge-secondary">${{c.valor}}</h1>
-                        x {{c.cantidad}}<br>
-                        <h3 >${{c.total}}</h3>
-                      </td>
-                      <td class="fila" style="width:25%">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
+                  <td class="text-center" style="padding:1px;width:15%">
+                    <h1 class="badge badge-success">${{c.valor}}</h1>
+                    x {{c.cantidad}}<br>
+                    <h3 >${{c.total}}</h3>
+                  </td>
+                  <td class="text-center" style="padding:1px;width:15%">
 <!--  GRUPO BOTONES DISEÑO -->
-                            <div class="btn-group btn-group-toggle"
-                              ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>
+                    <div class="btn-group btn-group-toggle"
+                      ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>
 
-                              <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
-                                <input ngbButton type="radio" [value]="0"><b>No</b>
-                              </label>
-                              <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
-                                <input ngbButton type="radio" [value]="1"><b>Si</b>
-                              </label>
-                            </div>
-                          </div>
+                      <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                        <input ngbButton type="radio" [value]="0">NO
+                      </label>
+                      <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                        <input ngbButton type="radio" [value]="1">SI
+                      </label>
+                    </div>
 <!--  SELECT DISEÑO -->
-                          <select class='form-control' name='color' [(ngModel)]='c.idColor'
-                            *ngIf='c.llevaDiseno==0'>
-                            <option [value]=''>[Color]</option>
-                            <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
-                          </select>
-                        </div>
-<!--                         <div style="display: inline;" *ngIf='c.llevaDiseno==0'>
-                          <select class='form-control' name='color' [(ngModel)]='c.idColor'>
-                            <option [value]=''>[Color]</option>
-                            <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
-                          </select>
-                        </div>
- --><!--                           <div *ngIf='c.llevaDiseno==1'>
-                            <a href="#" class="btn-primary">Añadir Tallas</a>
-                          </div>
- -->
-                     </td>
-                     <td class="fila" style="width:15%">
-
-                     </td>
-                     <td class="fila" style="width:15%">
-
-                     </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                    <select class='form-control' name='color' [(ngModel)]='c.idColor'
+                      *ngIf='c.llevaDiseno==0'>
+                      <option [value]=''>[Color]</option>
+                      <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+                    </select>
+                  </td>
+                  <td class="text-center" style="padding:1px;width:15%">
+                  <a href class="badge badge-secondary">Ver Detalles</a>
+                  <h3 >${{c.totalAdicionales}}</h3>
+                  </td>
+                  <td class="text-center" style="padding:1px;width:15%">
+                  <h3 >${{c.total}}</h3>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         <!--
                 <div class="col-sm-5" (click)="isCollapsed = !isCollapsed"
                 [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
@@ -263,16 +253,61 @@
     <div class="row">
       <div class="col-sm-7">
         <app-card>
-          <h4>Comentarios</h4>
-          <div class="container">
-            <textarea class="form-control rounded-0"
-              name="pedido.comentarios" rows="4"></textarea>
+          <span class="btn-group">
+            <h4><span>Comentarios</span>
+              <div style="position:absolute;top:0px;right:30px;">
+                <a class="btn btn-primary btn-sm" href="#">Añadir</a>
+              </div>
+            </h4>
+          </span>
+          <div class="container"> *ngFor="let item of pedido.listaComentarios"
+            <ul>
+              <li class="list-group-item table-bordered">
+                <div class="row">
+                  <div class="col-sm-3 text-right">
+                    {{item.fechaCreacion}}
+                  </div>
+                  <div class="col-sm-8 text-right">
+                    {{item.desc}}
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </app-card>
         <app-card>
-          <h4>Forma de pago</h4>
-          <div class="container">
-          </div>
+          <span class="btn-group">
+            <h4>
+              <span>Forma de pago</span>
+              <div style="position:absolute;top:0px;right:30px;">
+                <a class="btn btn-primary btn-sm" href="#">Añadir</a>
+              </div>
+            </h4>
+            <div class="container">
+              <ul>
+                <li class="list-group-item table-bordered">
+                  <div class="row">
+                      <div class="col-sm-5 text-right">
+                        <h5>Saldo Pendiente</h5>
+                      </div>
+                      <div class="col-sm-6 text-right">
+                        <h4>${{pedido.total}}</h4>
+                      </div>
+                  </div>
+                </li>
+                <li class="list-group-item table-bordered">
+                  <div class="row">
+                      <div class="col-sm-5 text-right">
+                        <h5>Saldo Pendiente</h5>
+                      </div>
+                      <div class="col-sm-6 text-right">
+                        <h4>${{pedido.total}}</h4>
+                      </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </span>
         </app-card>
       </div>
       <div class="col-sm-5">
@@ -282,20 +317,20 @@
             <ul class="list-group">
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-sm-5">
+                  <div class="text-right col-sm-5">
                     <h5>Subtotal</h5>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="text-right col-sm-6">
                     <h4>${{pedido.subTotal}}</h4>
                   </div>
                 </div>
               </li>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-sm-5">
+                  <div class="text-right col-sm-5">
                     <h5>Descuento %</h5>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="text-right col-sm-6">
                     <h4>
                       <input type='number' class='form-control' name='descuento' [(ngModel)]='pedido.descuento' placeholder='Descuento' (input)='onChangeCalculaTotal()'>
                     </h4>
@@ -304,31 +339,31 @@
               </li>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-sm-6">
+                  <div class="text-right col-sm-5">
                     <h5>Valor Neto</h5>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="text-right col-sm-6">
                     <h4>${{pedido.subTotalNeto}}</h4>
                   </div>
                 </div>
               </li>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-sm-6">
+                  <div class="text-right col-sm-5">
                     <h5>Iva 19%</h5>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="text-right col-sm-6">
                     <h4>${{pedido.iva}}</h4>
                   </div>
                 </div>
               </li>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-sm-6">
-                    <h5>Monto Total</h5>
+                  <div class="text-right col-sm-5">
+                    <h5><b>Monto Total</b></h5>
                   </div>
-                  <div class="col-sm-6">
-                    <h4>${{pedido.total}}</h4>
+                  <div class="text-right col-sm-6">
+                    <h4><b>${{pedido.total}}</b></h4>
                   </div>
                 </div>
               </li>

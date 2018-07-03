@@ -18,10 +18,13 @@ h4{
  }
 
 .fila{
-margin: 0px;
-padding: 0px;
+padding:1px;
 }
 
 .table-bordered td{
+
+}
+
+.table-bordered td, .table-bordered th {
   padding: 1px;
 }

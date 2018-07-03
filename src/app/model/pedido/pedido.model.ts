@@ -1,6 +1,7 @@
 import { MedioPago } from './medioPago.model';
 import { Cliente } from './../cliente/cliente.model';
 import { DetallePedido } from './detallePedido.model';
+import { Comentario } from './comentario.model';
 export class Pedido {
   public numeroPedido: number; //pk
   public fechaCreacion: Date;
@@ -15,7 +16,7 @@ export class Pedido {
   public subTotalNeto: number;
   public iva: number;
   public total: number;
-  public comentarios: string;
+  public listaComentarios: Comentario[];
   public listaMediosPago: MedioPago[];
 
   constructor(){}

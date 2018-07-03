@@ -13,7 +13,7 @@ export class DetallePedido {
   public llevaDiseno: number = 1; // 0 = no / 1 = si
   public idColor: number; // solo si llevaDiseño = 0
   public listaAdicionales: DetalleAdicional[];
-  public totalAdicionales: number;
+  public totalAdicionales: number = 0;
   public listaDetalleTallas: any;
   constructor() {}
 }
