@@ -18,7 +18,8 @@
               style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>
                 <!-- LISTADO CLIENTES-->
                 <button type="button" class="btn btn-primary"
-                *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"' (click)='verCliente(c)'>{{c.desc}}
+                  *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"'
+                  (click)='verCliente(c)'>{{c.desc}}
                 </button>
                 <!-- <a class='list-group-item  list-group-item-action' *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"'
                       (click)='verCliente(c)'>
@@ -47,8 +48,12 @@
     <div class="row">
       <div class="col-sm-12">
         <app-card>
-          <h4>Seleccione Producto</h4>
-          <!-- Formulario detalle Pedido -->
+          <h4>Seleccione Producto&nbsp;
+              <button type="button"
+              class="badge badge-danger">Nuevo Item
+            </button>
+          </h4>
+            <!-- Formulario detalle Pedido -->
           <form #detallePedidoForm='ngForm' (ngSubmit)="onSubmitDetalle(detallePedido);"
           class='form-horizontal'>
             <table class="form-table-bordered">
@@ -66,24 +71,25 @@
               </thead>
               <tbody>
                 <tr>
-                  <td class="col-xs-1" style="width:120px;">
-                    <select class='form-control' name='producto' [ngModel]='detallePedido.idProducto' (change)='onSelectProducto($event.target.value)'>
+                  <td class="col-xs-1" style="width:140px;">
+                    <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto'
+                    (change)='onSelectProducto($event.target.value)'>
                       <option [value]=''>[Producto]</option>
                       <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>
                     </select>
                   </td>
-                  <td style="width:120px;">
+                  <td style="width:140px;">
                     <select class='form-control' name='tipoProducto'
-                     [ngModel]='detallePedido.idTipoProducto'
+                     [(ngModel)]='detallePedido.idTipoProducto'
                      (change)='onSelectTipoProducto($event.target.value)'
                      placeholder="[Tipo Producto]">
                       <option [value]=''>[Tipo Producto]</option>
                       <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>
                     </select>
                   </td>
-                  <td style="width:70px;">
+                  <td style="width:90px;">
                     <select class='form-control' name='rangoPrecio'
-                    [ngModel]='detallePedido.idRangoPrecio'
+                    [(ngModel)]='detallePedido.idRangoPrecio'
                     (change)='onSelectRangoPrecio($event.target.value)'>
                       <option [value]=''>[Talla]</option>
                       <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>
@@ -91,11 +97,11 @@
                   </td>
                   <td style="width:90px;">
                     <input type='number' class='form-control' name='cantidad'
-                    [ngModel]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle($event.target.value)'>
+                    [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle($event.target.value)'>
                   </td>
                   <td style="width:100px;">
                     <input type='text' readonly class='form-control-plaintext form-control'
-                     name='valor' [ngModel]='rangoPrecioProducto.valor'
+                     name='valor' [ngModel]='detallePedido.valor'
                       [ngModelOptions]='{standalone: true}'>
                   </td>
                   <td style="width:100px;">
@@ -123,20 +129,17 @@
     <div class="row">
       <div class="col-sm-12">
         <app-card>
-          <h4>Lista de productos
-              <p *ngIf="cantidadProductos"
-              style="display:inline"
-              class="badge badge-secondary">{{cantidadProductos}}</p>
-          </h4>
-<!--             <ul class="list-group">
-              <li class="list-group-item" *ngFor='let c of pedido.listaProductos'>
- -->
+          <h4>Lista de productos&nbsp;
+              <span *ngIf="cantidadProductos"
+              class="badge badge-danger">{{cantidadProductos}}</span>
+            </h4>
               <div class="container">
                 <div class="row">
                   <table class="table table-bordered">
-                    <thead class="thead-light">
+                    <thead>
                       <tr>
-                      <th scope="col">Descricpión</th>
+                      <th scope="col" style="width:45%">Descricpión</th>
+                      <th scope="col">Subtotal</th>
                       <th scope="col">Diseño</th>
                       <th scope="col">Total Extras</th>
                       <th scope="col">Monto Total</th>
@@ -144,21 +147,20 @@
                   </thead>
                   <tbody>
                     <tr *ngFor='let c of pedido.listaProductos'>
-                      <td class="fila" style="width:45%">
-                        <button type="button" (click)="verProducto(c)" class="btn btn-outline-secondar text-left"
-                          style="width:100%;">
-                          <p *ngFor='let d of listaProductos | dataFilter: c.idProducto : "idProducto"'
-                            style="display:inline">
-                              {{d.desc}}
-                            </p>
-                          <p *ngFor='let d of listaTipoProducto | dataFilter: c.idTipoProducto : "id"'
-                            style="display:inline">
-                                [{{d.desc}}]
-                          </p>
-                          <h1 style="display:inline" class="badge badge-secondary">${{c.valor}}</h1>
-                          x {{c.cantidad}} =
-                          <h1 style="display:inline" class="badge badge-secondary">${{c.total}}</h1>
-                        </button>
+                      <td class="fila">
+                          <button type="button" (click)="verProducto(c)"
+                            class="btn btn-outline-secondar text-left"
+                            style="width:100%;">
+                                {{c.descProducto}}<br>
+                                  [{{c.descTipoProducto}}]
+                                / Tallas: [{{c.descRangoPrecio}}]
+                          </button>
+                      </td>
+<!--  GRUPO SUBTOTAL ITEM -->
+                      <td class="fila" style="width:15%">
+                        <h1 class="badge badge-secondary">${{c.valor}}</h1>
+                        x {{c.cantidad}}<br>
+                        <h3 >${{c.total}}</h3>
                       </td>
                       <td class="fila" style="width:25%">
                         <div class="input-group mb-3">

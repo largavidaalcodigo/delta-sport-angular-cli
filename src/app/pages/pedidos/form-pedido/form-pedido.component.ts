@@ -82,8 +82,8 @@ export class FormPedidoComponent implements OnInit {
     //Lista de productos
     this.listaProductos = this.pedidosService.getProductos();
     this.detallePedido = new DetallePedido();
-    this.detallePedido.cantidad = 1;
-    this.detallePedido.llevaDiseno = 1;
+    //this.detallePedido.cantidad = 1;
+    //this.detallePedido.llevaDiseno = 1;
 
     //this.pedido.listaProductos.push(this.detallePedido);
     this.rangoPrecioProducto = new RangoPrecioProducto();
@@ -105,7 +105,7 @@ export class FormPedidoComponent implements OnInit {
   }
 
   onSelectProducto(productoId: number) {
-    this.detallePedido.idProducto = productoId;
+    //this.detallePedido.idProducto = productoId;
     this.listaTipoProducto = this.pedidosService.getTipoProductos()
       .filter(item => item.idProducto == productoId);
     console.log('productoId-> ' + productoId);
@@ -113,7 +113,7 @@ export class FormPedidoComponent implements OnInit {
   }
 
   onSelectTipoProducto(tipoProductoId: number) {
-    this.detallePedido.idTipoProducto = tipoProductoId;
+    //this.detallePedido.idTipoProducto = tipoProductoId;
     this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
       .filter(item => item.idTipoProducto == tipoProductoId);
       console.log('onSelectTipoProducto tipoProductoId->' + tipoProductoId);
@@ -121,7 +121,7 @@ export class FormPedidoComponent implements OnInit {
 
   onSelectRangoPrecio(rangoPrecioId: number) {
     this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
-    this.detallePedido.idRangoPrecio = this.rangoPrecioProducto.id;
+    //this.detallePedido.idRangoPrecio = this.rangoPrecioProducto.id;
     this.detallePedido.valor   = this.rangoPrecioProducto.valor;
     //this.onChangeCalculaTotalDetalle();
     console.log('onSelectRangoPrecio rangoPrecioId->' + rangoPrecioId);
@@ -149,9 +149,19 @@ export class FormPedidoComponent implements OnInit {
 
   onSubmitDetalle() {
     //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
-    console.log("nuevo item->"+ this.detallePedido);
+    console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
+
+    //setea Correlativo nro item
+    this.detallePedido.id = this.pedido.listaProductos.length + 1;
+    let producto : Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
+    console.log('producto->'+JSON.stringify(producto));
+    this.detallePedido.descProducto= producto.desc;
+
+    this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
+    this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
+
     this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
-    this.rangoPrecioProducto = new RangoPrecioProducto();
+    //this.rangoPrecioProducto = new RangoPrecioProducto();
     //Calcula el total
     this.pedido.subTotal += this.detallePedido.total;
     this.onChangeCalculaTotal();
@@ -186,9 +196,10 @@ export class FormPedidoComponent implements OnInit {
 
   verProducto(detallePedido: DetallePedido) {
     this.editando=true;
-    console.log('detallePedido->'+ {'detallePedido' : 'json'} );
-    this.detallePedido = detallePedido;
+    let detalle : DetallePedido = detallePedido;
+    this.detallePedido = detalle;
+    this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
     this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
-    console.log('this.detallePedido->'+this.detallePedido);
+    console.log('detallePedido->'+JSON.stringify(detallePedido));
   }
 }
