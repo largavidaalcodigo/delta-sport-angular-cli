@@ -41,8 +41,8 @@ export class PedidosComponent implements OnInit {
 
   //Nuevo Pedido
   nuevoPedido() {
-    this.tipoForm = "Nuevo";
     this.toggleLista();
+    this.tipoForm = "Nuevo";
   }
 
   //Ver o Editar Cliente

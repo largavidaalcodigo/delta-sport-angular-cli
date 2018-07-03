@@ -192,6 +192,10 @@ export class FormPedidoComponent implements OnInit {
     this.editando=false;
   }
 
+  nuevoDetalle(){
+    this.detallePedido = new DetallePedido();
+  }
+
   addDetalleAdicional( detallePedido: DetallePedido, detalleAdicional: DetalleAdicional){
     console.log('todo bien');
     this.detallePedido.listaAdicionales.push(detalleAdicional);
