@@ -30,9 +30,6 @@ import { Comentario } from '../../../model/pedido/comentario.model';
 })
 
 export class FormPedidoComponent implements OnInit {
-/*   toppings = new FormControl();
-  toppingList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
- */
   @ViewChild('encabezadoPedidoForm') encabezadoPedidoForm: NgForm;
   @ViewChild('detallePedidoForm') detallePedidoForm: NgForm;
   @Input() verForm: boolean;
@@ -80,17 +77,11 @@ export class FormPedidoComponent implements OnInit {
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
     this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
-
-
-    //Lista de clientes
     this.listaClientes = this.clientesService.getClientes();
-    //Lista de productos
     this.listaProductos = this.pedidosService.getProductos();
-    this.detallePedido = new DetallePedido();
-    //this.detallePedido.cantidad = 1;
-    //this.detallePedido.llevaDiseno = 1;
 
-    //this.pedido.listaProductos.push(this.detallePedido);
+    this.detallePedido = new DetallePedido();
+    this.detallePedido.listaAdicionales = new Array();
     this.rangoPrecioProducto = new RangoPrecioProducto();
   }
 
@@ -132,17 +123,6 @@ export class FormPedidoComponent implements OnInit {
     console.log('onSelectRangoPrecio rangoPrecioId->' + rangoPrecioId);
   }
 
-  onChangeCalculaTotalDetalle() {
-    this.detallePedido.total = (this.detallePedido.cantidad * this.detallePedido.valor) + this.detallePedido.totalAdicionales;
-  }
-
-  onChangeCalculaTotal() {
-    this.pedido.subTotalNeto = this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100;
-    this.pedido.iva = this.pedido.subTotalNeto*0.19;
-    this.pedido.total = this.pedido.subTotalNeto + this.pedido.iva;
-  }
-
-
   onSelectSinDiseno(llevaDiseño: number){
       console.log('llevaDiseño->'+llevaDiseño);
   }
@@ -159,8 +139,8 @@ export class FormPedidoComponent implements OnInit {
     //setea Correlativo nro item
     this.detallePedido.id = this.pedido.listaProductos.length + 1;
     let producto : Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
-    console.log('producto->'+JSON.stringify(producto));
-    this.detallePedido.descProducto= producto.desc;
+    //console.log('producto->'+JSON.stringify(producto));
+    this.detallePedido.descProducto = producto.desc;
 
     this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
     this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
@@ -189,24 +169,48 @@ export class FormPedidoComponent implements OnInit {
     }
         this.emiteVolver();
  */
-    this.editando=false;
+    this.editando = false;
   }
 
   nuevoDetalle(){
     this.detallePedido = new DetallePedido();
   }
 
-  addDetalleAdicional( detallePedido: DetallePedido, detalleAdicional: DetalleAdicional){
-    console.log('todo bien');
-    this.detallePedido.listaAdicionales.push(detalleAdicional);
-  }
-
   verProducto(detallePedido: DetallePedido) {
-    this.editando=true;
-    let detalle : DetallePedido = detallePedido;
+    this.editando = true;
+    const detalle: DetallePedido = detallePedido;
     this.detallePedido = detalle;
     this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
     this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
-    console.log('detallePedido->'+JSON.stringify(detallePedido));
+    console.log('detallePedido->' + JSON.stringify(detallePedido));
   }
+
+  toggleVerDetallesAdicionales(detalle: DetalleAdicional){
+    console.log('detalles adicionales->' + JSON.stringify(detalle));
+  }
+
+  // CALCULA EL TOTAL DEL ITEM CUANDO CAMBIA LA CANTIDAD O EL VALOR
+  onChangeCalculaTotalDetalle() {
+    this.detallePedido.total = (this.detallePedido.cantidad * this.detallePedido.valor) + this.detallePedido.totalAdicionales;
+  }
+
+  // CUANDO CAMBIA EL DESCUENTO DEL PEDIDO
+  onChangeCalculaTotal() {
+    this.pedido.subTotalNeto = this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100;
+    this.pedido.iva = this.pedido.subTotalNeto * 0.19;
+    this.pedido.total = this.pedido.subTotalNeto + this.pedido.iva;
+  }
+
+  // CUANDO AGREGO UN DETALLE ADICIONAL
+  addDetalleAdicional(detalleAdicional: DetalleAdicional, checked: boolean){
+
+    this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.find(item => item.checked > 0 );
+/*     if (checked) {
+      this.detallePedido.listaAdicionales.push(detalleAdicional);
+    }
+ */
+    console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
+  }
+
+
 }

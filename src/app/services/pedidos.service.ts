@@ -13,19 +13,19 @@ export class PedidosService {
   public getDetallesAdicionales() {
     return [
       { id: 1, desc: "Logos insignias sublimados", valor: 550 },
-      { id: 1, desc: "Número sublimado", valor: 650 },
-      { id: 1, desc: "Logos vinilos", valor: 550 },
-      { id: 1, desc: "Números vinilos", valor: 750 },
-      { id: 1, desc: "Subliflok insignia", valor: 750 },
-      { id: 1, desc: "Cuello camisero tela", valor: 350 },
-      { id: 1, desc: "Cuello camisero tejido", valor: 800 },
-      { id: 1, desc: "Cierre polera", valor: 450 },
-      { id: 1, desc: "Broches (3)", valor: 450 },
-      { id: 1, desc: "Triángulo", valor: 550 },
-      { id: 1, desc: "Costados", valor: 500 },
-      { id: 1, desc: "Vivos", valor: 350 },
-      { id: 1, desc: "Cuellos sublimados", valor: 150 },
-      { id: 1, desc: "Cuello mao", valor: 350 },
+      { id: 2, desc: "Número sublimado", valor: 650 },
+      { id: 3, desc: "Logos vinilos", valor: 550 },
+      { id: 4, desc: "Números vinilos", valor: 750 },
+      { id: 5, desc: "Subliflok insignia", valor: 750 },
+      { id: 6, desc: "Cuello camisero tela", valor: 350 },
+      { id: 7, desc: "Cuello camisero tejido", valor: 800 },
+      { id: 8, desc: "Cierre polera", valor: 450 },
+      { id: 9, desc: "Broches (3)", valor: 450 },
+      { id: 10, desc: "Triángulo", valor: 550 },
+      { id: 11, desc: "Costados", valor: 500 },
+      { id: 12, desc: "Vivos", valor: 350 },
+      { id: 13, desc: "Cuellos sublimados", valor: 150 },
+      { id: 14, desc: "Cuello mao", valor: 350 },
     ];
   }
 

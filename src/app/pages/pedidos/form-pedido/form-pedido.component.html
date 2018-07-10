@@ -6,45 +6,27 @@
           <h4>Datos de pedido</h4>
           <form #encabezadoPedidoForm='ngForm' class='form-inline'>
             <div class='form-group'>
-              <!-- SELECCICONA CLIENTE-->
+<!-- SELECCICONA CLIENTE-->
               Cliente
               <input type='text' size="40" class='form-control' name='query'
               [(ngModel)]='queryBuscaCliente' placeholder='Seleccione Cliente...'>
-              <!-- <div class="fixed-top" style='z-index:1000;'> -->
-<!--                 <div id="toggle" onfocusout="" class='list-group' style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>
- -->
-              <!-- <div class="collapse navbar-collapse" id="collapse"> -->
               <div id="toggle" onfocusout="" class='list-group'
               style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>
-                <!-- LISTADO CLIENTES-->
+<!-- LISTADO CLIENTES-->
                 <button type="button" class="btn btn-primary"
                   *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"'
                   (click)='verCliente(c)'>{{c.desc}}
                 </button>
-                <!-- <a class='list-group-item  list-group-item-action' *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"'
-                      (click)='verCliente(c)'>
-                      {{c.desc}}
-                    </a> -->
               </div>
-              <!-- </div> -->
-              <!--FECHA ENTREGA -->
+<!--FECHA ENTREGA -->
               Fecha de Entrega
               <input class='form-control' name='fechaEntrega' [(ngModel)]='pedido.fechaEntrega' type="date" placeholder="Fecha entrega">
-              <!--
-                  (ngModelChange)='pedido.fechaEntrega=$event' ngbDatepicker
-                    #d='ngbDatepicker' placeholder="Fecha entrega...">
-                    <button (click)='d.toggle()' type='button'>
-                      <img src=' ./assets/icon/calendar.svg' style='cursor: pointer;' />
-                    </button> -->
             </div>
-            <!-- Fecha entrega -->
-            <!--       <div class='form-group mb-3'>
-                </div>
-           -->
           </form>
         </app-card>
       </div>
     </div>
+<!--SELECCIONA PRODUCTO-->
     <div class="row">
       <div class="col-sm-12">
         <app-card>
@@ -56,9 +38,9 @@
               </div>
             </h4>
           </span>
-                <!-- Formulario detalle Pedido -->
+<!-- Formulario detalle Pedido -->
           <form #detallePedidoForm='ngForm' (ngSubmit)="onSubmitDetalle(detallePedido);"
-          class='form-horizontal'>
+            class='form-horizontal'>
             <table class="form-table-bordered">
               <thead class="thead-light">
                 <tr>
@@ -67,13 +49,13 @@
                   <td>Talla</td>
                   <td>Cantidad</td>
                   <td>Valor</td>
-                  <!--           <td>Detalles</td>
-        -->
                   <td><b>Total</b></td>
+                  <td></td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
+<!--CATEGORIA-->
                   <td class="col-xs-1" style="width:140px;">
                     <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto'
                     (change)='onSelectProducto($event.target.value)'>
@@ -81,6 +63,7 @@
                       <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>
                     </select>
                   </td>
+<!--PRODUCTO-->
                   <td style="width:140px;">
                     <select class='form-control' name='tipoProducto'
                      [(ngModel)]='detallePedido.idTipoProducto'
@@ -90,6 +73,7 @@
                       <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>
                     </select>
                   </td>
+<!--RANGO PRECIO-->
                   <td style="width:90px;">
                     <select class='form-control' name='rangoPrecio'
                     [(ngModel)]='detallePedido.idRangoPrecio'
@@ -98,44 +82,91 @@
                       <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>
                     </select>
                   </td>
+<!--CANTIDAD-->
                   <td style="width:90px;">
                     <input type='number' class='form-control' name='cantidad'
                     [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle()'>
                   </td>
+<!--VALOR-->
                   <td style="width:100px;">
                     <input type='text' readonly class='form-control-plaintext form-control'
                      name='valor' [ngModel]='detallePedido.valor'
-                      [ngModelOptions]='{standalone: true}'>
+                      [ngModelOptions]='{standalone: true}'
+                      (change)="onChangeCalculaTotalDetalle()">
                   </td>
+<!--SUBTOTAL-->
                   <td style="width:100px;">
                     <input type='text' readonly class='form-control-plaintext form-control' name='total'
                     [ngModel]='detallePedido.total' [ngModelOptions]='{standalone: true}'>
                   </td>
                   <td>
+<!--BOTONERA ITEM PRODUCTO-->
                     <button type="submit" class="btn btn-primary">
                         Añadir
                       <!-- <label *ngIf="!editando">Añadir</label>
                       <label *ngIf="editando">Modificar</label> -->
                     </button>
                     <button type="reset" class="btn btn-primary">Borrar</button>
+
+                    <button type="button" (click)="isCollapsed = !isCollapsed"
+                      [attr.aria-expanded]="!isCollapsed"
+                      class="btn btn-outline-primary"
+                      aria-control="detallesAdicionales">Adicionales
+                    </button>
                   </td>
                 </tr>
               </tbody>
               <tfoot>
               </tfoot>
             </table>
-            <!-- {{detallePedido | json}} -->
+      <!-- {{detallePedido | json}} -->
           </form>
+        </app-card>
+<!--COLLAPSE DETALLES ADICIONALES-->
+        <app-card id="detallesAdicionales" [ngbCollapse]="!isCollapsed">
+          <span>
+            <h4><span>Detalles adicionales</span></h4>
+          </span>
+          <div class="container">
+            <div class="row">
+<!--LISTADO ADICIONALES-->
+              <div class="col-sm-9 border">
+                <label for="customCheck1{{i}}" class="badge badge-pill badge-success btn-sm"
+                  *ngFor="let c of listaDetallesAdicionales;let i = index"
+                  >
+                  {{c.desc}}
+                  <input type="checkbox" (click)="toggleVerDetallesAdicionales(c)"
+                    id="customCheck1{{i}}"
+                    (click)="addDetalleAdicional(c, $event.target.value)">
+                </label>
+              </div>
+<!--TOTAL ADICIONALES-->
+              <div class="col-sm-3 border">
+                <span>Total Adicionales:</span>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                  <input type='text' readonly class='form-control-plaintext form-control' name='totalAdicionales'
+                  [ngModel]='detallePedido.totalAdicionales' [ngModelOptions]='{standalone: true}'>
+                </div>
+                <!--BOTONERA ITEM PRODUCTO-->
+                <button type="button" class="btn btn-primary">Añadir</button>
+                <button type="button" class="btn btn-primary">Cancelar</button>
+              </div>
+            </div>
+            {{detallePedido.listaAdicionales|json}}
+          </div>
         </app-card>
       </div>
     </div>
+<!--LISTA PRODUCTOS-->
     <div class="row">
       <div class="col-sm-12">
         <app-card>
           <h4 style="display:inline;">Lista de productos&nbsp;
               <span *ngIf="cantidadProductos"
               class="badge badge-danger">{{cantidadProductos}}</span>
-
           </h4>
           <!-- <span style="display:inline;" class="badge badge-success">Eliminar todo</span> -->
           <div class="container">
@@ -143,15 +174,16 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                  <th scope="col" style="width:45%">Descricpión</th>
+                  <th scope="col" style="width:45%">Descripción</th>
                   <th scope="col">Subtotal</th>
                   <th scope="col">Diseño</th>
-                  <th scope="col">Total Extras</th>
+                  <th scope="col">Total adicionales</th>
                   <th scope="col">Monto Total</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor='let c of pedido.listaProductos'>
+                <tr *ngFor='let c of pedido.listaProductos; let i=index'>
+<!--DESCRIPCION-->
                   <td class="fila" style="padding:1px;">
                       <button type="button" (click)="verProducto(c)"
                         class="btn btn-outline-success text-left"
@@ -187,61 +219,25 @@
                       <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
                     </select>
                   </td>
+<!--DETALLES ADICIONALES-->
                   <td class="text-center" style="padding:1px;width:15%">
-                  <!-- <button type"button" (click)="toggleVerDetalles()" class="badge badge-secondary">Ver Detalles</button> -->
-                  <button type="button" (click)="toggleVerDetallesAdicionales()"
-                  class="btn btn-outline-primary btn-sm">Ver extras</button>
-                  <h3 >${{c.totalAdicionales}}</h3>
+                    <h3 >${{c.totalAdicionales}}</h3>
                   </td>
+<!--SUBTOTAL-->
                   <td class="text-center" style="padding:1px;width:15%">
-                  <h3 >${{c.total}}</h3>
+                    <h3 >${{c.total}}</h3>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        <!--
-                <div class="col-sm-5" (click)="isCollapsed = !isCollapsed"
-                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-                    <p *ngFor='let d of listaProductos | dataFilter: c.idProducto : "idProducto"'>
-                        {{d.desc}}
-                      </p>
-                      <p *ngFor='let d of listaTipoProducto | dataFilter: c.idTipoProducto : "id"'>
-                          [{{d.desc}}]
-                      </p>
-                      <span class="badge badge-secondary">${{c.total}}</span>
-
-                </div>
-                <div class="col-sm-5">
-                  <div class="btn-group btn-group-toggle"
-                    ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>
-
-                    <label ngbButtonLabel class="btn-primary">
-                      <input ngbButton type="radio" [value]="0">Color
-                    </label>
-                    <label ngbButtonLabel class="btn-primary">
-                      <input ngbButton type="radio" [value]="1">Diseño
-                    </label>
-                    <div *ngIf='c.llevaDiseno==0'>
-                      <select class='form-control' name='color' [(ngModel)]='c.idColor'>
-                        <option [value]=''>[Color]</option>
-                        <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
-                      </select>
-                    </div>
-                    <div *ngIf='c.llevaDiseno==1'>
-                      <a href="#" class="btn-primary">Añadir Tallas</a>
-                    </div>
-                  </div>
-                </div>
-            </li>
-            </ul>
--->
           </div>
         </app-card>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-7">
+<!--COMENTARIOS-->
         <app-card>
           <span class="btn-group">
             <h4><span>Comentarios</span>
@@ -265,6 +261,7 @@
             </ul>
           </div>
         </app-card>
+<!--FORMAS DE PAGO-->
         <app-card>
           <span class="btn-group">
             <h4>
@@ -300,6 +297,7 @@
           </span>
         </app-card>
       </div>
+<!--TOTALES PEDIDO-->
       <div class="col-sm-5">
         <app-card>
           <h4>Total Pedido</h4>
