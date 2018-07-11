@@ -26,6 +26,8 @@
         </app-card>
       </div>
     </div>
+
+
 <!--SELECCIONA PRODUCTO-->
     <div class="row">
       <div class="col-sm-12">
@@ -49,7 +51,7 @@
                   <td>Talla</td>
                   <td>Cantidad</td>
                   <td>Valor</td>
-                  <td><b>Total</b></td>
+                  <td><b>SubTotal</b></td>
                   <td></td>
                 </tr>
               </thead>
@@ -96,8 +98,8 @@
                   </td>
 <!--SUBTOTAL-->
                   <td style="width:100px;">
-                    <input type='text' readonly class='form-control-plaintext form-control' name='total'
-                    [ngModel]='detallePedido.total' [ngModelOptions]='{standalone: true}'>
+                    <input type='text' readonly class='form-control-plaintext form-control' name='subtotal'
+                    [ngModel]='detallePedido.subTotal' [ngModelOptions]='{standalone: true}'>
                   </td>
                   <td>
 <!--BOTONERA ITEM PRODUCTO-->
@@ -122,6 +124,8 @@
       <!-- {{detallePedido | json}} -->
           </form>
         </app-card>
+
+
 <!--COLLAPSE DETALLES ADICIONALES-->
         <app-card id="detallesAdicionales" [ngbCollapse]="!isCollapsed">
           <span>
@@ -132,12 +136,11 @@
 <!--LISTADO ADICIONALES-->
               <div class="col-sm-9 border">
                 <label for="customCheck1{{i}}" class="badge badge-pill badge-success btn-sm"
-                  *ngFor="let c of listaDetallesAdicionales;let i = index"
-                  >
+                  *ngFor="let c of listaDetallesAdicionales;let i = index">
                   {{c.desc}}
-                  <input type="checkbox" (click)="toggleVerDetallesAdicionales(c)"
-                    id="customCheck1{{i}}"
-                    (click)="addDetalleAdicional(c, $event.target.value)">
+                  <input type="checkbox" id="customCheck1{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
+                   (change)="addDetalleAdicional()">
+                   <span>${{c.valor}}</span>
                 </label>
               </div>
 <!--TOTAL ADICIONALES-->
@@ -148,18 +151,22 @@
                     <span class="input-group-text">$</span>
                   </div>
                   <input type='text' readonly class='form-control-plaintext form-control' name='totalAdicionales'
-                  [ngModel]='detallePedido.totalAdicionales' [ngModelOptions]='{standalone: true}'>
+                  [(ngModel)]='detallePedido.totalAdicionales'>
                 </div>
                 <!--BOTONERA ITEM PRODUCTO-->
-                <button type="button" class="btn btn-primary">Añadir</button>
+                <button type="button" class="btn btn-primary"
+                (click)="addDetalleAdicional()"
+                >Añadir</button>
                 <button type="button" class="btn btn-primary">Cancelar</button>
               </div>
             </div>
-            {{detallePedido.listaAdicionales|json}}
+            {{listaDetallesAdicionales|json}}
           </div>
         </app-card>
       </div>
     </div>
+
+
 <!--LISTA PRODUCTOS-->
     <div class="row">
       <div class="col-sm-12">
@@ -198,7 +205,7 @@
                   <td class="text-center" style="padding:1px;width:15%">
                     <h1 class="badge badge-success">${{c.valor}}</h1>
                     x {{c.cantidad}}<br>
-                    <h3 >${{c.total}}</h3>
+                    <h3 >${{c.subTotal}}</h3>
                   </td>
                   <td class="text-center" style="padding:1px;width:15%">
 <!--  GRUPO BOTONES DISEÑO -->
@@ -219,7 +226,7 @@
                       <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
                     </select>
                   </td>
-<!--DETALLES ADICIONALES-->
+<!--TOTAL DETALLES ADICIONALES-->
                   <td class="text-center" style="padding:1px;width:15%">
                     <h3 >${{c.totalAdicionales}}</h3>
                   </td>

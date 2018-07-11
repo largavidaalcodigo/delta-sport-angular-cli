@@ -48,7 +48,7 @@ export class FormPedidoComponent implements OnInit {
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
   listaClientes: Cliente[];
-  listaDetallesAdicionales: DetalleAdicional[] = new Array();
+  listaDetallesAdicionales: any[] = new Array();
 
   cantidadProductos: number;
   cantidadComentarios: number;
@@ -118,8 +118,8 @@ export class FormPedidoComponent implements OnInit {
   onSelectRangoPrecio(rangoPrecioId: number) {
     this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
     //this.detallePedido.idRangoPrecio = this.rangoPrecioProducto.id;
-    this.detallePedido.valor   = this.rangoPrecioProducto.valor;
-    //this.onChangeCalculaTotalDetalle();
+    this.detallePedido.valor  = this.rangoPrecioProducto.valor;
+    this.onChangeCalculaTotalDetalle();
     console.log('onSelectRangoPrecio rangoPrecioId->' + rangoPrecioId);
   }
 
@@ -134,25 +134,80 @@ export class FormPedidoComponent implements OnInit {
 
   onSubmitDetalle() {
     //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
-    console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
 
     //setea Correlativo nro item
     this.detallePedido.id = this.pedido.listaProductos.length + 1;
-    let producto : Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
-    //console.log('producto->'+JSON.stringify(producto));
-    this.detallePedido.descProducto = producto.desc;
 
+    // SETEA NOMBRE DE CATEGORIA/PRODUCTO/RANGO PRECIO
+    const producto: Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
+    this.detallePedido.descProducto = producto.desc;
     this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
     this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
 
+    this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
+
     this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
+    console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
 
     //Calcula el total
-    this.pedido.subTotal += this.detallePedido.total;
     this.onChangeCalculaTotal();
 
     //this.pedido.listaProductos = this.listaDetallePedido;
     this.detallePedido = new DetallePedido();
+    this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
+}
+
+  nuevoDetalle(){
+    this.detallePedido = new DetallePedido();
+  }
+
+  verProducto(detallePedido: DetallePedido) {
+    this.editando = true;
+    const detalle: DetallePedido = detallePedido;
+    this.detallePedido = detalle;
+    this.listaDetallesAdicionales = detallePedido.listaAdicionales;
+    this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
+    this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
+    console.log('detallePedido->' + JSON.stringify(detallePedido));
+  }
+
+  // CALCULA EL TOTAL DEL ITEM CUANDO CAMBIA LA CANTIDAD O EL VALOR
+  onChangeCalculaTotalDetalle() {
+    this.detallePedido.subTotal = (this.detallePedido.cantidad * this.detallePedido.valor);
+    this.detallePedido.total = this.detallePedido.subTotal + this.detallePedido.totalAdicionales;
+    console.log('total detalle->'+this.detallePedido.total);
+  }
+
+  // CUANDO CAMBIA EL DESCUENTO DEL PEDIDO
+  onChangeCalculaTotal() {
+    //suma valor del detalle al pedido
+    let totalPedido:number = 0;
+    this.pedido.listaProductos.filter(item => {
+      totalPedido += item.total;
+      console.log('total item->' + item.total + ' / total pedido->' + totalPedido);
+    } );
+    this.pedido.subTotal = totalPedido;
+
+    this.pedido.subTotalNeto = Math.round(this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100);
+    this.pedido.iva = Math.round(this.pedido.subTotalNeto * 0.19);
+    this.pedido.total = Math.round(this.pedido.subTotalNeto + this.pedido.iva);
+
+  }
+
+  // CUANDO AGREGO UN DETALLE ADICIONAL
+  addDetalleAdicional(){
+    let totalAdicionales:number = 0;
+    this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => {
+      if (item.checked){
+        totalAdicionales += item.valor;
+        //console.log('item->'+ JSON.stringify(item));
+      }
+    } );
+    this.detallePedido.totalAdicionales = totalAdicionales;
+    this.onChangeCalculaTotalDetalle();
+    //console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
+  }
+
     // add
 /*     if (this.tipoForm == 'Nuevo') {
       this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
@@ -168,49 +223,6 @@ export class FormPedidoComponent implements OnInit {
       });
     }
         this.emiteVolver();
- */
     this.editando = false;
-  }
-
-  nuevoDetalle(){
-    this.detallePedido = new DetallePedido();
-  }
-
-  verProducto(detallePedido: DetallePedido) {
-    this.editando = true;
-    const detalle: DetallePedido = detallePedido;
-    this.detallePedido = detalle;
-    this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
-    this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
-    console.log('detallePedido->' + JSON.stringify(detallePedido));
-  }
-
-  toggleVerDetallesAdicionales(detalle: DetalleAdicional){
-    console.log('detalles adicionales->' + JSON.stringify(detalle));
-  }
-
-  // CALCULA EL TOTAL DEL ITEM CUANDO CAMBIA LA CANTIDAD O EL VALOR
-  onChangeCalculaTotalDetalle() {
-    this.detallePedido.total = (this.detallePedido.cantidad * this.detallePedido.valor) + this.detallePedido.totalAdicionales;
-  }
-
-  // CUANDO CAMBIA EL DESCUENTO DEL PEDIDO
-  onChangeCalculaTotal() {
-    this.pedido.subTotalNeto = this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100;
-    this.pedido.iva = this.pedido.subTotalNeto * 0.19;
-    this.pedido.total = this.pedido.subTotalNeto + this.pedido.iva;
-  }
-
-  // CUANDO AGREGO UN DETALLE ADICIONAL
-  addDetalleAdicional(detalleAdicional: DetalleAdicional, checked: boolean){
-
-    this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.find(item => item.checked > 0 );
-/*     if (checked) {
-      this.detallePedido.listaAdicionales.push(detalleAdicional);
-    }
  */
-    console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
-  }
-
-
 }
