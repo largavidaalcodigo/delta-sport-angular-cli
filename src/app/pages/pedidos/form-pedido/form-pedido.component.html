@@ -138,9 +138,19 @@
                 <label for="customCheck1{{i}}" class="badge badge-pill badge-success btn-sm"
                   *ngFor="let c of listaDetallesAdicionales;let i = index">
                   {{c.desc}}
-                  <input type="checkbox" id="customCheck1{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
-                   (change)="addDetalleAdicional()">
-                   <span>${{c.valor}}</span>
+                  <span>${{c.valor}}</span>
+                  <div *ngIf="detallePedido.listaAdicionales.length > 0; else other_content">
+                    <div *ngFor="let d of detallePedido.listaAdicionales;">
+                      <div *ngIf="c.id == d.id; else other_content">
+                        <input ng-checked="true" type="checkbox" id="customCheck1{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
+                        (change)="addDetalleAdicional()">
+                      </div>
+                    </div>
+                  </div>
+                  <ng-template #other_content>
+                    <input ng-checked="false" type="checkbox" id="customCheck1{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
+                    (change)="addDetalleAdicional()">
+                  </ng-template>
                 </label>
               </div>
 <!--TOTAL ADICIONALES-->

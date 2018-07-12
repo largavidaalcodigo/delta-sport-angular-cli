@@ -165,9 +165,11 @@ export class FormPedidoComponent implements OnInit {
     this.editando = true;
     const detalle: DetallePedido = detallePedido;
     this.detallePedido = detalle;
-    this.listaDetallesAdicionales = detallePedido.listaAdicionales;
     this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
     this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
+
+    //this.listaDetallesAdicionales = detallePedido.listaAdicionales;
+
     console.log('detallePedido->' + JSON.stringify(detallePedido));
   }
 
