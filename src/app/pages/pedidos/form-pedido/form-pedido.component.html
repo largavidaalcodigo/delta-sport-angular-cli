@@ -14,7 +14,7 @@
               style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>
 <!-- LISTADO CLIENTES-->
                 <button type="button" class="btn btn-primary"
-                  *ngFor='let c of listaProductos | dataFilter: queryBuscaCliente : "desc"'
+                  *ngFor='let c of listaClientes | dataFilter: queryBuscaCliente : "desc"'
                   (click)='verCliente(c)'>{{c.desc}}
                 </button>
               </div>
@@ -103,17 +103,19 @@
                   </td>
                   <td>
 <!--BOTONERA ITEM PRODUCTO-->
-                    <button type="submit" class="btn btn-primary">
-                        Añadir
-                      <!-- <label *ngIf="!editando">Añadir</label>
-                      <label *ngIf="editando">Modificar</label> -->
-                    </button>
-                    <button type="reset" class="btn btn-primary">Borrar</button>
-
+                    <div *ngIf="editando; else nuevoItem">
+                      <button type="submit" class="btn btn-primary">Editar</button>
+                      <button type="button" class="btn btn-primary"
+                      (click)="nuevoDetalle()">Cancelar</button>
+                    </div>
+                    <ng-template #nuevoItem>
+                      <button type="submit" class="btn btn-primary">Añadir</button>
+                      <button type="reset" class="btn btn-primary">Limpiar</button>
+                    </ng-template>
                     <button type="button" (click)="isCollapsed = !isCollapsed"
                       [attr.aria-expanded]="!isCollapsed"
                       class="btn btn-outline-primary"
-                      aria-control="detallesAdicionales">Adicionales
+                      aria-control="detallesAdicionales">Extras
                     </button>
                   </td>
                 </tr>
@@ -125,7 +127,6 @@
           </form>
         </app-card>
 
-
 <!--COLLAPSE DETALLES ADICIONALES-->
         <app-card id="detallesAdicionales" [ngbCollapse]="!isCollapsed">
           <span>
@@ -135,23 +136,17 @@
             <div class="row">
 <!--LISTADO ADICIONALES-->
               <div class="col-sm-9 border">
-                <label for="customCheck1{{i}}" class="badge badge-pill badge-success btn-sm"
+                <label for="checkAdicionales{{i}}" class="badge badge-pill badge-success btn-sm"
                   *ngFor="let c of listaDetallesAdicionales;let i = index">
                   {{c.desc}}
                   <span>${{c.valor}}</span>
-                  <div *ngIf="detallePedido.listaAdicionales.length > 0; else other_content">
-                    <div *ngFor="let d of detallePedido.listaAdicionales;">
-                      <div *ngIf="c.id == d.id; else other_content">
-                        <input ng-checked="true" type="checkbox" id="customCheck1{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
-                        (change)="addDetalleAdicional()">
-                      </div>
-                    </div>
-                  </div>
-                  <ng-template #other_content>
-                    <input ng-checked="false" type="checkbox" id="customCheck1{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
+                    <input type="checkbox" id="checkAdicionales{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
                     (change)="addDetalleAdicional()">
+<!--                   <ng-template #noChecked>
+                      <input ng-checked="false" type="checkbox" id="checkAdicionales{{i}}" [(ngModel)]="c.checked" data-toggle="toggle"
+                      (change)="addDetalleAdicional()">
                   </ng-template>
-                </label>
+ -->                </label>
               </div>
 <!--TOTAL ADICIONALES-->
               <div class="col-sm-3 border">
@@ -164,19 +159,19 @@
                   [(ngModel)]='detallePedido.totalAdicionales'>
                 </div>
                 <!--BOTONERA ITEM PRODUCTO-->
-                <button type="button" class="btn btn-primary"
+<!--                 <button type="button" class="btn btn-primary"
                 (click)="addDetalleAdicional()"
                 >Añadir</button>
-                <button type="button" class="btn btn-primary">Cancelar</button>
+                <button type="button" class="btn btn-primary">Cancelar</button> -->
               </div>
             </div>
-            {{listaDetallesAdicionales|json}}
+            <!-- {{listaDetallesAdicionales|json}} -->
           </div>
         </app-card>
       </div>
     </div>
-
-
+<!--     {{ listaDetallesAdicionales | json }}
+ -->
 <!--LISTA PRODUCTOS-->
     <div class="row">
       <div class="col-sm-12">
@@ -283,33 +278,78 @@
           <span class="btn-group">
             <h4>
               <span>Forma de pago</span>
-              <div style="position:absolute;top:0px;right:30px;">
-                <a class="btn btn-primary btn-sm" href="#">Añadir</a>
+<!-- BOTONERA FORMAS DE PAGO -->
+              <div style="position:absolute;top:0px;right:30px;"
+                [ngbCollapse]="botoneraFormaPagoisCollapsed" >
+                <button type="button" class="btn btn-primary btn-sm"
+                  (click)="nuevoMedioPago();botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed" [attr.aria-expanded]="!botoneraFormaPagoisCollapsed">
+                  Añadir
+                </button>
               </div>
+              <div style="position:absolute;top:0px;right:50px;"
+                [ngbCollapse]="!botoneraFormaPagoisCollapsed" >
+                <button type="button" class="btn btn-primary btn-sm"
+                  (click)="addMedioPago();botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed"
+                  [attr.aria-expanded]="!botoneraFormaPagoisCollapsed">
+                  Guardar
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                  (click)="botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed"
+                  [attr.aria-expanded]="!botoneraFormaPagoisCollapsed">
+                  Cancelar
+                </button>
+              </div>
+
             </h4>
-            <div class="container">
+            <div [ngbCollapse]="!botoneraFormaPagoisCollapsed">
               <ul>
                 <li class="list-group-item table-bordered">
                   <div class="row">
-                      <div class="col-sm-5 text-right">
-                        <h5>Saldo Pendiente</h5>
-                      </div>
-                      <div class="col-sm-6 text-right">
-                        <h4>${{pedido.total}}</h4>
-                      </div>
-                  </div>
-                </li>
-                <li class="list-group-item table-bordered">
-                  <div class="row">
-                      <div class="col-sm-5 text-right">
-                        <h5>Saldo Pendiente</h5>
-                      </div>
-                      <div class="col-sm-6 text-right">
-                        <h4>${{pedido.total}}</h4>
-                      </div>
+                    <div class="col-sm-5 text-right">
+                      <h5>Ingrese monto</h5>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                      <select class='form-control' name='tipoPago' [(ngModel)]='medioPago.tipoPago'>
+                        <option value='efectivo'>Efectivo</option>
+                        <option value='transferencia'>Transferencia</option>
+                        <option value='cheque'>Cheque</option>
+                      </select>
+                      <input type='number' class='form-control' name='montoPago' [(ngModel)]='medioPago.montoPago' placeholder='Monto Pagado'>
+                    </div>
                   </div>
                 </li>
               </ul>
+            </div>
+            <div class="container">
+<!--TITULO-->
+              <table width="100%" class="table-bordered">
+                <tr *ngIf="pedido.listaMediosPago.length>0">
+                    <th class="text-center">Fecha Pago</th>
+                    <th class="text-center">Medio Pago</th>
+                    <th class="text-center">Monto</th>
+                </tr>
+                <!--LISTA DE MEDIOS DE PAGO-->
+                <tr *ngFor="let item of pedido.listaMediosPago">
+                    <td class="text-center">
+                        <h5>{{item.fechaPago | date: 'dd/MM/yyyy' }}</h5>
+                    </td>
+                    <td class="text-left">
+                      <h5>{{item.tipoPago}}</h5>
+                    </td>
+                    <td class="text-right">
+                      <h4>${{item.montoPago}}</h4>
+                    </td>
+                </tr>
+                <!--LISTA DE MEDIOS DE PAGO-->
+                <tr>
+                  <td colspan="2" class="text-right">
+                    Saldo Pendiente
+                  </td>
+                  <td class="text-right">
+                    <h4><b>${{saldoPendiente}}</b></h4>
+                  </td>
+                </tr>
+              </table>
             </div>
           </span>
         </app-card>
@@ -380,8 +420,7 @@
   </div>
   <div class='form-group'>
     <button type='reset' class='btn btn-default'>Cancelar</button>
-    <button type='submit' class='btn btn-primary'>Crear</button>
-
+    <button (click)='guardarPedido();' class='btn btn-primary'>Crear</button>
   </div>
-  {{ pedido | json }}
 </div>
+{{pedido|json}}

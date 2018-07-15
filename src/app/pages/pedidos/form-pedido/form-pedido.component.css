@@ -54,3 +54,7 @@ padding:1px;
     /* Move the check mark back when checked */
 	text-indent: 0;
 }
+
+.btn{
+  padding: 10px 5px;
+}

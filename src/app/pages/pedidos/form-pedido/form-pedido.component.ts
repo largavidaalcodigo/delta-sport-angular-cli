@@ -39,6 +39,7 @@ export class FormPedidoComponent implements OnInit {
 
   //Lista Detalle pedido
   detallePedido: DetallePedido;
+  medioPago: MedioPago;
   //listaDetallePedido: DetallePedido[] = new Array();
   rangoPrecioProducto: RangoPrecioProducto;
 
@@ -57,14 +58,13 @@ export class FormPedidoComponent implements OnInit {
   //Medio pago
   listaMediosPago: any[] = new Array();
 
+  saldoPendiente: number;
   editando: boolean = false;
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
   }
 
   ngOnInit() {
 
-/*     this.cantidadComentarios = this.pedido.listaComentarios.push(new Comentario());
- */
      if (this.pedido == null) {
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //0= inactivo , 1=activo
@@ -72,15 +72,24 @@ export class FormPedidoComponent implements OnInit {
       this.pedido.subTotal = 0;
       this.pedido.descuento = 0;
       this.pedido.listaProductos = new Array();
+      this.pedido.listaMediosPago = new Array();
       }
 
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
     this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
-    this.listaClientes = this.clientesService.getClientes();
+
+    //lista de pedidos
+    this.clientesService.getClientes().subscribe(data => {
+      console.log('obteniendo lista clientes...');
+      console.log(data);
+      this.listaClientes = data;
+    });
+
     this.listaProductos = this.pedidosService.getProductos();
 
     this.detallePedido = new DetallePedido();
+    this.medioPago = new MedioPago();
     this.detallePedido.listaAdicionales = new Array();
     this.rangoPrecioProducto = new RangoPrecioProducto();
   }
@@ -133,32 +142,37 @@ export class FormPedidoComponent implements OnInit {
   }
 
   onSubmitDetalle() {
-    //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
+    if (this.editando){
 
-    //setea Correlativo nro item
-    this.detallePedido.id = this.pedido.listaProductos.length + 1;
+    }else{
+      //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
 
-    // SETEA NOMBRE DE CATEGORIA/PRODUCTO/RANGO PRECIO
-    const producto: Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
-    this.detallePedido.descProducto = producto.desc;
-    this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
-    this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
+      //setea Correlativo nro item
+      this.detallePedido.id = this.pedido.listaProductos.length + 1;
 
-    this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
+      // SETEA NOMBRE DE CATEGORIA/PRODUCTO/RANGO PRECIO
+      const producto: Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
+      this.detallePedido.descProducto = producto.desc;
+      this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
+      this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
 
-    this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
-    console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
+      this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
 
+      this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
+      console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
+
+    }
     //Calcula el total
     this.onChangeCalculaTotal();
 
-    //this.pedido.listaProductos = this.listaDetallePedido;
+   //this.pedido.listaProductos = this.listaDetallePedido;
     this.detallePedido = new DetallePedido();
     this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
-}
+  }
 
   nuevoDetalle(){
     this.detallePedido = new DetallePedido();
+    this.editando = false;
   }
 
   verProducto(detallePedido: DetallePedido) {
@@ -169,6 +183,15 @@ export class FormPedidoComponent implements OnInit {
     this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
 
     //this.listaDetallesAdicionales = detallePedido.listaAdicionales;
+    for (let c of this.listaDetallesAdicionales) {
+      c.checked = false;
+      for (let d of this.detallePedido.listaAdicionales) {
+        if (c.id == d.id){
+          c.checked = true;
+          break;
+        }
+      }
+    }
 
     console.log('detallePedido->' + JSON.stringify(detallePedido));
   }
@@ -193,7 +216,7 @@ export class FormPedidoComponent implements OnInit {
     this.pedido.subTotalNeto = Math.round(this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100);
     this.pedido.iva = Math.round(this.pedido.subTotalNeto * 0.19);
     this.pedido.total = Math.round(this.pedido.subTotalNeto + this.pedido.iva);
-
+    this.saldoPendiente = this.pedido.total - this.pedido.totalMediosPago;
   }
 
   // CUANDO AGREGO UN DETALLE ADICIONAL
@@ -210,6 +233,27 @@ export class FormPedidoComponent implements OnInit {
     //console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
   }
 
+  nuevoMedioPago() {
+    this.medioPago = new MedioPago();
+    this.medioPago.fechaPago = new Date();
+  }
+  addMedioPago() {
+    console.log('agregando medio pago');
+    this.pedido.listaMediosPago.push(this.medioPago);
+    this.pedido.totalMediosPago = 0;
+    for (let c of this.pedido.listaMediosPago) {
+      this.pedido.totalMediosPago += c.montoPago;
+    }
+    this.onChangeCalculaTotal();
+  }
+
+  guardarPedido(){
+    this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
+      this.pedido = pedido;
+      console.log('nuevo  insertado->' + pedido);
+    });
+
+
     // add
 /*     if (this.tipoForm == 'Nuevo') {
       this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
@@ -224,7 +268,9 @@ export class FormPedidoComponent implements OnInit {
         console.log('pedido actualizado->' + pedido);
       });
     }
-        this.emiteVolver();
-    this.editando = false;
  */
+this.emiteVolver();
+this.editando = false;
+
+  }
 }

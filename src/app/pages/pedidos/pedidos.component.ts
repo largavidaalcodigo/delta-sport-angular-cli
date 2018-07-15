@@ -26,7 +26,6 @@ export class PedidosComponent implements OnInit {
       console.log(data);
       this.listaPedidos = data;
     });
-
   }
 
   //Cierre con boton Volver

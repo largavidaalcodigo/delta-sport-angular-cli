@@ -6,9 +6,21 @@ import { Pedido } from "../model/pedido/pedido.model";
 
 @Injectable()
 export class PedidosService {
-  baseUrl: string = "http://localhost:8081";
+  //baseUrl: string = "http://localhost:8081";
 
   constructor(private http: HttpClient) {}
+
+  public getPedidos(): Observable<Pedido[]> {
+    return this.http.get('/api/getPedidos');
+  }
+
+  public addPedido(pedido: Pedido): Observable<Pedido> {
+    return this.http.post<Pedido>('/api/addPedido', pedido);
+  }
+
+  public putPedido(pedido: Pedido): Observable<Pedido> {
+    return this.http.put<Pedido>("/pedidos", pedido);
+  }
 
   public getDetallesAdicionales() {
     return [
@@ -103,17 +115,5 @@ export class PedidosService {
       { id: 9, idTipoProducto: 5, desc: " 16 a L", valor: 3800 },
       { id: 14, idTipoProducto: 5, desc: "XL - xxl", valor: 4200 }
     ];
-  }
-
-  public getPedidos() {
-    return this.http.get(this.baseUrl + "/pedidos");
-  }
-
-  public addPedido(pedido: Pedido): Observable<Pedido> {
-    return this.http.post<Pedido>(this.baseUrl + "/pedidos", pedido);
-  }
-
-  public putPedido(pedido: Pedido): Observable<Pedido> {
-    return this.http.put<Pedido>(this.baseUrl + "/pedidos", pedido);
   }
 }

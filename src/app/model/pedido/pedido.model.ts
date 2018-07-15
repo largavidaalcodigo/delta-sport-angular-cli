@@ -18,6 +18,7 @@ export class Pedido {
   public total: number;
   public listaComentarios: Comentario[];
   public listaMediosPago: MedioPago[];
+  public totalMediosPago: number = 0;
 
   constructor(){}
 }

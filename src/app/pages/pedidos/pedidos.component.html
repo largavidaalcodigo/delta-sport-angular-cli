@@ -31,13 +31,14 @@
             <th>Estado</th>
           </tr>
           </thead>
-          <tbody *ngFor="let pedido of listaPedidos">
+          <tbody *ngFor="let pedido of listaPedidos;let i = index">
             <tr (click)="editarPedido(pedido)">
-              <td></td>
-              <td>{{pedido.rutCliente}}</td>
-              <td>{{cliente.razonSocialCliente}}</td>
-              <td></td>
-              <td></td>
+              <td>{{i+1}}</td>
+              <td>cliente</td>
+              <td>{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+              <td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+              <td>${{pedido.total}}</td>
+              <td>${{pedido.idEstado}}</td>
             </tr>
           </tbody>
         </table>
