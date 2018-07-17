@@ -60,11 +60,10 @@ export class FormPedidoComponent implements OnInit {
 
   saldoPendiente: number;
   editando: boolean = false;
-  constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {
-  }
+
+  constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
 
   ngOnInit() {
-
      if (this.pedido == null) {
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //0= inactivo , 1=activo
@@ -73,6 +72,9 @@ export class FormPedidoComponent implements OnInit {
       this.pedido.descuento = 0;
       this.pedido.listaProductos = new Array();
       this.pedido.listaMediosPago = new Array();
+      } else{
+        this.queryBuscaCliente = 'prueba'; //this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
+        console.log('queryBuscaCliente->' + this.queryBuscaCliente);
       }
 
     this.listaColores = this.pedidosService.getColores();
@@ -94,11 +96,9 @@ export class FormPedidoComponent implements OnInit {
     this.rangoPrecioProducto = new RangoPrecioProducto();
   }
 
-  verCliente(cliente: any) {
-    this.queryBuscaCliente = cliente.desc;
-    //TODO asignar el objeto cliente al pedido
-
-      console.log('cliente->' + cliente.desc);
+  addCliente(cliente: Cliente) {
+    this.pedido.cliente = cliente;
+    this.queryBuscaCliente = cliente.rutCliente + ' - ' + cliente.nombresCliente + ' ' + cliente.apellidoPaternoCliente;
   }
 
   getListaCliente(cadena:string) {
@@ -253,24 +253,7 @@ export class FormPedidoComponent implements OnInit {
       console.log('nuevo  insertado->' + pedido);
     });
 
-
-    // add
-/*     if (this.tipoForm == 'Nuevo') {
-      this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
-        this.pedido = pedido;
-        console.log('nuevo  insertado->' + pedido);
-      });
-
-      //update
-    } else if (this.tipoForm == 'Ver') {
-      this.pedidosService.putPedido(this.pedido).subscribe(pedido => {
-        this.pedido = pedido;
-        console.log('pedido actualizado->' + pedido);
-      });
-    }
- */
-this.emiteVolver();
-this.editando = false;
-
+    this.emiteVolver();
+    this.editando = false;
   }
 }

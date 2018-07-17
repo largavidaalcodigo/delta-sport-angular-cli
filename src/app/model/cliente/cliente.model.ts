@@ -8,7 +8,7 @@ export class Cliente {
   public comunaCliente: string;
   public fonoCliente: string;
   public emailCliente: string;
-  public estadoCliente: number;
+  public idEstado: number;
 
   constructor() {
   }

@@ -22,6 +22,14 @@ export class PedidosService {
     return this.http.put<Pedido>("/pedidos", pedido);
   }
 
+  public getEstadosPedido() {
+    return [
+      { id: 1, desc: "Creado"},
+      { id: 2, desc: "En proceso"},
+      { id: 3, desc: "Terminado"},
+      { id: 4, desc: "Cancelado"},
+    ];
+  }
   public getDetallesAdicionales() {
     return [
       { id: 1, desc: "Logos insignias sublimados", valor: 550 },

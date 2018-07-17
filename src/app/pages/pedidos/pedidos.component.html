@@ -18,9 +18,27 @@
 <!-- Lista  -->
 <div class="row" *ngIf='verLista'>
   <div class="col-sm-12">
+    <app-card>
+      <h4>Filtros de busqueda</h4>
+      <form #encabezadoPedidoForm='ngForm' class='form-inline'>
+        <div class='form-group form-inline'>
+          Cliente
+          <input type='text' size="40" class='form-control' name='queryClientes'>
+          Estado
+          <select class='form-control' name='queryEstado'>
+            <option [value]=''>[Producto]</option>
+            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>
+          </select>
+          Fecha creación
+          <input class='form-control' name='fechaDesde' type="date" placeholder="Fecha desde">
+          <button type="reset" class="btn btn-primary">Quitar Filtro</button>
+        </div>
+      </form>
+    </app-card>
+
     <app-card [title]="'Pedidos'" [classHeader]="false" [blockClass]="'table-border-style'">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-hover">
           <thead>
           <tr>
             <th>#</th>
@@ -29,16 +47,21 @@
             <th>Fecha Entrega</th>
             <th>Monto Total</th>
             <th>Estado</th>
+            <th>Opciones</th>
           </tr>
           </thead>
           <tbody *ngFor="let pedido of listaPedidos;let i = index">
-            <tr (click)="editarPedido(pedido)">
-              <td>{{i+1}}</td>
-              <td>cliente</td>
-              <td>{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
-              <td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
-              <td>${{pedido.total}}</td>
-              <td>${{pedido.idEstado}}</td>
+            <tr>
+              <td (click)="editarPedido(pedido)">{{i+1}}</td>
+              <td (click)="editarPedido(pedido)">{{pedido.cliente.nombresCliente}}</td>
+              <td (click)="editarPedido(pedido)">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+              <td (click)="editarPedido(pedido)">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+              <td (click)="editarPedido(pedido)">${{pedido.total}}</td>
+              <td (click)="editarPedido(pedido)">{{pedido.idEstado}}</td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm"
+                (click)="addTallas(pedido); $event.stopPropagation();">Tallas</button>
+              </td>
             </tr>
           </tbody>
         </table>

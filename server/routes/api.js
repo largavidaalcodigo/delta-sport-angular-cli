@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var Pedido = require('../model/pedido.model.js');
+var Cliente = require('../model/cliente.model.js');
 
 /* FIND ALL */
 router.get('/', (req, res) => {
@@ -37,9 +38,21 @@ router.post('/addCliente', function(req, res, next) {
     res.json(post);
   });
 });
+/*
+router.put('/:id', function(req, res, next) {
+  Pedido.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
 
-
-
+router.delete('/:id', function(req, res, next) {
+  Book.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
+ */
 
 // Error handling
 const sendError = (err, res) => {

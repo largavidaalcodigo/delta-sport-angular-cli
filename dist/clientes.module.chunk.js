@@ -176,7 +176,7 @@ ClientesModule = __decorate([
 /***/ "../../../../../src/app/pages/clientes/form-cliente/form-cliente.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-card *ngIf=\"verForm==true\">\n  <!--<form class=\"form-horizontal\">-->\n    <form (ngSubmit)=\"onSubmit(cliente);\" #clienteForm=\"ngForm\" class=\"form-horizontal\">\n    <div class=\"form-group row\">\n      <div class=\"col-sm-3\">\n        <h2>{{tipoForm}} Cliente</h2>\n      </div>\n    <app-card>\n      <h4>Datos Cliente</h4>\n      <div class=\"form-group row\">\n        <div class=\"col-sm-2\">\n          <label>Rut</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.rutCliente\" name=\"rutCliente\" required>\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Razón social</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.razonSocialCliente\" name=\"razonSocialCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Nombres</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.nombresCliente\" name=\"nombresCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Ap. paterno</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.apellidoPaternoCliente\" name=\"apellidoPaternoCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Ap. Materno</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.apellidoMaternoCliente\" name=\"apellidoMaternoCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Email</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.emailCliente\" name=\"emailCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Direccion</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.direccionCliente\" name=\"direccionCliente\">\n        </div>\n        <div class=\"col-sm-2\">\n          <label>Comuna</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.comunaCliente\" name=\"comunaCliente\">\n        </div>\n        <div class=\"col-sm-2\">\n          <label>Telefono</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.fonoCliente\" name=\"fonoCliente\">\n        </div>\n      </div>\n    </app-card>\n  </div>\n  <div class=\"form-group\">\n      <a class=\"btn btn-primary\" (click)=\"emiteVolver()\">Cancelar</a>\n      <button type=\"submit\" class=\"btn btn-primary\">Guardar</button>\n    </div>\n  </form>\n  {{cliente|json}}\n</app-card>\n"
+module.exports = "<app-card *ngIf=\"verForm==true\">\n  <!--<form class=\"form-horizontal\">-->\n    <form (ngSubmit)=\"onSubmit(cliente);\" #clienteForm=\"ngForm\" class=\"form-horizontal\">\n    <div class=\"form-group row\">\n      <div class=\"col-sm-3\">\n        <h2>{{tipoForm}} Cliente</h2>\n      </div>\n    <app-card>\n      <h4>Datos Cliente</h4>\n      <div class=\"form-group row\">\n        <div class=\"col-sm-2\">\n          <label>Rut</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.rutCliente\" name=\"rutCliente\" required>\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Razón social</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.razonSocialCliente\" name=\"razonSocialCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Nombres</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.nombresCliente\" name=\"nombresCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Ap. paterno</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.apellidoPaternoCliente\" name=\"apellidoPaternoCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Ap. Materno</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.apellidoMaternoCliente\" name=\"apellidoMaternoCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Email</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.emailCliente\" name=\"emailCliente\">\n        </div>\n        <div class=\"col-sm-4\">\n          <label>Direccion</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.direccionCliente\" name=\"direccionCliente\">\n        </div>\n        <div class=\"col-sm-2\">\n          <label>Comuna</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.comunaCliente\" name=\"comunaCliente\">\n        </div>\n        <div class=\"col-sm-2\">\n          <label>Telefono</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"cliente.fonoCliente\" name=\"fonoCliente\">\n        </div>\n      </div>\n    </app-card>\n  </div>\n  <div class=\"form-group\">\n    <button (click)='emiteVolver()' type='reset' class='btn btn-default'>Cancelar</button>\n    <button (click)='guardarCliente();' class='btn btn-primary'>Crear</button>\n  </div>\n  </form>\n  {{cliente|json}}\n</app-card>\n"
 
 /***/ }),
 
@@ -206,42 +206,26 @@ var FormClienteComponent = (function () {
     function FormClienteComponent(clientesService) {
         this.clientesService = clientesService;
         this.salir = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["EventEmitter"]();
+        this.editando = false;
     }
     FormClienteComponent.prototype.ngOnInit = function () {
-        console.log('tipoForm->' + this.tipoForm);
-        console.log('cliente->' + this.cliente);
+        //SI CLIENTE ES NUEVO
+        if (this.cliente == null) {
+            this.cliente = new __WEBPACK_IMPORTED_MODULE_2__model_cliente_cliente_model__["a" /* Cliente */]();
+        }
     };
     FormClienteComponent.prototype.emiteVolver = function () {
         this.clienteForm.reset();
         this.salir.emit();
     };
-    FormClienteComponent.prototype.onSubmit = function () {
+    FormClienteComponent.prototype.guardarCliente = function () {
         var _this = this;
-        this.cliente.rutCliente = this.clienteForm.value.rutCliente;
-        this.cliente.razonSocialCliente = this.clienteForm.value.razonSocialCliente;
-        this.cliente.nombresCliente = this.clienteForm.value.nombresCliente;
-        this.cliente.apellidoPaternoCliente = this.clienteForm.value.apellidoPaternoCliente;
-        this.cliente.apellidoMaternoCliente = this.clienteForm.value.apellidoMaternoCliente;
-        this.cliente.direccionCliente = this.clienteForm.value.direccionCliente;
-        this.cliente.comunaCliente = this.clienteForm.value.comunaCliente;
-        this.cliente.fonoCliente = this.clienteForm.value.fonoCliente;
-        this.cliente.emailCliente = this.clienteForm.value.emailCliente;
-        this.cliente.estadoCliente = 1; //0= inactivo , 1=activo
-        //add
-        if (this.tipoForm == 'Nuevo') {
-            this.clientesService.addCliente(this.cliente).subscribe(function (cliente) {
-                _this.cliente = cliente;
-                console.log('nuevo cliente insertado->' + cliente);
-            });
-            //update
-        }
-        else if (this.tipoForm == 'Ver') {
-            this.clientesService.putCliente(this.cliente).subscribe(function (cliente) {
-                _this.cliente = cliente;
-                console.log('cliente actualizado->' + cliente);
-            });
-        }
+        this.clientesService.addCliente(this.cliente).subscribe(function (cliente) {
+            _this.cliente = cliente;
+            console.log('nuevo  insertado->' + cliente);
+        });
         this.emiteVolver();
+        this.editando = false;
     };
     return FormClienteComponent;
 }());

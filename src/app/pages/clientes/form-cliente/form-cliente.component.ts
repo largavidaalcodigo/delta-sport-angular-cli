@@ -15,12 +15,16 @@ export class FormClienteComponent implements OnInit {
   @Input() tipoForm: string;
 
   @Output() public salir = new EventEmitter();
+  editando: boolean = false;
 
   constructor(private clientesService: ClientesService) {
   }
   ngOnInit() {
-    console.log('tipoForm->'+ this.tipoForm);
-    console.log('cliente->'+ this.cliente);
+
+    //SI CLIENTE ES NUEVO
+    if (this.cliente == null) {
+      this.cliente = new Cliente();
+    }
   }
 
   emiteVolver() {
@@ -28,37 +32,13 @@ export class FormClienteComponent implements OnInit {
     this.salir.emit();
   }
 
-   onSubmit() {
-    this.cliente.rutCliente = this.clienteForm.value.rutCliente;
-    this.cliente.razonSocialCliente = this.clienteForm.value.razonSocialCliente;
-    this.cliente.nombresCliente = this.clienteForm.value.nombresCliente;
-    this.cliente.apellidoPaternoCliente = this.clienteForm.value.apellidoPaternoCliente;
-    this.cliente.apellidoMaternoCliente = this.clienteForm.value.apellidoMaternoCliente;
-    this.cliente.direccionCliente = this.clienteForm.value.direccionCliente;
-    this.cliente.comunaCliente = this.clienteForm.value.comunaCliente;
-    this.cliente.fonoCliente = this.clienteForm.value.fonoCliente;
-    this.cliente.emailCliente = this.clienteForm.value.emailCliente;
-    this.cliente.estadoCliente = 1; //0= inactivo , 1=activo
-
-    //add
-    if (this.tipoForm == 'Nuevo'){
-      this.clientesService.addCliente(this.cliente).subscribe(cliente => {
-        this.cliente=cliente;
-        console.log('nuevo cliente insertado->' + cliente);
-      });
-
-    //update
-    }else if (this.tipoForm == 'Ver'){
-      this.clientesService.putCliente(this.cliente).subscribe(cliente => {
-        this.cliente=cliente;
-        console.log('cliente actualizado->' + cliente);
-      });
-
-    }
+  guardarCliente(){
+    this.clientesService.addCliente(this.cliente).subscribe(cliente => {
+      this.cliente = cliente;
+      console.log('nuevo  insertado->' + cliente);
+    });
 
     this.emiteVolver();
+    this.editando = false;
   }
-
-
-
 }

@@ -10,11 +10,11 @@ import { Producto } from '../../model/producto/producto.model';
   styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent implements OnInit {
-  listaPedidos: any;
+  listaPedidos: Pedido[];
+  listaEstadosPedido: any[];
   pedido: Pedido;
   verLista: boolean = true;
-  //verForm: boolean = false;
-  tipoForm: string = 'Nuevo'; // puede ser NUEVO o EDITAR
+  tipoForm: string; // USADO PARA DEFINIR LAS TALLAS
 
   constructor(private pedidosService: PedidosService) {
   }
@@ -26,6 +26,8 @@ export class PedidosComponent implements OnInit {
       console.log(data);
       this.listaPedidos = data;
     });
+
+    this.listaEstadosPedido = this.pedidosService.getEstadosPedido();
   }
 
   //Cierre con boton Volver
@@ -41,13 +43,19 @@ export class PedidosComponent implements OnInit {
   //Nuevo Pedido
   nuevoPedido() {
     this.toggleLista();
-    this.tipoForm = "Nuevo";
+    //this.tipoForm = "Nuevo";
   }
 
   //Ver o Editar Cliente
   editarPedido(pedido: Pedido) {
     this.pedido=pedido;
-    this.tipoForm = "Ver";
+    this.toggleLista();
+  }
+
+  addTallas(pedido: Pedido){
+    console.log('editando tallas...');
+    this.tipoForm = "tallas";
+    this.pedido=pedido;
     this.toggleLista();
   }
 }
