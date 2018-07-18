@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 var Pedido = require('../model/pedido.model.js');
-var Cliente = require('../model/cliente.model.js');
 
 /* FIND ALL */
 router.get('/', (req, res) => {
@@ -53,22 +52,5 @@ router.delete('/:id', function(req, res, next) {
   });
 });
  */
-
-// Error handling
-const sendError = (err, res) => {
-    response.status = 501;
-    response.message = typeof err == 'object' ? err.message : err;
-    res.status(501).json(response);
-};
-
-// Response handling
-let response = {
-    status: 200,
-    data: [],
-    message: null
-};
-
-
-
 
 module.exports = router;
