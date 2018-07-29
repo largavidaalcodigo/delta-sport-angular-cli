@@ -1,4 +1,4 @@
-import { ClientesService } from "./../../../services/clientes.service";
+import { ClientesService } from "../../../services/clientes.service";
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
 import { Cliente } from "../../../model/cliente/cliente.model";
 import { NgForm } from "@angular/forms";

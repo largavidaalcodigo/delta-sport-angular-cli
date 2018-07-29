@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ClientesService } from './../../services/clientes.service';
+import { ClientesService } from '../../services/clientes.service';
 import { Cliente } from '../../model/cliente/cliente.model';
 import { ClientesComponent } from './clientes.component';
 

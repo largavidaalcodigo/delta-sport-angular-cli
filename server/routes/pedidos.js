@@ -46,6 +46,4 @@ router.get('/deletePedido', function(req, res, next) {
   });
 });
 
-
-
 module.exports = router;

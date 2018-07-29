@@ -1,7 +1,7 @@
 import { Component, ViewChild, Output, Input, EventEmitter, HostListener } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
+import 'rxjs';
 import { MultiSelect } from './multiselect.model';
 
 @Component({
