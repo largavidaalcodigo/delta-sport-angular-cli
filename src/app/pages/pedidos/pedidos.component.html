@@ -1,8 +1,9 @@
 <div class="row" *ngIf='verLista'>
   <div class="col-sm-12">
-    <app-card>
+    <!-- <app-card> -->
       <a class="btn btn-primary" (click)="nuevoPedido()" routerLinkActive="active">Nuevo Pedido</a>
-    </app-card>
+      <a routerLink="/formPedido">NUEVO</a>
+    <!-- </app-card> -->
   </div>
 </div>
 
@@ -18,7 +19,7 @@
 <!-- Lista  -->
 <div class="row" *ngIf='verLista'>
   <div class="col-sm-12">
-    <app-card>
+    <!-- <app-card> -->
       <h4>Filtros de busqueda</h4>
       <form #encabezadoPedidoForm='ngForm' class='form-inline'>
         <div class='form-group form-inline'>
@@ -34,7 +35,7 @@
           <button type="reset" class="btn btn-primary">Quitar Filtro</button>
         </div>
       </form>
-    </app-card>
+    <!-- </app-card> -->
 
     <app-card [title]="'Pedidos'" [classHeader]="false" [blockClass]="'table-border-style'">
       <div class="table-responsive">

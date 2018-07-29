@@ -1,5 +1,5 @@
-import { DetalleTalla } from './../producto/detalleTalla.model';
-import { DetalleAdicional } from './../producto/detalleAdicional.model';
+import { DetalleTalla } from '../producto/detalleTalla.model';
+import { DetalleAdicional } from '../producto/detalleAdicional.model';
 export class DetallePedido {
   public id: number;
   public idProducto: number;

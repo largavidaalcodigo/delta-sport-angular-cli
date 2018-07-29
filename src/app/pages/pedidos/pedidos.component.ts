@@ -5,6 +5,7 @@ import { Producto } from '../../model/producto/producto.model';
  */import { Component, OnInit} from '@angular/core';
  import { Observable } from "rxjs";
 
+
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',
@@ -21,6 +22,8 @@ export class PedidosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.verLista = true;
+
     //lista de pedidos
     this.pedidosService.getPedidos()
       .subscribe(

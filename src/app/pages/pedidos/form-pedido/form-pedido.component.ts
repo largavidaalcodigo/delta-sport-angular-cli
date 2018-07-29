@@ -1,4 +1,4 @@
-import { DetalleTalla } from './../../../model/producto/detalleTalla.model';
+import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { DetallePedido } from '../../../model/pedido/detallePedido.model';
 import { DetalleAdicional } from '../../../model/producto/detalleAdicional.model';
 import { MedioPago } from '../../../model/pedido/medioPago.model';
@@ -31,8 +31,9 @@ import { Comentario } from '../../../model/pedido/comentario.model';
 })
 
 export class FormPedidoComponent implements OnInit {
-  @ViewChild('encabezadoPedidoForm') encabezadoPedidoForm: NgForm;
+ /*  @ViewChild('encabezadoPedidoForm') encabezadoPedidoForm: NgForm;
   @ViewChild('detallePedidoForm') detallePedidoForm: NgForm;
+  */
   @Input() verForm: boolean;
   @Input() tipoForm: string;
   @Input() pedido: Pedido; //Puede venir con datos

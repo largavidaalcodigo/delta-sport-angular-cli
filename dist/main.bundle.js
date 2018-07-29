@@ -10,47 +10,47 @@ var map = {
 	],
 	"./pages/authentication/authentication.module": [
 		"../../../../../src/app/pages/authentication/authentication.module.ts",
-		"authentication.module"
+		"authentication.module.0"
 	],
 	"./pages/clientes/clientes.module": [
 		"../../../../../src/app/pages/clientes/clientes.module.ts",
 		"common",
-		"clientes.module"
+		"clientes.module.0"
 	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
 		"common",
-		"dashboard-default.module"
+		"dashboard-default.module.0"
 	],
 	"./pages/map/google-map/google-map.module": [
 		"../../../../../src/app/pages/map/google-map/google-map.module.ts",
-		"google-map.module"
+		"google-map.module.0"
 	],
 	"./pages/pedidos/pedidos.module": [
 		"../../../../../src/app/pages/pedidos/pedidos.module.ts",
 		"common",
-		"pedidos.module"
+		"pedidos.module.0"
 	],
 	"./pages/simple-page/simple-page.module": [
 		"../../../../../src/app/pages/simple-page/simple-page.module.ts",
-		"simple-page.module"
+		"simple-page.module.0"
 	],
 	"./pages/ui-elements/advance/notifications/notifications.module": [
 		"../../../../../src/app/pages/ui-elements/advance/notifications/notifications.module.ts",
-		"notifications.module"
+		"notifications.module.0"
 	],
 	"./pages/ui-elements/basic/basic.module": [
 		"../../../../../src/app/pages/ui-elements/basic/basic.module.ts",
-		"basic.module"
+		"basic.module.0"
 	],
 	"./pages/ui-elements/tables/bootstrap-table/basic-bootstrap/basic-bootstrap.module": [
 		"../../../../../src/app/pages/ui-elements/tables/bootstrap-table/basic-bootstrap/basic-bootstrap.module.ts",
-		"basic-bootstrap.module"
+		"basic-bootstrap.module.0"
 	],
 	"./pages/user/profile/profile.module": [
 		"../../../../../src/app/pages/user/profile/profile.module.ts",
 		"common",
-		"profile.module"
+		"profile.module.0"
 	],
 	"./typography/typography.module": [
 		"../../../../../src/app/pages/ui-elements/basic/typography/typography.module.ts",
@@ -228,11 +228,6 @@ var AppRoutes = [
                 path: 'clientes',
                 loadChildren: './pages/clientes/clientes.module#ClientesModule'
             }, {
-                /*
-                        path: 'productos',
-                        loadChildren: './pages/productos/productos.module#ProductosModule'
-                      }, {
-                */
                 path: 'notifications',
                 loadChildren: './pages/ui-elements/advance/notifications/notifications.module#NotificationsModule'
             }, {

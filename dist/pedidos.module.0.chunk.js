@@ -1,4 +1,4 @@
-webpackJsonp(["pedidos.module"],{
+webpackJsonp(["pedidos.module.0"],{
 
 /***/ "../../../../../src/app/model/pedido/detallePedido.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -399,7 +399,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/pedidos/pedidos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <a class=\"btn btn-primary\" (click)=\"nuevoPedido()\" routerLinkActive=\"active\">Nuevo Pedido</a>\r\n      <a routerLink=\"/formPedido\">NUEVO</a>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n<!-- Formulario  -->\r\n<div class=\"container\">\r\n  <app-form-pedido\r\n  [verForm]=\"!verLista\"\r\n  [tipoForm]=\"tipoForm\"\r\n  [pedido]=\"pedido\"\r\n  (salir)=\"volver($event)\"></app-form-pedido>\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <h4>Filtros de busqueda</h4>\r\n      <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n        <div class='form-group form-inline'>\r\n          Cliente\r\n          <input type='text' size=\"40\" class='form-control' name='queryClientes'>\r\n          Estado\r\n          <select class='form-control' name='queryEstado'>\r\n            <option [value]=''>[Producto]</option>\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>\r\n          </select>\r\n          Fecha creación\r\n          <input class='form-control' name='fechaDesde' type=\"date\" placeholder=\"Fecha desde\">\r\n          <button type=\"reset\" class=\"btn btn-primary\">Quitar Filtro</button>\r\n        </div>\r\n      </form>\r\n    </app-card>\r\n\r\n    <app-card [title]=\"'Pedidos'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>Monto Total</th>\r\n            <th>Estado</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td (click)=\"editarPedido(pedido)\">{{i+1}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.cliente.nombresCliente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.total}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.idEstado}}</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addTallas(pedido); $event.stopPropagation();\">Tallas</button>\r\n<!--BORRAR PEDIDO-->\r\n                <button type=\"button\" (click)='eliminaPedido(pedido);$event.stopPropagation();'>\r\n                  <i class=\"icofont icofont-trash\"></i>\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <!-- <app-card> -->\r\n      <a class=\"btn btn-primary\" (click)=\"nuevoPedido()\" routerLinkActive=\"active\">Nuevo Pedido</a>\r\n      <a routerLink=\"/formPedido\">NUEVO</a>\r\n    <!-- </app-card> -->\r\n  </div>\r\n</div>\r\n\r\n<!-- Formulario  -->\r\n<div class=\"container\">\r\n  <app-form-pedido\r\n  [verForm]=\"!verLista\"\r\n  [tipoForm]=\"tipoForm\"\r\n  [pedido]=\"pedido\"\r\n  (salir)=\"volver($event)\"></app-form-pedido>\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <!-- <app-card> -->\r\n      <h4>Filtros de busqueda</h4>\r\n      <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n        <div class='form-group form-inline'>\r\n          Cliente\r\n          <input type='text' size=\"40\" class='form-control' name='queryClientes'>\r\n          Estado\r\n          <select class='form-control' name='queryEstado'>\r\n            <option [value]=''>[Producto]</option>\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>\r\n          </select>\r\n          Fecha creación\r\n          <input class='form-control' name='fechaDesde' type=\"date\" placeholder=\"Fecha desde\">\r\n          <button type=\"reset\" class=\"btn btn-primary\">Quitar Filtro</button>\r\n        </div>\r\n      </form>\r\n    <!-- </app-card> -->\r\n\r\n    <app-card [title]=\"'Pedidos'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>Monto Total</th>\r\n            <th>Estado</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td (click)=\"editarPedido(pedido)\">{{i+1}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.cliente.nombresCliente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.total}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.idEstado}}</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addTallas(pedido); $event.stopPropagation();\">Tallas</button>\r\n<!--BORRAR PEDIDO-->\r\n                <button type=\"button\" (click)='eliminaPedido(pedido);$event.stopPropagation();'>\r\n                  <i class=\"icofont icofont-trash\"></i>\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -430,6 +430,7 @@ var PedidosComponent = (function () {
     }
     PedidosComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.verLista = true;
         //lista de pedidos
         this.pedidosService.getPedidos()
             .subscribe(function (pedidos) { return _this.listaPedidos = pedidos; }, function (err) { return console.log(err); });
@@ -487,16 +488,30 @@ var _a;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PedidosModule", function() { return PedidosModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pedidos_router__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.router.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__form_pedido_form_pedido_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pedidos_router__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.router.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__form_pedido_form_pedido_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
+
+
+
 
 
 
@@ -511,9 +526,20 @@ var PedidosModule = (function () {
     return PedidosModule;
 }());
 PedidosModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
-        imports: [__WEBPACK_IMPORTED_MODULE_0__pedidos_router__["a" /* pedidosRouter */]],
-        declarations: [__WEBPACK_IMPORTED_MODULE_2__pedidos_component__["a" /* PedidosComponent */], __WEBPACK_IMPORTED_MODULE_3__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */]]
+    Object(__WEBPACK_IMPORTED_MODULE_6__angular_core__["NgModule"])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_5__pedidos_router__["a" /* pedidosRouter */],
+            __WEBPACK_IMPORTED_MODULE_9__angular_router__["g" /* RouterModule */],
+            __WEBPACK_IMPORTED_MODULE_7__angular_common__["CommonModule"],
+            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_2__shared_shared_module__["a" /* SharedModule */]
+        ],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_clientes_service__["a" /* ClientesService */]
+        ],
+        declarations: [__WEBPACK_IMPORTED_MODULE_8__pedidos_component__["a" /* PedidosComponent */], __WEBPACK_IMPORTED_MODULE_10__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */]]
     })
 ], PedidosModule);
 
@@ -536,7 +562,7 @@ var PEDIDOS_ROUTER = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__pedidos_component__["a" /* PedidosComponent */] },
     { path: 'formPedido', loadChildren: './pages/pedidos/form-pedido/form-pedido.module#FormPedidoModule' }
 ];
-var pedidosRouter = __WEBPACK_IMPORTED_MODULE_1__angular_router__["g" /* RouterModule */].forRoot(PEDIDOS_ROUTER);
+var pedidosRouter = __WEBPACK_IMPORTED_MODULE_1__angular_router__["g" /* RouterModule */].forChild(PEDIDOS_ROUTER);
 //# sourceMappingURL=pedidos.router.js.map
 
 /***/ }),
@@ -695,4 +721,4 @@ var _a;
 /***/ })
 
 });
-//# sourceMappingURL=pedidos.module.chunk.js.map
+//# sourceMappingURL=pedidos.module.0.chunk.js.map

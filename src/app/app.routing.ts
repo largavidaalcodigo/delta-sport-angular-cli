@@ -24,11 +24,6 @@ export const AppRoutes: Routes = [
         path: 'clientes',
         loadChildren: './pages/clientes/clientes.module#ClientesModule'
       }, {
-/*
-        path: 'productos',
-        loadChildren: './pages/productos/productos.module#ProductosModule'
-      }, {
-*/
         path: 'notifications',
         loadChildren: './pages/ui-elements/advance/notifications/notifications.module#NotificationsModule'
       }, {
