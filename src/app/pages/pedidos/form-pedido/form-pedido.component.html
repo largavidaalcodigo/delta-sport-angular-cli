@@ -1,4 +1,3 @@
-<div *ngIf='verForm'>
   <div class="container">
     <div *ngIf="tipoForm=='tallas'; else formPedido">
       <div class="row">
@@ -499,8 +498,7 @@
     </ng-template>
   </div>
   <div class='form-group'>
-    <button (click)='emiteVolver()' type='reset' class='btn btn-default'>Cancelar</button>
+    <a class="btn btn-primary" routerLink='/pedidos'>Cancelar</a>
     <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>
   </div>
 <!--   {{pedido|json}} -->
-</div>

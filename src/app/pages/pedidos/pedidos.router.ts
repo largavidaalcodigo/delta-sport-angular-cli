@@ -7,7 +7,6 @@ import { FormPedidoComponent } from './form-pedido/form-pedido.component';
 
 const PEDIDOS_ROUTER: Routes = [
   {path: '', component: PedidosComponent},
-  {path: 'formPedido', loadChildren: './pages/pedidos/form-pedido/form-pedido.module#FormPedidoModule'}
 ];
 
 export const pedidosRouter = RouterModule.forChild(PEDIDOS_ROUTER);

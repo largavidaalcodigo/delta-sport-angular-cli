@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { PedidosService } from '../../services/pedidos.service';
 import { Pedido } from '../../model/pedido/pedido.model';
 /* import { TipoProducto } from '../../model/producto/tipoProducto.model';
@@ -18,7 +19,13 @@ export class PedidosComponent implements OnInit {
   verLista: boolean = true;
   tipoForm: string; // USADO PARA DEFINIR LAS TALLAS
 
-  constructor(private pedidosService: PedidosService) {
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private pedidosService: PedidosService) {
+    let sub = this.route.params.subscribe(params => {
+      let mensaje = params['id']; // (+) converts string 'id' to a number
+      console.log('mensaje->'+ mensaje);
+    });
   }
 
   ngOnInit() {
@@ -30,7 +37,6 @@ export class PedidosComponent implements OnInit {
         pedidos => this.listaPedidos = pedidos,
         err => console.log(err)
     );
-
     this.listaEstadosPedido = this.pedidosService.getEstadosPedido();
   }
 
@@ -42,12 +48,6 @@ export class PedidosComponent implements OnInit {
   public toggleLista(){
     this.verLista = !this.verLista;
     console.log('this.verLista ->'+ this.verLista);
-  }
-
-  //Nuevo Pedido
-  nuevoPedido() {
-    this.toggleLista();
-    //this.tipoForm = "Nuevo";
   }
 
   //Ver o Editar Cliente

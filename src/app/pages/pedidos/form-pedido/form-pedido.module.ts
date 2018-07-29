@@ -1,3 +1,4 @@
+import { PedidosComponent } from './../pedidos.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,26 +9,23 @@ import { PedidosService } from '../../../services/pedidos.service';
 import { ClientesService } from '../../../services/clientes.service';
 import { FilterDataPipe } from './filterdata.pipe';
 
-/* export const formPedidoRoutes: Routes = [
-  {
-    path: '',
-    component: FormPedidoComponent
-  }
-]; */
+export const pedidosRoutes: Routes = [
+  {path: ':id', component: PedidosComponent},
+];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forChild(pedidosRoutes)
   ],
-/*   providers: [
+  providers: [
     PedidosService,
     ClientesService
   ],
- */  declarations: [
-    FormPedidoComponent,
+  declarations: [
     FilterDataPipe
   ]
 })

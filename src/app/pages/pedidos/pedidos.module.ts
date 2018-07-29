@@ -9,10 +9,12 @@ import { CommonModule } from '@angular/common';
 import { PedidosComponent } from './pedidos.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormPedidoComponent } from './form-pedido/form-pedido.component';
-/* const pedidosRoutes: Routes = [
+import { FormPedidoModule } from './form-pedido/form-pedido.module';
+
+export const pedidosRoutes: Routes = [
   {path: '', component: PedidosComponent},
-  {path: 'formPedido', component: FormPedidoComponent}
-]; */
+  {path: 'formPedido/:id', component: FormPedidoComponent}
+];
 
 @NgModule({
   imports: [
@@ -21,7 +23,9 @@ import { FormPedidoComponent } from './form-pedido/form-pedido.component';
     CommonModule,
     FormsModule,
     HttpModule,
-    SharedModule
+    SharedModule,
+    FormPedidoModule,
+    RouterModule.forChild(pedidosRoutes),
   ],
   providers: [
     PedidosService,
@@ -30,3 +34,4 @@ import { FormPedidoComponent } from './form-pedido/form-pedido.component';
   declarations: [PedidosComponent, FormPedidoComponent]
 })
 export class PedidosModule {}
+

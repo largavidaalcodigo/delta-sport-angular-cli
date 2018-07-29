@@ -13,6 +13,8 @@ import { ClientesService } from '../../../services/clientes.service';
 import { PedidosService } from '../../../services/pedidos.service';
 import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
   Component,
@@ -34,10 +36,12 @@ export class FormPedidoComponent implements OnInit {
  /*  @ViewChild('encabezadoPedidoForm') encabezadoPedidoForm: NgForm;
   @ViewChild('detallePedidoForm') detallePedidoForm: NgForm;
   */
-  @Input() verForm: boolean;
+/*   @Input() verForm: boolean;
   @Input() tipoForm: string;
   @Input() pedido: Pedido; //Puede venir con datos
-  @Output() public salir = new EventEmitter();
+  @Output() public salir = new EventEmitter(); */
+  pedido: Pedido;
+  tipoForm: string;
 
   //Lista Detalle pedido
   detallePedido: DetallePedido;
@@ -66,9 +70,17 @@ export class FormPedidoComponent implements OnInit {
   saldoPendiente: number;
   editando: boolean = false;
 
-  constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private pedidosService: PedidosService,
+    private clientesService: ClientesService) {}
 
   ngOnInit() {
+    console.log('Se inicia form pedido');
+    let sub = this.route.params.subscribe(params => {
+      let id = +params['id']; // (+) converts string 'id' to a number
+    });
+
     if (this.tipoForm =='editar'){
       console.log('Editando pedido');
 
@@ -157,7 +169,9 @@ export class FormPedidoComponent implements OnInit {
 
   emiteVolver() {
     //this.pedidoForm.reset();
-    this.salir.emit();
+    //this.salir.emit();
+    //this.router.navigate(['/pedidos', 'Pedido creado']);
+
   }
 
 
@@ -303,9 +317,7 @@ export class FormPedidoComponent implements OnInit {
           console.log('nuevo  insertado->' + pedido);
         });
       }
-
-      this.emiteVolver();
-      this.editando = false;
+      this.router.navigate(['/pedidos', 'Pedido Creado exitosamente']);
   }
 
   eliminaProducto(id: number){
