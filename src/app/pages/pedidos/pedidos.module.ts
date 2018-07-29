@@ -8,17 +8,19 @@ import { FormPedidoComponent } from './form-pedido/form-pedido.component';
 import { HttpModule } from '@angular/http';
 import { PedidosService } from '../../services/pedidos.service';
 import { ClientesService } from '../../services/clientes.service';
-import { FilterDataPipe } from '../../pages/pedidos/form-pedido/filterdata.pipe';
+import { FilterDataPipe } from './form-pedido/filterdata.pipe';
 
 export const pedidosRoutes: Routes = [
   {
     path: '',
-    component: PedidosComponent
-  },
-  {
-    path: '/nuevo',
-    component: FormPedidoComponent
-  }
+    component: PedidosComponent,
+    children: [
+    {
+      path: '/nuevo',
+      component: FormPedidoComponent
+    }
+  ]
+}
 ];
 
 @NgModule({

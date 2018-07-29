@@ -61,6 +61,10 @@
               <td>
                 <button type="button" class="btn btn-danger btn-sm"
                 (click)="addTallas(pedido); $event.stopPropagation();">Tallas</button>
+<!--BORRAR PEDIDO-->
+                <button type="button" (click)='eliminaPedido(pedido);$event.stopPropagation();'>
+                  <i class="icofont icofont-trash"></i>
+                </button>
               </td>
             </tr>
           </tbody>

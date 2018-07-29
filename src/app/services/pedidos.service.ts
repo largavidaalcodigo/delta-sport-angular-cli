@@ -1,8 +1,9 @@
-import { Producto } from "./../model/producto/producto.model";
+import { Producto } from "../model/producto/producto.model";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Pedido } from "../model/pedido/pedido.model";
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PedidosService {
@@ -11,7 +12,13 @@ export class PedidosService {
   constructor(private http: HttpClient) {}
 
   public getPedidos(): Observable<Pedido[]> {
-    return this.http.get('/api/getPedidos');
+    return this.http.get('/api/getPedidos')
+      .map(response => response as Pedido[])
+      .catch((error : any) => Observable.throw('Server error'));
+  }
+
+  public countPedidos(): any {
+    return this.http.get('/api/countPedidos');
   }
 
   public addPedido(pedido: Pedido): Observable<Pedido> {
@@ -19,9 +26,12 @@ export class PedidosService {
   }
 
   public putPedido(pedido: Pedido): Observable<Pedido> {
-    return this.http.put<Pedido>("/pedidos", pedido);
+    return this.http.put<Pedido>('/api/putPedido/', pedido);
   }
 
+  public deletePedido(pedido: Pedido){
+    return this.http.delete<Pedido>('/api/deletePedido/' + pedido);
+  }
   public getEstadosPedido() {
     return [
       { id: 1, desc: "Creado"},

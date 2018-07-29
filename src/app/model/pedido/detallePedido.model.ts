@@ -1,3 +1,4 @@
+import { DetalleTalla } from './../producto/detalleTalla.model';
 import { DetalleAdicional } from './../producto/detalleAdicional.model';
 export class DetallePedido {
   public id: number;
@@ -14,7 +15,7 @@ export class DetallePedido {
   public idColor: number; // solo si llevaDiseño = 0
   public listaAdicionales: DetalleAdicional[];
   public totalAdicionales: number = 0;
-  public listaDetalleTallas: any;
+  public listaDetalleTallas: DetalleTalla[];
   public total: number = 0;
   constructor() {}
 }

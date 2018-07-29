@@ -1,8 +1,9 @@
-import { PedidosService } from './../../services/pedidos.service';
+import { PedidosService } from '../../services/pedidos.service';
 import { Pedido } from '../../model/pedido/pedido.model';
 /* import { TipoProducto } from '../../model/producto/tipoProducto.model';
 import { Producto } from '../../model/producto/producto.model';
  */import { Component, OnInit} from '@angular/core';
+ import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-pedidos',
@@ -21,11 +22,11 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit() {
     //lista de pedidos
-    this.pedidosService.getPedidos().subscribe(data => {
-      console.log('obteniendo lista pedidos...');
-      console.log(data);
-      this.listaPedidos = data;
-    });
+    this.pedidosService.getPedidos()
+      .subscribe(
+        pedidos => this.listaPedidos = pedidos,
+        err => console.log(err)
+    );
 
     this.listaEstadosPedido = this.pedidosService.getEstadosPedido();
   }
@@ -49,9 +50,14 @@ export class PedidosComponent implements OnInit {
   //Ver o Editar Cliente
   editarPedido(pedido: Pedido) {
     this.pedido=pedido;
+    this.tipoForm = "editar";
     this.toggleLista();
   }
 
+  eliminaPedido(pedido: Pedido){
+      console.log('editando tallas...');
+    this.pedidosService.deletePedido(pedido);
+  }
   addTallas(pedido: Pedido){
     console.log('editando tallas...');
     this.tipoForm = "tallas";

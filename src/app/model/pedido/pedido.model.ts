@@ -1,5 +1,5 @@
 import { MedioPago } from './medioPago.model';
-import { Cliente } from './../cliente/cliente.model';
+import { Cliente } from '../cliente/cliente.model';
 import { DetallePedido } from './detallePedido.model';
 import { Comentario } from './comentario.model';
 export class Pedido {

@@ -25,7 +25,11 @@ var pedidoSchema = new Schema({
       checked: Boolean
     }],
     totalAdicionales: Number,
-    listaDetalleTallas: String,
+    listaDetalleTallas: [{
+      numero: String,
+      nombrePecho: String,
+      nombreEspalda: String
+    }],
     total: Number
   }],
   cliente: {

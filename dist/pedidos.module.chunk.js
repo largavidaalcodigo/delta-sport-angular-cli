@@ -50,6 +50,21 @@ var Pedido = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/model/producto/detalleTalla.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetalleTalla; });
+var DetalleTalla = (function () {
+    function DetalleTalla() {
+    }
+    return DetalleTalla;
+}());
+
+//# sourceMappingURL=detalleTalla.model.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/model/producto/rangoPrecioProducto.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -106,7 +121,7 @@ FilterDataPipe = __decorate([
 /***/ "../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "{{tipoForm}}\r\n<div *ngIf='verForm'>\r\n  <div class=\"container\">\r\n    <div *ngIf=\"tipoForm=='tallas'; else formPedido\">\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4>Detalle Tallas</h4>\r\n            detalle del pedio, nombre, fecha, etc. estado, tipo deporte\r\n          </app-card>\r\n          <app-card>\r\n            <div class=\"accordion\" id=\"acordionProductos\">\r\n              <div class=\"card\" *ngFor='let c of pedido.listaProductos; let i=index'>\r\n                <!--header fila-->\r\n                <div class=\"card-header\" id=\"header{{i}}\">\r\n                  <button class=\"btn btn-link\" type=\"button\" data-toggle=\"collapse\" aria-expanded=\"false\"\r\n                    [attr.data-target]=\"'#fila'+i\" [attr.aria-controls]=\"'#fila'+i\">\r\n                    {{c.descProducto}}<br>\r\n                    [{{c.descTipoProducto}}]\r\n                    / Tallas: [{{c.descRangoPrecio}}]\r\n                  </button>\r\n                </div>\r\n                <!--detalle fila-->\r\n                <div id=\"fila{{i}}\" class=\"collapse\" [attr.aria-labelledby]=\"'header'+i\"\r\n                  data-parent=\"#acordionProductos\">\r\n                  <div class=\"card-body\">\r\n                    Anim pariatur cliche reprehenderit,\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <ng-template #formPedido>\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4>Datos de pedido</h4>\r\n            <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n              <div class='form-group'>\r\n  <!-- SELECCICONA CLIENTE-->\r\n                Cliente\r\n                <input type='text' size=\"40\" class='form-control' name='query'\r\n                [(ngModel)]='queryBuscaCliente' placeholder='Seleccione Cliente...'>\r\n                <div id=\"toggle\" onfocusout=\"\" class='list-group'\r\n                style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>\r\n  <!-- LISTADO CLIENTES-->\r\n                  <button type=\"button\" class=\"btn btn-primary\"\r\n                    *ngFor='let c of listaClientes | dataFilter: queryBuscaCliente : \"nombresCliente\"'\r\n                    (click)='addCliente(c)'>{{c.rutCliente}} - {{c.nombresCliente}}\r\n                  </button>\r\n                </div>\r\n  <!--FECHA ENTREGA -->\r\n                Fecha de Entrega\r\n                <input class='form-control' name='fechaEntrega'\r\n                [(ngModel)] ='pedido.fechaEntrega' type=\"date\" placeholder=\"Fecha entrega\">\r\n              </div>\r\n            </form>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n\r\n\r\n  <!--SELECCIONA PRODUCTO-->\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <span class=\"btn-group\">\r\n              <h4><span>Seleccione Producto</span>\r\n                <div style=\"position:absolute;top:0px;left:230px;\">\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                  (click)=\"nuevoDetalle()\">Nuevo</button>\r\n                </div>\r\n              </h4>\r\n            </span>\r\n  <!-- Formulario detalle Pedido -->\r\n            <form #detallePedidoForm='ngForm' (ngSubmit)=\"onSubmitDetalle(detallePedido);\"\r\n              class='form-horizontal'>\r\n              <table class=\"form-table-bordered\">\r\n                <thead class=\"thead-light\">\r\n                  <tr>\r\n                    <td>Categoria</td>\r\n                    <td>Producto</td>\r\n                    <td>Talla</td>\r\n                    <td>Cantidad</td>\r\n                    <td>Valor</td>\r\n                    <td><b>SubTotal</b></td>\r\n                    <td></td>\r\n                  </tr>\r\n                </thead>\r\n                <tbody>\r\n                  <tr>\r\n  <!--CATEGORIA-->\r\n                    <td class=\"col-xs-1\" style=\"width:140px;\">\r\n                      <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto'\r\n                      (change)='onSelectProducto($event.target.value)'>\r\n                        <option [value]=''>[Producto]</option>\r\n                        <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--PRODUCTO-->\r\n                    <td style=\"width:140px;\">\r\n                      <select class='form-control' name='tipoProducto'\r\n                      [(ngModel)]='detallePedido.idTipoProducto'\r\n                      (change)='onSelectTipoProducto($event.target.value)'\r\n                      placeholder=\"[Tipo Producto]\">\r\n                        <option [value]=''>[Tipo Producto]</option>\r\n                        <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--RANGO PRECIO-->\r\n                    <td style=\"width:90px;\">\r\n                      <select class='form-control' name='rangoPrecio'\r\n                      [(ngModel)]='detallePedido.idRangoPrecio'\r\n                      (change)='onSelectRangoPrecio($event.target.value)'>\r\n                        <option [value]=''>[Talla]</option>\r\n                        <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--CANTIDAD-->\r\n                    <td style=\"width:90px;\">\r\n                      <input type='number' class='form-control' name='cantidad'\r\n                      [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle()'>\r\n                    </td>\r\n  <!--VALOR-->\r\n                    <td style=\"width:100px;\">\r\n                      <input type='text' readonly class='form-control-plaintext form-control'\r\n                      name='valor' [ngModel]='detallePedido.valor'\r\n                        [ngModelOptions]='{standalone: true}'\r\n                        (change)=\"onChangeCalculaTotalDetalle()\">\r\n                    </td>\r\n  <!--SUBTOTAL-->\r\n                    <td style=\"width:100px;\">\r\n                      <input type='text' readonly class='form-control-plaintext form-control' name='subtotal'\r\n                      [ngModel]='detallePedido.subTotal' [ngModelOptions]='{standalone: true}'>\r\n                    </td>\r\n                    <td>\r\n  <!--BOTONERA ITEM PRODUCTO-->\r\n                      <div *ngIf=\"editando; else nuevoItem\">\r\n                        <button type=\"submit\" class=\"btn btn-primary\">Editar</button>\r\n                        <button type=\"button\" class=\"btn btn-primary\"\r\n                        (click)=\"nuevoDetalle()\">Cancelar</button>\r\n                      </div>\r\n                      <ng-template #nuevoItem>\r\n                        <button type=\"submit\" class=\"btn btn-primary\">Añadir</button>\r\n                        <button type=\"reset\" class=\"btn btn-primary\">Limpiar</button>\r\n                      </ng-template>\r\n                      <button type=\"button\" (click)=\"isCollapsed = !isCollapsed\"\r\n                        [attr.aria-expanded]=\"!isCollapsed\"\r\n                        class=\"btn btn-outline-primary\"\r\n                        aria-control=\"detallesAdicionales\">Extras\r\n                      </button>\r\n                    </td>\r\n                  </tr>\r\n                </tbody>\r\n                <tfoot>\r\n                </tfoot>\r\n              </table>\r\n        <!-- {{detallePedido | json}} -->\r\n            </form>\r\n          </app-card>\r\n\r\n  <!--COLLAPSE DETALLES ADICIONALES-->\r\n          <app-card id=\"detallesAdicionales\" [ngbCollapse]=\"!isCollapsed\">\r\n            <span>\r\n              <h4><span>Detalles adicionales</span></h4>\r\n            </span>\r\n            <div class=\"container\">\r\n              <div class=\"row\">\r\n  <!--LISTADO ADICIONALES-->\r\n                <div class=\"col-sm-9 border\">\r\n                  <label for=\"checkAdicionales{{i}}\" class=\"badge badge-pill badge-success btn-sm\"\r\n                    *ngFor=\"let c of listaDetallesAdicionales;let i = index\">\r\n                    {{c.desc}}\r\n                    <span>${{c.valor}}</span>\r\n                      <input type=\"checkbox\" id=\"checkAdicionales{{i}}\" [(ngModel)]=\"c.checked\" data-toggle=\"toggle\"\r\n                      (change)=\"addDetalleAdicional()\">\r\n  <!--                   <ng-template #noChecked>\r\n                        <input ng-checked=\"false\" type=\"checkbox\" id=\"checkAdicionales{{i}}\" [(ngModel)]=\"c.checked\" data-toggle=\"toggle\"\r\n                        (change)=\"addDetalleAdicional()\">\r\n                    </ng-template>\r\n  -->                </label>\r\n                </div>\r\n  <!--TOTAL ADICIONALES-->\r\n                <div class=\"col-sm-3 border\">\r\n                  <span>Total Adicionales:</span>\r\n                  <div class=\"input-group\">\r\n                    <div class=\"input-group-prepend\">\r\n                      <span class=\"input-group-text\">$</span>\r\n                    </div>\r\n                    <input type='text' readonly class='form-control-plaintext form-control' name='totalAdicionales'\r\n                    [(ngModel)]='detallePedido.totalAdicionales'>\r\n                  </div>\r\n                  <!--BOTONERA ITEM PRODUCTO-->\r\n  <!--                 <button type=\"button\" class=\"btn btn-primary\"\r\n                  (click)=\"addDetalleAdicional()\"\r\n                  >Añadir</button>\r\n                  <button type=\"button\" class=\"btn btn-primary\">Cancelar</button> -->\r\n                </div>\r\n              </div>\r\n              <!-- {{listaDetallesAdicionales|json}} -->\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n  <!--     {{ listaDetallesAdicionales | json }}\r\n  -->\r\n  <!--LISTA PRODUCTOS-->\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4 style=\"display:inline;\">Lista de productos&nbsp;\r\n                <span *ngIf=\"cantidadProductos\"\r\n                class=\"badge badge-danger\">{{cantidadProductos}}</span>\r\n            </h4>\r\n            <!-- <span style=\"display:inline;\" class=\"badge badge-success\">Eliminar todo</span> -->\r\n            <div class=\"container\">\r\n              <div class=\"row\">\r\n                <table class=\"table table-bordered\">\r\n                  <thead>\r\n                    <tr>\r\n                      <th scope=\"col\" style=\"width:45%\">Descripción</th>\r\n                      <th scope=\"col\">Subtotal</th>\r\n                      <th scope=\"col\">Diseño</th>\r\n                      <th scope=\"col\">Total adicionales</th>\r\n                      <th scope=\"col\">Monto Total</th>\r\n                    </tr>\r\n                  </thead>\r\n                <tbody>\r\n                  <tr *ngFor='let c of pedido.listaProductos; let i=index'>\r\n  <!--DESCRIPCION-->\r\n                    <td class=\"fila\" style=\"padding:1px;\">\r\n                        <button type=\"button\" (click)=\"verProducto(c)\"\r\n                          class=\"btn btn-outline-success text-left\"\r\n                          aria-pressed=\"true\"\r\n                          style=\"width:100%;\">\r\n                              {{c.descProducto}}<br>\r\n                                [{{c.descTipoProducto}}]\r\n                              / Tallas: [{{c.descRangoPrecio}}]\r\n                        </button>\r\n                    </td>\r\n  <!--  GRUPO SUBTOTAL ITEM -->\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n                      <h1 class=\"badge badge-success\">${{c.valor}}</h1>\r\n                      x {{c.cantidad}}<br>\r\n                      <h3 >${{c.subTotal}}</h3>\r\n                    </td>\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n  <!--  GRUPO BOTONES DISEÑO -->\r\n                      <div class=\"btn-group btn-group-toggle\"\r\n                        ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>\r\n\r\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                          <input ngbButton type=\"radio\" [value]=\"0\">NO\r\n                        </label>\r\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                          <input ngbButton type=\"radio\" [value]=\"1\">SI\r\n                        </label>\r\n                      </div>\r\n  <!--  SELECT DISEÑO -->\r\n                      <select class='form-control' name='color' [(ngModel)]='c.idColor'\r\n                        *ngIf='c.llevaDiseno==0'>\r\n                        <option [value]=''>[Color]</option>\r\n                        <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--TOTAL DETALLES ADICIONALES-->\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n                      <h3 >${{c.totalAdicionales}}</h3>\r\n                    </td>\r\n  <!--SUBTOTAL-->\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n                      <h3 >${{c.total}}</h3>\r\n                    </td>\r\n                  </tr>\r\n                </tbody>\r\n              </table>\r\n            </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-7\">\r\n  <!--COMENTARIOS-->\r\n          <app-card>\r\n            <span class=\"btn-group\">\r\n              <h4><span>Comentarios</span>\r\n                <div style=\"position:absolute;top:0px;right:30px;\">\r\n                  <a class=\"btn btn-primary btn-sm\" href=\"#\">Añadir</a>\r\n                </div>\r\n              </h4>\r\n            </span>\r\n            <div class=\"container\" *ngFor=\"let item of pedido.listaComentarios\">\r\n              <ul>\r\n                <li class=\"list-group-item table-bordered\">\r\n                  <div class=\"row\">\r\n                    <div class=\"col-sm-3 text-right\">\r\n                      {{item.fechaCreacion}}\r\n                    </div>\r\n                    <div class=\"col-sm-8 text-right\">\r\n                      {{item.desc}}\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n              </ul>\r\n            </div>\r\n          </app-card>\r\n  <!--FORMAS DE PAGO-->\r\n          <app-card>\r\n            <span class=\"btn-group\">\r\n              <h4>\r\n                <span>Forma de pago</span>\r\n  <!-- BOTONERA FORMAS DE PAGO -->\r\n                <div style=\"position:absolute;top:0px;right:30px;\"\r\n                  [ngbCollapse]=\"botoneraFormaPagoisCollapsed\" >\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                    (click)=\"nuevoMedioPago();botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed\" [attr.aria-expanded]=\"!botoneraFormaPagoisCollapsed\">\r\n                    Añadir\r\n                  </button>\r\n                </div>\r\n                <div style=\"position:absolute;top:0px;right:50px;\"\r\n                  [ngbCollapse]=\"!botoneraFormaPagoisCollapsed\" >\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                    (click)=\"addMedioPago();botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed\"\r\n                    [attr.aria-expanded]=\"!botoneraFormaPagoisCollapsed\">\r\n                    Guardar\r\n                  </button>\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                    (click)=\"botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed\"\r\n                    [attr.aria-expanded]=\"!botoneraFormaPagoisCollapsed\">\r\n                    Cancelar\r\n                  </button>\r\n                </div>\r\n\r\n              </h4>\r\n              <div [ngbCollapse]=\"!botoneraFormaPagoisCollapsed\">\r\n                <ul>\r\n                  <li class=\"list-group-item table-bordered\">\r\n                    <div class=\"row\">\r\n                      <div class=\"col-sm-5 text-right\">\r\n                        <h5>Ingrese monto</h5>\r\n                      </div>\r\n                      <div class=\"col-sm-6 text-right\">\r\n                        <select class='form-control' name='tipoPago' [(ngModel)]='medioPago.tipoPago'>\r\n                          <option value='efectivo'>Efectivo</option>\r\n                          <option value='transferencia'>Transferencia</option>\r\n                          <option value='cheque'>Cheque</option>\r\n                        </select>\r\n                        <input type='number' class='form-control' name='montoPago' [(ngModel)]='medioPago.montoPago' placeholder='Monto Pagado'>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n                </ul>\r\n              </div>\r\n              <div class=\"container\">\r\n  <!--TITULO-->\r\n                <table width=\"100%\" class=\"table-bordered\">\r\n                  <tr *ngIf=\"pedido.listaMediosPago.length>0\">\r\n                      <th class=\"text-center\">Fecha Pago</th>\r\n                      <th class=\"text-center\">Medio Pago</th>\r\n                      <th class=\"text-center\">Monto</th>\r\n                  </tr>\r\n                  <!--LISTA DE MEDIOS DE PAGO-->\r\n                  <tr *ngFor=\"let item of pedido.listaMediosPago\">\r\n                      <td class=\"text-center\">\r\n                          <h5>{{item.fechaPago | date: 'dd/MM/yyyy' }}</h5>\r\n                      </td>\r\n                      <td class=\"text-left\">\r\n                        <h5>{{item.tipoPago}}</h5>\r\n                      </td>\r\n                      <td class=\"text-right\">\r\n                        <h4>${{item.montoPago}}</h4>\r\n                      </td>\r\n                  </tr>\r\n                  <!--LISTA DE MEDIOS DE PAGO-->\r\n                  <tr>\r\n                    <td colspan=\"2\" class=\"text-right\">\r\n                      Saldo Pendiente\r\n                    </td>\r\n                    <td class=\"text-right\">\r\n                      <h4><b>${{saldoPendiente}}</b></h4>\r\n                    </td>\r\n                  </tr>\r\n                </table>\r\n              </div>\r\n            </span>\r\n          </app-card>\r\n        </div>\r\n  <!--TOTALES PEDIDO-->\r\n        <div class=\"col-sm-5\">\r\n          <app-card>\r\n            <h4>Total Pedido</h4>\r\n            <div class=\"container\">\r\n              <ul class=\"list-group\">\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Subtotal</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>${{pedido.subTotal}}</h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Descuento %</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>\r\n                        <input type='number' class='form-control' name='descuento' [(ngModel)]='pedido.descuento' placeholder='Descuento' (input)='onChangeCalculaTotal()'>\r\n                      </h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Valor Neto</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>${{pedido.subTotalNeto}}</h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Iva 19%</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>${{pedido.iva}}</h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5><b>Monto Total</b></h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4><b>${{pedido.total}}</b></h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n              </ul>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n  </div>\r\n  <div class='form-group'>\r\n    <button (click)='emiteVolver()' type='reset' class='btn btn-default'>Cancelar</button>\r\n    <button (click)='guardarPedido();' class='btn btn-primary'>Crear</button>\r\n  </div>\r\n  {{pedido|json}}\r\n</div>\r\n"
+module.exports = "<div *ngIf='verForm'>\r\n  <div class=\"container\">\r\n    <div *ngIf=\"tipoForm=='tallas'; else formPedido\">\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4>Detalle Tallas</h4>\r\n            nombre Clientefecha, etc. estado, tipo deporte\r\n          </app-card>\r\n          <app-card>\r\n            <div id=\"acordionProductos\">\r\n              <div class=\"card\" *ngFor='let c of pedido.listaProductos; let i=index'>\r\n                <!--header fila-->\r\n                <div id=\"header{{i}}\">\r\n                  <h3>{{c.descProducto}}<br>\r\n                    [{{c.descTipoProducto}}]\r\n                    / Tallas: [{{c.descRangoPrecio}}]</h3>\r\n                </div>\r\n                <!--detalle fila-->\r\n                <div id=\"fila{{i}}\">\r\n                  <form #detallePedidoForm='ngForm' (ngSubmit)=\"onSubmitDetalle(detallePedido);\" class='form-inline'>\r\n                    <table class=\"form-table-bordered\">\r\n                      <thead>\r\n                        <tr>\r\n                          <td>#</td>\r\n                          <td>Numero jugador</td>\r\n                          <td>Nombre pecho</td>\r\n                          <td>Nombre espalda</td>\r\n                        </tr>\r\n                      </thead>\r\n                      <tbody>\r\n                        <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>\r\n                          <td>{{ ii+1 }}</td>\r\n        <!--NUMERO JUGADOR-->\r\n                          <td style=\"width:90px;\">\r\n                            <input type='number' class='form-control' name='numero'\r\n                             [(ngModel)]=\"d.numero\" placeholder='Numero jugador'>\r\n                          </td>\r\n        <!--NOMBRE PECHO-->\r\n                          <td style=\"width:140px;\">\r\n                            <input type='text' class='form-control' name='nombrePecho'\r\n                            [(ngModel)]=\"d.nombrePecho\" placeholder='Nombre pecho'>\r\n                          </td>\r\n        <!--NOMBRE ESPALDA-->\r\n                          <td style=\"width:140px;\">\r\n                            <input type='text' class='form-control' name='nombreEspalda'\r\n                            [(ngModel)]=\"d.nombreEspalda\" placeholder='Nombre espalda'>\r\n                          </td>\r\n                        </tr>\r\n                      </tbody>\r\n                    </table>\r\n              <!-- {{detallePedido | json}} -->\r\n                  </form>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <ng-template #formPedido>\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4>Datos de pedido</h4>\r\n            <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n              <div class='form-group'>\r\n  <!-- SELECCICONA CLIENTE-->\r\n                Cliente\r\n                <input type='text' size=\"40\" class='form-control' name='query'\r\n                [(ngModel)]='queryBuscaCliente' placeholder='Seleccione Cliente...'>\r\n                <div id=\"toggle\" onfocusout=\"\" class='list-group'\r\n                style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>\r\n  <!-- LISTADO CLIENTES-->\r\n                  <button type=\"button\" class=\"btn btn-primary\"\r\n                    *ngFor='let c of listaClientes | dataFilter: queryBuscaCliente : \"nombresCliente\"'\r\n                    (click)='addCliente(c)'>{{c.rutCliente}} - {{c.nombresCliente}}\r\n                  </button>\r\n                </div>\r\n  <!--FECHA ENTREGA -->\r\n                Fecha de Entrega\r\n                <input class='form-control' name='fechaEntrega'\r\n                [(ngModel)] ='pedido.fechaEntrega' type=\"date\" placeholder=\"Fecha entrega\">\r\n              </div>\r\n            </form>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n\r\n\r\n  <!--SELECCIONA PRODUCTO-->\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <span class=\"btn-group\">\r\n              <h4><span>Seleccione Producto</span>\r\n                <div style=\"position:absolute;top:0px;left:230px;\">\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                  (click)=\"nuevoDetalle()\">Nuevo</button>\r\n                </div>\r\n              </h4>\r\n            </span>\r\n  <!-- Formulario detalle Pedido -->\r\n            <form #detallePedidoForm='ngForm' (ngSubmit)=\"onSubmitDetalle(detallePedido);\"\r\n              class='form-horizontal'>\r\n              <table class=\"form-table-bordered\">\r\n                <thead class=\"thead-light\">\r\n                  <tr>\r\n                    <td>Categoria</td>\r\n                    <td>Producto</td>\r\n                    <td>Talla</td>\r\n                    <td>Cantidad</td>\r\n                    <td>Valor</td>\r\n                    <td><b>SubTotal</b></td>\r\n                    <td></td>\r\n                  </tr>\r\n                </thead>\r\n                <tbody>\r\n                  <tr>\r\n  <!--CATEGORIA-->\r\n                    <td class=\"col-xs-1\" style=\"width:140px;\">\r\n                      <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto'\r\n                      (change)='onSelectProducto($event.target.value)'>\r\n                        <option [value]=''>[Producto]</option>\r\n                        <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--PRODUCTO-->\r\n                    <td style=\"width:140px;\">\r\n                      <select class='form-control' name='tipoProducto'\r\n                      [(ngModel)]='detallePedido.idTipoProducto'\r\n                      (change)='onSelectTipoProducto($event.target.value)'\r\n                      placeholder=\"[Tipo Producto]\">\r\n                        <option [value]=''>[Tipo Producto]</option>\r\n                        <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--RANGO PRECIO-->\r\n                    <td style=\"width:90px;\">\r\n                      <select class='form-control' name='rangoPrecio'\r\n                      [(ngModel)]='detallePedido.idRangoPrecio'\r\n                      (change)='onSelectRangoPrecio($event.target.value)'>\r\n                        <option [value]=''>[Talla]</option>\r\n                        <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--CANTIDAD-->\r\n                    <td style=\"width:90px;\">\r\n                      <input type='number' class='form-control' name='cantidad'\r\n                      [(ngModel)]='detallePedido.cantidad' placeholder='Cantidad' (input)='onChangeCalculaTotalDetalle()'>\r\n                    </td>\r\n  <!--VALOR-->\r\n                    <td style=\"width:100px;\">\r\n                      <input type='text' readonly class='form-control-plaintext form-control'\r\n                      name='valor' [ngModel]='detallePedido.valor'\r\n                        [ngModelOptions]='{standalone: true}'\r\n                        (change)=\"onChangeCalculaTotalDetalle()\">\r\n                    </td>\r\n  <!--SUBTOTAL-->\r\n                    <td style=\"width:100px;\">\r\n                      <input type='text' readonly class='form-control-plaintext form-control' name='subtotal'\r\n                      [ngModel]='detallePedido.subTotal' [ngModelOptions]='{standalone: true}'>\r\n                    </td>\r\n                    <td>\r\n  <!--BOTONERA ITEM PRODUCTO-->\r\n                      <div *ngIf=\"editando; else nuevoItem\">\r\n                        <button type=\"submit\" class=\"btn btn-primary\">Editar</button>\r\n                        <button type=\"button\" class=\"btn btn-primary\"\r\n                        (click)=\"nuevoDetalle()\">Cancelar</button>\r\n                      </div>\r\n                      <ng-template #nuevoItem>\r\n                        <button type=\"submit\" class=\"btn btn-primary\">Añadir</button>\r\n                        <button type=\"reset\" class=\"btn btn-primary\">Limpiar</button>\r\n                      </ng-template>\r\n                      <button type=\"button\" (click)=\"isCollapsed = !isCollapsed\"\r\n                        [attr.aria-expanded]=\"!isCollapsed\"\r\n                        class=\"btn btn-outline-primary\"\r\n                        aria-control=\"detallesAdicionales\">Extras\r\n                      </button>\r\n                    </td>\r\n                  </tr>\r\n                </tbody>\r\n                <tfoot>\r\n                </tfoot>\r\n              </table>\r\n        <!-- {{detallePedido | json}} -->\r\n            </form>\r\n  <!--COLLAPSE DETALLES ADICIONALES-->\r\n            <div id=\"detallesAdicionales\" [ngbCollapse]=\"!isCollapsed\">\r\n              <span>\r\n                <h4><span>Detalles adicionales</span></h4>\r\n              </span>\r\n              <div class=\"container\">\r\n                <div class=\"row\">\r\n    <!--LISTADO ADICIONALES-->\r\n                  <div class=\"col-sm-9 border\">\r\n                    <label for=\"checkAdicionales{{i}}\" class=\"badge badge-pill badge-success btn-sm\"\r\n                    *ngFor=\"let c of listaDetallesAdicionales;let i = index\"\r\n                      [style.background-color] = \"c.checked ? 'blue' : 'green'\">\r\n                      {{c.desc}}\r\n                      <span>${{c.valor}}</span>\r\n                        <input type=\"checkbox\" id=\"checkAdicionales{{i}}\" [(ngModel)]=\"c.checked\" data-toggle=\"toggle\"\r\n                        (change)=\"addDetalleAdicional()\">\r\n    <!--                   <ng-template #noChecked>\r\n                          <input ng-checked=\"false\" type=\"checkbox\" id=\"checkAdicionales{{i}}\" [(ngModel)]=\"c.checked\" data-toggle=\"toggle\"\r\n                          (change)=\"addDetalleAdicional()\">\r\n                      </ng-template>\r\n    -->                </label>\r\n                  </div>\r\n    <!--TOTAL ADICIONALES-->\r\n                  <div class=\"col-sm-3 border\">\r\n                    <span>Total Adicionales:</span>\r\n                    <div class=\"input-group\">\r\n                      <div class=\"input-group-prepend\">\r\n                        <span class=\"input-group-text\">$</span>\r\n                      </div>\r\n                      <input type='text' readonly class='form-control-plaintext form-control' name='totalAdicionales'\r\n                      [(ngModel)]='detallePedido.totalAdicionales'>\r\n                    </div>\r\n                    <!--BOTONERA ITEM PRODUCTO-->\r\n    <!--                 <button type=\"button\" class=\"btn btn-primary\"\r\n                    (click)=\"addDetalleAdicional()\"\r\n                    >Añadir</button>\r\n                    <button type=\"button\" class=\"btn btn-primary\">Cancelar</button> -->\r\n                  </div>\r\n                </div>\r\n                <!-- {{listaDetallesAdicionales|json}} -->\r\n              </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n  <!--     {{ listaDetallesAdicionales | json }}\r\n  -->\r\n  <!--LISTA PRODUCTOS-->\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4 style=\"display:inline;\">Lista de productos&nbsp;\r\n                <span *ngIf=\"cantidadProductos\"\r\n                class=\"badge badge-danger\">{{cantidadProductos}}</span>\r\n            </h4>\r\n            <!-- <span style=\"display:inline;\" class=\"badge badge-success\">Eliminar todo</span> -->\r\n            <div class=\"container\">\r\n              <div class=\"row\">\r\n                <table class=\"table table-bordered\">\r\n                  <thead>\r\n                    <tr>\r\n                      <th scope=\"col\" style=\"width:45%\">Descripción</th>\r\n                      <th scope=\"col\">Subtotal</th>\r\n                      <th scope=\"col\">Diseño</th>\r\n                      <th scope=\"col\">Total adicionales</th>\r\n                      <th scope=\"col\">Monto Total</th>\r\n                      <th>&nbsp;</th>\r\n                    </tr>\r\n                  </thead>\r\n                <tbody>\r\n                  <tr *ngFor='let c of pedido.listaProductos; let i=index'>\r\n  <!--DESCRIPCION-->\r\n                    <td class=\"fila\" style=\"padding:1px;\">\r\n                        <button type=\"button\" (click)=\"verProducto(c)\"\r\n                          class=\"btn btn-outline-success text-left\"\r\n                          aria-pressed=\"true\"\r\n                          style=\"width:100%;\">\r\n                              {{c.descProducto}}<br>\r\n                                [{{c.descTipoProducto}}]\r\n                              / Tallas: [{{c.descRangoPrecio}}]\r\n                        </button>\r\n                    </td>\r\n  <!--  GRUPO SUBTOTAL ITEM -->\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n                      <h1 class=\"badge badge-success\">${{c.valor}}</h1>\r\n                      x {{c.cantidad}}<br>\r\n                      <h3 >${{c.subTotal}}</h3>\r\n                    </td>\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n  <!--  GRUPO BOTONES DISEÑO -->\r\n                      <div class=\"btn-group btn-group-toggle\"\r\n                        ngbRadioGroup name='llevaDiseno' [(ngModel)]='c.llevaDiseno'>\r\n\r\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                          <input ngbButton type=\"radio\" [value]=\"0\">NO\r\n                        </label>\r\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                          <input ngbButton type=\"radio\" [value]=\"1\">SI\r\n                        </label>\r\n                      </div>\r\n  <!--  SELECT DISEÑO -->\r\n                      <select class='form-control' name='color' [(ngModel)]='c.idColor'\r\n                        *ngIf='c.llevaDiseno==0'>\r\n                        <option [value]=''>[Color]</option>\r\n                        <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>\r\n                      </select>\r\n                    </td>\r\n  <!--TOTAL DETALLES ADICIONALES-->\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n                      <h3 >${{c.totalAdicionales}}</h3>\r\n                    </td>\r\n  <!--SUBTOTAL-->\r\n                    <td class=\"text-center\" style=\"padding:1px;width:15%\">\r\n                      <h3 >${{c.total}}</h3>\r\n                    </td>\r\n  <!--OPCION ELIMINAR-->\r\n                    <td>\r\n                        <div style=\"text-align:center\">\r\n                          <button type=\"button\" (click)='eliminaProducto(\"$index\");'>\r\n                            <i class=\"icofont icofont-trash\"></i>\r\n                          </button>\r\n                        </div>\r\n                    </td>\r\n                  </tr>\r\n                </tbody>\r\n              </table>\r\n            </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-7\">\r\n  <!--COMENTARIOS-->\r\n          <app-card>\r\n            <span class=\"btn-group\">\r\n              <h4><span>Comentarios</span>\r\n                <div style=\"position:absolute;top:0px;right:30px;\">\r\n                  <a class=\"btn btn-primary btn-sm\" href=\"#\">Añadir</a>\r\n                </div>\r\n              </h4>\r\n            </span>\r\n            <div class=\"container\" *ngFor=\"let item of pedido.listaComentarios\">\r\n              <ul>\r\n                <li class=\"list-group-item table-bordered\">\r\n                  <div class=\"row\">\r\n                    <div class=\"col-sm-3 text-right\">\r\n                      {{item.fechaCreacion}}\r\n                    </div>\r\n                    <div class=\"col-sm-8 text-right\">\r\n                      {{item.desc}}\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n              </ul>\r\n            </div>\r\n          </app-card>\r\n  <!--FORMAS DE PAGO-->\r\n          <app-card>\r\n            <span class=\"btn-group\">\r\n              <h4>\r\n                <span>Forma de pago</span>\r\n  <!-- BOTONERA FORMAS DE PAGO -->\r\n                <div style=\"position:absolute;top:0px;right:30px;\"\r\n                  [ngbCollapse]=\"botoneraFormaPagoisCollapsed\" >\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                    (click)=\"nuevoMedioPago();botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed\" [attr.aria-expanded]=\"!botoneraFormaPagoisCollapsed\">\r\n                    Añadir\r\n                  </button>\r\n                </div>\r\n                <div style=\"position:absolute;top:0px;right:50px;\"\r\n                  [ngbCollapse]=\"!botoneraFormaPagoisCollapsed\" >\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                    (click)=\"addMedioPago();botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed\"\r\n                    [attr.aria-expanded]=\"!botoneraFormaPagoisCollapsed\">\r\n                    Guardar\r\n                  </button>\r\n                  <button type=\"button\" class=\"btn btn-primary btn-sm\"\r\n                    (click)=\"botoneraFormaPagoisCollapsed=!botoneraFormaPagoisCollapsed\"\r\n                    [attr.aria-expanded]=\"!botoneraFormaPagoisCollapsed\">\r\n                    Cancelar\r\n                  </button>\r\n                </div>\r\n\r\n              </h4>\r\n              <div [ngbCollapse]=\"!botoneraFormaPagoisCollapsed\">\r\n                <ul>\r\n                  <li class=\"list-group-item table-bordered\">\r\n                    <div class=\"row\">\r\n                      <div class=\"col-sm-5 text-right\">\r\n                        <h5>Ingrese monto</h5>\r\n                      </div>\r\n                      <div class=\"col-sm-6 text-right\">\r\n                        <select class='form-control' name='tipoPago' [(ngModel)]='medioPago.tipoPago'>\r\n                          <option value='efectivo'>Efectivo</option>\r\n                          <option value='transferencia'>Transferencia</option>\r\n                          <option value='cheque'>Cheque</option>\r\n                        </select>\r\n                        <input type='number' class='form-control' name='montoPago' [(ngModel)]='medioPago.montoPago' placeholder='Monto Pagado'>\r\n                      </div>\r\n                    </div>\r\n                  </li>\r\n                </ul>\r\n              </div>\r\n              <div class=\"container\">\r\n  <!--TITULO-->\r\n                <table width=\"100%\" class=\"table-bordered\">\r\n                  <tr *ngIf=\"pedido.listaMediosPago.length>0\">\r\n                      <th class=\"text-center\">Fecha Pago</th>\r\n                      <th class=\"text-center\">Medio Pago</th>\r\n                      <th class=\"text-center\">Monto</th>\r\n                      <th>&nbsp;</th>\r\n                  </tr>\r\n                  <!--LISTA DE MEDIOS DE PAGO-->\r\n                  <tr *ngFor=\"let item of pedido.listaMediosPago; let i = index;\">\r\n                    <td class=\"text-center\">\r\n                        <h5>{{item.fechaPago | date: 'dd/MM/yyyy' }}</h5>\r\n                    </td>\r\n                    <td class=\"text-left\">\r\n                      <h5>{{item.tipoPago}}</h5>\r\n                    </td>\r\n                    <td class=\"text-right\">\r\n                      <h4>${{item.montoPago}}</h4>\r\n                    </td>\r\n                    <td>\r\n                      <div style=\"text-align:center\">\r\n                        <button type=\"button\" (click)='eliminaMedioPago(\"$i\");'>\r\n                          <i class=\"icofont icofont-trash\"></i>\r\n                        </button>\r\n                      </div>\r\n                    </td>\r\n\r\n                  </tr>\r\n                  <!--LISTA DE MEDIOS DE PAGO-->\r\n                  <tr>\r\n                    <td colspan=\"2\" class=\"text-right\">\r\n                      Saldo Pendiente\r\n                    </td>\r\n                    <td class=\"text-right\">\r\n                      <h4><b>${{saldoPendiente}}</b></h4>\r\n                    </td>\r\n                  </tr>\r\n                </table>\r\n              </div>\r\n            </span>\r\n          </app-card>\r\n        </div>\r\n  <!--TOTALES PEDIDO-->\r\n        <div class=\"col-sm-5\">\r\n          <app-card>\r\n            <h4>Total Pedido</h4>\r\n            <div class=\"container\">\r\n              <ul class=\"list-group\">\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Subtotal</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>${{pedido.subTotal}}</h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Descuento %</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>\r\n                        <input type='number' class='form-control' name='descuento' [(ngModel)]='pedido.descuento' placeholder='Descuento' (input)='onChangeCalculaTotal()'>\r\n                      </h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Valor Neto</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>${{pedido.subTotalNeto}}</h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5>Iva 19%</h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4>${{pedido.iva}}</h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n                <li class=\"list-group-item\">\r\n                  <div class=\"row\">\r\n                    <div class=\"text-right col-sm-5\">\r\n                      <h5><b>Monto Total</b></h5>\r\n                    </div>\r\n                    <div class=\"text-right col-sm-6\">\r\n                      <h4><b>${{pedido.total}}</b></h4>\r\n                    </div>\r\n                  </div>\r\n                </li>\r\n              </ul>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n  </div>\r\n  <div class='form-group'>\r\n    <button (click)='emiteVolver()' type='reset' class='btn btn-default'>Cancelar</button>\r\n    <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>\r\n  </div>\r\n<!--   {{pedido|json}} -->\r\n</div>\r\n"
 
 /***/ }),
 
@@ -115,14 +130,15 @@ module.exports = "{{tipoForm}}\r\n<div *ngIf='verForm'>\r\n  <div class=\"contai
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormPedidoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_pedido_detallePedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/detallePedido.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_pedido_medioPago_model__ = __webpack_require__("../../../../../src/app/model/pedido/medioPago.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_producto_rangoPrecioProducto_model__ = __webpack_require__("../../../../../src/app/model/producto/rangoPrecioProducto.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_producto_detalleTalla_model__ = __webpack_require__("../../../../../src/app/model/producto/detalleTalla.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_pedido_detallePedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/detallePedido.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_pedido_medioPago_model__ = __webpack_require__("../../../../../src/app/model/pedido/medioPago.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_producto_rangoPrecioProducto_model__ = __webpack_require__("../../../../../src/app/model/producto/rangoPrecioProducto.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -140,30 +156,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var FormPedidoComponent = (function () {
     function FormPedidoComponent(pedidosService, clientesService) {
         this.pedidosService = pedidosService;
         this.clientesService = clientesService;
-        this.salir = new __WEBPACK_IMPORTED_MODULE_7__angular_core__["EventEmitter"]();
+        this.salir = new __WEBPACK_IMPORTED_MODULE_8__angular_core__["EventEmitter"]();
+        this.nombreBoton = "Guardar";
         this.listaDetallesAdicionales = new Array();
+        this.listaDetallesTallas = new Array();
         //Medio pago
         this.listaMediosPago = new Array();
         this.editando = false;
     }
     FormPedidoComponent.prototype.ngOnInit = function () {
         var _this = this;
+        if (this.tipoForm == 'editar') {
+            console.log('Editando pedido');
+            this.queryBuscaCliente = 'prueba';
+            //this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
+            this.nombreBoton = "Actualizar";
+            this.onChangeCalculaTotal();
+        }
+        else if (this.tipoForm == 'tallas') {
+            console.log('Editando tallas');
+            this.nombreBoton = "Actualizar";
+        }
         if (this.pedido == null) {
-            this.pedido = new __WEBPACK_IMPORTED_MODULE_3__model_pedido_pedido_model__["a" /* Pedido */]();
+            console.log('nuevo pedido');
+            this.pedido = new __WEBPACK_IMPORTED_MODULE_4__model_pedido_pedido_model__["a" /* Pedido */]();
             this.pedido.idEstado = 1; //0= inactivo , 1=activo
             this.pedido.fechaCreacion = new Date();
             this.pedido.subTotal = 0;
             this.pedido.descuento = 0;
             this.pedido.listaProductos = new Array();
             this.pedido.listaMediosPago = new Array();
-        }
-        else {
-            this.queryBuscaCliente = 'prueba'; //this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
-            console.log('queryBuscaCliente->' + this.queryBuscaCliente);
         }
         this.listaColores = this.pedidosService.getColores();
         this.listaMediosPago = this.pedidosService.getMediosPago();
@@ -175,10 +202,11 @@ var FormPedidoComponent = (function () {
             _this.listaClientes = data;
         });
         this.listaProductos = this.pedidosService.getProductos();
-        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_0__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
-        this.medioPago = new __WEBPACK_IMPORTED_MODULE_1__model_pedido_medioPago_model__["a" /* MedioPago */]();
+        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_1__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.medioPago = new __WEBPACK_IMPORTED_MODULE_2__model_pedido_medioPago_model__["a" /* MedioPago */]();
         this.detallePedido.listaAdicionales = new Array();
-        this.rangoPrecioProducto = new __WEBPACK_IMPORTED_MODULE_2__model_producto_rangoPrecioProducto_model__["a" /* RangoPrecioProducto */]();
+        this.detallePedido.listaDetalleTallas = new Array();
+        this.rangoPrecioProducto = new __WEBPACK_IMPORTED_MODULE_3__model_producto_rangoPrecioProducto_model__["a" /* RangoPrecioProducto */]();
     };
     FormPedidoComponent.prototype.addCliente = function (cliente) {
         this.pedido.cliente = cliente;
@@ -221,6 +249,9 @@ var FormPedidoComponent = (function () {
     FormPedidoComponent.prototype.onSubmitDetalle = function () {
         var _this = this;
         if (this.editando) {
+            this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(function (item) { return item.checked; });
+        }
+        else if (this.tipoForm == 'tallas') {
         }
         else {
             //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
@@ -232,17 +263,30 @@ var FormPedidoComponent = (function () {
             this.detallePedido.descTipoProducto = this.listaTipoProducto.find(function (item) { return item.id == _this.detallePedido.idTipoProducto; }).desc;
             this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(function (item) { return item.id == _this.detallePedido.idRangoPrecio; }).desc;
             this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(function (item) { return item.checked; });
+            //TALLAS
+            this.listaDetallesTallas = new Array();
+            for (var c = 0; c < this.detallePedido.cantidad; c++) {
+                this.detalleTallas = new __WEBPACK_IMPORTED_MODULE_0__model_producto_detalleTalla_model__["a" /* DetalleTalla */]();
+                this.detalleTallas.numero = '';
+                this.detalleTallas.nombrePecho = '';
+                this.detalleTallas.nombreEspalda = '';
+                this.listaDetallesTallas.push(this.detalleTallas);
+            }
+            this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
+            //this.pedido.numeroPedido = this.pedidosService.countPedidos();
             this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
             console.log("nuevo item->" + JSON.stringify(this.detallePedido));
+            this.detallePedido = new __WEBPACK_IMPORTED_MODULE_1__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
         }
         //Calcula el total
         this.onChangeCalculaTotal();
         //this.pedido.listaProductos = this.listaDetallePedido;
-        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_0__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_1__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
         this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
     };
     FormPedidoComponent.prototype.nuevoDetalle = function () {
-        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_0__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_1__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
         this.editando = false;
     };
     FormPedidoComponent.prototype.verProducto = function (detallePedido) {
@@ -273,6 +317,7 @@ var FormPedidoComponent = (function () {
     };
     // CUANDO CAMBIA EL DESCUENTO DEL PEDIDO
     FormPedidoComponent.prototype.onChangeCalculaTotal = function () {
+        console.log('Calculando total...');
         //suma valor del detalle al pedido
         var totalPedido = 0;
         this.pedido.listaProductos.filter(function (item) {
@@ -283,6 +328,11 @@ var FormPedidoComponent = (function () {
         this.pedido.subTotalNeto = Math.round(this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100);
         this.pedido.iva = Math.round(this.pedido.subTotalNeto * 0.19);
         this.pedido.total = Math.round(this.pedido.subTotalNeto + this.pedido.iva);
+        this.pedido.totalMediosPago = 0;
+        for (var _i = 0, _a = this.pedido.listaMediosPago; _i < _a.length; _i++) {
+            var c = _a[_i];
+            this.pedido.totalMediosPago += c.montoPago;
+        }
         this.saldoPendiente = this.pedido.total - this.pedido.totalMediosPago;
     };
     // CUANDO AGREGO UN DETALLE ADICIONAL
@@ -299,60 +349,76 @@ var FormPedidoComponent = (function () {
         //console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
     };
     FormPedidoComponent.prototype.nuevoMedioPago = function () {
-        this.medioPago = new __WEBPACK_IMPORTED_MODULE_1__model_pedido_medioPago_model__["a" /* MedioPago */]();
+        this.medioPago = new __WEBPACK_IMPORTED_MODULE_2__model_pedido_medioPago_model__["a" /* MedioPago */]();
         this.medioPago.fechaPago = new Date();
     };
     FormPedidoComponent.prototype.addMedioPago = function () {
         console.log('agregando medio pago');
         this.pedido.listaMediosPago.push(this.medioPago);
         this.pedido.totalMediosPago = 0;
-        for (var _i = 0, _a = this.pedido.listaMediosPago; _i < _a.length; _i++) {
-            var c = _a[_i];
-            this.pedido.totalMediosPago += c.montoPago;
-        }
         this.onChangeCalculaTotal();
     };
     FormPedidoComponent.prototype.guardarPedido = function () {
         var _this = this;
-        this.pedidosService.addPedido(this.pedido).subscribe(function (pedido) {
-            _this.pedido = pedido;
-            console.log('nuevo  insertado->' + pedido);
-        });
+        if (this.tipoForm == 'editar') {
+            this.pedidosService.putPedido(this.pedido);
+            console.log('pedido update->' + JSON.stringify(this.pedido));
+        }
+        else if (this.tipoForm == 'tallas') {
+        }
+        else {
+            console.log('insertando pedido...');
+            this.pedidosService.addPedido(this.pedido).subscribe(function (pedido) {
+                _this.pedido = pedido;
+                console.log('nuevo  insertado->' + pedido);
+            });
+        }
         this.emiteVolver();
         this.editando = false;
+    };
+    FormPedidoComponent.prototype.eliminaProducto = function (id) {
+        this.pedido.listaProductos.splice(id, 1);
+        this.cantidadProductos = this.pedido.listaProductos.length;
+        this.onChangeCalculaTotal();
+        console.log('eliminando producto->' + id);
+    };
+    FormPedidoComponent.prototype.eliminaMedioPago = function (id) {
+        this.pedido.listaMediosPago.splice(id, 1);
+        this.onChangeCalculaTotal();
+        console.log('eliminando medio pago->' + id);
     };
     return FormPedidoComponent;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["ViewChild"])('encabezadoPedidoForm'),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_6__angular_forms__["d" /* NgForm */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_forms__["d" /* NgForm */]) === "function" && _a || Object)
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["ViewChild"])('encabezadoPedidoForm'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_7__angular_forms__["d" /* NgForm */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_forms__["d" /* NgForm */]) === "function" && _a || Object)
 ], FormPedidoComponent.prototype, "encabezadoPedidoForm", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["ViewChild"])('detallePedidoForm'),
-    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__angular_forms__["d" /* NgForm */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_forms__["d" /* NgForm */]) === "function" && _b || Object)
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["ViewChild"])('detallePedidoForm'),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_7__angular_forms__["d" /* NgForm */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_forms__["d" /* NgForm */]) === "function" && _b || Object)
 ], FormPedidoComponent.prototype, "detallePedidoForm", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["Input"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["Input"])(),
     __metadata("design:type", Boolean)
 ], FormPedidoComponent.prototype, "verForm", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["Input"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["Input"])(),
     __metadata("design:type", String)
 ], FormPedidoComponent.prototype, "tipoForm", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["Input"])(),
-    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__model_pedido_pedido_model__["a" /* Pedido */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__model_pedido_pedido_model__["a" /* Pedido */]) === "function" && _c || Object)
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["Input"])(),
+    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__model_pedido_pedido_model__["a" /* Pedido */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__model_pedido_pedido_model__["a" /* Pedido */]) === "function" && _c || Object)
 ], FormPedidoComponent.prototype, "pedido", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["Output"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["Output"])(),
     __metadata("design:type", Object)
 ], FormPedidoComponent.prototype, "salir", void 0);
 FormPedidoComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["Component"])({
+    Object(__WEBPACK_IMPORTED_MODULE_8__angular_core__["Component"])({
         selector: 'app-form-pedido',
         template: __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.html")
     }),
-    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_pedidos_service__["a" /* PedidosService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_clientes_service__["a" /* ClientesService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_pedidos_service__["a" /* PedidosService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_clientes_service__["a" /* ClientesService */]) === "function" && _e || Object])
 ], FormPedidoComponent);
 
 var _a, _b, _c, _d, _e;
@@ -381,7 +447,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/pedidos/pedidos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <a class=\"btn btn-primary\" (click)=\"nuevoPedido()\" routerLinkActive=\"active\">Nuevo Pedido</a>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n<!-- Formulario  -->\r\n<div class=\"container\">\r\n  <app-form-pedido\r\n  [verForm]=\"!verLista\"\r\n  [tipoForm]=\"tipoForm\"\r\n  [pedido]=\"pedido\"\r\n  (salir)=\"volver($event)\"></app-form-pedido>\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <h4>Filtros de busqueda</h4>\r\n      <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n        <div class='form-group form-inline'>\r\n          Cliente\r\n          <input type='text' size=\"40\" class='form-control' name='queryClientes'>\r\n          Estado\r\n          <select class='form-control' name='queryEstado'>\r\n            <option [value]=''>[Producto]</option>\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>\r\n          </select>\r\n          Fecha creación\r\n          <input class='form-control' name='fechaDesde' type=\"date\" placeholder=\"Fecha desde\">\r\n          <button type=\"reset\" class=\"btn btn-primary\">Quitar Filtro</button>\r\n        </div>\r\n      </form>\r\n    </app-card>\r\n\r\n    <app-card [title]=\"'Pedidos'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>Monto Total</th>\r\n            <th>Estado</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td (click)=\"editarPedido(pedido)\">{{i+1}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.cliente.nombresCliente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.total}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.idEstado}}</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addTallas(pedido); $event.stopPropagation();\">Tallas</button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <a class=\"btn btn-primary\" (click)=\"nuevoPedido()\" routerLinkActive=\"active\">Nuevo Pedido</a>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n<!-- Formulario  -->\r\n<div class=\"container\">\r\n  <app-form-pedido\r\n  [verForm]=\"!verLista\"\r\n  [tipoForm]=\"tipoForm\"\r\n  [pedido]=\"pedido\"\r\n  (salir)=\"volver($event)\"></app-form-pedido>\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\" *ngIf='verLista'>\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <h4>Filtros de busqueda</h4>\r\n      <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n        <div class='form-group form-inline'>\r\n          Cliente\r\n          <input type='text' size=\"40\" class='form-control' name='queryClientes'>\r\n          Estado\r\n          <select class='form-control' name='queryEstado'>\r\n            <option [value]=''>[Producto]</option>\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>\r\n          </select>\r\n          Fecha creación\r\n          <input class='form-control' name='fechaDesde' type=\"date\" placeholder=\"Fecha desde\">\r\n          <button type=\"reset\" class=\"btn btn-primary\">Quitar Filtro</button>\r\n        </div>\r\n      </form>\r\n    </app-card>\r\n\r\n    <app-card [title]=\"'Pedidos'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>Monto Total</th>\r\n            <th>Estado</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td (click)=\"editarPedido(pedido)\">{{i+1}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.cliente.nombresCliente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.total}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.idEstado}}</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addTallas(pedido); $event.stopPropagation();\">Tallas</button>\r\n<!--BORRAR PEDIDO-->\r\n                <button type=\"button\" (click)='eliminaPedido(pedido);$event.stopPropagation();'>\r\n                  <i class=\"icofont icofont-trash\"></i>\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -413,11 +479,8 @@ var PedidosComponent = (function () {
     PedidosComponent.prototype.ngOnInit = function () {
         var _this = this;
         //lista de pedidos
-        this.pedidosService.getPedidos().subscribe(function (data) {
-            console.log('obteniendo lista pedidos...');
-            console.log(data);
-            _this.listaPedidos = data;
-        });
+        this.pedidosService.getPedidos()
+            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos; }, function (err) { return console.log(err); });
         this.listaEstadosPedido = this.pedidosService.getEstadosPedido();
     };
     //Cierre con boton Volver
@@ -437,7 +500,12 @@ var PedidosComponent = (function () {
     //Ver o Editar Cliente
     PedidosComponent.prototype.editarPedido = function (pedido) {
         this.pedido = pedido;
+        this.tipoForm = "editar";
         this.toggleLista();
+    };
+    PedidosComponent.prototype.eliminaPedido = function (pedido) {
+        console.log('editando tallas...');
+        this.pedidosService.deletePedido(pedido);
     };
     PedidosComponent.prototype.addTallas = function (pedido) {
         console.log('editando tallas...');
@@ -478,7 +546,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_pedidos_form_pedido_filterdata_pipe__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/filterdata.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__form_pedido_filterdata_pipe__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/filterdata.pipe.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -499,11 +567,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var pedidosRoutes = [
     {
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_3__pedidos_component__["a" /* PedidosComponent */]
-    },
-    {
-        path: '/nuevo',
-        component: __WEBPACK_IMPORTED_MODULE_6__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */]
+        component: __WEBPACK_IMPORTED_MODULE_3__pedidos_component__["a" /* PedidosComponent */],
+        children: [
+            {
+                path: '/nuevo',
+                component: __WEBPACK_IMPORTED_MODULE_6__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */]
+            }
+        ]
     }
 ];
 var PedidosModule = (function () {
@@ -528,7 +598,7 @@ PedidosModule = __decorate([
         declarations: [
             __WEBPACK_IMPORTED_MODULE_3__pedidos_component__["a" /* PedidosComponent */],
             __WEBPACK_IMPORTED_MODULE_6__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__pages_pedidos_form_pedido_filterdata_pipe__["a" /* FilterDataPipe */]
+            __WEBPACK_IMPORTED_MODULE_10__form_pedido_filterdata_pipe__["a" /* FilterDataPipe */]
         ]
     })
 ], PedidosModule);
@@ -543,7 +613,11 @@ PedidosModule = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PedidosService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -555,19 +629,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var PedidosService = (function () {
     //baseUrl: string = "http://localhost:8081";
     function PedidosService(http) {
         this.http = http;
     }
     PedidosService.prototype.getPedidos = function () {
-        return this.http.get('/api/getPedidos');
+        return this.http.get('/api/getPedidos')
+            .map(function (response) { return response; })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
+    };
+    PedidosService.prototype.countPedidos = function () {
+        return this.http.get('/api/countPedidos');
     };
     PedidosService.prototype.addPedido = function (pedido) {
         return this.http.post('/api/addPedido', pedido);
     };
     PedidosService.prototype.putPedido = function (pedido) {
-        return this.http.put("/pedidos", pedido);
+        return this.http.put('/api/putPedido/', pedido);
+    };
+    PedidosService.prototype.deletePedido = function (pedido) {
+        return this.http.delete('/api/deletePedido/' + pedido);
     };
     PedidosService.prototype.getEstadosPedido = function () {
         return [
@@ -667,7 +751,7 @@ var PedidosService = (function () {
     return PedidosService;
 }());
 PedidosService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
 ], PedidosService);
 

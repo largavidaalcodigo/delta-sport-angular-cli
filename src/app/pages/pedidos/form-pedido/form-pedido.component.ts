@@ -1,15 +1,16 @@
-import { DetallePedido } from './../../../model/pedido/detallePedido.model';
-import { DetalleAdicional } from './../../../model/producto/detalleAdicional.model';
-import { MedioPago } from './../../../model/pedido/medioPago.model';
+import { DetalleTalla } from './../../../model/producto/detalleTalla.model';
+import { DetallePedido } from '../../../model/pedido/detallePedido.model';
+import { DetalleAdicional } from '../../../model/producto/detalleAdicional.model';
+import { MedioPago } from '../../../model/pedido/medioPago.model';
 import { Observable } from 'rxjs';
-import { Cliente } from './../../../model/cliente/cliente.model';
-import { Color } from './../../../model/producto/color.model';
-import { TipoProducto } from './../../../model/producto/tipoProducto.model';
+import { Cliente } from '../../../model/cliente/cliente.model';
+import { Color } from '../../../model/producto/color.model';
+import { TipoProducto } from '../../../model/producto/tipoProducto.model';
 import { RangoPrecioProducto } from '../../../model/producto/rangoPrecioProducto.model';
 import { Pedido } from '../../../model/pedido/pedido.model';
 
-import { ClientesService } from './../../../services/clientes.service';
-import { PedidosService } from './../../../services/pedidos.service';
+import { ClientesService } from '../../../services/clientes.service';
+import { PedidosService } from '../../../services/pedidos.service';
 import { NgForm } from '@angular/forms';
 import {FormControl} from '@angular/forms';
 
@@ -39,7 +40,9 @@ export class FormPedidoComponent implements OnInit {
 
   //Lista Detalle pedido
   detallePedido: DetallePedido;
+  detalleTallas: DetalleTalla;
   medioPago: MedioPago;
+  nombreBoton: string="Guardar";
   //listaDetallePedido: DetallePedido[] = new Array();
   rangoPrecioProducto: RangoPrecioProducto;
 
@@ -50,6 +53,7 @@ export class FormPedidoComponent implements OnInit {
   listaColores: Color[];
   listaClientes: Cliente[];
   listaDetallesAdicionales: any[] = new Array();
+  listaDetallesTallas: any[] = new Array();
 
   cantidadProductos: number;
   cantidadComentarios: number;
@@ -64,7 +68,22 @@ export class FormPedidoComponent implements OnInit {
   constructor(private pedidosService: PedidosService, private clientesService: ClientesService) {}
 
   ngOnInit() {
-     if (this.pedido == null) {
+    if (this.tipoForm =='editar'){
+      console.log('Editando pedido');
+
+      this.queryBuscaCliente = 'prueba';
+        //this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
+      this.nombreBoton="Actualizar";
+      this.onChangeCalculaTotal();
+
+    }else if (this.tipoForm == 'tallas'){
+      console.log('Editando tallas');
+
+        this.nombreBoton="Actualizar";
+    }
+
+    if (this.pedido == null) {
+      console.log('nuevo pedido');
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //0= inactivo , 1=activo
       this.pedido.fechaCreacion = new Date();
@@ -72,10 +91,8 @@ export class FormPedidoComponent implements OnInit {
       this.pedido.descuento = 0;
       this.pedido.listaProductos = new Array();
       this.pedido.listaMediosPago = new Array();
-      } else{
-        this.queryBuscaCliente = 'prueba'; //this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
-        console.log('queryBuscaCliente->' + this.queryBuscaCliente);
-      }
+    }
+
 
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
@@ -93,6 +110,7 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido = new DetallePedido();
     this.medioPago = new MedioPago();
     this.detallePedido.listaAdicionales = new Array();
+    this.detallePedido.listaDetalleTallas = new Array();
     this.rangoPrecioProducto = new RangoPrecioProducto();
   }
 
@@ -141,8 +159,11 @@ export class FormPedidoComponent implements OnInit {
     this.salir.emit();
   }
 
+
   onSubmitDetalle() {
     if (this.editando){
+      this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
+    }else if (this.tipoForm == 'tallas'){
 
     }else{
       //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
@@ -158,9 +179,24 @@ export class FormPedidoComponent implements OnInit {
 
       this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
 
-      this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
-      console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
+      //TALLAS
+      this.listaDetallesTallas = new Array();
+      for (let c = 0; c < this.detallePedido.cantidad; c++) {
+        this.detalleTallas = new DetalleTalla();
+        this.detalleTallas.numero = '';
+        this.detalleTallas.nombrePecho = '';
+        this.detalleTallas.nombreEspalda = '';
+        this.listaDetallesTallas.push(this.detalleTallas);
+      }
+      this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
+      //this.pedido.numeroPedido = this.pedidosService.countPedidos();
 
+
+
+      this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
+
+      console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
+      this.detallePedido = new DetallePedido();
     }
     //Calcula el total
     this.onChangeCalculaTotal();
@@ -172,6 +208,7 @@ export class FormPedidoComponent implements OnInit {
 
   nuevoDetalle(){
     this.detallePedido = new DetallePedido();
+    this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
     this.editando = false;
   }
 
@@ -205,6 +242,7 @@ export class FormPedidoComponent implements OnInit {
 
   // CUANDO CAMBIA EL DESCUENTO DEL PEDIDO
   onChangeCalculaTotal() {
+    console.log('Calculando total...');
     //suma valor del detalle al pedido
     let totalPedido:number = 0;
     this.pedido.listaProductos.filter(item => {
@@ -216,7 +254,14 @@ export class FormPedidoComponent implements OnInit {
     this.pedido.subTotalNeto = Math.round(this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100);
     this.pedido.iva = Math.round(this.pedido.subTotalNeto * 0.19);
     this.pedido.total = Math.round(this.pedido.subTotalNeto + this.pedido.iva);
+
+    this.pedido.totalMediosPago=0;
+    for (let c of this.pedido.listaMediosPago) {
+      this.pedido.totalMediosPago += c.montoPago;
+    }
+
     this.saldoPendiente = this.pedido.total - this.pedido.totalMediosPago;
+
   }
 
   // CUANDO AGREGO UN DETALLE ADICIONAL
@@ -241,19 +286,38 @@ export class FormPedidoComponent implements OnInit {
     console.log('agregando medio pago');
     this.pedido.listaMediosPago.push(this.medioPago);
     this.pedido.totalMediosPago = 0;
-    for (let c of this.pedido.listaMediosPago) {
-      this.pedido.totalMediosPago += c.montoPago;
-    }
     this.onChangeCalculaTotal();
   }
 
   guardarPedido(){
-    this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
-      this.pedido = pedido;
-      console.log('nuevo  insertado->' + pedido);
-    });
+    if (this.tipoForm =='editar'){
+      this.pedidosService.putPedido(this.pedido);
+        console.log('pedido update->' + JSON.stringify(this.pedido));
+      } else if (this.tipoForm == 'tallas'){
 
-    this.emiteVolver();
-    this.editando = false;
+      }else{
+        console.log('insertando pedido...');
+        this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
+          this.pedido = pedido;
+          console.log('nuevo  insertado->' + pedido);
+        });
+      }
+
+      this.emiteVolver();
+      this.editando = false;
   }
+
+  eliminaProducto(id: number){
+    this.pedido.listaProductos.splice(id, 1);
+    this.cantidadProductos=this.pedido.listaProductos.length;
+    this.onChangeCalculaTotal();
+    console.log('eliminando producto->' + id);
+  }
+
+  eliminaMedioPago(id: number){
+    this.pedido.listaMediosPago.splice(id, 1);
+    this.onChangeCalculaTotal();
+    console.log('eliminando medio pago->' + id);
+  }
+
 }

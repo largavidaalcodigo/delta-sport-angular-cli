@@ -14,13 +14,13 @@ var map = {
 	],
 	"./pages/clientes/clientes.module": [
 		"../../../../../src/app/pages/clientes/clientes.module.ts",
-		"clientes.module",
-		"common"
+		"common",
+		"clientes.module"
 	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
-		"dashboard-default.module",
-		"common"
+		"common",
+		"dashboard-default.module"
 	],
 	"./pages/map/google-map/google-map.module": [
 		"../../../../../src/app/pages/map/google-map/google-map.module.ts",
@@ -28,8 +28,8 @@ var map = {
 	],
 	"./pages/pedidos/pedidos.module": [
 		"../../../../../src/app/pages/pedidos/pedidos.module.ts",
-		"pedidos.module",
-		"common"
+		"common",
+		"pedidos.module"
 	],
 	"./pages/simple-page/simple-page.module": [
 		"../../../../../src/app/pages/simple-page/simple-page.module.ts",
@@ -49,8 +49,8 @@ var map = {
 	],
 	"./pages/user/profile/profile.module": [
 		"../../../../../src/app/pages/user/profile/profile.module.ts",
-		"profile.module",
-		"common"
+		"common",
+		"profile.module"
 	],
 	"./typography/typography.module": [
 		"../../../../../src/app/pages/ui-elements/basic/typography/typography.module.ts",
