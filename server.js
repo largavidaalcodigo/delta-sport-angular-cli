@@ -36,7 +36,6 @@ app.use(flash());
 
 // Angular DIST output folder
 /*
-app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/', routes.site.loginForm);
 app.get('/login', routes.site.loginForm);
@@ -53,12 +52,13 @@ app.get('/api/clientinfo', routes.client.info); */
 
 
 // API location
-/* app.use('/api', api);
- */
+//app.use('/api', api);
 // Send all other requests to the Angular app
-/* app.get('*', (req, res) => {
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/index.html'));
-}); */
+});
 
 
 
