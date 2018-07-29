@@ -1,6 +1,0 @@
-[
-    { id: 1, idProducto: 1, desc: "Molde recto" },
-    { id: 2, idProducto: 1, desc: "raglan tela color" },
-    { id: 3, idProducto: 1, desc: "manga larga recta" },
-    { id: 4, idProducto: 1, desc: "manga larga raglan" }
-]
