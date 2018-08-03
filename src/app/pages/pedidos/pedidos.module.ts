@@ -13,7 +13,8 @@ import { FormPedidoModule } from './form-pedido/form-pedido.module';
 
 export const pedidosRoutes: Routes = [
   {path: '', component: PedidosComponent},
-  {path: 'formPedido/:id', component: FormPedidoComponent}
+  {path: 'formPedido/:tipoForm', component: FormPedidoComponent},
+  {path: 'formPedido/:tipoForm/:id', component: FormPedidoComponent}
 ];
 
 @NgModule({

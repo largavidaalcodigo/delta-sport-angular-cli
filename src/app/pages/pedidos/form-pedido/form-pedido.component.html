@@ -421,10 +421,19 @@
                   <!--LISTA DE MEDIOS DE PAGO-->
                   <tr>
                     <td colspan="2" class="text-right">
-                      Saldo Pendiente
+                      Saldo Pendiente:
+                    </td>
+                    <td class="text-right text-danger">
+                      <h4>${{pedido.totalPagoPendiente}}</h4>
+                    </td>
+                  </tr>
+                  <!--LISTA DE MEDIOS DE PAGO-->
+                  <tr>
+                    <td colspan="2" class="text-right">
+                      Monto cancelado:
                     </td>
                     <td class="text-right">
-                      <h4><b>${{saldoPendiente}}</b></h4>
+                      <h4><b>${{pedido.totalMediosPago}}</b></h4>
                     </td>
                   </tr>
                 </table>
@@ -501,4 +510,4 @@
     <a class="btn btn-primary" routerLink='/pedidos'>Cancelar</a>
     <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>
   </div>
-<!--   {{pedido|json}} -->
+{{pedido|json}}

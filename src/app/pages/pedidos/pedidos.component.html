@@ -1,3 +1,10 @@
+<div *ngIf="mensaje" class="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{mensaje}}
+</div>
+
 <div class="row" *ngIf='verLista'>
   <div class="col-sm-12">
     <!-- <app-card> -->
@@ -53,7 +60,7 @@
           </thead>
           <tbody *ngFor="let pedido of listaPedidos;let i = index">
             <tr>
-              <td (click)="editarPedido(pedido)">{{i+1}}</td>
+              <td (click)="editarPedido(pedido)">{{pedido.numeroPedido}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.cliente.nombresCliente}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>

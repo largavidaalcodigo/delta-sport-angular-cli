@@ -62,6 +62,7 @@ var pedidoSchema = new Schema({
     montoPago: Number
   }],
   totalMediosPago: Number,
+  totalPagoPendiente: Number
 });
 
 module.exports = mongoose.model('pedido', pedidoSchema);

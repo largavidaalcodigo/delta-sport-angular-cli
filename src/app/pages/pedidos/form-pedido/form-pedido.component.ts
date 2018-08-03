@@ -67,8 +67,9 @@ export class FormPedidoComponent implements OnInit {
   //Medio pago
   listaMediosPago: any[] = new Array();
 
-  saldoPendiente: number;
+  //saldoPendiente: number;
   editando: boolean = false;
+  id: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -77,25 +78,38 @@ export class FormPedidoComponent implements OnInit {
 
   ngOnInit() {
     console.log('Se inicia form pedido');
+    this.tipoForm = this.route.snapshot.params['tipoForm'];
+/*
     let sub = this.route.params.subscribe(params => {
-      let id = +params['id']; // (+) converts string 'id' to a number
+      console.log(params);
+      this.tipoForm = params['tipoForm'];
     });
-
-    if (this.tipoForm =='editar'){
-      console.log('Editando pedido');
-
-      this.queryBuscaCliente = 'prueba';
-        //this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
-      this.nombreBoton="Actualizar";
-      this.onChangeCalculaTotal();
+ */
+    if (this.tipoForm == 'editar'){
+      //Obtiene el pedido desde la bd
+      this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
+        console.log('Editando pedido->' + JSON.stringify(data));
+        this.pedido = data;
+      });
+      //this.onChangeCalculaTotal();
+//      this.queryBuscaCliente = this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
+      this.nombreBoton = 'Actualizar';
+//      this.onChangeCalculaTotal();
 
     }else if (this.tipoForm == 'tallas'){
       console.log('Editando tallas');
 
         this.nombreBoton="Actualizar";
     }
+  //Contador de pedidos
+  this.pedidosService.countPedidos().subscribe(countPedidos => {
+    this.pedido.numeroPedido = countPedidos + 1;
+    console.log('countPedidos->' + countPedidos);
+  });
 
     if (this.pedido == null) {
+
+
       console.log('nuevo pedido');
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //0= inactivo , 1=activo
@@ -105,7 +119,6 @@ export class FormPedidoComponent implements OnInit {
       this.pedido.listaProductos = new Array();
       this.pedido.listaMediosPago = new Array();
     }
-
 
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
@@ -204,7 +217,6 @@ export class FormPedidoComponent implements OnInit {
         this.listaDetallesTallas.push(this.detalleTallas);
       }
       this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
-      //this.pedido.numeroPedido = this.pedidosService.countPedidos();
 
 
 
@@ -260,13 +272,15 @@ export class FormPedidoComponent implements OnInit {
     console.log('Calculando total...');
     //suma valor del detalle al pedido
     let totalPedido:number = 0;
+    console.log('this.pedido.listaProductos: ', this.pedido.listaProductos);
     this.pedido.listaProductos.filter(item => {
       totalPedido += item.total;
       console.log('total item->' + item.total + ' / total pedido->' + totalPedido);
     } );
     this.pedido.subTotal = totalPedido;
 
-    this.pedido.subTotalNeto = Math.round(this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento) / 100);
+    this.pedido.subTotalNeto = Math.round(this.pedido.subTotal - (this.pedido.subTotal * this.pedido.descuento)
+     / 100);
     this.pedido.iva = Math.round(this.pedido.subTotalNeto * 0.19);
     this.pedido.total = Math.round(this.pedido.subTotalNeto + this.pedido.iva);
 
@@ -274,9 +288,8 @@ export class FormPedidoComponent implements OnInit {
     for (let c of this.pedido.listaMediosPago) {
       this.pedido.totalMediosPago += c.montoPago;
     }
-
-    this.saldoPendiente = this.pedido.total - this.pedido.totalMediosPago;
-
+    console.log('this.pedido.totalMediosPago->' + this.pedido.totalMediosPago);
+    this.pedido.totalPagoPendiente = this.pedido.total - this.pedido.totalMediosPago;
   }
 
   // CUANDO AGREGO UN DETALLE ADICIONAL
@@ -305,19 +318,21 @@ export class FormPedidoComponent implements OnInit {
   }
 
   guardarPedido(){
-    if (this.tipoForm =='editar'){
-      this.pedidosService.putPedido(this.pedido);
-        console.log('pedido update->' + JSON.stringify(this.pedido));
-      } else if (this.tipoForm == 'tallas'){
+    if (this.tipoForm == 'editar') {
+      console.log('muestra la wea ctm');
+      this.pedidosService.putPedido(this.pedido.numeroPedido);
+      //this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
 
-      }else{
-        console.log('insertando pedido...');
-        this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
-          this.pedido = pedido;
-          console.log('nuevo  insertado->' + pedido);
-        });
-      }
-      this.router.navigate(['/pedidos', 'Pedido Creado exitosamente']);
+    } else if (this.tipoForm == 'tallas'){
+
+    }else if (this.tipoForm == 'nuevo') {
+      console.log('insertando pedido...');
+      this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
+        this.pedido = pedido;
+        console.log('nuevo  insertado->' + JSON.stringify(this.pedido));
+      });
+      this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Creado exitosamente']);
+    }
   }
 
   eliminaProducto(id: number){

@@ -17,6 +17,12 @@ export class PedidosService {
       .catch((error : any) => Observable.throw('Server error'));
   }
 
+  public getPedido(numeroPedido: any): Observable<Pedido> {
+    return this.http.get('/api/getPedido/' + numeroPedido)
+       .map(response => response as Pedido)
+      .catch((error : any) => Observable.throw('Server error'));
+  }
+
   public countPedidos(): any {
     return this.http.get('/api/countPedidos');
   }
@@ -25,8 +31,9 @@ export class PedidosService {
     return this.http.post<Pedido>('/api/addPedido', pedido);
   }
 
-  public putPedido(pedido: Pedido): Observable<Pedido> {
-    return this.http.put<Pedido>('/api/putPedido/', pedido);
+  public putPedido(numeroPedido: number): Observable<Pedido> {
+    console.log('put pedido');
+    return this.http.get<Pedido>('/api/putPedido/' + numeroPedido);
   }
 
   public deletePedido(pedido: Pedido){

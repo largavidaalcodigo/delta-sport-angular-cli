@@ -18,13 +18,13 @@ export class PedidosComponent implements OnInit {
   pedido: Pedido;
   verLista: boolean = true;
   tipoForm: string; // USADO PARA DEFINIR LAS TALLAS
-
+  mensaje: string;
   constructor(private route: ActivatedRoute,
     private router: Router,
     private pedidosService: PedidosService) {
     let sub = this.route.params.subscribe(params => {
-      let mensaje = params['id']; // (+) converts string 'id' to a number
-      console.log('mensaje->'+ mensaje);
+      this.mensaje = params['id']; // (+) converts string 'id' to a number
+      //console.log('mensaje->'+ mensaje);
     });
   }
 
@@ -52,9 +52,7 @@ export class PedidosComponent implements OnInit {
 
   //Ver o Editar Cliente
   editarPedido(pedido: Pedido) {
-    this.pedido=pedido;
-    this.tipoForm = "editar";
-    this.toggleLista();
+    this.router.navigate(['/pedidos/formPedido/editar/', pedido.numeroPedido]);
   }
 
   eliminaPedido(pedido: Pedido){

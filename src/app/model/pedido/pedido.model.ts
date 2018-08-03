@@ -19,6 +19,7 @@ export class Pedido {
   public listaComentarios: Comentario[];
   public listaMediosPago: MedioPago[];
   public totalMediosPago: number = 0;
+  public totalPagoPendiente: number = 0;
 
   constructor(){}
 }
