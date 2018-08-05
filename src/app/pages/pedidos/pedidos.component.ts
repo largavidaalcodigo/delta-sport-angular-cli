@@ -56,13 +56,16 @@ export class PedidosComponent implements OnInit {
   }
 
   eliminaPedido(pedido: Pedido){
-      console.log('editando tallas...');
-    this.pedidosService.deletePedido(pedido);
+    console.log('Elimina Pedido..');
+    //Cambia el estado del pedido
+    pedido.idEstado=0;
+    this.pedidosService.putPedido(pedido).subscribe(data => {
+      console.log('pedido eliminado->' + JSON.stringify(data));
+      this.pedido = data;
+    });
   }
   addTallas(pedido: Pedido){
     console.log('editando tallas...');
-    this.tipoForm = "tallas";
-    this.pedido=pedido;
-    this.toggleLista();
+    this.router.navigate(['/pedidos/formPedido/tallas/', pedido.numeroPedido]);
   }
 }

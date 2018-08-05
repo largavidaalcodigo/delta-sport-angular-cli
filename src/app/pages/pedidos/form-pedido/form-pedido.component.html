@@ -1,4 +1,6 @@
   <div class="container">
+
+<!--FORM TALLAS -->
     <div *ngIf="tipoForm=='tallas'; else formPedido">
       <div class="row">
         <div class="col-sm-12">
@@ -29,20 +31,21 @@
                       </thead>
                       <tbody>
                         <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>
-                          <td>{{ ii+1 }}</td>
+                          <td>{{ ii+1 }}
+                          </td>
         <!--NUMERO JUGADOR-->
                           <td style="width:90px;">
-                            <input type='number' class='form-control' name='numero'
+                            <input type='number' class='form-control' name='numero{{ii}}'
                              [(ngModel)]="d.numero" placeholder='Numero jugador'>
                           </td>
         <!--NOMBRE PECHO-->
                           <td style="width:140px;">
-                            <input type='text' class='form-control' name='nombrePecho'
+                            <input type='text' class='form-control' name='nombrePecho{{ii}}'
                             [(ngModel)]="d.nombrePecho" placeholder='Nombre pecho'>
                           </td>
         <!--NOMBRE ESPALDA-->
                           <td style="width:140px;">
-                            <input type='text' class='form-control' name='nombreEspalda'
+                            <input type='text' class='form-control' name='nombreEspalda{{ii}}'
                             [(ngModel)]="d.nombreEspalda" placeholder='Nombre espalda'>
                           </td>
                         </tr>
@@ -58,6 +61,7 @@
       </div>
     </div>
 
+<!--FORM PEDIDO / ACTUALIZAR O CREAR -->
     <ng-template #formPedido>
       <div class="row">
         <div class="col-sm-12">

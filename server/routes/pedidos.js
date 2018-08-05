@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/getPedidos', function(req, res, next) {
-  console.log('find pedidos...');
+  console.log('/getPedidos...');
   Pedido.find(function (err, data) {
     if (err) return next(err);
     res.json(data);
@@ -16,7 +16,7 @@ router.get('/getPedidos', function(req, res, next) {
 });
 
 router.get('/getPedido/:id', function(req, res, next) {
-  console.log('find pedido->'+req.params.id);
+  console.log('/getPedido/:id->'+req.params.id);
   Pedido.findOne({numeroPedido: req.params.id}, function (err, data) {
     if (err) return next(err);
     res.json(data);
@@ -25,7 +25,7 @@ router.get('/getPedido/:id', function(req, res, next) {
 });
 
 router.get('/countPedidos', function(req, res, next) {
-  //console.log('total pedidos', count);
+  console.log('/countPedidos...');
 /*   Pedido.countDocuments({ type: 'number' }, function (err, count) {
     if (err) return next(err);
     console.log('existen [%d] pedidos', count);
@@ -45,14 +45,30 @@ router.post('/addPedido', function(req, res, next) {
   });
 });
 
-router.get('/putPedido/:id', function(req, res, next) {
-  console.log(' req.params.id-> ', req.params.id);
 
-  Pedido.findByIdAndUpdate({'numeroPedido':req.params.id}, req.body, function (err, post) {
+
+router.put('/putPedido', function(req, res, next) {
+  console.log('/putPedido/:id->'+req.body._id);
+  Pedido.findByIdAndUpdate({'_id':req.body._id}, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
-    //console.log(post);
+    console.log('actualizado->'+post);
   });
+});
+
+/* router.delete('/deletePedido/:id', function(req, res, next) {
+  Pedido.findByIdAndRemove({'numeroPedido':req.params.id}, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
+ */
+module.exports = router;
+
+/* router.get('/putPedido/:id', function(req, res, next) {
+  console.log('/putPedido/:id-> ', req.params.id);
+
+ */
 
 /*  Pedido.findById(numeroPedido, req.body.numeroPedido, function (err, tank) {
   if (err) return handleError(err);
@@ -62,14 +78,5 @@ router.get('/putPedido/:id', function(req, res, next) {
     if (err) return handleError(err);
     res.send(pedido);
   });
-}); */
- });
-
-router.get('/deletePedido', function(req, res, next) {
-  Pedido.findByIdAndRemove(req.param._id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
 });
-
-module.exports = router;
+ });*/

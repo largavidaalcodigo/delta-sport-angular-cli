@@ -98,18 +98,13 @@ export class FormPedidoComponent implements OnInit {
 
     }else if (this.tipoForm == 'tallas'){
       console.log('Editando tallas');
-
-        this.nombreBoton="Actualizar";
+      this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
+        console.log('Editando tallas->' + JSON.stringify(data));
+        this.pedido = data;
+      });
     }
-  //Contador de pedidos
-  this.pedidosService.countPedidos().subscribe(countPedidos => {
-    this.pedido.numeroPedido = countPedidos + 1;
-    console.log('countPedidos->' + countPedidos);
-  });
 
     if (this.pedido == null) {
-
-
       console.log('nuevo pedido');
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //0= inactivo , 1=activo
@@ -176,9 +171,9 @@ export class FormPedidoComponent implements OnInit {
     console.log('onSelectRangoPrecio rangoPrecioId->' + rangoPrecioId);
   }
 
-  onSelectSinDiseno(llevaDiseño: number){
+/*   onSelectSinDiseno(llevaDiseño: number){
       console.log('llevaDiseño->'+llevaDiseño);
-  }
+  } */
 
   emiteVolver() {
     //this.pedidoForm.reset();
@@ -318,14 +313,20 @@ export class FormPedidoComponent implements OnInit {
   }
 
   guardarPedido(){
-    if (this.tipoForm == 'editar') {
-      console.log('muestra la wea ctm');
-      this.pedidosService.putPedido(this.pedido.numeroPedido);
-      //this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
-
-    } else if (this.tipoForm == 'tallas'){
+    if (this.tipoForm == 'editar' || this.tipoForm == 'tallas') {
+      this.pedidosService.putPedido(this.pedido).subscribe(data => {
+        console.log('pedido actualizado->' + JSON.stringify(data));
+        this.pedido = data;
+      });
+      this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
 
     }else if (this.tipoForm == 'nuevo') {
+      //Contador de pedidos
+      this.pedidosService.countPedidos().subscribe(countPedidos => {
+        this.pedido.numeroPedido = countPedidos + 1;
+        console.log('countPedidos->' + countPedidos);
+      });
+
       console.log('insertando pedido...');
       this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
         this.pedido = pedido;
