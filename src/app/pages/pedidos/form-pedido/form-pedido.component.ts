@@ -186,9 +186,11 @@ export class FormPedidoComponent implements OnInit {
   onSubmitDetalle() {
     if (this.editando){
       this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
+      this.addTallasProducto();
+
     }else if (this.tipoForm == 'tallas'){
 
-    }else{
+    }else if (this.tipoForm == 'nuevo'){
       //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
 
       //setea Correlativo nro item
@@ -199,22 +201,9 @@ export class FormPedidoComponent implements OnInit {
       this.detallePedido.descProducto = producto.desc;
       this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
       this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
-
       this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
 
-      //TALLAS
-      this.listaDetallesTallas = new Array();
-      for (let c = 0; c < this.detallePedido.cantidad; c++) {
-        this.detalleTallas = new DetalleTalla();
-        this.detalleTallas.numero = '';
-        this.detalleTallas.nombrePecho = '';
-        this.detalleTallas.nombreEspalda = '';
-        this.listaDetallesTallas.push(this.detalleTallas);
-      }
-      this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
-
-
-
+      this.addTallasProducto();
       this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
 
       console.log("nuevo item->"+ JSON.stringify(this.detallePedido));
@@ -226,6 +215,24 @@ export class FormPedidoComponent implements OnInit {
    //this.pedido.listaProductos = this.listaDetallePedido;
     this.detallePedido = new DetallePedido();
     this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
+  }
+
+  addTallasProducto(){
+      //TALLAS
+      this.listaDetallesTallas = new Array();
+      for (let c = 0; c < this.detallePedido.cantidad; c++) {
+        this.detalleTallas = new DetalleTalla();
+        this.detalleTallas.numero = '';
+        this.detalleTallas.nombrePecho = '';
+        this.detalleTallas.nombreEspalda = '';
+        this.detalleTallas.terminadoConfeccion = 0;
+        this.detalleTallas.terminadoCorte = 0;
+        this.detalleTallas.terminadoEstampado = 0;
+        this.detalleTallas.terminadoDiseno = 0;
+
+        this.listaDetallesTallas.push(this.detalleTallas);
+      }
+      this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
   }
 
   nuevoDetalle(){
@@ -313,26 +320,31 @@ export class FormPedidoComponent implements OnInit {
   }
 
   guardarPedido(){
-    if (this.tipoForm == 'editar' || this.tipoForm == 'tallas') {
+    if (this.tipoForm === 'editar' || this.tipoForm === 'tallas') {
+
+      //SE DEFINE ESTE ESTADO CUANDO SE INGRESAN LAS TALLAS
+      if (this.tipoForm === 'tallas'){
+        this.pedido.idEstado=3;
+      }
       this.pedidosService.putPedido(this.pedido).subscribe(data => {
         console.log('pedido actualizado->' + JSON.stringify(data));
         this.pedido = data;
       });
       this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
 
-    }else if (this.tipoForm == 'nuevo') {
+    }else if (this.tipoForm === 'nuevo') {
       //Contador de pedidos
       this.pedidosService.countPedidos().subscribe(countPedidos => {
         this.pedido.numeroPedido = countPedidos + 1;
-        console.log('countPedidos->' + countPedidos);
-      });
+        console.log('this.pedido.numeroPedido->' +  this.pedido.numeroPedido);
 
-      console.log('insertando pedido...');
-      this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
-        this.pedido = pedido;
-        console.log('nuevo  insertado->' + JSON.stringify(this.pedido));
+        console.log('insertando pedido...');
+        this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
+          this.pedido = pedido;
+          console.log('nuevo  insertado->' + JSON.stringify(this.pedido));
+          this.router.navigate(['/pedidos', 'Pedido nro. ['+ this.pedido.numeroPedido + '] Creado exitosamente']);
+        });
       });
-      this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Creado exitosamente']);
     }
   }
 

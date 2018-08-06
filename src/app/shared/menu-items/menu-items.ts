@@ -67,30 +67,30 @@ const MENUITEMS = [
     label: 'Modulos',
     main: [
       {
-        state: 'Diseño',
+        state: 'diseno',
         short_label: 'n',
-        name: 'diseño',
+        name: 'Diseño',
         type: 'link',
         icon: 'ti-crown'
       },
       {
-        state: 'Estampado',
+        state: 'estampado',
         short_label: 'n',
         name: 'Estampado',
         type: 'link',
         icon: 'ti-crown'
       },
       {
-        state: 'Corte',
+        state: 'corte',
         short_label: 'n',
         name: 'Corte',
         type: 'link',
         icon: 'ti-crown'
       },
       {
-        state: 'Confección',
+        state: 'confeccion',
         short_label: 'n',
-        name: 'confeccion',
+        name: 'Confeccion',
         type: 'link',
         icon: 'ti-crown'
       }

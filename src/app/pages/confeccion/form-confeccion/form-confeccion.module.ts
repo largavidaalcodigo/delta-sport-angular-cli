@@ -1,16 +1,16 @@
-import { PedidosComponent } from '../pedidos.component';
+import { ConfeccionComponent } from '../Confeccion.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormPedidoComponent } from './form-pedido.component';
+import { FormConfeccionComponent } from './form-confeccion.component';
 import { HttpModule } from '@angular/http';
 import { PedidosService } from '../../../services/pedidos.service';
 import { ClientesService } from '../../../services/clientes.service';
-import { FilterDataPipe } from './filterdata.pipe';
+//import { FilterDataPipe } from './filterdata.pipe';
 
-export const pedidosRoutes: Routes = [
-  {path: ':id', component: PedidosComponent},
+export const confeccionRoutes: Routes = [
+  {path: ':id', component: ConfeccionComponent},
 ];
 
 @NgModule({
@@ -19,14 +19,14 @@ export const pedidosRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forChild(pedidosRoutes)
+    RouterModule.forChild(confeccionRoutes)
   ],
   providers: [
     PedidosService,
     ClientesService
   ],
   declarations: [
-    FilterDataPipe
+    //FilterDataPipe
   ]
 })
-export class FormPedidoModule {}
+export class FormConfeccionModule {}

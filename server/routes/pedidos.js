@@ -26,12 +26,6 @@ router.get('/getPedido/:id', function(req, res, next) {
 
 router.get('/countPedidos', function(req, res, next) {
   console.log('/countPedidos...');
-/*   Pedido.countDocuments({ type: 'number' }, function (err, count) {
-    if (err) return next(err);
-    console.log('existen [%d] pedidos', count);
-    res.json(count)
-  });
- */
   Pedido.count({}, function(err, count){
     res.json(count);
   });

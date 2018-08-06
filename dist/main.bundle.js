@@ -17,10 +17,30 @@ var map = {
 		"common",
 		"clientes.module"
 	],
+	"./pages/confeccion/confeccion.module": [
+		"../../../../../src/app/pages/confeccion/confeccion.module.ts",
+		"common",
+		"confeccion.module"
+	],
+	"./pages/corte/corte.module": [
+		"../../../../../src/app/pages/corte/corte.module.ts",
+		"common",
+		"corte.module"
+	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
 		"common",
 		"dashboard-default.module"
+	],
+	"./pages/diseno/diseno.module": [
+		"../../../../../src/app/pages/diseno/diseno.module.ts",
+		"common",
+		"diseno.module"
+	],
+	"./pages/estampado/estampado.module": [
+		"../../../../../src/app/pages/estampado/estampado.module.ts",
+		"common",
+		"estampado.module"
 	],
 	"./pages/map/google-map/google-map.module": [
 		"../../../../../src/app/pages/map/google-map/google-map.module.ts",
@@ -227,6 +247,18 @@ var AppRoutes = [
             }, {
                 path: 'clientes',
                 loadChildren: './pages/clientes/clientes.module#ClientesModule'
+            }, {
+                path: 'corte',
+                loadChildren: './pages/corte/corte.module#CorteModule'
+            }, {
+                path: 'diseno',
+                loadChildren: './pages/diseno/diseno.module#DisenoModule'
+            }, {
+                path: 'confeccion',
+                loadChildren: './pages/confeccion/confeccion.module#ConfeccionModule'
+            }, {
+                path: 'estampado',
+                loadChildren: './pages/estampado/estampado.module#EstampadoModule'
             }, {
                 path: 'notifications',
                 loadChildren: './pages/ui-elements/advance/notifications/notifications.module#NotificationsModule'
@@ -1247,30 +1279,30 @@ var MENUITEMS = [
         label: 'Modulos',
         main: [
             {
-                state: 'Diseño',
+                state: 'diseno',
                 short_label: 'n',
-                name: 'diseño',
+                name: 'Diseño',
                 type: 'link',
                 icon: 'ti-crown'
             },
             {
-                state: 'Estampado',
+                state: 'estampado',
                 short_label: 'n',
                 name: 'Estampado',
                 type: 'link',
                 icon: 'ti-crown'
             },
             {
-                state: 'Corte',
+                state: 'corte',
                 short_label: 'n',
                 name: 'Corte',
                 type: 'link',
                 icon: 'ti-crown'
             },
             {
-                state: 'Confección',
+                state: 'confeccion',
                 short_label: 'n',
-                name: 'confeccion',
+                name: 'Confeccion',
                 type: 'link',
                 icon: 'ti-crown'
             }

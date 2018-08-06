@@ -1,0 +1,81 @@
+  <div class="container" *ngIf="pedido.listaProductos">
+    <div>
+      <div class="row">
+        <div class="col-sm-12">
+          <app-card>
+            <h4>Detalle Tallas</h4>
+            nombre Clientefecha, etc. estado, tipo deporte
+          </app-card>
+          <app-card>
+            <div id="acordionProductos">
+              <div class="card" *ngFor='let c of pedido.listaProductos; let i=index'>
+                <!--header fila-->
+                <div id="header{{i}}">
+                  <h3>{{c.descProducto}}<br>
+                    [{{c.descTipoProducto}}]
+                    / Tallas: [{{c.descRangoPrecio}}]</h3>
+                </div>
+                <!--detalle fila-->
+                <div id="fila{{i}}">
+                  <form #detallePedidoForm='ngForm' class='form-inline'>
+                    <table class="form-table-bordered">
+                      <thead>
+                        <tr>
+                          <td>#</td>
+                          <td>Numero jugador</td>
+                          <td>Nombre pecho</td>
+                          <td>Nombre espalda</td>
+                          <td>Terminado?</td>
+                          <td>Opciones</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>
+                          <td style="width:10px;">{{ ii+1 }}
+                          </td>
+        <!--NUMERO JUGADOR-->
+                          <td style="width:90px;">
+                            {{d.numero}}
+                          </td>
+        <!--NOMBRE PECHO-->
+                          <td style="width:140px;">
+                            {{d.nombrePecho}}
+                          </td>
+        <!--NOMBRE ESPALDA-->
+                          <td style="width:140px;">
+                            {{d.nombreEspalda}}
+                          </td>
+                          <td>
+                            <div class="btn-group btn-group-toggle"
+                              ngbRadioGroup name='terminadoConfeccion{{ii}}' [(ngModel)]='d.terminadoConfeccion'>
+                              <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                                <input ngbButton type="radio" [value]="0">NO
+                              </label>
+                              <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                                <input ngbButton type="radio" [value]="1">SI
+                              </label>
+                            </div>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-danger btn-sm"
+                            (click)="$event.stopPropagation();">Notificar</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+              <!-- {{detallePedido | json}} -->
+                  </form>
+                </div>
+              </div>
+            </div>
+          </app-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='form-group'>
+    <a class="btn btn-primary" routerLink='/confeccion'>Cancelar</a>
+    <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>
+  </div>
+<!-- {{pedido|json}}
+ -->

@@ -28,7 +28,11 @@ var pedidoSchema = new Schema({
     listaDetalleTallas: [{
       numero: String,
       nombrePecho: String,
-      nombreEspalda: String
+      nombreEspalda: String,
+      terminadoCorte: Number,
+      terminadoDiseno: Number,
+      terminadoConfeccion: Number,
+      terminadoEstampado: Number
     }],
     total: Number
   }],

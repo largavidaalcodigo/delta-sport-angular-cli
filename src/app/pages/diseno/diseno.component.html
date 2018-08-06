@@ -1,0 +1,49 @@
+<div *ngIf="mensaje" class="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{mensaje}}
+</div>
+
+<!-- Lista  -->
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Diseño - Orden de trabajo'" [classHeader]="false" [blockClass]="'table-border-style'">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre Cliente</th>
+            <th>Fecha pedido</th>
+            <th>Fecha Entrega</th>
+            <th>% avance</th>
+            <!-- <th>Monto Total</th> -->
+            <!-- <th>Estado</th> -->
+            <th>Opciones</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let pedido of listaPedidos;let i = index">
+            <tr>
+              <td>{{pedido.numeroPedido}}</td>
+              <td>{{pedido.cliente.nombresCliente}}</td>
+              <td>{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+              <td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+              <td></td>
+              <!-- <td (click)="editarPedido(pedido)">{{pedido.idEstado}}</td> -->
+              <td>
+                <button type="button" class="btn btn-danger btn-sm"
+                (click)="addDiseno(pedido); $event.stopPropagation();">Ver</button>
+<!--BORRAR PEDIDO-->
+<!--                 <button type="button" (click)='eliminaPedido(pedido);$event.stopPropagation();'>
+                  <i class="icofont icofont-trash"></i>
+                </button>
+ -->              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+

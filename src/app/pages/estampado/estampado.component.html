@@ -5,28 +5,10 @@
   {{mensaje}}
 </div>
 
-<div class="row" *ngIf='verLista'>
-  <div class="col-sm-12">
-    <!-- <app-card> -->
-      <!-- <a class="btn btn-primary" (click)="nuevoPedido()" routerLinkActive="active">Nuevo Pedido</a> -->
-      <a class="btn btn-primary" [routerLink]="['/pedidos/formPedido', 'nuevo']">NUEVO</a>
-    <!-- </app-card> -->
-  </div>
-</div>
-
-<!-- Formulario  -->
-<!-- <div class="container">
-  <app-form-pedido
-  [verForm]="!verLista"
-  [tipoForm]="tipoForm"
-  [pedido]="pedido"
-  (salir)="volver($event)"></app-form-pedido>
-</div> -->
-
 <!-- Lista  -->
-<div class="row" *ngIf='verLista'>
+<div class="row">
   <div class="col-sm-12">
-    <app-card>
+<!--     <app-card>
       <h4>Filtros de busqueda</h4>
       <form #encabezadoPedidoForm='ngForm' class='form-inline'>
         <div class='form-group form-inline'>
@@ -42,9 +24,9 @@
           <button type="reset" class="btn btn-primary">Quitar Filtro</button>
         </div>
       </form>
-    </app-card>
+    </app-card> -->
 
-    <app-card [title]="'Pedidos'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <app-card [title]="'Estampado - Orden de trabajo'" [classHeader]="false" [blockClass]="'table-border-style'">
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -53,29 +35,28 @@
             <th>Nombre Cliente</th>
             <th>Fecha pedido</th>
             <th>Fecha Entrega</th>
-            <th>Monto Total</th>
-            <th>Estado</th>
+            <th>% avance</th>
+            <!-- <th>Monto Total</th> -->
+            <!-- <th>Estado</th> -->
             <th>Opciones</th>
           </tr>
           </thead>
           <tbody *ngFor="let pedido of listaPedidos;let i = index">
             <tr>
-              <td (click)="editarPedido(pedido)">{{pedido.numeroPedido}}</td>
-              <td (click)="editarPedido(pedido)">{{pedido.cliente.nombresCliente}}</td>
-              <td (click)="editarPedido(pedido)">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
-              <td (click)="editarPedido(pedido)">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
-              <td (click)="editarPedido(pedido)">${{pedido.total}}</td>
-              <td (click)="editarPedido(pedido)">{{pedido.idEstado}}</td>
+              <td>{{pedido.numeroPedido}}</td>
+              <td>{{pedido.cliente.nombresCliente}}</td>
+              <td>{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+              <td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+              <td></td>
+              <!-- <td (click)="editarPedido(pedido)">{{pedido.idEstado}}</td> -->
               <td>
                 <button type="button" class="btn btn-danger btn-sm"
-                (click)="addTallas(pedido); $event.stopPropagation();">Tallas</button>
-                <button type="button" class="btn btn-danger btn-sm"
-                (click)="$event.stopPropagation();">Ficha tecnica</button>
+                (click)="addEstampado(pedido); $event.stopPropagation();">Ver</button>
 <!--BORRAR PEDIDO-->
-                <button type="button" (click)='eliminaPedido(pedido);$event.stopPropagation();'>
+<!--                 <button type="button" (click)='eliminaPedido(pedido);$event.stopPropagation();'>
                   <i class="icofont icofont-trash"></i>
                 </button>
-              </td>
+ -->              </td>
             </tr>
           </tbody>
         </table>

@@ -24,6 +24,18 @@ export const AppRoutes: Routes = [
         path: 'clientes',
         loadChildren: './pages/clientes/clientes.module#ClientesModule'
       }, {
+        path: 'corte',
+        loadChildren: './pages/corte/corte.module#CorteModule'
+      }, {
+        path: 'diseno',
+        loadChildren: './pages/diseno/diseno.module#DisenoModule'
+      }, {
+        path: 'confeccion',
+        loadChildren: './pages/confeccion/confeccion.module#ConfeccionModule'
+      }, {
+        path: 'estampado',
+        loadChildren: './pages/estampado/estampado.module#EstampadoModule'
+      }, {
         path: 'notifications',
         loadChildren: './pages/ui-elements/advance/notifications/notifications.module#NotificationsModule'
       }, {
