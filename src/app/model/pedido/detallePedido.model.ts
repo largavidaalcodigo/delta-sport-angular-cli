@@ -1,3 +1,4 @@
+import { FichaTecnica } from '../producto/fichaTecnica.model';
 import { DetalleTalla } from '../producto/detalleTalla.model';
 import { DetalleAdicional } from '../producto/detalleAdicional.model';
 export class DetallePedido {
@@ -17,5 +18,8 @@ export class DetallePedido {
   public totalAdicionales: number = 0;
   public listaDetalleTallas: DetalleTalla[];
   public total: number = 0;
+  public tipoJugador: string;
+  //Ficha Tecnica
+  public fichaTecnica: FichaTecnica[];
   constructor() {}
 }

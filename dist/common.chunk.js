@@ -145,6 +145,12 @@ var PedidosService = (function () {
             { id: 3, desc: 'Amarillo', codigoHex: '#FFFF00' }
         ];
     };
+    PedidosService.prototype.getTallas = function () {
+        return ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'];
+    };
+    PedidosService.prototype.getTipoDeporte = function () {
+        return ['Futbol', 'Basquetall', 'Rugby', 'Volleyball', 'Tenis'];
+    };
     PedidosService.prototype.getMediosPago = function () {
         return [
             { id: 1, desc: 'Efectivo' },

@@ -1,21 +1,43 @@
   <div class="container">
 
 <!--FORM TALLAS -->
-    <div *ngIf="tipoForm=='tallas'; else formPedido">
+    <div *ngIf="tipoForm==='tallas'; else formPedido">
       <div class="row">
         <div class="col-sm-12">
           <app-card>
             <h4>Detalle Tallas</h4>
-            nombre Clientefecha, etc. estado, tipo deporte
+            <div class="d-inline-block">
+              <div class="col-4 d-inline-block border">
+                <p class="font-weight-bold">Cliente</p>
+                <span *ngIf="pedido.cliente">
+                  {{pedido.cliente.nombresCliente}} {{pedido.cliente.apellidoPaternoCliente}}
+                </span>
+              </div>
+              <div class="col-2 d-inline-block border">
+                  <p class="font-weight-bold">Fecha creación</p>
+                  <span>{{pedido.fechaCreacion | date:'yyyy-MM-dd'}}</span>
+              </div>
+              <div class="col-2 d-inline-block border">
+                  <p class="font-weight-bold">Fecha entrega</p>
+                  <span>{{pedido.fechaEntrega | date:'yyyy-MM-dd'}}</span>
+              </div>
+              <div class="col-2 d-inline-block border">
+                  <p class="font-weight-bold">Tipo de deporte</p>
+                  <span>{{pedido.tipoDeporte}}</span>
+              </div>
+            </div>
           </app-card>
           <app-card>
             <div id="acordionProductos">
               <div class="card" *ngFor='let c of pedido.listaProductos; let i=index'>
                 <!--header fila-->
                 <div id="header{{i}}">
-                  <h3>{{c.descProducto}}<br>
+                  <h4>{{c.descProducto}}<br>
                     [{{c.descTipoProducto}}]
-                    / Tallas: [{{c.descRangoPrecio}}]</h3>
+                    / Tallas: [{{c.descRangoPrecio}}]
+                  </h4>
+                  Tipo jugador
+                  <h4>{{c.tipoJugador}}</h4>
                 </div>
                 <!--detalle fila-->
                 <div id="fila{{i}}">
@@ -24,6 +46,8 @@
                       <thead>
                         <tr>
                           <td>#</td>
+                          <td>Talla</td>
+                          <td>Sexo prenda</td>
                           <td>Numero jugador</td>
                           <td>Nombre pecho</td>
                           <td>Nombre espalda</td>
@@ -33,6 +57,26 @@
                         <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>
                           <td>{{ ii+1 }}
                           </td>
+        <!--TALLA-->
+                          <td style="width:90px;">
+                            <select class='form-control' name='listaTallas' [(ngModel)]='d.talla'>
+                              <option [value]=''>[Seleccione...]</option>
+                              <option *ngFor='let talla of listaTallas' [value]='talla'>{{talla}}</option>
+                            </select>
+                          </td>
+        <!--SEXO PRENDA-->
+                          <td>
+                            <div class="btn-group btn-group-toggle"
+                            ngbRadioGroup name='sexoPrenda' [(ngModel)]='d.generoPrenda'>
+
+                            <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                              <input ngbButton type="radio" [value]='0'>Hombre
+                            </label>
+                            <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                              <input ngbButton type="radio" [value]='1'>Mujer
+                            </label>
+                          </div>
+                        </td>
         <!--NUMERO JUGADOR-->
                           <td style="width:90px;">
                             <input type='number' class='form-control' name='numero{{ii}}'
@@ -47,11 +91,13 @@
                           <td style="width:140px;">
                             <input type='text' class='form-control' name='nombreEspalda{{ii}}'
                             [(ngModel)]="d.nombreEspalda" placeholder='Nombre espalda'>
+                            <br>
+                            {{d | json }}
+
                           </td>
                         </tr>
                       </tbody>
                     </table>
-              <!-- {{detallePedido | json}} -->
                   </form>
                 </div>
               </div>
@@ -66,27 +112,53 @@
       <div class="row">
         <div class="col-sm-12">
           <app-card>
-            <h4>Datos de pedido<span *ngIf="pedido.numeroPedido"><b>[ Nro.{{pedido.numeroPedido}}]</b></span></h4>
-            <form #encabezadoPedidoForm='ngForm' class='form-inline'>
-              <div class='form-group'>
+            <h4>Datos de pedido<span *ngIf="pedido.numeroPedido">[ Nro.{{pedido.numeroPedido}}]</span></h4>
+            <form #encabezadoPedidoForm='ngForm'>
+              <div class='form-group'><!--  border border-primary'> -->
   <!-- SELECCICONA CLIENTE-->
-                Cliente
-                <input type='text' size="40" class='form-control' name='query'
-                [(ngModel)]='queryBuscaCliente' placeholder='Seleccione Cliente...'>
-                <div id="toggle" onfocusout="" class='list-group'
-                style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>
-  <!-- LISTADO CLIENTES-->
+                <div class="col-7 d-inline-block">
+                  <div class="d-inline-block">
+                    Cliente
+                    <input *ngIf="!pedido.cliente" type='text' size="45" class='form-control' name='query' [(ngModel)]="queryBuscaCliente"
+                    placeholder='Seleccione Cliente...'>
+
+                    <span *ngIf="pedido.cliente">
+                      <input type='text' size="45" class='form-control' name='query' [(ngModel)]="pedido.cliente.nombresCliente">
+                    </span>
+                  </div>
+  <!--BOTON CARGAR CLIENTE-->
+                  <div class="d-inline-block">
+                    <button *ngIf="!pedido.cliente" type="button" (click)="cargarCliente();" class="btn btn-primary">Cargar</button>
+                    <button *ngIf="pedido.cliente" type="button" (click)="cambiarCliente();" class="btn btn-primary">Cambiar</button>
+                  </div>
+                </div>
+
+              <!--FECHA ENTREGA -->
+                <div class="col-2 d-inline-block">
+                  Fecha de Entrega
+                  <input class='form-control' name='fechaEntrega'
+                  [ngModel]="pedido.fechaEntrega | date:'yyyy-MM-dd'"
+                  (ngModelChange)="pedido.fechaEntrega = $event"
+                  type="date" placeholder="Fecha entrega">
+                </div>
+
+              <!--TIPO DEPORTE -->
+                <div class="col-2 d-inline-block">
+                  Tipo de deporte
+                  <select class='form-control' name='tipoDeporte' [(ngModel)]='pedido.tipoDeporte'>
+                    <option [value]=''>Seleccione...</option>
+                    <option *ngFor='let c of listaTipoDeporte' [value]='c'>{{c}}</option>
+                  </select>
+                </div>
+
+<!-- LISTADO BUSQUEDA CLIENTES-->
+                <div id="toggle" onfocusout="" class='list-group col-8'
+                  style='position:fixed; z-index:1000;' *ngIf='queryBuscaCliente'>
                   <button type="button" class="btn btn-primary"
                     *ngFor='let c of listaClientes | dataFilter: queryBuscaCliente : "nombresCliente"'
                     (click)='addCliente(c)'>{{c.rutCliente}} - {{c.nombresCliente}}
                   </button>
                 </div>
-  <!--FECHA ENTREGA -->
-                Fecha de Entrega
-                <input class='form-control' name='fechaEntrega'
-                [ngModel]='pedido.fechaEntrega'
-                [value] ="pedido.fechaEntrega | date:'yyyy-MM-dd'" type="date" placeholder="Fecha entrega">
-
               </div>
             </form>
           </app-card>
@@ -118,7 +190,7 @@
                     <td>Cantidad</td>
                     <td>Valor</td>
                     <td><b>SubTotal</b></td>
-                    <td></td>
+                    <td>Tipo Jugador</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -167,8 +239,18 @@
                       <input type='text' readonly class='form-control-plaintext form-control' name='subtotal'
                       [ngModel]='detallePedido.subTotal' [ngModelOptions]='{standalone: true}'>
                     </td>
-                    <td>
-  <!--BOTONERA ITEM PRODUCTO-->
+<!-- TIPO JUGADOR -->
+                    <td colspan="2">
+                      <input type='text' class='form-control-plaintext form-control'
+                        name='valor' [(ngModel)]='detallePedido.tipoJugador'
+                        [ngModelOptions]='{standalone: true}'>
+                    </td>
+                  </tr>
+                  </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="4">
+                      <!--BOTONERA ITEM PRODUCTO-->
                       <div *ngIf="editando; else nuevoItem">
                         <button type="submit" class="btn btn-primary">Editar</button>
                         <button type="button" class="btn btn-primary"
@@ -185,8 +267,6 @@
                       </button>
                     </td>
                   </tr>
-                </tbody>
-                <tfoot>
                 </tfoot>
               </table>
         <!-- {{detallePedido | json}} -->

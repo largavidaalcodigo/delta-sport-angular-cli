@@ -27,14 +27,42 @@ var pedidoSchema = new Schema({
     totalAdicionales: Number,
     listaDetalleTallas: [{
       numero: String,
+      talla: String,
+      generoPrenda: Number,
       nombrePecho: String,
       nombreEspalda: String,
       terminadoCorte: Number,
       terminadoDiseno: Number,
       terminadoConfeccion: Number,
-      terminadoEstampado: Number
+      terminadoEstampado: Number,
+      listaComentarios: [{
+        fechaCreacion: Date,
+        desc: String
+      }]
     }],
-    total: Number
+    fichaTecnica: {
+      listaTipoProducto: [{
+        colorTela: String,
+        tipoTela: String,
+      }],
+      listaTipoCuello: [{
+        colorTela: String,
+        tipoTela: String,
+      }],
+      listaTerminacion:[String],
+      listaEstampado:[String],
+      listaImg: [{
+        fechaCreacion: String,
+        img: String,
+        desc: String
+      }],
+      listaComentarios: [{
+        fechaCreacion: Date,
+        desc: String
+      }]
+    },
+    total: Number,
+    tipoJugador: String,
   }],
   cliente: {
     rutCliente: String,
@@ -66,7 +94,8 @@ var pedidoSchema = new Schema({
     montoPago: Number
   }],
   totalMediosPago: Number,
-  totalPagoPendiente: Number
+  totalPagoPendiente: Number,
+  tipoDeporte: String
 });
 
 module.exports = mongoose.model('pedido', pedidoSchema);

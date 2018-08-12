@@ -20,7 +20,7 @@ router.get('/getPedido/:id', function(req, res, next) {
   Pedido.findOne({numeroPedido: req.params.id}, function (err, data) {
     if (err) return next(err);
     res.json(data);
-    //console.log('pedido->'+data);
+    console.log('pedido->'+data);
   });
 });
 

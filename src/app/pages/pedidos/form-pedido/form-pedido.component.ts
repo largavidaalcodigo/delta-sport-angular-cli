@@ -41,6 +41,7 @@ export class FormPedidoComponent implements OnInit {
   @Input() pedido: Pedido; //Puede venir con datos
   @Output() public salir = new EventEmitter(); */
   pedido: Pedido;
+  cliente: Cliente;
   tipoForm: string;
 
   //Lista Detalle pedido
@@ -59,6 +60,8 @@ export class FormPedidoComponent implements OnInit {
   listaClientes: Cliente[];
   listaDetallesAdicionales: any[] = new Array();
   listaDetallesTallas: any[] = new Array();
+  listaTipoDeporte: any[] = new Array();
+  listaTallas: any[] = new Array();
 
   cantidadProductos: number;
   cantidadComentarios: number;
@@ -77,33 +80,29 @@ export class FormPedidoComponent implements OnInit {
     private clientesService: ClientesService) {}
 
   ngOnInit() {
-    console.log('Se inicia form pedido');
     this.tipoForm = this.route.snapshot.params['tipoForm'];
-/*
-    let sub = this.route.params.subscribe(params => {
-      console.log(params);
-      this.tipoForm = params['tipoForm'];
-    });
- */
-    if (this.tipoForm == 'editar'){
-      //Obtiene el pedido desde la bd
-      this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
-        console.log('Editando pedido->' + JSON.stringify(data));
-        this.pedido = data;
-      });
-      //this.onChangeCalculaTotal();
-//      this.queryBuscaCliente = this.pedido.cliente.rutCliente + ' - ' + this.pedido.cliente.nombresCliente + ' ' + this.pedido.cliente.apellidoPaternoCliente;
-      this.nombreBoton = 'Actualizar';
-//      this.onChangeCalculaTotal();
+    console.log('Se inicia form pedido->' + this.tipoForm);
 
-    }else if (this.tipoForm == 'tallas'){
-      console.log('Editando tallas');
+    //TALLAS
+    if (this.tipoForm === 'tallas') {
+      this.listaTallas = this.pedidosService.getTallas();
+
       this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
         console.log('Editando tallas->' + JSON.stringify(data));
         this.pedido = data;
       });
-    }
+      this.nombreBoton = 'Actualizar';
 
+    }else if (this.tipoForm === 'editar') {
+    //EDITAR
+      this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
+        console.log('Editando pedido->' + JSON.stringify(data));
+        this.pedido = data;
+      });
+      this.nombreBoton = 'Actualizar';
+
+    //NUEVO
+    }
     if (this.pedido == null) {
       console.log('nuevo pedido');
       this.pedido = new Pedido();
@@ -118,6 +117,7 @@ export class FormPedidoComponent implements OnInit {
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
     this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
+    this.listaTipoDeporte = this.pedidosService.getTipoDeporte();
 
     //lista de pedidos
     this.clientesService.getClientes().subscribe(data => {
@@ -133,11 +133,6 @@ export class FormPedidoComponent implements OnInit {
     this.detallePedido.listaAdicionales = new Array();
     this.detallePedido.listaDetalleTallas = new Array();
     this.rangoPrecioProducto = new RangoPrecioProducto();
-  }
-
-  addCliente(cliente: Cliente) {
-    this.pedido.cliente = cliente;
-    this.queryBuscaCliente = cliente.rutCliente + ' - ' + cliente.nombresCliente + ' ' + cliente.apellidoPaternoCliente;
   }
 
   getListaCliente(cadena:string) {
@@ -229,6 +224,7 @@ export class FormPedidoComponent implements OnInit {
         this.detalleTallas.terminadoCorte = 0;
         this.detalleTallas.terminadoEstampado = 0;
         this.detalleTallas.terminadoDiseno = 0;
+        this.detalleTallas.generoPrenda ='';
 
         this.listaDetallesTallas.push(this.detalleTallas);
       }
@@ -361,4 +357,17 @@ export class FormPedidoComponent implements OnInit {
     console.log('eliminando medio pago->' + id);
   }
 
+  addCliente(cliente: Cliente) {
+    this.cliente = cliente;
+    this.queryBuscaCliente = cliente.rutCliente + ' - ' + cliente.nombresCliente + ' ' + cliente.apellidoPaternoCliente;
+  }
+
+  cargarCliente(){
+    this.pedido.cliente = this.cliente;
+  }
+
+  cambiarCliente(){
+    this.pedido.cliente = null;
+    this.queryBuscaCliente = '';
+  }
 }

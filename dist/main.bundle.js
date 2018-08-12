@@ -1149,6 +1149,7 @@ var DataFilterPipe = (function () {
     function DataFilterPipe() {
     }
     DataFilterPipe.prototype.transform = function (items, query, key) {
+        //console.log('query->' + query + ' / key->' + key);
         if (!items) {
             return [];
         }
@@ -1157,12 +1158,13 @@ var DataFilterPipe = (function () {
         }
         else {
             if (query) {
-                //console.log('query->' + query + ' / key->' + key);
                 return items.filter(function (row) {
-                    if (typeof row[key] == 'number')
-                        return row[key] == query;
-                    else
+                    if (typeof row[key] === 'number') {
+                        return row[key] === query;
+                    }
+                    else {
                         return row[key].toLowerCase().indexOf(query.toString()) > -1;
+                    }
                 });
                 /*             return items.filter( it => {
                               return it.toLowerCase().includes(query);
