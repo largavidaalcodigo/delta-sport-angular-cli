@@ -145,11 +145,14 @@ var PedidosService = (function () {
             { id: 3, desc: 'Amarillo', codigoHex: '#FFFF00' }
         ];
     };
+    PedidosService.prototype.getTelas = function () {
+        return ['boston', 'rugby', 'mesh', 'lycra', 'elasticada', 'franela', 'franela elasticada', 'dupont', 'otro'];
+    };
     PedidosService.prototype.getTallas = function () {
         return ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'];
     };
     PedidosService.prototype.getTipoDeporte = function () {
-        return ['Futbol', 'Basquetall', 'Rugby', 'Volleyball', 'Tenis'];
+        return ['tela1', 'tela', 'Rugby', 'Volleyball', 'Tenis'];
     };
     PedidosService.prototype.getMediosPago = function () {
         return [

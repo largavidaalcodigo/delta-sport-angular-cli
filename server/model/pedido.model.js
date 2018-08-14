@@ -44,6 +44,7 @@ var pedidoSchema = new Schema({
       listaTipoProducto: [{
         colorTela: String,
         tipoTela: String,
+        descTela: String
       }],
       listaTipoCuello: [{
         colorTela: String,

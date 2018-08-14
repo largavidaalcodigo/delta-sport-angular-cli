@@ -8,10 +8,10 @@ const session = require('express-session');
 //const passport = require('passport');
 const routes = require('./server/routes');
 const flash = require('connect-flash');
+var multer = require('multer');
+var fs = require('fs');
 
-const app = express();
-//const api = require('./server/routes/api');
-
+var app = express();
 // Parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -26,6 +26,57 @@ app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: fals
 //app.use(passport.initialize());
 //app.use(passport.session());
 app.use(flash());
+
+
+
+//Upload files START
+var DIR = './uploads/';
+var upload = multer({dest: DIR});
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
+/*
+app.use(
+  multer(
+    {
+      dest: DIR,
+      rename: function (fieldname, filename) {
+        return filename + Date.now();
+      },
+      onFileUploadStart: function (file) {
+        console.log(file.originalname + ' is starting ...');
+      },
+      onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path);
+      }
+    }
+  )
+);
+*/
+
+app.get('/api', function (req, res) {
+  res.end('file catcher example');
+});
+
+app.post('/api', function (req, res) {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.end(err.toString());
+    }
+
+    res.end('File is uploaded');
+  });
+});
+//Upload files END
+
+
+//const api = require('./server/routes/api');
 
 // Passport configuration
 // require('./server/config/auth');

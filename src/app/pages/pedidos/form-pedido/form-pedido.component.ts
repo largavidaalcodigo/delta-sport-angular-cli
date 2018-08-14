@@ -1,3 +1,7 @@
+import { ImgFT } from './../../../model/producto/imgFT.model';
+import { TipoCuelloFT } from './../../../model/producto/tipoCuelloFT.model';
+import { TipoProductoFT } from './../../../model/producto/tipoProductoFT.model';
+import { FichaTecnica } from './../../../model/producto/fichaTecnica.model';
 import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { DetallePedido } from '../../../model/pedido/detallePedido.model';
 import { DetalleAdicional } from '../../../model/producto/detalleAdicional.model';
@@ -43,10 +47,20 @@ export class FormPedidoComponent implements OnInit {
   pedido: Pedido;
   cliente: Cliente;
   tipoForm: string;
-
   //Lista Detalle pedido
   detallePedido: DetallePedido;
   detalleTallas: DetalleTalla;
+
+  detalleFichaTecnica: FichaTecnica;
+  listaTipoProductoFT: TipoProductoFT[];
+    tipoProductoFT: TipoProductoFT;
+  listaTipoCuelloFT: TipoCuelloFT[];
+    tipoCuelloFT: TipoCuelloFT;
+  listaTerminacionFT: string[];
+  listaEstampadoFT: string[];
+  listaImgFT: ImgFT[];
+    imgFT: ImgFT;
+
   medioPago: MedioPago;
   nombreBoton: string="Guardar";
   //listaDetallePedido: DetallePedido[] = new Array();
@@ -62,6 +76,7 @@ export class FormPedidoComponent implements OnInit {
   listaDetallesTallas: any[] = new Array();
   listaTipoDeporte: any[] = new Array();
   listaTallas: any[] = new Array();
+  listaTelas: any[] = new Array();
 
   cantidadProductos: number;
   cantidadComentarios: number;
@@ -84,7 +99,7 @@ export class FormPedidoComponent implements OnInit {
     console.log('Se inicia form pedido->' + this.tipoForm);
 
     //TALLAS
-    if (this.tipoForm === 'tallas') {
+    if (this.tipoForm === 'tallas' || this.tipoForm === 'ft' || this.tipoForm === 'editar') {
       this.listaTallas = this.pedidosService.getTallas();
 
       this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
@@ -92,17 +107,18 @@ export class FormPedidoComponent implements OnInit {
         this.pedido = data;
       });
       this.nombreBoton = 'Actualizar';
+    }
 
-    }else if (this.tipoForm === 'editar') {
-    //EDITAR
-      this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
-        console.log('Editando pedido->' + JSON.stringify(data));
-        this.pedido = data;
-      });
-      this.nombreBoton = 'Actualizar';
+    if(this.tipoForm === 'ft'){
+      this.listaTelas = this.pedidosService.getTelas();
+      this.detalleFichaTecnica = new FichaTecnica();
+      this.tipoProductoFT = new TipoProductoFT();
+      this.listaTipoProductoFT = new Array();
+      this.listaTipoCuelloFT = new Array();
+      this.tipoCuelloFT = new TipoCuelloFT();
+    }
 
     //NUEVO
-    }
     if (this.pedido == null) {
       console.log('nuevo pedido');
       this.pedido = new Pedido();
@@ -182,7 +198,6 @@ export class FormPedidoComponent implements OnInit {
     if (this.editando){
       this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
       this.addTallasProducto();
-
     }else if (this.tipoForm == 'tallas'){
 
     }else if (this.tipoForm == 'nuevo'){
@@ -224,11 +239,12 @@ export class FormPedidoComponent implements OnInit {
         this.detalleTallas.terminadoCorte = 0;
         this.detalleTallas.terminadoEstampado = 0;
         this.detalleTallas.terminadoDiseno = 0;
-        this.detalleTallas.generoPrenda ='';
+        //this.detalleTallas.generoPrenda = 0;
 
         this.listaDetallesTallas.push(this.detalleTallas);
       }
       this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
+      this.detallePedido.fichaTecnica = new FichaTecnica();
   }
 
   nuevoDetalle(){
@@ -304,23 +320,14 @@ export class FormPedidoComponent implements OnInit {
     //console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
   }
 
-  nuevoMedioPago() {
-    this.medioPago = new MedioPago();
-    this.medioPago.fechaPago = new Date();
-  }
-  addMedioPago() {
-    console.log('agregando medio pago');
-    this.pedido.listaMediosPago.push(this.medioPago);
-    this.pedido.totalMediosPago = 0;
-    this.onChangeCalculaTotal();
-  }
-
   guardarPedido(){
-    if (this.tipoForm === 'editar' || this.tipoForm === 'tallas') {
+    if (this.tipoForm === 'editar' || this.tipoForm === 'tallas' || this.tipoForm === 'ft') {
 
       //SE DEFINE ESTE ESTADO CUANDO SE INGRESAN LAS TALLAS
       if (this.tipoForm === 'tallas'){
         this.pedido.idEstado=3;
+      }else if (this.tipoForm === 'ft'){
+        this.pedido.idEstado=4;
       }
       this.pedidosService.putPedido(this.pedido).subscribe(data => {
         console.log('pedido actualizado->' + JSON.stringify(data));
@@ -351,11 +358,47 @@ export class FormPedidoComponent implements OnInit {
     console.log('eliminando producto->' + id);
   }
 
+/* MEDIOS DE PAGO */
+  nuevoMedioPago() {
+    this.medioPago = new MedioPago();
+    this.medioPago.fechaPago = new Date();
+  }
+  addMedioPago() {
+    console.log('agregando medio pago');
+    this.pedido.listaMediosPago.push(this.medioPago);
+    this.pedido.totalMediosPago = 0;
+    this.onChangeCalculaTotal();
+  }
   eliminaMedioPago(id: number){
     this.pedido.listaMediosPago.splice(id, 1);
     this.onChangeCalculaTotal();
     console.log('eliminando medio pago->' + id);
   }
+
+/* FICHA TECNICA */
+  addTipoProductoFT(detalle: DetallePedido, form: NgForm) {
+    console.log('agregando tipo producto FT');
+    detalle.fichaTecnica.listaTipoProducto.push(this.tipoProductoFT);
+    this.tipoProductoFT = new TipoProductoFT();
+    form.resetForm();
+  }
+  addTipoCuelloFT(detalle: DetallePedido, form: NgForm) {
+    console.log('agregando tipo cuello FT');
+    detalle.fichaTecnica.listaTipoCuello.push(this.tipoCuelloFT);
+    this.tipoCuelloFT = new TipoCuelloFT();
+    form.resetForm();
+  }
+
+  eliminaTipoProductoFT(detalle: DetallePedido, id: number) {
+    detalle.fichaTecnica.listaTipoProducto.splice(id, 1);
+    console.log('eliminando Tipo Producto Tela FT ->' + id);
+  }
+
+  eliminaTipoCuelloFT(detalle: DetallePedido, id: number) {
+    detalle.fichaTecnica.listaTipoCuello.splice(id, 1);
+    console.log('eliminando Tipo Cuello FT ->' + id);
+  }
+
 
   addCliente(cliente: Cliente) {
     this.cliente = cliente;

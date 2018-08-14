@@ -73,12 +73,16 @@ export class PedidosService {
     ];
   }
 
+  public getTelas() {
+    return ['boston','rugby','mesh','lycra','elasticada','franela','franela elasticada','dupont','otro'];
+  }
+
   public getTallas() {
     return ['2','4','6','8','10','12','14','16','S', 'M', 'L', 'XL', 'XXL'];
   }
 
   public getTipoDeporte() {
-    return ['Futbol', 'Basquetall', 'Rugby', 'Volleyball', 'Tenis'];
+    return ['tela1', 'tela', 'Rugby', 'Volleyball', 'Tenis'];
   }
 
   public getMediosPago() {

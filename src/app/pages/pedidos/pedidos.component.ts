@@ -68,4 +68,10 @@ export class PedidosComponent implements OnInit {
     console.log('editando tallas...');
     this.router.navigate(['/pedidos/formPedido/tallas/', pedido.numeroPedido]);
   }
+
+  addFichaTecnica(pedido: Pedido){
+    console.log('editando Ficha Tecnica...');
+    this.router.navigate(['/pedidos/formPedido/ft/', pedido.numeroPedido]);
+  }
+
 }

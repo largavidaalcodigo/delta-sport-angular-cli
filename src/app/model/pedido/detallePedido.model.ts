@@ -20,6 +20,6 @@ export class DetallePedido {
   public total: number = 0;
   public tipoJugador: string;
   //Ficha Tecnica
-  public fichaTecnica: FichaTecnica[];
+  public fichaTecnica: FichaTecnica;
   constructor() {}
 }

@@ -13,6 +13,7 @@ import {BreadcrumbsComponent} from './layout/admin/breadcrumbs/breadcrumbs.compo
 import {TitleComponent} from './layout/admin/title/title.component';
 import {AuthComponent} from './layout/auth/auth.component';
 import { LayoutModulosDirective } from './layout-modulos.directive';
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,10 @@ import { LayoutModulosDirective } from './layout-modulos.directive';
     BreadcrumbsComponent,
     TitleComponent,
     AuthComponent,
-    LayoutModulosDirective
+    LayoutModulosDirective,
+    FileSelectDirective,
+    FileDropDirective,
+    FileUploader
   ],
   imports: [
     HttpClientModule,

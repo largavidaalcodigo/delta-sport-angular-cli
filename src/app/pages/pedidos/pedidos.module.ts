@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
 import { PedidosComponent } from './pedidos.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormPedidoComponent } from './form-pedido/form-pedido.component';
+import { FileUploadComponent } from '../../file-upload/file-upload.component';
 import { FormPedidoModule } from './form-pedido/form-pedido.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 export const pedidosRoutes: Routes = [
   {path: '', component: PedidosComponent},
@@ -26,13 +28,14 @@ export const pedidosRoutes: Routes = [
     HttpModule,
     SharedModule,
     FormPedidoModule,
+    NgbModule,
     RouterModule.forChild(pedidosRoutes),
   ],
   providers: [
     PedidosService,
     ClientesService
   ],
-  declarations: [PedidosComponent, FormPedidoComponent]
+  declarations: [PedidosComponent, FormPedidoComponent, FileUploadComponent]
 })
 export class PedidosModule {}
 
