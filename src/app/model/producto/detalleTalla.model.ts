@@ -1,4 +1,4 @@
-import { Comentario } from './../pedido/comentario.model';
+import { Comentario } from '../pedido/comentario.model';
 export class DetalleTalla {
   public numero: string;
   public talla: string;

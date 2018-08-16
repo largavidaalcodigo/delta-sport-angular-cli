@@ -8,8 +8,7 @@ import { Producto } from '../../model/producto/producto.model';
 
 @Component({
   selector: 'app-corte',
-  templateUrl: './corte.component.html',
-  styleUrls: ['./corte.component.css']
+  templateUrl: './corte.component.html'
 })
 export class CorteComponent implements OnInit {
   listaPedidos: Pedido[];
@@ -24,7 +23,7 @@ export class CorteComponent implements OnInit {
     //lista de pedidos
      this.pedidosService.getPedidos()
       .subscribe(
-        pedidos => this.listaPedidos = pedidos.filter(item => item.idEstado === 3),
+        pedidos => this.listaPedidos = pedidos.filter(item => item.idEstado >= 3),
         err => console.log(err),
     );
   }

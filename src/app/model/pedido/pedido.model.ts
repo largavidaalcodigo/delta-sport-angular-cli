@@ -20,6 +20,17 @@ export class Pedido {
   public listaMediosPago: MedioPago[];
   public totalMediosPago: number = 0;
   public totalPagoPendiente: number = 0;
+  public tipoDeporte: string;
+
+  public avanceCorte: number;
+  public itemsTerminadosCorte: number;
+  public avanceDiseno: number;
+  public itemsTerminadosDiseno: number;
+  public avanceConfeccion: number;
+  public itemsTerminadosConfeccion: number;
+  public avanceEstampado: number;
+  public itemsTerminadosEstampado: number;
+  public totalItems: number;
 
   constructor(){}
 }

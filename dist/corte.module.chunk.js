@@ -1,27 +1,9 @@
 webpackJsonp(["corte.module"],{
 
-/***/ "../../../../../src/app/pages/corte/corte.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
 /***/ "../../../../../src/app/pages/corte/corte.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n  {{mensaje}}\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n<!--     <app-card>\r\n      <h4>Filtros de busqueda</h4>\r\n      <form #encabezadoPedidoForm='ngForm' class='form-inline'>\r\n        <div class='form-group form-inline'>\r\n          Cliente\r\n          <input type='text' size=\"40\" class='form-control' name='queryClientes'>\r\n          Estado\r\n          <select class='form-control' name='queryEstado'>\r\n            <option [value]=''>[Producto]</option>\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>\r\n          </select>\r\n          Fecha creación\r\n          <input class='form-control' name='fechaDesde' type=\"date\" placeholder=\"Fecha desde\">\r\n          <button type=\"reset\" class=\"btn btn-primary\">Quitar Filtro</button>\r\n        </div>\r\n      </form>\r\n    </app-card> -->\r\n\r\n    <app-card [title]=\"'Corte - Orden de trabajo'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>% avance</th>\r\n            <!-- <th>Monto Total</th> -->\r\n            <!-- <th>Estado</th> -->\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td>{{pedido.numeroPedido}}</td>\r\n              <td>{{pedido.cliente.nombresCliente}}</td>\r\n              <td>{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td></td>\r\n              <!-- <td (click)=\"editarPedido(pedido)\">{{pedido.idEstado}}</td> -->\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addCorte(pedido); $event.stopPropagation();\">Ver</button>\r\n<!--BORRAR PEDIDO-->\r\n<!--                 <button type=\"button\" (click)='eliminaPedido(pedido);$event.stopPropagation();'>\r\n                  <i class=\"icofont icofont-trash\"></i>\r\n                </button>\r\n -->              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n  {{mensaje}}\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n    <app-card [title]=\"'Corte - Orden de trabajo'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th class=\"text-center\">#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th class=\"text-center\">Fecha pedido</th>\r\n            <th class=\"text-center\">Fecha Entrega</th>\r\n            <th class=\"text-center font-weight-bold text-danger\">prendas terminadas</th>\r\n            <th class=\"text-center font-weight-bold text-success\">% avance</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td class=\"text-center\">{{pedido.numeroPedido}}</td>\r\n              <td>{{pedido.cliente.nombresCliente}}</td>\r\n              <td class=\"text-center\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td class=\"text-center\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td class=\"font-weight-bold text-danger text-center\">{{pedido.itemsTerminadosCorte}}</td>\r\n              <td class=\"font-weight-bold text-success text-center\">{{pedido.avanceCorte}}%</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addCorte(pedido); $event.stopPropagation();\">Ver</button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -57,7 +39,7 @@ var CorteComponent = (function () {
         var _this = this;
         //lista de pedidos
         this.pedidosService.getPedidos()
-            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos.filter(function (item) { return item.idEstado === 3; }); }, function (err) { return console.log(err); });
+            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos.filter(function (item) { return item.idEstado >= 3; }); }, function (err) { return console.log(err); });
     };
     CorteComponent.prototype.addCorte = function (pedido) {
         console.log('editando corte...');
@@ -68,8 +50,7 @@ var CorteComponent = (function () {
 CorteComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
         selector: 'app-corte',
-        template: __webpack_require__("../../../../../src/app/pages/corte/corte.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/pages/corte/corte.component.css")]
+        template: __webpack_require__("../../../../../src/app/pages/corte/corte.component.html")
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object])
 ], CorteComponent);
@@ -156,11 +137,8 @@ CorteModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return corteRouter; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__corte_component__ = __webpack_require__("../../../../../src/app/pages/corte/corte.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-//import { NgModule } from '@angular/core';
-//import { CommonModule } from '@angular/common';
 
 
-//import { FormCorteComponent } from './form-corte/form-corte.component';
 var CORTE_ROUTER = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__corte_component__["a" /* CorteComponent */] },
 ];
@@ -172,7 +150,7 @@ var corteRouter = __WEBPACK_IMPORTED_MODULE_1__angular_router__["g" /* RouterMod
 /***/ "../../../../../src/app/pages/corte/form-corte/form-corte.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"container\" *ngIf=\"pedido.listaProductos\">\r\n    <div>\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4>Detalle Tallas</h4>\r\n            nombre Clientefecha, etc. estado, tipo deporte\r\n          </app-card>\r\n          <app-card>\r\n            <div id=\"acordionProductos\">\r\n              <div class=\"card\" *ngFor='let c of pedido.listaProductos; let i=index'>\r\n                <!--header fila-->\r\n                <div id=\"header{{i}}\">\r\n                  <h3>{{c.descProducto}}<br>\r\n                    [{{c.descTipoProducto}}]\r\n                    / Tallas: [{{c.descRangoPrecio}}]</h3>\r\n                </div>\r\n                <!--detalle fila-->\r\n                <div id=\"fila{{i}}\">\r\n                  <form #detallePedidoForm='ngForm' (ngSubmit)=\"onSubmitDetalle(detallePedido);\" class='form-inline'>\r\n                    <table class=\"form-table-bordered\">\r\n                      <thead>\r\n                        <tr>\r\n                          <td>#</td>\r\n                          <td>Numero jugador</td>\r\n                          <td>Nombre pecho</td>\r\n                          <td>Nombre espalda</td>\r\n                          <td>Terminado?</td>\r\n                          <td>Opciones</td>\r\n                        </tr>\r\n                      </thead>\r\n                      <tbody>\r\n                        <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>\r\n                          <td style=\"width:10px;\">{{ ii+1 }}\r\n                          </td>\r\n        <!--NUMERO JUGADOR-->\r\n                          <td style=\"width:90px;\">\r\n                            {{d.numero}}\r\n                          </td>\r\n        <!--NOMBRE PECHO-->\r\n                          <td style=\"width:140px;\">\r\n                            {{d.nombrePecho}}\r\n                          </td>\r\n        <!--NOMBRE ESPALDA-->\r\n                          <td style=\"width:140px;\">\r\n                            {{d.nombreEspalda}}\r\n                          </td>\r\n                          <td>\r\n                            <div class=\"btn-group btn-group-toggle\"\r\n                              ngbRadioGroup name='terminadoCorte{{ii}}' [(ngModel)]='d.terminadoCorte'>\r\n                              <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                                <input ngbButton type=\"radio\" [value]=\"0\">NO\r\n                              </label>\r\n                              <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                                <input ngbButton type=\"radio\" [value]=\"1\">SI\r\n                              </label>\r\n                            </div>\r\n                          </td>\r\n                          <td>\r\n                            <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                            (click)=\"$event.stopPropagation();\">Notificar</button>\r\n                          </td>\r\n                        </tr>\r\n                      </tbody>\r\n                    </table>\r\n              <!-- {{detallePedido | json}} -->\r\n                  </form>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class='form-group'>\r\n    <a class=\"btn btn-primary\" routerLink='/corte'>Cancelar</a>\r\n    <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>\r\n  </div>\r\n<!-- {{pedido|json}}\r\n -->\r\n"
+module.exports = "  <div class=\"container\" *ngIf=\"pedido.listaProductos\">\r\n    <div>\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-12\">\r\n          <app-card>\r\n            <h4>Detalle Tallas</h4>\r\n            nombre Clientefecha, etc. estado, tipo deporte\r\n          </app-card>\r\n          <app-card>\r\n            <div id=\"acordionProductos\">\r\n              <div class=\"card\" *ngFor='let c of pedido.listaProductos; let i=index'>\r\n                <!--header fila-->\r\n                <div id=\"header{{i}}\">\r\n                  <h3>{{c.descProducto}}<br>\r\n                    [{{c.descTipoProducto}}]\r\n                    / Tallas: [{{c.descRangoPrecio}}]</h3>\r\n                </div>\r\n                <!--detalle fila-->\r\n                <div id=\"fila{{i}}\">\r\n                  <form #detallePedidoForm='ngForm' class='form-inline'>\r\n                    <table class=\"form-table-bordered\">\r\n                      <thead>\r\n                        <tr>\r\n                          <td>#</td>\r\n                          <td>Numero jugador</td>\r\n                          <td>Nombre pecho</td>\r\n                          <td>Nombre espalda</td>\r\n                          <td>Terminado?</td>\r\n                          <td>Opciones</td>\r\n                        </tr>\r\n                      </thead>\r\n                      <tbody>\r\n                        <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>\r\n                          <td style=\"width:10px;\">{{ ii+1 }}\r\n                          </td>\r\n        <!--NUMERO JUGADOR-->\r\n                          <td style=\"width:90px;\">\r\n                            {{d.numero}}\r\n                          </td>\r\n        <!--NOMBRE PECHO-->\r\n                          <td style=\"width:140px;\">\r\n                            {{d.nombrePecho}}\r\n                          </td>\r\n        <!--NOMBRE ESPALDA-->\r\n                          <td style=\"width:140px;\">\r\n                            {{d.nombreEspalda}}\r\n                          </td>\r\n                          <td>\r\n                            <div class=\"btn-group btn-group-toggle\"\r\n                              ngbRadioGroup name='terminadoCorte{{ii}}'\r\n                              [(ngModel)]='d.terminadoCorte'>\r\n                              <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                                <input ngbButton type=\"radio\" [value]=\"0\">NO\r\n                              </label>\r\n                              <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\r\n                                <input ngbButton type=\"radio\" [value]=\"1\">SI\r\n                              </label>\r\n                            </div>\r\n                          </td>\r\n                          <td>\r\n                            <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                            (click)=\"$event.stopPropagation();\">Notificar</button>\r\n                          </td>\r\n                        </tr>\r\n                      </tbody>\r\n                    </table>\r\n              <!-- {{detallePedido | json}} -->\r\n                  </form>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </app-card>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class='form-group'>\r\n    <a class=\"btn btn-primary\" routerLink='/corte'>Cancelar</a>\r\n    <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>\r\n  </div>\r\n<!-- {{pedido|json}}\r\n -->\r\n"
 
 /***/ }),
 
@@ -220,11 +198,29 @@ var FormCorteComponent = (function () {
     };
     FormCorteComponent.prototype.guardarPedido = function () {
         var _this = this;
+        this.calculaAvanceCorte();
         this.pedidosService.putPedido(this.pedido).subscribe(function (data) {
             console.log('pedido actualizado->' + JSON.stringify(data));
             _this.pedido = data;
         });
         this.router.navigate(['/corte', '<strong>Pedido nro. [' + this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
+    };
+    FormCorteComponent.prototype.calculaAvanceCorte = function () {
+        var contadorCorte = 0; //sumo solo los items que esten terminados
+        var contadorTotalitemsProductos = 0; //sumo todos los items que encuentre
+        //Calcula % avance del pedido corte
+        for (var _i = 0, _a = this.pedido.listaProductos; _i < _a.length; _i++) {
+            var producto = _a[_i];
+            for (var _b = 0, _c = producto.listaDetalleTallas; _b < _c.length; _b++) {
+                var talla = _c[_b];
+                if (talla.terminadoCorte === 1) {
+                    contadorCorte++;
+                }
+                contadorTotalitemsProductos++;
+            }
+        }
+        this.pedido.avanceCorte = Math.round((contadorCorte * 100) / this.pedido.totalItems);
+        this.pedido.itemsTerminadosCorte = contadorCorte;
     };
     return FormCorteComponent;
 }());

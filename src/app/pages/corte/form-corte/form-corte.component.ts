@@ -1,3 +1,5 @@
+import { DetallePedido } from './../../../model/pedido/detallePedido.model';
+import { DetalleAdicional } from './../../../model/producto/detalleAdicional.model';
 import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { Pedido } from '../../../model/pedido/pedido.model';
 
@@ -37,10 +39,27 @@ export class FormCorteComponent implements OnInit {
   }
 
   guardarPedido(){
+    this.calculaAvanceCorte();
     this.pedidosService.putPedido(this.pedido).subscribe(data => {
       console.log('pedido actualizado->' + JSON.stringify(data));
       this.pedido = data;
     });
     this.router.navigate(['/corte', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
+  }
+
+  calculaAvanceCorte(){
+    let contadorCorte=0; //sumo solo los items que esten terminados
+    let contadorTotalitemsProductos=0; //sumo todos los items que encuentre
+    //Calcula % avance del pedido corte
+    for (const producto of this.pedido.listaProductos) {
+      for (const talla of producto.listaDetalleTallas) {
+        if (talla.terminadoCorte === 1) {
+          contadorCorte++;
+        }
+        contadorTotalitemsProductos++;
+      }
+    }
+    this.pedido.avanceCorte = Math.round(( contadorCorte * 100 ) / this.pedido.totalItems);
+    this.pedido.itemsTerminadosCorte = contadorCorte;
   }
 }

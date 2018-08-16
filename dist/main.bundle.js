@@ -163,8 +163,6 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__layout_admin_title_title_component__ = __webpack_require__("../../../../../src/app/layout/admin/title/title.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__layout_auth_auth_component__ = __webpack_require__("../../../../../src/app/layout/auth/auth.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__layout_modulos_directive__ = __webpack_require__("../../../../../src/app/layout-modulos.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload_ng2_file_upload__ = __webpack_require__("../../../../ng2-file-upload/ng2-file-upload.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload_ng2_file_upload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_ng2_file_upload_ng2_file_upload__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -186,7 +184,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
+/* import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+ */
 var AppModule = (function () {
     function AppModule() {
     }
@@ -201,9 +200,6 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_12__layout_admin_title_title_component__["a" /* TitleComponent */],
             __WEBPACK_IMPORTED_MODULE_13__layout_auth_auth_component__["a" /* AuthComponent */],
             __WEBPACK_IMPORTED_MODULE_14__layout_modulos_directive__["a" /* LayoutModulosDirective */],
-            __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload_ng2_file_upload__["FileSelectDirective"],
-            __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload_ng2_file_upload__["FileDropDirective"],
-            __WEBPACK_IMPORTED_MODULE_15_ng2_file_upload_ng2_file_upload__["FileUploader"]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["b" /* HttpClientModule */],

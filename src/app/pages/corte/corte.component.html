@@ -8,55 +8,32 @@
 <!-- Lista  -->
 <div class="row">
   <div class="col-sm-12">
-<!--     <app-card>
-      <h4>Filtros de busqueda</h4>
-      <form #encabezadoPedidoForm='ngForm' class='form-inline'>
-        <div class='form-group form-inline'>
-          Cliente
-          <input type='text' size="40" class='form-control' name='queryClientes'>
-          Estado
-          <select class='form-control' name='queryEstado'>
-            <option [value]=''>[Producto]</option>
-            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>
-          </select>
-          Fecha creación
-          <input class='form-control' name='fechaDesde' type="date" placeholder="Fecha desde">
-          <button type="reset" class="btn btn-primary">Quitar Filtro</button>
-        </div>
-      </form>
-    </app-card> -->
-
     <app-card [title]="'Corte - Orden de trabajo'" [classHeader]="false" [blockClass]="'table-border-style'">
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
           <tr>
-            <th>#</th>
+            <th class="text-center">#</th>
             <th>Nombre Cliente</th>
-            <th>Fecha pedido</th>
-            <th>Fecha Entrega</th>
-            <th>% avance</th>
-            <!-- <th>Monto Total</th> -->
-            <!-- <th>Estado</th> -->
+            <th class="text-center">Fecha pedido</th>
+            <th class="text-center">Fecha Entrega</th>
+            <th class="text-center font-weight-bold text-danger">prendas terminadas</th>
+            <th class="text-center font-weight-bold text-success">% avance</th>
             <th>Opciones</th>
           </tr>
           </thead>
           <tbody *ngFor="let pedido of listaPedidos;let i = index">
             <tr>
-              <td>{{pedido.numeroPedido}}</td>
+              <td class="text-center">{{pedido.numeroPedido}}</td>
               <td>{{pedido.cliente.nombresCliente}}</td>
-              <td>{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
-              <td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
-              <td></td>
-              <!-- <td (click)="editarPedido(pedido)">{{pedido.idEstado}}</td> -->
+              <td class="text-center">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+              <td class="text-center">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+              <td class="font-weight-bold text-danger text-center">{{pedido.itemsTerminadosCorte}}</td>
+              <td class="font-weight-bold text-success text-center">{{pedido.avanceCorte}}%</td>
               <td>
                 <button type="button" class="btn btn-danger btn-sm"
                 (click)="addCorte(pedido); $event.stopPropagation();">Ver</button>
-<!--BORRAR PEDIDO-->
-<!--                 <button type="button" (click)='eliminaPedido(pedido);$event.stopPropagation();'>
-                  <i class="icofont icofont-trash"></i>
-                </button>
- -->              </td>
+              </td>
             </tr>
           </tbody>
         </table>

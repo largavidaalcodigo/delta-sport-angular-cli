@@ -44,9 +44,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-/* import { TipoProducto } from '../../model/producto/tipoProducto.model';
-import { Producto } from '../../model/producto/producto.model';
- */ 
+
 var EstampadoComponent = (function () {
     function EstampadoComponent(route, router, pedidosService) {
         this.route = route;
@@ -156,11 +154,8 @@ EstampadoModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return estampadoRouter; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__estampado_component__ = __webpack_require__("../../../../../src/app/pages/estampado/estampado.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-//import { NgModule } from '@angular/core';
-//import { CommonModule } from '@angular/common';
 
 
-//import { FormCorteComponent } from './form-corte/form-corte.component';
 var ESTAMPADO_ROUTER = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_0__estampado_component__["a" /* EstampadoComponent */] },
 ];

@@ -1,9 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { PedidosService } from '../../services/pedidos.service';
 import { Pedido } from '../../model/pedido/pedido.model';
-/* import { TipoProducto } from '../../model/producto/tipoProducto.model';
-import { Producto } from '../../model/producto/producto.model';
- */import { Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
  import { Observable } from "rxjs";
 
 @Component({

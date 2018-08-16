@@ -17,7 +17,7 @@
                 </div>
                 <!--detalle fila-->
                 <div id="fila{{i}}">
-                  <form #detallePedidoForm='ngForm' (ngSubmit)="onSubmitDetalle(detallePedido);" class='form-inline'>
+                  <form #detallePedidoForm='ngForm' class='form-inline'>
                     <table class="form-table-bordered">
                       <thead>
                         <tr>
@@ -47,7 +47,8 @@
                           </td>
                           <td>
                             <div class="btn-group btn-group-toggle"
-                              ngbRadioGroup name='terminadoCorte{{ii}}' [(ngModel)]='d.terminadoCorte'>
+                              ngbRadioGroup name='terminadoCorte{{ii}}'
+                              [(ngModel)]='d.terminadoCorte'>
                               <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
                                 <input ngbButton type="radio" [value]="0">NO
                               </label>

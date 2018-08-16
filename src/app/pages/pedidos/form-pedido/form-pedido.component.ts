@@ -1,7 +1,7 @@
-import { ImgFT } from './../../../model/producto/imgFT.model';
-import { TipoCuelloFT } from './../../../model/producto/tipoCuelloFT.model';
-import { TipoProductoFT } from './../../../model/producto/tipoProductoFT.model';
-import { FichaTecnica } from './../../../model/producto/fichaTecnica.model';
+import { ImgFT } from '../../../model/producto/imgFT.model';
+import { TipoCuelloFT } from '../../../model/producto/tipoCuelloFT.model';
+import { TipoProductoFT } from '../../../model/producto/tipoProductoFT.model';
+import { FichaTecnica } from '../../../model/producto/fichaTecnica.model';
 import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { DetallePedido } from '../../../model/pedido/detallePedido.model';
 import { DetalleAdicional } from '../../../model/producto/detalleAdicional.model';
@@ -126,6 +126,15 @@ export class FormPedidoComponent implements OnInit {
       this.pedido.fechaCreacion = new Date();
       this.pedido.subTotal = 0;
       this.pedido.descuento = 0;
+      this.pedido.avanceConfeccion = 0;
+      this.pedido.itemsTerminadosConfeccion = 0;
+      this.pedido.avanceCorte = 0;
+      this.pedido.itemsTerminadosCorte = 0;
+      this.pedido.avanceDiseno = 0;
+      this.pedido.itemsTerminadosDiseno = 0;
+      this.pedido.avanceEstampado = 0;
+      this.pedido.itemsTerminadosEstampado = 0;
+      this.pedido.totalItems = 0;
       this.pedido.listaProductos = new Array();
       this.pedido.listaMediosPago = new Array();
     }
@@ -329,6 +338,9 @@ export class FormPedidoComponent implements OnInit {
       }else if (this.tipoForm === 'ft'){
         this.pedido.idEstado=4;
       }
+
+      this.calculaTotalItem();
+
       this.pedidosService.putPedido(this.pedido).subscribe(data => {
         console.log('pedido actualizado->' + JSON.stringify(data));
         this.pedido = data;
@@ -336,6 +348,8 @@ export class FormPedidoComponent implements OnInit {
       this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
 
     }else if (this.tipoForm === 'nuevo') {
+      this.calculaTotalItem();
+
       //Contador de pedidos
       this.pedidosService.countPedidos().subscribe(countPedidos => {
         this.pedido.numeroPedido = countPedidos + 1;
@@ -412,5 +426,16 @@ export class FormPedidoComponent implements OnInit {
   cambiarCliente(){
     this.pedido.cliente = null;
     this.queryBuscaCliente = '';
+  }
+
+  calculaTotalItem(){
+    let contadorTotalitemsProductos=0; //sumo todos los items que encuentre
+    //Calcula % avance del pedido corte
+    for (const producto of this.pedido.listaProductos) {
+      for (const talla of producto.listaDetalleTallas) {
+        contadorTotalitemsProductos++;
+      }
+    }
+    this.pedido.totalItems = contadorTotalitemsProductos;
   }
 }

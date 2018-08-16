@@ -96,7 +96,17 @@ var pedidoSchema = new Schema({
   }],
   totalMediosPago: Number,
   totalPagoPendiente: Number,
-  tipoDeporte: String
+  tipoDeporte: String,
+  avanceCorte: Number,
+  itemsTerminadosCorte: Number,
+  avanceDiseno: Number,
+  itemsTerminadosDiseno: Number,
+  avanceConfeccion: Number,
+  itemsTerminadosConfeccion: Number,
+  avanceEstampado: Number,
+  itemsTerminadosEstampado: Number,
+  totalItems: Number
+
 });
 
 module.exports = mongoose.model('pedido', pedidoSchema);

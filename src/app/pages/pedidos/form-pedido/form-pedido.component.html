@@ -279,7 +279,7 @@
               <!--FECHA ENTREGA -->
                 <div class="col-3 d-inline-block">
                   Fecha de Entrega
-                  <input class='form-control' name='fechaEntrega'
+                  <input size="20" class='form-control' name='fechaEntrega'
                   [ngModel]="pedido.fechaEntrega | date:'yyyy-MM-dd'"
                   (ngModelChange)="pedido.fechaEntrega = $event"
                   type="date" placeholder="Fecha entrega">
@@ -739,4 +739,4 @@
     <a class="btn btn-primary" routerLink='/pedidos'>Cancelar</a>
     <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>
   </div>
-{{pedido|json}}
+<!-- {{pedido|json}} -->

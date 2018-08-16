@@ -13,8 +13,8 @@ import {BreadcrumbsComponent} from './layout/admin/breadcrumbs/breadcrumbs.compo
 import {TitleComponent} from './layout/admin/title/title.component';
 import {AuthComponent} from './layout/auth/auth.component';
 import { LayoutModulosDirective } from './layout-modulos.directive';
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
-
+/* import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+ */
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,10 +23,10 @@ import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-u
     TitleComponent,
     AuthComponent,
     LayoutModulosDirective,
-    FileSelectDirective,
+/*     FileSelectDirective,
     FileDropDirective,
     FileUploader
-  ],
+ */  ],
   imports: [
     HttpClientModule,
     FormsModule,
