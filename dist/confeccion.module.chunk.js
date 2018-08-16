@@ -1,57 +1,5 @@
 webpackJsonp(["confeccion.module"],{
 
-/***/ "../../../../../src/app/pages/confeccion/Confeccion.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConfeccionComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var ConfeccionComponent = (function () {
-    function ConfeccionComponent(route, router, pedidosService) {
-        this.route = route;
-        this.router = router;
-        this.pedidosService = pedidosService;
-    }
-    ConfeccionComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        //lista de pedidos
-        this.pedidosService.getPedidos()
-            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos.filter(function (item) { return item.idEstado >= 3; }); }, function (err) { return console.log(err); });
-    };
-    ConfeccionComponent.prototype.addConfeccion = function (pedido) {
-        console.log('editando confeccion...');
-        this.router.navigate(['/confeccion/formConfeccion/', pedido.numeroPedido]);
-    };
-    return ConfeccionComponent;
-}());
-ConfeccionComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
-        selector: 'app-confeccion',
-        template: __webpack_require__("../../../../../src/app/pages/confeccion/confeccion.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/pages/confeccion/confeccion.component.css")]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object])
-], ConfeccionComponent);
-
-var _a, _b, _c;
-//# sourceMappingURL=Confeccion.component.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/pages/confeccion/confeccion.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -294,7 +242,7 @@ var _a, _b, _c, _d;
 "use strict";
 /* unused harmony export confeccionRoutes */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormConfeccionModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Confeccion_component__ = __webpack_require__("../../../../../src/app/pages/confeccion/Confeccion.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__confeccion_component__ = __webpack_require__("../../../../../src/app/pages/confeccion/confeccion.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
@@ -318,7 +266,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 //import { FilterDataPipe } from './filterdata.pipe';
 var confeccionRoutes = [
-    { path: ':id', component: __WEBPACK_IMPORTED_MODULE_0__Confeccion_component__["a" /* ConfeccionComponent */] },
+    { path: ':id', component: __WEBPACK_IMPORTED_MODULE_0__confeccion_component__["a" /* ConfeccionComponent */] },
 ];
 var FormConfeccionModule = (function () {
     function FormConfeccionModule() {
