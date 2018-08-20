@@ -8,12 +8,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CorteComponent } from './corte.component';
 import { RouterModule, Routes } from '@angular/router';
-import { FormCorteComponent } from './form-corte/form-corte.component';
-import { FormCorteModule } from './form-corte/form-corte.module';
 
 export const corteRoutes: Routes = [
   {path: '', component: CorteComponent},
-  {path: 'formCorte/:id', component: FormCorteComponent}
 ];
 
 @NgModule({
@@ -24,14 +21,15 @@ export const corteRoutes: Routes = [
     FormsModule,
     HttpModule,
     SharedModule,
-    FormCorteModule,
     RouterModule.forChild(corteRoutes),
   ],
   providers: [
     PedidosService,
     ClientesService
   ],
-  declarations: [CorteComponent, FormCorteComponent]
+  declarations: [
+    CorteComponent,
+  ]
 })
 export class CorteModule {}
 

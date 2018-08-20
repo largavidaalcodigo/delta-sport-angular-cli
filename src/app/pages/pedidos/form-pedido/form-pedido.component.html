@@ -1,257 +1,7 @@
   <div class="container">
-      <app-file-upload></app-file-upload>
-<!--FORM TALLAS -->
-    <div *ngIf="tipoForm==='tallas' || tipoForm==='ft'; else formPedido">
-      <div class="row">
-        <div class="col-sm-12">
-          <app-card>
-            <h4 *ngIf="tipoForm==='tallas'">Detalle Tallas</h4>
-            <h4 *ngIf="tipoForm==='ft'">Detalle Ficha Técnica</h4>
-
-            <div class="d-inline-block">
-              <div class="col-4 d-inline-block border">
-                <p class="font-weight-bold">Cliente</p>
-                <span *ngIf="pedido.cliente">
-                  {{pedido.cliente.nombresCliente}} {{pedido.cliente.apellidoPaternoCliente}}
-                </span>
-              </div>
-              <div class="col-2 d-inline-block border">
-                  <p class="font-weight-bold">Fecha creación</p>
-                  <span>{{pedido.fechaCreacion | date:'yyyy-MM-dd'}}</span>
-              </div>
-              <div class="col-2 d-inline-block border">
-                  <p class="font-weight-bold">Fecha entrega</p>
-                  <span>{{pedido.fechaEntrega | date:'yyyy-MM-dd'}}</span>
-              </div>
-              <div class="col-2 d-inline-block border">
-                  <p class="font-weight-bold">Tipo de deporte</p>
-                  <span>{{pedido.tipoDeporte}}</span>
-              </div>
-            </div>
-          </app-card>
-          <app-card>
-            <div *ngFor='let c of pedido.listaProductos; let i=index'>
-              <!--header fila-->
-              <div class="col-12 d-inline-block" id="header{{i}}">
-                <div class="col-7 d-inline-block bg-danger">
-                  <h4>[#{{i+1}}] {{c.descProducto}}
-                    [{{c.descTipoProducto}}]
-                    / Rango Tallas: [{{c.descRangoPrecio}}]
-                  </h4>
-                </div>
-                <div class="col-4 d-inline-block bg-danger">
-                  <h4>Tipo jugador: {{c.tipoJugador}}</h4>
-                </div>
-              </div>
-
-<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->
-              <app-card>
-                <div class="d-inline-block" id="filaTipoProductoFT{{i}}" *ngIf="tipoForm==='ft'">
-                  <span class="btn-group">
-                  <h4>Producto</h4>
-            <!-- DESCRIPCION TELA -->
-                  <form #formTipoProductoFT="ngForm">
-                    <div class="row" >
-                      <div class="col-4">
-                        <h5>Descripción tela</h5>
-                        <input type='text' class='form-control' name='tipoProductoFTDescTela{{i}}'
-                        (change)='tipoProductoFT.descTela = $event.target.value;'>
-                      </div>
-                      <div class="col-2">
-                          <h5>Color tela</h5>
-                          <select class='form-control' name='tipoProductoFTcolorTela{{i}}'
-                            (change)='tipoProductoFT.colorTela = $event.target.value;'>
-                            <option [value]=''>[Seleccione...]</option>
-                            <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
-                          </select>
-                        </div>
-                        <div class="col-2">
-                          <h5>Tipo tela</h5>
-                          <select class='form-control' name='tipoProductoFTtipoTela{{i}}'
-                            (change)='tipoProductoFT.tipoTela = $event.target.value;'>
-                            <option [value]=''>[Seleccione...]</option>
-                            <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>
-                          </select>
-                        </div>
-                        <div class="col-4">
-                          <br>
-                          <button type="button" class="btn btn-primary btn-sm"
-                            (click)="addTipoProductoFT(c, formTipoProductoFT);">
-                            Guardar
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                    <div class="d-inline-block border">
-            <!--TITULO-->
-                          <table width="100%" class="table-bordered">
-                            <tr *ngIf="c.fichaTecnica.listaTipoProducto.length>0">
-                                <th class="text-center">#</th>
-                                <th class="text-center">Descripción</th>
-                                <th class="text-center">Color</th>
-                                <th class="text-center">Tipo tela</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                            <!--LISTA DE MEDIOS DE PAGO-->
-                            <tr *ngFor="let item of c.fichaTecnica.listaTipoProducto; let i = index;">
-                              <td class="text-center">
-                                  <h5>{{i + 1}}</h5>
-                              </td>
-                              <td class="text-left">
-                                  <h5>{{item.descTela}}</h5>
-                              </td>
-                              <td class="text-left">
-                                <h5>{{item.colorTela}}</h5>
-                              </td>
-                              <td class="text-left">
-                                <h5>{{item.tipoTela}}</h5>
-                              </td>
-                              <td>
-                                <div style="text-align:center">
-                                  <button type="button" (click)='eliminaTipoProductoFT(c, i);'>
-                                    <i class="icofont icofont-trash"></i>
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          </table>
-                        </div>
-                      </span>
-                  </div>
-                </app-card>
-<!--DETALLE TIPO CUELLO FICHA TECNICA-->
-                <app-card>
-                  <div class="d-inline-block" id="filaTipoCuelloFT{{i}}" *ngIf="tipoForm==='ft'">
-                    <span class="btn-group">
-                    <h4>Tipo Cuello</h4>
-                <!-- DESCRIPCION TELA -->
-                    <form #formTipoCuelloFT="ngForm">
-                      <div class="row" >
-                        <div class="col-3">
-                          <h5>Color tela</h5>
-                          <select class='form-control' name='tipoCuelloFTcolorTela{{i}}'
-                            (change)='tipoCuelloFT.colorTela = $event.target.value;'>
-                            <option [value]=''>[Seleccione...]</option>
-                            <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
-                          </select>
-                        </div>
-                        <div class="col-3">
-                          <h5>Tipo tela</h5>
-                          <select class='form-control' name='tipoCuelloFTtipoTela{{i}}'
-                            (change)='tipoCuelloFT.tipoTela = $event.target.value;'>
-                            <option [value]=''>[Seleccione...]</option>
-                            <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>
-                          </select>
-                        </div>
-                        <div class="col-4">
-                          <br>
-                          <button type="button" class="btn btn-primary btn-sm"
-                            (click)="addTipoCuelloFT(c, formTipoCuelloFT);">
-                            Guardar
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                    <div class="d-inline-block border">
-                <!--TITULO-->
-                      <table width="100%" class="table-bordered">
-                        <tr *ngIf="c.fichaTecnica.listaTipoCuello.length>0">
-                            <th class="text-center">#</th>
-                            <th class="text-center">Color</th>
-                            <th class="text-center">Tipo tela</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                        <!--LISTA DE MEDIOS DE PAGO-->
-                        <tr *ngFor="let item of c.fichaTecnica.listaTipoCuello; let i = index;">
-                          <td class="text-center">
-                              <h5>{{i + 1}}</h5>
-                          </td>
-                          <td class="text-left">
-                            <h5>{{item.colorTela}}</h5>
-                          </td>
-                          <td class="text-left">
-                            <h5>{{item.tipoTela}}</h5>
-                          </td>
-                          <td>
-                            <div style="text-align:center">
-                              <button type="button" (click)='eliminaTipoCuelloFT(c, i);'>
-                                <i class="icofont icofont-trash"></i>
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </span>
-                </div>
-              </app-card>
-<!--DETALLE TALLAS-->
-                <div id="fila{{i}}" *ngIf="tipoForm==='tallas'">
-                  <form #detallePedidoForm='ngForm' (ngSubmit)="onSubmitDetalle(detallePedido);" class='form-inline'>
-                    <table class="form-table-bordered">
-                      <thead>
-                        <tr>
-                          <td>#</td>
-                          <td>Talla</td>
-                          <td>Sexo prenda</td>
-                          <td>Numero jugador</td>
-                          <td>Nombre pecho</td>
-                          <td>Nombre espalda</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>
-                          <td>{{ ii+1 }}
-                          </td>
-        <!--TALLA-->
-                          <td style="width:90px;">
-                            <select class='form-control' name='listaTallas{{ii}}' [(ngModel)]='d.talla'>
-                              <option [value]=''>[Seleccione...]</option>
-                              <option *ngFor='let talla of listaTallas' [value]='talla'>{{talla}}</option>
-                            </select>
-                          </td>
-        <!--SEXO PRENDA-->
-                          <td>
-                            <div class="btn-group btn-group-toggle"
-                            ngbRadioGroup name='sexoPrenda{{ii}}' [(ngModel)]='d.generoPrenda'>
-
-                            <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
-                              <input ngbButton type="radio" [value]='0'>Hombre
-                            </label>
-                            <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
-                              <input ngbButton type="radio" [value]='1'>Mujer
-                            </label>
-                          </div>
-                        </td>
-        <!--NUMERO JUGADOR-->
-                          <td style="width:90px;">
-                            <input type='number' class='form-control' name='numero{{ii}}'
-                             [(ngModel)]="d.numero" placeholder='Numero jugador'>
-                          </td>
-        <!--NOMBRE PECHO-->
-                          <td style="width:140px;">
-                            <input type='text' class='form-control' name='nombrePecho{{ii}}'
-                            [(ngModel)]="d.nombrePecho" placeholder='Nombre pecho'>
-                          </td>
-        <!--NOMBRE ESPALDA-->
-                          <td style="width:140px;">
-                            <input type='text' class='form-control' name='nombreEspalda{{ii}}'
-                            [(ngModel)]="d.nombreEspalda" placeholder='Nombre espalda'>
-                            <br>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                </div>
-              </div>
-          </app-card>
-        </div>
-      </div>
-    </div>
+<!--     <app-file-upload></app-file-upload> -->
 
 <!--FORM PEDIDO / ACTUALIZAR O CREAR -->
-    <ng-template #formPedido>
       <div class="row">
         <div class="col-sm-12">
           <app-card>
@@ -259,7 +9,7 @@
             <form #encabezadoPedidoForm='ngForm'>
               <div class='form-group'><!--  border border-primary'> -->
   <!-- SELECCICONA CLIENTE-->
-                <div class="col-7 d-inline-block">
+                <div class="col-6 d-inline-block">
                   <div class="d-inline-block">
                     Cliente
                     <input *ngIf="!pedido.cliente" type='text' size="45" class='form-control' name='query' [(ngModel)]="queryBuscaCliente"
@@ -271,8 +21,8 @@
                   </div>
   <!--BOTON CARGAR CLIENTE-->
                   <div class="d-inline-block">
-                    <button *ngIf="!pedido.cliente" type="button" (click)="cargarCliente();" class="btn btn-primary">Cargar</button>
-                    <button *ngIf="pedido.cliente" type="button" (click)="cambiarCliente();" class="btn btn-primary">Cambiar</button>
+                    <button *ngIf="!pedido.cliente" type="button" (click)="cargarCliente();" class="btn btn-primary btn-sm">Cargar</button>
+                    <button *ngIf="pedido.cliente" type="button" (click)="cambiarCliente();" class="btn btn-primary btn-sm">Cambiar</button>
                   </div>
                 </div>
 
@@ -733,7 +483,6 @@
           </app-card>
         </div>
       </div>
-    </ng-template>
   </div>
   <div class='form-group'>
     <a class="btn btn-primary" routerLink='/pedidos'>Cancelar</a>

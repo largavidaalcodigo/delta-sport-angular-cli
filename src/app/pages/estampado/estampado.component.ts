@@ -10,25 +10,11 @@ import { Component, OnInit} from '@angular/core';
   styleUrls: ['./estampado.component.css']
 })
 export class EstampadoComponent implements OnInit {
-  listaPedidos: Pedido[];
-  pedido: Pedido;
-  mensaje: string;
-  constructor(private route: ActivatedRoute,
-    private router: Router,
-    private pedidosService: PedidosService) {
+  modulo: string;
+  constructor() {
   }
 
   ngOnInit() {
-    //lista de pedidos
-     this.pedidosService.getPedidos()
-      .subscribe(
-        pedidos => this.listaPedidos = pedidos.filter(item => item.idEstado === 3),
-        err => console.log(err),
-    );
-  }
-
-  addEstampado(pedido: Pedido){
-    console.log('editando estampado...');
-    this.router.navigate(['/estampado/formEstampado/', pedido.numeroPedido]);
+    this.modulo = 'estampado';
   }
 }

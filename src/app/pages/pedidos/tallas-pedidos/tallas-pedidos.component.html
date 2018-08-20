@@ -1,0 +1,127 @@
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+ -->
+ <div class="row" *ngIf='pedido'>
+  <div class="col-sm-12">
+    <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>
+
+<!--LISTADO PRODUCTOS -->
+<div *ngFor='let c of pedido.listaProductos; let i=index'>
+    <app-card>
+      <!--header fila-->
+        <div class="col-12 d-inline-block bg-primary" id="header{{i}}">
+          <h3>
+            Tipo jugador: {{c.tipoJugador}}
+            <!-- [#{{i+1}}]  -->
+          </h3>
+          {{c.descProducto}}
+          [{{c.descTipoProducto}}]
+        </div>
+<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->
+        <div class="row col-12" id="collapseExample">
+          <form #tallasForm="ngForm" class='form'>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Talla</th>
+                  <th class="text-center">Sexo prenda</th>
+                  <th class="text-center">Numero jugador</th>
+                  <th class="text-center">Nombre pecho</th>
+                  <th class="text-center">Nombre espalda</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>
+                  <td class="text-center" >{{ ii+1 }}
+                  </td>
+<!--TALLA-->
+                  <td style="width:90px;">
+                    <span *ngIf="tipoForm === 'ver'; else crearTalla">
+                      <div class='col-2 text-center'>
+                        {{d.talla}}
+                      </div>
+                    </span>
+                    <ng-template #crearTalla>
+                      <select class='form-control' name='listaTallas{{ii}}' [(ngModel)]='d.talla'>
+                        <option [value]=''>[Seleccione...]</option>
+                        <option *ngFor='let talla of listaTallas' [value]='talla'>{{talla}}</option>
+                      </select>
+                    </ng-template>
+                  </td>
+<!--SEXO PRENDA-->
+                  <td class="text-center" style="width:170px;">
+                    <span *ngIf="tipoForm === 'ver'; else crearGenero">
+                      <div class='col-2 text-center'>
+                        <p *ngIf='d.generoPrenda === 0' >Hombre</p>
+                        <p *ngIf='d.generoPrenda === 1' >Mujer</p>
+                      </div>
+                    </span>
+                    <ng-template #crearGenero>
+                      <div class="btn-group btn-group-toggle"
+                        ngbRadioGroup name='sexoPrenda{{ii}}' [(ngModel)]='d.generoPrenda'>
+
+                        <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                          <input class="form-control" ngbButton type="radio" [value]='0'>Hombre
+                        </label>
+                        <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
+                          <input class="form-control" ngbButton type="radio" [value]='1'>Mujer
+                        </label>
+                      </div>
+                    </ng-template>
+                </td>
+<!--NUMERO JUGADOR-->
+                <td style="width:90px;">
+                  <span *ngIf="tipoForm === 'ver'; else crearNumeroJugador">
+                    <div class='col-2'>
+                      {{d.numero}}
+                    </div>
+                  </span>
+                  <ng-template #crearNumeroJugador>
+                    <input type='number' class='form-control' name='numero{{ii}}'
+                    [(ngModel)]="d.numero" placeholder='Numero jugador'>
+                  </ng-template>
+                </td>
+<!--NOMBRE PECHO-->
+                <td style="width:140px;">
+                  <span *ngIf="tipoForm === 'ver'; else crearNombrePecho">
+                    <div class='col-3'>
+                      {{d.nombrePecho}}
+                    </div>
+                  </span>
+                  <ng-template #crearNombrePecho>
+                    <input type='text' class='form-control' name='nombrePecho{{ii}}'
+                    [(ngModel)]="d.nombrePecho" placeholder='Nombre pecho'>
+                  </ng-template>
+                </td>
+<!--NOMBRE ESPALDA-->
+                <td style="width:140px;">
+                  <span *ngIf="tipoForm === 'ver'; else crearNombreEspalda">
+                    <div class='col-3'>
+                      {{d.nombreEspalda}}
+                    </div>
+                  </span>
+                  <ng-template #crearNombreEspalda>
+                      <input type='text' class='form-control' name='nombreEspalda{{ii}}'
+                      [(ngModel)]="d.nombreEspalda" placeholder='Nombre espalda'>
+                  </ng-template>
+                  <br>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+    </app-card>
+  </div>
+  <div *ngIf="tipoForm === 'ver'; else crear" class='form-group'>
+    <a class="btn btn-primary" (click)="goBack()">Volver</a>
+  </div>
+  <ng-template #crear>
+    <div class='form-group'>
+      <a class="btn btn-primary" routerLink='/corte'>Cancelar</a>
+      <button (click)="onSubmit()" class='btn btn-primary'>Guardar</button>
+    </div>
+  </ng-template>
+  </div>
+</div>

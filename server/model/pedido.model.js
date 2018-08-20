@@ -79,6 +79,7 @@ var pedidoSchema = new Schema({
   },
   idUsuario: Number,
   idEstado: Number,
+  estado: String,
   subTotal: Number,
   descuento: Number,
   subTotalNeto: Number,

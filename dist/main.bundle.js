@@ -14,33 +14,33 @@ var map = {
 	],
 	"./pages/clientes/clientes.module": [
 		"../../../../../src/app/pages/clientes/clientes.module.ts",
-		"common",
-		"clientes.module"
+		"clientes.module",
+		"common"
 	],
 	"./pages/confeccion/confeccion.module": [
 		"../../../../../src/app/pages/confeccion/confeccion.module.ts",
-		"common",
-		"confeccion.module"
+		"confeccion.module",
+		"common"
 	],
 	"./pages/corte/corte.module": [
 		"../../../../../src/app/pages/corte/corte.module.ts",
-		"common",
-		"corte.module"
+		"corte.module",
+		"common"
 	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
-		"common",
-		"dashboard-default.module"
+		"dashboard-default.module",
+		"common"
 	],
 	"./pages/diseno/diseno.module": [
 		"../../../../../src/app/pages/diseno/diseno.module.ts",
-		"common",
-		"diseno.module"
+		"diseno.module",
+		"common"
 	],
 	"./pages/estampado/estampado.module": [
 		"../../../../../src/app/pages/estampado/estampado.module.ts",
-		"common",
-		"estampado.module"
+		"estampado.module",
+		"common"
 	],
 	"./pages/map/google-map/google-map.module": [
 		"../../../../../src/app/pages/map/google-map/google-map.module.ts",
@@ -48,8 +48,8 @@ var map = {
 	],
 	"./pages/pedidos/pedidos.module": [
 		"../../../../../src/app/pages/pedidos/pedidos.module.ts",
-		"common",
-		"pedidos.module"
+		"pedidos.module",
+		"common"
 	],
 	"./pages/simple-page/simple-page.module": [
 		"../../../../../src/app/pages/simple-page/simple-page.module.ts",
@@ -69,8 +69,8 @@ var map = {
 	],
 	"./pages/user/profile/profile.module": [
 		"../../../../../src/app/pages/user/profile/profile.module.ts",
-		"common",
-		"profile.module"
+		"profile.module",
+		"common"
 	],
 	"./typography/typography.module": [
 		"../../../../../src/app/pages/ui-elements/basic/typography/typography.module.ts",
@@ -684,6 +684,343 @@ AuthComponent = __decorate([
 ], AuthComponent);
 
 //# sourceMappingURL=auth.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<app-card>\n  <h3>{{titulo}}</h3>\n  <div class=\"d-inline-block\">\n    <div class=\"col-4 d-inline-block border\">\n      <p class=\"font-weight-bold\">Cliente</p>\n      <span *ngIf=\"pedido.cliente\">\n        {{pedido.cliente.nombresCliente}} {{pedido.cliente.apellidoPaternoCliente}}\n      </span>\n    </div>\n    <div class=\"col-2 d-inline-block border\">\n        <p class=\"font-weight-bold\">Fecha creación</p>\n        <span>{{pedido.fechaCreacion | date:'yyyy-MM-dd'}}</span>\n    </div>\n    <div class=\"col-2 d-inline-block border\">\n        <p class=\"font-weight-bold\">Fecha entrega</p>\n        <span>{{pedido.fechaEntrega | date:'yyyy-MM-dd'}}</span>\n    </div>\n    <div class=\"col-2 d-inline-block border\">\n        <p class=\"font-weight-bold\">Tipo de deporte</p>\n        <span>{{pedido.tipoDeporte}}</span>\n    </div>\n  </div>\n</app-card>\n<div class=\"clearfix\"></div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HeaderPedidosComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var HeaderPedidosComponent = (function () {
+    function HeaderPedidosComponent() {
+    }
+    HeaderPedidosComponent.prototype.ngOnInit = function () {
+    };
+    return HeaderPedidosComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Object)
+], HeaderPedidosComponent.prototype, "pedido", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], HeaderPedidosComponent.prototype, "titulo", void 0);
+HeaderPedidosComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-header-pedidos',
+        template: __webpack_require__("../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], HeaderPedidosComponent);
+
+//# sourceMappingURL=header-pedidos.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n  {{mensaje}}\n</div>\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-card [title]=titulo [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\n        <div class=\"table-responsive\">\n          <table class=\"table table-hover\">\n            <thead>\n            <tr>\n              <th class=\"text-center\">#</th>\n              <th>Nombre Cliente</th>\n              <th class=\"text-center\">Fecha pedido</th>\n              <th class=\"text-center\">Fecha Entrega</th>\n              <th class=\"text-center font-weight-bold text-danger\">prendas terminadas</th>\n              <th class=\"text-center font-weight-bold text-success\">% avance</th>\n              <th>Opciones</th>\n            </tr>\n            </thead>\n            <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\n              <tr>\n                <td class=\"text-center\">{{pedido.numeroPedido}}</td>\n                <td>{{pedido.cliente.nombresCliente}}</td>\n                <td class=\"text-center\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\n                <td class=\"text-center\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\n                <td class=\"font-weight-bold text-danger text-center\">\n                  <span *ngIf=\"modulo === 'corte'\">{{pedido.itemsTerminadosCorte}}</span>\n                  <span *ngIf=\"modulo === 'diseno'\">{{pedido.itemsTerminadosDiseno}}</span>\n                  <span *ngIf=\"modulo === 'confeccion'\">{{pedido.itemsTerminadosConfeccion}}</span>\n                  <span *ngIf=\"modulo === 'estampado'\">{{pedido.itemsTerminadosEstampado}}</span>\n                </td>\n                <td class=\"font-weight-bold text-success text-center\">\n                  <span *ngIf=\"modulo === 'corte'\">{{pedido.avanceCorte}}%</span>\n                  <span *ngIf=\"modulo === 'diseno'\">{{pedido.avanceDiseno}}%</span>\n                  <span *ngIf=\"modulo === 'confeccion'\">{{pedido.avanceConfeccion}}%</span>\n                  <span *ngIf=\"modulo === 'estampado'\">{{pedido.avanceEstampado}}%</span>\n                </td>\n                <td>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verAvance(pedido); $event.stopPropagation();\">Avances</button>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verTallas(pedido); $event.stopPropagation();\">Tallas</button>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verFichaTecnica(pedido); $event.stopPropagation();\">Ficha tecnica</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n      </app-card>\n    </div>\n  </div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListaPedidosComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ListaPedidosComponent = (function () {
+    function ListaPedidosComponent(route, router, pedidosService) {
+        this.route = route;
+        this.router = router;
+        this.pedidosService = pedidosService;
+    }
+    ListaPedidosComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.pedidosService.getPedidos()
+            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos.filter(function (item) { return item.idEstado === 3; }); }, function (err) { return console.log(err); });
+        this.titulo = this.modulo + ' Orden de trabajo';
+    };
+    ListaPedidosComponent.prototype.verAvance = function (pedido) {
+        console.log('editando ' + this.modulo + '...');
+        if (this.modulo === 'corte') {
+            this.router.navigate(['/pedidos/formModulos/corte/', pedido.numeroPedido]);
+        }
+        else if (this.modulo === 'diseño') {
+            this.router.navigate(['/pedidos/formModulos/diseno/', pedido.numeroPedido]);
+        }
+        else if (this.modulo === 'estampado') {
+            this.router.navigate(['/pedidos/formModulos/estampado/', pedido.numeroPedido]);
+        }
+        else if (this.modulo === 'confeccion') {
+            this.router.navigate(['/pedidos/formModulos/confeccion/', pedido.numeroPedido]);
+        }
+    };
+    ListaPedidosComponent.prototype.verTallas = function (pedido) {
+        console.log('ver tallas...');
+        this.router.navigate(['/pedidos/formTallas/ver/', pedido.numeroPedido]);
+    };
+    ListaPedidosComponent.prototype.verFichaTecnica = function (pedido) {
+        console.log('ver Ficha Tecnica...');
+        this.router.navigate(['/pedidos/formFichaTecnica/ver/', pedido.numeroPedido]);
+    };
+    return ListaPedidosComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Input"])(),
+    __metadata("design:type", String)
+], ListaPedidosComponent.prototype, "modulo", void 0);
+ListaPedidosComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
+        selector: 'app-lista-pedidos',
+        template: __webpack_require__("../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object])
+], ListaPedidosComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=lista-pedidos.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/pedidos.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PedidosService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var PedidosService = (function () {
+    //baseUrl: string = 'http://localhost:8081';
+    function PedidosService(http) {
+        this.http = http;
+    }
+    PedidosService.prototype.getPedidos = function () {
+        return this.http.get('/api/getPedidos')
+            .map(function (response) { return response; })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
+    };
+    PedidosService.prototype.getPedido = function (numeroPedido) {
+        return this.http.get('/api/getPedido/' + numeroPedido)
+            .map(function (response) { return response; })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
+    };
+    PedidosService.prototype.countPedidos = function () {
+        return this.http.get('/api/countPedidos');
+    };
+    PedidosService.prototype.addPedido = function (pedido) {
+        return this.http.post('/api/addPedido', pedido);
+    };
+    PedidosService.prototype.putPedido = function (pedido) {
+        return this.http.put('/api/putPedido', pedido);
+    };
+    /*  public deletePedido(pedido: Pedido){
+       return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
+     } */
+    PedidosService.prototype.getEstadosPedido = function () {
+        return ['Creado', 'En proceso', 'Terminado', 'Eliminado'];
+    };
+    PedidosService.prototype.getDetallesAdicionales = function () {
+        return [
+            { id: 1, desc: 'Logos insignias sublimados', valor: 550 },
+            { id: 2, desc: 'Número sublimado', valor: 650 },
+            { id: 3, desc: 'Logos vinilos', valor: 550 },
+            { id: 4, desc: 'Números vinilos', valor: 750 },
+            { id: 5, desc: 'Subliflok insignia', valor: 750 },
+            { id: 6, desc: 'Cuello camisero tela', valor: 350 },
+            { id: 7, desc: 'Cuello camisero tejido', valor: 800 },
+            { id: 8, desc: 'Cierre polera', valor: 450 },
+            { id: 9, desc: 'Broches (3)', valor: 450 },
+            { id: 10, desc: 'Triángulo', valor: 550 },
+            { id: 11, desc: 'Costados', valor: 500 },
+            { id: 12, desc: 'Vivos', valor: 350 },
+            { id: 13, desc: 'Cuellos sublimados', valor: 150 },
+            { id: 14, desc: 'Cuello mao', valor: 350 },
+        ];
+    };
+    PedidosService.prototype.getColores = function () {
+        return [
+            { id: 1, desc: 'Azul', codigoHex: '#0000FF' },
+            { id: 2, desc: 'Verde', codigoHex: '#008000' },
+            { id: 3, desc: 'Amarillo', codigoHex: '#FFFF00' }
+        ];
+    };
+    PedidosService.prototype.getTelas = function () {
+        return ['boston', 'rugby', 'mesh', 'lycra', 'elasticada', 'franela', 'franela elasticada', 'dupont', 'otro'];
+    };
+    PedidosService.prototype.getTallas = function () {
+        return ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'];
+    };
+    PedidosService.prototype.getTipoDeporte = function () {
+        return ['Futbol', 'Rugby', 'Volleyball', 'Tenis'];
+    };
+    PedidosService.prototype.getTerminacion = function () {
+        return ['cierre', 'broche', 'pata', 'costado', 'otro'];
+    };
+    PedidosService.prototype.getEstampado = function () {
+        return ['full', 'pecho', 'espala', 'manga', 'gorro', 'cuello'];
+    };
+    PedidosService.prototype.getMediosPago = function () {
+        return [
+            { id: 1, desc: 'Efectivo' },
+            { id: 2, desc: 'Transferencia' },
+            { id: 3, desc: 'Cheque' }
+        ];
+    };
+    //   public getProductos():Observable<Producto[]> {
+    PedidosService.prototype.getProductos = function () {
+        //return this.http.get('./assets/data/productos/productos.json');
+        return [
+            { idProducto: 1, desc: 'Polera Tela color cire' },
+            { idProducto: 2, desc: 'Polera sublimacion 100% cire' },
+            { idProducto: 3, desc: 'Polera sublimacion 100% rugby' },
+            { idProducto: 4, desc: 'Polera sublimacion 100% elasticada' },
+            { idProducto: 5, desc: 'Calzas' },
+            { idProducto: 6, desc: 'Pantalon buzo' },
+            { idProducto: 7, desc: 'Polerón con cierre' }
+        ];
+    };
+    PedidosService.prototype.getTipoProductos = function () {
+        //return this.http.get('./assets/data/productos/tipos-productos.json');
+        return [
+            { id: 1, idProducto: 1, desc: 'Molde recto' },
+            { id: 2, idProducto: 1, desc: 'raglan tela color' },
+            { id: 3, idProducto: 1, desc: 'manga larga recta' },
+            { id: 4, idProducto: 1, desc: 'manga larga raglan' },
+            { id: 5, idProducto: 1, desc: 'sin manga' },
+            { id: 6, idProducto: 2, desc: 'molde rect o m/c' },
+            { id: 7, idProducto: 2, desc: 'molde raglan m/c' },
+            { id: 8, idProducto: 2, desc: 'molde recto m/L' },
+            { id: 9, idProducto: 2, desc: 'molde raglan m/L' },
+            { id: 10, idProducto: 2, desc: 'pecho/espalda recta' },
+            { id: 11, idProducto: 2, desc: 'pecho/espalda raglan' },
+            { id: 12, idProducto: 2, desc: 'sin manga' },
+            { id: 13, idProducto: 3, desc: 'molde recto m/c' },
+            { id: 14, idProducto: 3, desc: 'molde raglan m/c' },
+            { id: 15, idProducto: 3, desc: 'molde recto m/L' },
+            { id: 16, idProducto: 3, desc: 'molde raglan m/L' },
+            { id: 17, idProducto: 3, desc: 'pecho/espalda recta' },
+            { id: 18, idProducto: 3, desc: 'pecho/espalda raglan' },
+            { id: 19, idProducto: 3, desc: 'sin manga' }
+        ];
+    };
+    PedidosService.prototype.getRangoPrecios = function () {
+        return [
+            { id: 1, idTipoProducto: 1, desc: '4 a 14', valor: 3500 },
+            { id: 10, idTipoProducto: 1, desc: 'XL - xxl', valor: 4500 },
+            { id: 5, idTipoProducto: 1, desc: ' 16 a L', valor: 4000 },
+            { id: 2, idTipoProducto: 2, desc: '4 a 14', valor: 3700 },
+            { id: 6, idTipoProducto: 2, desc: ' 16 a L', valor: 4200 },
+            { id: 11, idTipoProducto: 2, desc: 'XL - xxl', valor: 4700 },
+            { id: 3, idTipoProducto: 3, desc: '4 a 14', valor: 4500 },
+            { id: 7, idTipoProducto: 3, desc: ' 16 a L', valor: 5500 },
+            { id: 12, idTipoProducto: 3, desc: 'XL - xxl', valor: 6000 },
+            { id: 4, idTipoProducto: 4, desc: '4 a 14', valor: 4700 },
+            { id: 8, idTipoProducto: 4, desc: ' 16 a L', valor: 5700 },
+            { id: 13, idTipoProducto: 4, desc: 'XL - xxl', valor: 6700 },
+            { id: 9, idTipoProducto: 5, desc: ' 16 a L', valor: 3800 },
+            { id: 14, idTipoProducto: 5, desc: 'XL - xxl', valor: 4200 }
+        ];
+    };
+    return PedidosService;
+}());
+PedidosService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], PedidosService);
+
+var _a;
+//# sourceMappingURL=pedidos.service.js.map
 
 /***/ }),
 
@@ -1531,20 +1868,22 @@ ScrollModule = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SharedModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fullscreen_toggle_fullscreen_directive__ = __webpack_require__("../../../../../src/app/shared/fullscreen/toggle-fullscreen.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__accordion_accordionanchor_directive__ = __webpack_require__("../../../../../src/app/shared/accordion/accordionanchor.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__accordion_accordionlink_directive__ = __webpack_require__("../../../../../src/app/shared/accordion/accordionlink.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__accordion_accordion_directive__ = __webpack_require__("../../../../../src/app/shared/accordion/accordion.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scroll_scroll_module__ = __webpack_require__("../../../../../src/app/shared/scroll/scroll.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__menu_items_menu_items__ = __webpack_require__("../../../../../src/app/shared/menu-items/menu-items.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__spinner_spinner_component__ = __webpack_require__("../../../../../src/app/shared/spinner/spinner.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__card_card_component__ = __webpack_require__("../../../../../src/app/shared/card/card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__card_card_refresh_directive__ = __webpack_require__("../../../../../src/app/shared/card/card-refresh.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__card_card_toggle_directive__ = __webpack_require__("../../../../../src/app/shared/card/card-toggle.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__element_data_filter_pipe__ = __webpack_require__("../../../../../src/app/shared/element/data-filter.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_commons_lista_pedidos_lista_pedidos_component__ = __webpack_require__("../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_commons_header_pedidos_header_pedidos_component__ = __webpack_require__("../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__fullscreen_toggle_fullscreen_directive__ = __webpack_require__("../../../../../src/app/shared/fullscreen/toggle-fullscreen.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__accordion_accordionanchor_directive__ = __webpack_require__("../../../../../src/app/shared/accordion/accordionanchor.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__accordion_accordionlink_directive__ = __webpack_require__("../../../../../src/app/shared/accordion/accordionlink.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__accordion_accordion_directive__ = __webpack_require__("../../../../../src/app/shared/accordion/accordion.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__scroll_scroll_module__ = __webpack_require__("../../../../../src/app/shared/scroll/scroll.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__menu_items_menu_items__ = __webpack_require__("../../../../../src/app/shared/menu-items/menu-items.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__spinner_spinner_component__ = __webpack_require__("../../../../../src/app/shared/spinner/spinner.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__card_card_component__ = __webpack_require__("../../../../../src/app/shared/card/card.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__card_card_refresh_directive__ = __webpack_require__("../../../../../src/app/shared/card/card-refresh.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__card_card_toggle_directive__ = __webpack_require__("../../../../../src/app/shared/card/card-toggle.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__element_data_filter_pipe__ = __webpack_require__("../../../../../src/app/shared/element/data-filter.pipe.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1565,44 +1904,50 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 var SharedModule = (function () {
     function SharedModule() {
     }
     return SharedModule;
 }());
 SharedModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["NgModule"])({
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
-            __WEBPACK_IMPORTED_MODULE_7__scroll_scroll_module__["a" /* ScrollModule */],
-            __WEBPACK_IMPORTED_MODULE_6__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot()
+            __WEBPACK_IMPORTED_MODULE_3__angular_common__["CommonModule"],
+            __WEBPACK_IMPORTED_MODULE_9__scroll_scroll_module__["a" /* ScrollModule */],
+            __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot()
         ],
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_3__accordion_accordionanchor_directive__["a" /* AccordionAnchorDirective */],
-            __WEBPACK_IMPORTED_MODULE_4__accordion_accordionlink_directive__["a" /* AccordionLinkDirective */],
-            __WEBPACK_IMPORTED_MODULE_5__accordion_accordion_directive__["a" /* AccordionDirective */],
-            __WEBPACK_IMPORTED_MODULE_2__fullscreen_toggle_fullscreen_directive__["a" /* ToggleFullscreenDirective */],
-            __WEBPACK_IMPORTED_MODULE_11__card_card_refresh_directive__["a" /* CardRefreshDirective */],
-            __WEBPACK_IMPORTED_MODULE_12__card_card_toggle_directive__["a" /* CardToggleDirective */],
-            __WEBPACK_IMPORTED_MODULE_9__spinner_spinner_component__["a" /* SpinnerComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__card_card_component__["a" /* CardComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__element_data_filter_pipe__["a" /* DataFilterPipe */]
+            __WEBPACK_IMPORTED_MODULE_5__accordion_accordionanchor_directive__["a" /* AccordionAnchorDirective */],
+            __WEBPACK_IMPORTED_MODULE_6__accordion_accordionlink_directive__["a" /* AccordionLinkDirective */],
+            __WEBPACK_IMPORTED_MODULE_7__accordion_accordion_directive__["a" /* AccordionDirective */],
+            __WEBPACK_IMPORTED_MODULE_4__fullscreen_toggle_fullscreen_directive__["a" /* ToggleFullscreenDirective */],
+            __WEBPACK_IMPORTED_MODULE_13__card_card_refresh_directive__["a" /* CardRefreshDirective */],
+            __WEBPACK_IMPORTED_MODULE_14__card_card_toggle_directive__["a" /* CardToggleDirective */],
+            __WEBPACK_IMPORTED_MODULE_11__spinner_spinner_component__["a" /* SpinnerComponent */],
+            __WEBPACK_IMPORTED_MODULE_1__pages_commons_header_pedidos_header_pedidos_component__["a" /* HeaderPedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_0__pages_commons_lista_pedidos_lista_pedidos_component__["a" /* ListaPedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__card_card_component__["a" /* CardComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__element_data_filter_pipe__["a" /* DataFilterPipe */]
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_3__accordion_accordionanchor_directive__["a" /* AccordionAnchorDirective */],
-            __WEBPACK_IMPORTED_MODULE_4__accordion_accordionlink_directive__["a" /* AccordionLinkDirective */],
-            __WEBPACK_IMPORTED_MODULE_5__accordion_accordion_directive__["a" /* AccordionDirective */],
-            __WEBPACK_IMPORTED_MODULE_2__fullscreen_toggle_fullscreen_directive__["a" /* ToggleFullscreenDirective */],
-            __WEBPACK_IMPORTED_MODULE_11__card_card_refresh_directive__["a" /* CardRefreshDirective */],
-            __WEBPACK_IMPORTED_MODULE_12__card_card_toggle_directive__["a" /* CardToggleDirective */],
-            __WEBPACK_IMPORTED_MODULE_7__scroll_scroll_module__["a" /* ScrollModule */],
-            __WEBPACK_IMPORTED_MODULE_6__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
-            __WEBPACK_IMPORTED_MODULE_9__spinner_spinner_component__["a" /* SpinnerComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__card_card_component__["a" /* CardComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__element_data_filter_pipe__["a" /* DataFilterPipe */]
+            __WEBPACK_IMPORTED_MODULE_5__accordion_accordionanchor_directive__["a" /* AccordionAnchorDirective */],
+            __WEBPACK_IMPORTED_MODULE_6__accordion_accordionlink_directive__["a" /* AccordionLinkDirective */],
+            __WEBPACK_IMPORTED_MODULE_7__accordion_accordion_directive__["a" /* AccordionDirective */],
+            __WEBPACK_IMPORTED_MODULE_4__fullscreen_toggle_fullscreen_directive__["a" /* ToggleFullscreenDirective */],
+            __WEBPACK_IMPORTED_MODULE_13__card_card_refresh_directive__["a" /* CardRefreshDirective */],
+            __WEBPACK_IMPORTED_MODULE_14__card_card_toggle_directive__["a" /* CardToggleDirective */],
+            __WEBPACK_IMPORTED_MODULE_9__scroll_scroll_module__["a" /* ScrollModule */],
+            __WEBPACK_IMPORTED_MODULE_8__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
+            __WEBPACK_IMPORTED_MODULE_11__spinner_spinner_component__["a" /* SpinnerComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__card_card_component__["a" /* CardComponent */],
+            __WEBPACK_IMPORTED_MODULE_1__pages_commons_header_pedidos_header_pedidos_component__["a" /* HeaderPedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_0__pages_commons_lista_pedidos_lista_pedidos_component__["a" /* ListaPedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__element_data_filter_pipe__["a" /* DataFilterPipe */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_8__menu_items_menu_items__["a" /* MenuItems */]
+            __WEBPACK_IMPORTED_MODULE_10__menu_items_menu_items__["a" /* MenuItems */]
         ]
     })
 ], SharedModule);

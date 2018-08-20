@@ -58,7 +58,7 @@ export class PedidosComponent implements OnInit {
   eliminaPedido(pedido: Pedido){
     console.log('Elimina Pedido..');
     //Cambia el estado del pedido
-    pedido.idEstado=0;
+    pedido.estado = 'Eliminado';
     this.pedidosService.putPedido(pedido).subscribe(data => {
       console.log('pedido eliminado->' + JSON.stringify(data));
       this.pedido = data;
@@ -66,12 +66,12 @@ export class PedidosComponent implements OnInit {
   }
   addTallas(pedido: Pedido){
     console.log('editando tallas...');
-    this.router.navigate(['/pedidos/formPedido/tallas/', pedido.numeroPedido]);
+    this.router.navigate(['/pedidos/formTallas/', pedido.numeroPedido]);
   }
 
   addFichaTecnica(pedido: Pedido){
     console.log('editando Ficha Tecnica...');
-    this.router.navigate(['/pedidos/formPedido/ft/', pedido.numeroPedido]);
+    this.router.navigate(['/pedidos/formFichaTecnica/', pedido.numeroPedido]);
   }
 
 }

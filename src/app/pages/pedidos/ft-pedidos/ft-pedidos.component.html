@@ -1,0 +1,261 @@
+<div class="row" *ngIf='pedido'>
+    <div class="col-sm-12">
+      <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>
+
+      <div *ngFor='let c of pedido.listaProductos; let i=index'>
+        <app-card>
+      <!--header fila-->
+          <div class="col-12 d-inline-block bg-primary" id="header{{i}}">
+            <h3>
+              Tipo jugador: {{c.tipoJugador}}
+              <!-- [#{{i+1}}]  -->
+            </h3>
+            {{c.descProducto}}
+            [{{c.descTipoProducto}}]
+          </div>
+
+<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->
+<!-- <div class="row col-12" id="collapseExample">
+
+  <app-card> -->
+
+          <div class="row col-12" id="filaTipoProductoFT{{i}}">
+            <span class="col-7 btn-group align-top">
+              <h4>Producto</h4>
+        <!-- DESCRIPCION TELA -->
+              <form #formTipoProductoFT="ngForm" *ngIf="tipoForm != 'ver' ">
+                <div class="row" >
+                  <div class="col-3">
+                    <h5>Desc. tela</h5>
+                    <input type='text' class='form-control' name='tipoProductoFTDescTela{{i}}'
+                    (change)='tipoProductoFT.descTela = $event.target.value;'>
+                  </div>
+                  <div class="col-3">
+                    <h5>Color tela</h5>
+                    <select class='form-control' name='tipoProductoFTcolorTela{{i}}'
+                      (change)='tipoProductoFT.colorTela = $event.target.value;'>
+                      <option [value]=''>[Seleccione...]</option>
+                      <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <h5>Tipo tela</h5>
+                    <select class='form-control' name='tipoProductoFTtipoTela{{i}}'
+                      (change)='tipoProductoFT.tipoTela = $event.target.value;'>
+                      <option [value]=''>[Seleccione...]</option>
+                      <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>
+                    </select>
+                  </div>
+                    <div class="col-1">
+                      <br>
+                      <button type="button" class="btn btn-primary btn-sm"
+                        (click)="addTipoProductoFT(c, formTipoProductoFT);">
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="d-inline-block border">
+        <!--TITULO-->
+                  <table class="table table-hover">
+                    <tr *ngIf="c.fichaTecnica.listaTipoProducto.length>0">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Descripción</th>
+                        <th class="text-center">Color</th>
+                        <th class="text-center">Tipo tela</th>
+                        <th *ngIf="tipoForm != 'ver'">&nbsp;</th>
+                    </tr>
+                    <!--LISTA DE MEDIOS DE PAGO-->
+                    <tr *ngFor="let item of c.fichaTecnica.listaTipoProducto; let i = index;">
+                      <td class="text-center">
+                          <h5>{{i + 1}}</h5>
+                      </td>
+                      <td class="text-left">
+                          <h5>{{item.descTela}}</h5>
+                      </td>
+                      <td class="text-left">
+                        <h5>{{item.colorTela}}</h5>
+                      </td>
+                      <td class="text-left">
+                        <h5>{{item.tipoTela}}</h5>
+                      </td>
+                      <td *ngIf="tipoForm != 'ver'">
+                        <button type="button" (click)='eliminaTipoProductoFT(c, i);'>
+                          <i class="icofont icofont-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </span>
+              <span class="col-5 btn-group align-top" >
+                  <h4>Tipo Cuello</h4>
+              <!-- DESCRIPCION TELA -->
+                  <form #formTipoCuelloFT="ngForm"  *ngIf="tipoForm != 'ver' ">
+                    <div class="row" >
+                      <div class="col-4">
+                        <h5>Color tela</h5>
+                        <select class='form-control' name='tipoCuelloFTcolorTela{{i}}'
+                          (change)='tipoCuelloFT.colorTela = $event.target.value;'>
+                          <option [value]=''>[Seleccione...]</option>
+                          <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>
+                        </select>
+                      </div>
+                      <div class="col-4">
+                        <h5>Tipo tela</h5>
+                        <select class='form-control' name='tipoCuelloFTtipoTela{{i}}'
+                          (change)='tipoCuelloFT.tipoTela = $event.target.value;'>
+                          <option [value]=''>[Seleccione...]</option>
+                          <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>
+                        </select>
+                      </div>
+                      <div class="col-4">
+                        <br>
+                        <button type="button" class="btn btn-primary btn-sm"
+                          (click)="addTipoCuelloFT(c, formTipoCuelloFT);">
+                          Guardar
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="d-inline-block border">
+              <!--TITULO-->
+                    <table class="table table-hover">
+                      <tr *ngIf="c.fichaTecnica.listaTipoCuello.length>0">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Color</th>
+                        <th class="text-center">Tipo tela</th>
+                        <th *ngIf="tipoForm != 'ver'">&nbsp;</th>
+                      </tr>
+                      <tr *ngFor="let item of c.fichaTecnica.listaTipoCuello; let i = index;">
+                        <td class="text-center">
+                          {{i + 1}}
+                        </td>
+                        <td class="text-left">
+                          {{item.colorTela}}
+                        </td>
+                        <td class="text-left">
+                          {{item.tipoTela}}
+                        </td>
+                        <td *ngIf="tipoForm != 'ver'">
+                            <button type="button" (click)='eliminaTipoCuelloFT(c, i);'>
+                            <i class="icofont icofont-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </span>
+            </div>
+          </app-card>
+<!--DETALLE TIPO CUELLO FICHA TECNICA-->
+            <app-card>
+              <div id="filaTipoCuelloFT{{i}}">
+                  <span class="col-6 d-inline-block btn-group align-top">
+                      <h4>Estampado</h4>
+                  <!-- DESCRIPCION TELA -->
+                      <form #formEstampadoFT="ngForm"  *ngIf="tipoForm != 'ver' ">
+                        <div class="row" >
+                          <div>
+                            <h5>Estampados</h5>
+                            <select class='form-control' name='estampadoFT{{i}}'
+                              (change)='estampadoFT = $event.target.value;'>
+                              <option [value]=''>[Seleccione...]</option>
+                              <option *ngFor='let item of listaEstampadoFT' [value]='item'>{{item}}</option>
+                            </select>
+                          </div>
+                          <div>
+                            <br>
+                            <button type="button" class="btn btn-primary btn-sm"
+                              (click)="addEstampadoFT(c, formEstampadoFT);">
+                              Guardar
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="d-inline-block border">
+                  <!--TITULO-->
+                        <table class="table table-hover">
+                          <tr *ngIf="c.fichaTecnica.listaEstampado.length>0">
+                            <th class="text-center">#</th>
+                            <th class="text-center">Estampado</th>
+                            <th>&nbsp;</th>
+                          </tr>
+                          <tr *ngFor="let item of c.fichaTecnica.listaEstampado; let i = index;">
+                            <td class="text-center">
+                              {{i + 1}}
+                            </td>
+                            <td class="text-left">
+                              {{item}}
+                            </td>
+                            <td *ngIf="tipoForm != 'ver'">
+                              <button type="button" (click)='eliminaEstampadoFT(c, i);'>
+                                <i class="icofont icofont-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </span>
+              <span class="col-6 btn-group  d-inline-block align-top">
+                  <h4>Terminación</h4>
+              <!-- DESCRIPCION TELA -->
+                  <form #formTerminacionFT="ngForm" *ngIf="tipoForm != 'ver' ">
+                    <div class="row" >
+                      <div>
+                        <h5>Terminaciones</h5>
+                        <select class='form-control' name='terminacionFT{{i}}'
+                          (change)='terminacionFT = $event.target.value;'>
+                          <option [value]=''>[Seleccione...]</option>
+                          <option *ngFor='let item of listaTerminacionFT' [value]='item'>{{item}}</option>
+                        </select>
+                      </div>
+                      <div>
+                        <br>
+                        <button type="button" class="btn btn-primary btn-sm"
+                          (click)="addTerminacionFT(c, formTerminacionFT);">
+                          Guardar
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="d-inline-block border">
+              <!--TITULO-->
+                    <table class="table table-hover">
+                      <tr *ngIf="c.fichaTecnica.listaTerminacion.length>0">
+                        <th class="text-center">#</th>
+                        <th class="text-center">Terminacion</th>
+                        <th>&nbsp;</th>
+                      </tr>
+                      <tr *ngFor="let item of c.fichaTecnica.listaTerminacion; let i = index;">
+                        <td class="text-center">
+                          {{i + 1}}
+                        </td>
+                        <td class="text-left">
+                          {{item}}
+                        </td>
+                        <td *ngIf="tipoForm != 'ver'">
+                          <button type="button" (click)='eliminaTerminacionFT(c, i);'>
+                            <i class="icofont icofont-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </span>
+
+            </div>
+          </app-card>
+       </div>
+       <div *ngIf="tipoForm === 'ver'; else crear" class='form-group'>
+          <a class="btn btn-primary" (click)="goBack()">Volver</a>
+        </div>
+        <ng-template #crear>
+          <div class='form-group'>
+            <a class="btn btn-primary" (click)="goBack()">Cancelar</a>
+            <button (click)="onSubmit()" class='btn btn-primary'>Guardar</button>
+          </div>
+        </ng-template>
+    </div>
+  </div>

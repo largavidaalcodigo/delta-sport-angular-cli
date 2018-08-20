@@ -1,0 +1,55 @@
+<div *ngIf="mensaje" class="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{mensaje}}
+</div>
+  <div class="row">
+    <div class="col-sm-12">
+      <app-card [title]=titulo [classHeader]="false" [blockClass]="'table-border-style'">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th class="text-center">#</th>
+              <th>Nombre Cliente</th>
+              <th class="text-center">Fecha pedido</th>
+              <th class="text-center">Fecha Entrega</th>
+              <th class="text-center font-weight-bold text-danger">prendas terminadas</th>
+              <th class="text-center font-weight-bold text-success">% avance</th>
+              <th>Opciones</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let pedido of listaPedidos;let i = index">
+              <tr>
+                <td class="text-center">{{pedido.numeroPedido}}</td>
+                <td>{{pedido.cliente.nombresCliente}}</td>
+                <td class="text-center">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
+                <td class="font-weight-bold text-danger text-center">
+                  <span *ngIf="modulo === 'corte'">{{pedido.itemsTerminadosCorte}}</span>
+                  <span *ngIf="modulo === 'diseno'">{{pedido.itemsTerminadosDiseno}}</span>
+                  <span *ngIf="modulo === 'confeccion'">{{pedido.itemsTerminadosConfeccion}}</span>
+                  <span *ngIf="modulo === 'estampado'">{{pedido.itemsTerminadosEstampado}}</span>
+                </td>
+                <td class="font-weight-bold text-success text-center">
+                  <span *ngIf="modulo === 'corte'">{{pedido.avanceCorte}}%</span>
+                  <span *ngIf="modulo === 'diseno'">{{pedido.avanceDiseno}}%</span>
+                  <span *ngIf="modulo === 'confeccion'">{{pedido.avanceConfeccion}}%</span>
+                  <span *ngIf="modulo === 'estampado'">{{pedido.avanceEstampado}}%</span>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm"
+                  (click)="verAvance(pedido); $event.stopPropagation();">Avances</button>
+                  <button type="button" class="btn btn-danger btn-sm"
+                  (click)="verTallas(pedido); $event.stopPropagation();">Tallas</button>
+                  <button type="button" class="btn btn-danger btn-sm"
+                  (click)="verFichaTecnica(pedido); $event.stopPropagation();">Ficha tecnica</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </app-card>
+    </div>
+  </div>

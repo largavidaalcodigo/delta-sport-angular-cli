@@ -1,3 +1,5 @@
+import { ListaPedidosComponent } from '../pages/commons/lista-pedidos/lista-pedidos.component';
+import { HeaderPedidosComponent } from '../pages/commons/header-pedidos/header-pedidos.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -30,6 +32,8 @@ import {DataFilterPipe} from './element/data-filter.pipe';
     CardRefreshDirective,
     CardToggleDirective,
     SpinnerComponent,
+    HeaderPedidosComponent,
+    ListaPedidosComponent,
     CardComponent,
     DataFilterPipe
   ],
@@ -44,6 +48,8 @@ import {DataFilterPipe} from './element/data-filter.pipe';
     NgbModule,
     SpinnerComponent,
     CardComponent,
+    HeaderPedidosComponent,
+    ListaPedidosComponent,
     DataFilterPipe
   ],
   providers: [

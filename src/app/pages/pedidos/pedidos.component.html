@@ -65,7 +65,7 @@
               <td (click)="editarPedido(pedido)">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
               <td (click)="editarPedido(pedido)">${{pedido.total}}</td>
-              <td (click)="editarPedido(pedido)">{{pedido.idEstado}}</td>
+              <td (click)="editarPedido(pedido)">{{pedido.estado}}</td>
               <td>
                 <button type="button" class="btn btn-danger btn-sm"
                 (click)="addTallas(pedido); $event.stopPropagation();">Tallas</button>

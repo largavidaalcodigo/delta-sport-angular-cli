@@ -39,13 +39,9 @@ export class PedidosService {
     return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
   } */
   public getEstadosPedido() {
-    return [
-      { id: 1, desc: 'Creado'},
-      { id: 2, desc: 'En proceso'},
-      { id: 3, desc: 'Terminado'},
-      { id: 4, desc: 'Cancelado'},
-    ];
+    return ['Creado', 'En proceso', 'Terminado', 'Eliminado'];
   }
+
   public getDetallesAdicionales() {
     return [
       { id: 1, desc: 'Logos insignias sublimados', valor: 550 },
@@ -82,7 +78,15 @@ export class PedidosService {
   }
 
   public getTipoDeporte() {
-    return ['tela1', 'tela', 'Rugby', 'Volleyball', 'Tenis'];
+    return ['Futbol', 'Rugby', 'Volleyball', 'Tenis'];
+  }
+
+  public getTerminacion() {
+    return ['cierre','broche','pata','costado','otro'];
+  }
+
+  public getEstampado() {
+    return ['full', 'pecho', 'espala', 'manga', 'gorro', 'cuello'];
   }
 
   public getMediosPago() {

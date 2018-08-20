@@ -10,6 +10,7 @@ export class Pedido {
   public cliente: Cliente; //fk
   public idUsuario: number;
   public idEstado: number;
+  public estado: string;
 
   public subTotal: number; //en %
   public descuento: number; //en %

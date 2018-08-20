@@ -44,6 +44,7 @@ export class FormPedidoComponent implements OnInit {
   @Input() tipoForm: string;
   @Input() pedido: Pedido; //Puede venir con datos
   @Output() public salir = new EventEmitter(); */
+  titulo: string;
   pedido: Pedido;
   cliente: Cliente;
   tipoForm: string;
@@ -99,8 +100,8 @@ export class FormPedidoComponent implements OnInit {
     console.log('Se inicia form pedido->' + this.tipoForm);
 
     //TALLAS
-    if (this.tipoForm === 'tallas' || this.tipoForm === 'ft' || this.tipoForm === 'editar') {
-      this.listaTallas = this.pedidosService.getTallas();
+    if (this.tipoForm === 'ft' || this.tipoForm === 'editar') {
+/*       this.listaTallas = this.pedidosService.getTallas(); */
 
       this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
         console.log('Editando tallas->' + JSON.stringify(data));
@@ -109,20 +110,12 @@ export class FormPedidoComponent implements OnInit {
       this.nombreBoton = 'Actualizar';
     }
 
-    if(this.tipoForm === 'ft'){
-      this.listaTelas = this.pedidosService.getTelas();
-      this.detalleFichaTecnica = new FichaTecnica();
-      this.tipoProductoFT = new TipoProductoFT();
-      this.listaTipoProductoFT = new Array();
-      this.listaTipoCuelloFT = new Array();
-      this.tipoCuelloFT = new TipoCuelloFT();
-    }
-
     //NUEVO
     if (this.pedido == null) {
-      console.log('nuevo pedido');
+      this.titulo='Nuevo Pedido';
       this.pedido = new Pedido();
-      this.pedido.idEstado = 1; //0= inactivo , 1=activo
+      this.pedido.idEstado = 1; //creado
+      this.pedido.estado = 'Creado';
       this.pedido.fechaCreacion = new Date();
       this.pedido.subTotal = 0;
       this.pedido.descuento = 0;
@@ -138,6 +131,24 @@ export class FormPedidoComponent implements OnInit {
       this.pedido.listaProductos = new Array();
       this.pedido.listaMediosPago = new Array();
     }
+    if(this.tipoForm === 'editar'){
+      this.titulo = 'Editando Pedido';
+
+    }
+/*     if(this.tipoForm === 'tallas'){
+      this.titulo = 'Listado Tallas';
+
+    }
+ */     if(this.tipoForm === 'ft'){
+      this.titulo = 'Ficha Tecnica productos';
+      this.listaTelas = this.pedidosService.getTelas();
+      this.detalleFichaTecnica = new FichaTecnica();
+      this.tipoProductoFT = new TipoProductoFT();
+      this.listaTipoProductoFT = new Array();
+      this.listaTipoCuelloFT = new Array();
+      this.tipoCuelloFT = new TipoCuelloFT();
+    }
+
 
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
@@ -206,8 +217,6 @@ export class FormPedidoComponent implements OnInit {
   onSubmitDetalle() {
     if (this.editando){
       this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
-      this.addTallasProducto();
-    }else if (this.tipoForm == 'tallas'){
 
     }else if (this.tipoForm == 'nuevo'){
       //this.pedido.rutCliente = this.pedidoForm.value.rutCliente;
@@ -330,17 +339,8 @@ export class FormPedidoComponent implements OnInit {
   }
 
   guardarPedido(){
-    if (this.tipoForm === 'editar' || this.tipoForm === 'tallas' || this.tipoForm === 'ft') {
-
-      //SE DEFINE ESTE ESTADO CUANDO SE INGRESAN LAS TALLAS
-      if (this.tipoForm === 'tallas'){
-        this.pedido.idEstado=3;
-      }else if (this.tipoForm === 'ft'){
-        this.pedido.idEstado=4;
-      }
-
-      this.calculaTotalItem();
-
+    this.calculaTotalItem();
+    if (this.tipoForm === 'editar') {
       this.pedidosService.putPedido(this.pedido).subscribe(data => {
         console.log('pedido actualizado->' + JSON.stringify(data));
         this.pedido = data;
@@ -348,7 +348,6 @@ export class FormPedidoComponent implements OnInit {
       this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
 
     }else if (this.tipoForm === 'nuevo') {
-      this.calculaTotalItem();
 
       //Contador de pedidos
       this.pedidosService.countPedidos().subscribe(countPedidos => {
@@ -388,31 +387,6 @@ export class FormPedidoComponent implements OnInit {
     this.onChangeCalculaTotal();
     console.log('eliminando medio pago->' + id);
   }
-
-/* FICHA TECNICA */
-  addTipoProductoFT(detalle: DetallePedido, form: NgForm) {
-    console.log('agregando tipo producto FT');
-    detalle.fichaTecnica.listaTipoProducto.push(this.tipoProductoFT);
-    this.tipoProductoFT = new TipoProductoFT();
-    form.resetForm();
-  }
-  addTipoCuelloFT(detalle: DetallePedido, form: NgForm) {
-    console.log('agregando tipo cuello FT');
-    detalle.fichaTecnica.listaTipoCuello.push(this.tipoCuelloFT);
-    this.tipoCuelloFT = new TipoCuelloFT();
-    form.resetForm();
-  }
-
-  eliminaTipoProductoFT(detalle: DetallePedido, id: number) {
-    detalle.fichaTecnica.listaTipoProducto.splice(id, 1);
-    console.log('eliminando Tipo Producto Tela FT ->' + id);
-  }
-
-  eliminaTipoCuelloFT(detalle: DetallePedido, id: number) {
-    detalle.fichaTecnica.listaTipoCuello.splice(id, 1);
-    console.log('eliminando Tipo Cuello FT ->' + id);
-  }
-
 
   addCliente(cliente: Cliente) {
     this.cliente = cliente;
