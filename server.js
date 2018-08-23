@@ -22,23 +22,40 @@ app.use(cookieParser());
 app.use(errorHandler());
 //app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
+
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/api', require('./server/routes/pedidos'));
+app.use('/api', require('./server/routes/clientes'));
+
 app.get('/upload', function (req, res) {
   res.end('file catcher example');
 });
 
 app.post('/upload', function (req, res) {
+console.log('req->' + JSON.stringify(req.file));
+  if (!req.file)
+  return res.status(400).send('Error: ningun archivo fue subido.');
+});
+
+// The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+//let sampleFile = req.files.sampleFile;
+
+// Use the mv() method to place the file somewhere on your server
+/* sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+  if (err)
+    return res.status(500).send(err);
+
+  res.send('File uploaded!');
+});
+ */
+  /*
   upload(req, res, function (err) {
     if (err) {
       return res.end(err.toString());
     }
     res.end('File is uploaded');
-  });
-});
+  }); */
 //Upload files END
-
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/api', require('./server/routes/pedidos'));
-app.use('/api', require('./server/routes/clientes'));
 
 //Set Port
 const port = process.env.PORT || '3000';

@@ -1,7 +1,22 @@
 <div class="form-group row">
+<!--     <form ref='uploadForm'
+    id='uploadForm'
+    action='http://localhost:3000/upload'
+    method='post'
+    (change)="subirImagen($event.target.files)"
 
-  <form method="POST" enctype="multipart/form-data" name="form">
+    encType="multipart/form-data">
+      <input type="file" name="sampleFile" />
+      <input type='submit' value='Upload!' />
+  </form>
+ -->
+  <form method="POST"
+  enctype="multipart/form-data"
+  name="form">
     <label class="col-2 col-form-label">Seleccione imagen</label>
-    <input type="file" class="col-6" (change)="subirImagen($event.target.files[0])">
+    <input type="file"
+      class="col-6"
+      (change)="subirImagen($event.target.files[0])"
+      multiple="multiple">
   </form>
 </div>

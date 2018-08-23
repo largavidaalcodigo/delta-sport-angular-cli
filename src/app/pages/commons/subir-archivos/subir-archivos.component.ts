@@ -14,11 +14,12 @@ export class SubirArchivosComponent implements OnInit {
   }
 
   subirImagen(archivo: File): Promise<any> {
+    console.log(archivo.name);
     if (!archivo) {
       return;
     }
     return new Promise((resolve, reject) => {
-      this.commonsService.subirArchivo(archivo);
+      this.commonsService.subirArchivos(archivo);
       /* .then((resp: any) => {
         resolve(resp);
       })

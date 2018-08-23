@@ -188,7 +188,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group row\">\n\n  <form method=\"POST\" enctype=\"multipart/form-data\" name=\"form\">\n    <label class=\"col-2 col-form-label\">Seleccione imagen</label>\n    <input type=\"file\" class=\"col-6\" (change)=\"subirImagen($event.target.files[0])\">\n  </form>\n</div>\n"
+module.exports = "<div class=\"form-group row\">\n<!--     <form ref='uploadForm'\n    id='uploadForm'\n    action='http://localhost:3000/upload'\n    method='post'\n    (change)=\"subirImagen($event.target.files)\"\n\n    encType=\"multipart/form-data\">\n      <input type=\"file\" name=\"sampleFile\" />\n      <input type='submit' value='Upload!' />\n  </form>\n -->\n  <form method=\"POST\"\n  enctype=\"multipart/form-data\"\n  name=\"form\">\n    <label class=\"col-2 col-form-label\">Seleccione imagen</label>\n    <input type=\"file\"\n      class=\"col-6\"\n      (change)=\"subirImagen($event.target.files[0])\"\n      multiple=\"multiple\">\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -218,11 +218,12 @@ var SubirArchivosComponent = (function () {
     };
     SubirArchivosComponent.prototype.subirImagen = function (archivo) {
         var _this = this;
+        console.log(archivo.name);
         if (!archivo) {
             return;
         }
         return new Promise(function (resolve, reject) {
-            _this.commonsService.subirArchivo(archivo);
+            _this.commonsService.subirArchivos(archivo);
             /* .then((resp: any) => {
               resolve(resp);
             })
@@ -1374,7 +1375,7 @@ var CommonsService = (function () {
         this.http = http;
         this.URL = 'http://localhost:3000';
     }
-    CommonsService.prototype.subirArchivo = function (archivo) {
+    CommonsService.prototype.subirArchivos = function (file) {
         /*    var xhr = new XMLHttpRequest();
             var formData = new FormData();
             //xhr.onload = successfullyUploaded;
@@ -1389,21 +1390,26 @@ var CommonsService = (function () {
         return new Promise(function (resolve, reject) {
             var formData = new FormData();
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:3000/upload', true);
-            formData.append('file', archivo, archivo.name);
+            xhr.open('POST', 'http://localhost:3000/upload/', true);
+            console.log('service file->' + file.name);
+            formData.append('file', file);
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
+            /*       xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                      if (xhr.status === 200) {
                         resolve(xhr.response);
-                    }
-                    else {
+                      } else {
                         reject(xhr.response);
+                      }
                     }
-                }
-            };
+                  };
+             */
             xhr.send(formData);
         });
+        /*       for(let file in files) {
+                formData.append('uploads', file);
+         */
+        //}
     };
     CommonsService.prototype.putPedido = function (pedido) {
         return this.http.put('/api/putPedido', pedido);

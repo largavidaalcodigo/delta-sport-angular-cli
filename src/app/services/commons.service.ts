@@ -11,7 +11,7 @@ export class CommonsService {
   URL: string = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  subirArchivo(archivo: File) {
+  subirArchivos(file: File) {
 
 /*    var xhr = new XMLHttpRequest();
     var formData = new FormData();
@@ -25,15 +25,14 @@ export class CommonsService {
 
 */
       return new Promise((resolve, reject) => {
-       let formData = new FormData();
-      let xhr = new XMLHttpRequest();
+       const formData = new FormData();
+      const xhr = new XMLHttpRequest();
 
-      xhr.open('POST', 'http://localhost:3000/upload', true);
-
-      formData.append('file', archivo, archivo.name);
+      xhr.open('POST', 'http://localhost:3000/upload/', true);
+      console.log('service file->'+ file.name);
+      formData.append('file', file);
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-      xhr.onreadystatechange = function () {
+/*       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             resolve(xhr.response);
@@ -42,9 +41,17 @@ export class CommonsService {
           }
         }
       };
-
+ */
       xhr.send(formData);
     });
+
+/*       for(let file in files) {
+        formData.append('uploads', file);
+ */
+
+    //}
+
+
   }
 
   public putPedido(pedido: Pedido): Observable<Pedido> {
