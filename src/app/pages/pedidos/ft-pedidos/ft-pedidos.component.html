@@ -1,7 +1,7 @@
 <div class="row" *ngIf='pedido'>
     <div class="col-sm-12">
       <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>
-
+      <app-subir-archivos></app-subir-archivos>
       <div *ngFor='let c of pedido.listaProductos; let i=index'>
         <app-card>
       <!--header fila-->

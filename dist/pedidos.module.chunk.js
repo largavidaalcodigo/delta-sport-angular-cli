@@ -167,6 +167,87 @@ var TipoProductoFT = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"form-group row\">\n\n  <form method=\"POST\" enctype=\"multipart/form-data\" name=\"form\">\n    <label class=\"col-2 col-form-label\">Seleccione imagen</label>\n    <input type=\"file\" class=\"col-6\" (change)=\"subirImagen($event.target.files[0])\">\n  </form>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubirArchivosComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_commons_service__ = __webpack_require__("../../../../../src/app/services/commons.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SubirArchivosComponent = (function () {
+    function SubirArchivosComponent(commonsService) {
+        this.commonsService = commonsService;
+    }
+    SubirArchivosComponent.prototype.ngOnInit = function () {
+    };
+    SubirArchivosComponent.prototype.subirImagen = function (archivo) {
+        var _this = this;
+        if (!archivo) {
+            return;
+        }
+        return new Promise(function (resolve, reject) {
+            _this.commonsService.subirArchivo(archivo);
+            /* .then((resp: any) => {
+              resolve(resp);
+            })
+              .catch(error => {
+                reject(error);
+              });
+          }); */
+        });
+    };
+    return SubirArchivosComponent;
+}());
+SubirArchivosComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
+        selector: 'app-subir-archivos',
+        template: __webpack_require__("../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__services_commons_service__["a" /* CommonsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_commons_service__["a" /* CommonsService */]) === "function" && _a || Object])
+], SubirArchivosComponent);
+
+var _a;
+//# sourceMappingURL=subir-archivos.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/pages/pedidos/form-modulos/form-modulos.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -780,7 +861,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/pedidos/ft-pedidos/ft-pedidos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" *ngIf='pedido'>\n    <div class=\"col-sm-12\">\n      <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>\n\n      <div *ngFor='let c of pedido.listaProductos; let i=index'>\n        <app-card>\n      <!--header fila-->\n          <div class=\"col-12 d-inline-block bg-primary\" id=\"header{{i}}\">\n            <h3>\n              Tipo jugador: {{c.tipoJugador}}\n              <!-- [#{{i+1}}]  -->\n            </h3>\n            {{c.descProducto}}\n            [{{c.descTipoProducto}}]\n          </div>\n\n<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->\n<!-- <div class=\"row col-12\" id=\"collapseExample\">\n\n  <app-card> -->\n\n          <div class=\"row col-12\" id=\"filaTipoProductoFT{{i}}\">\n            <span class=\"col-7 btn-group align-top\">\n              <h4>Producto</h4>\n        <!-- DESCRIPCION TELA -->\n              <form #formTipoProductoFT=\"ngForm\" *ngIf=\"tipoForm != 'ver' \">\n                <div class=\"row\" >\n                  <div class=\"col-3\">\n                    <h5>Desc. tela</h5>\n                    <input type='text' class='form-control' name='tipoProductoFTDescTela{{i}}'\n                    (change)='tipoProductoFT.descTela = $event.target.value;'>\n                  </div>\n                  <div class=\"col-3\">\n                    <h5>Color tela</h5>\n                    <select class='form-control' name='tipoProductoFTcolorTela{{i}}'\n                      (change)='tipoProductoFT.colorTela = $event.target.value;'>\n                      <option [value]=''>[Seleccione...]</option>\n                      <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>\n                    </select>\n                  </div>\n                  <div class=\"col-3\">\n                    <h5>Tipo tela</h5>\n                    <select class='form-control' name='tipoProductoFTtipoTela{{i}}'\n                      (change)='tipoProductoFT.tipoTela = $event.target.value;'>\n                      <option [value]=''>[Seleccione...]</option>\n                      <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>\n                    </select>\n                  </div>\n                    <div class=\"col-1\">\n                      <br>\n                      <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                        (click)=\"addTipoProductoFT(c, formTipoProductoFT);\">\n                        Guardar\n                      </button>\n                    </div>\n                  </div>\n                </form>\n\n                <div class=\"d-inline-block border\">\n        <!--TITULO-->\n                  <table class=\"table table-hover\">\n                    <tr *ngIf=\"c.fichaTecnica.listaTipoProducto.length>0\">\n                        <th class=\"text-center\">#</th>\n                        <th class=\"text-center\">Descripción</th>\n                        <th class=\"text-center\">Color</th>\n                        <th class=\"text-center\">Tipo tela</th>\n                        <th *ngIf=\"tipoForm != 'ver'\">&nbsp;</th>\n                    </tr>\n                    <!--LISTA DE MEDIOS DE PAGO-->\n                    <tr *ngFor=\"let item of c.fichaTecnica.listaTipoProducto; let i = index;\">\n                      <td class=\"text-center\">\n                          <h5>{{i + 1}}</h5>\n                      </td>\n                      <td class=\"text-left\">\n                          <h5>{{item.descTela}}</h5>\n                      </td>\n                      <td class=\"text-left\">\n                        <h5>{{item.colorTela}}</h5>\n                      </td>\n                      <td class=\"text-left\">\n                        <h5>{{item.tipoTela}}</h5>\n                      </td>\n                      <td *ngIf=\"tipoForm != 'ver'\">\n                        <button type=\"button\" (click)='eliminaTipoProductoFT(c, i);'>\n                          <i class=\"icofont icofont-trash\"></i>\n                        </button>\n                      </td>\n                    </tr>\n                  </table>\n                </div>\n              </span>\n              <span class=\"col-5 btn-group align-top\" >\n                  <h4>Tipo Cuello</h4>\n              <!-- DESCRIPCION TELA -->\n                  <form #formTipoCuelloFT=\"ngForm\"  *ngIf=\"tipoForm != 'ver' \">\n                    <div class=\"row\" >\n                      <div class=\"col-4\">\n                        <h5>Color tela</h5>\n                        <select class='form-control' name='tipoCuelloFTcolorTela{{i}}'\n                          (change)='tipoCuelloFT.colorTela = $event.target.value;'>\n                          <option [value]=''>[Seleccione...]</option>\n                          <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>\n                        </select>\n                      </div>\n                      <div class=\"col-4\">\n                        <h5>Tipo tela</h5>\n                        <select class='form-control' name='tipoCuelloFTtipoTela{{i}}'\n                          (change)='tipoCuelloFT.tipoTela = $event.target.value;'>\n                          <option [value]=''>[Seleccione...]</option>\n                          <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>\n                        </select>\n                      </div>\n                      <div class=\"col-4\">\n                        <br>\n                        <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                          (click)=\"addTipoCuelloFT(c, formTipoCuelloFT);\">\n                          Guardar\n                        </button>\n                      </div>\n                    </div>\n                  </form>\n                  <div class=\"d-inline-block border\">\n              <!--TITULO-->\n                    <table class=\"table table-hover\">\n                      <tr *ngIf=\"c.fichaTecnica.listaTipoCuello.length>0\">\n                        <th class=\"text-center\">#</th>\n                        <th class=\"text-center\">Color</th>\n                        <th class=\"text-center\">Tipo tela</th>\n                        <th *ngIf=\"tipoForm != 'ver'\">&nbsp;</th>\n                      </tr>\n                      <tr *ngFor=\"let item of c.fichaTecnica.listaTipoCuello; let i = index;\">\n                        <td class=\"text-center\">\n                          {{i + 1}}\n                        </td>\n                        <td class=\"text-left\">\n                          {{item.colorTela}}\n                        </td>\n                        <td class=\"text-left\">\n                          {{item.tipoTela}}\n                        </td>\n                        <td *ngIf=\"tipoForm != 'ver'\">\n                            <button type=\"button\" (click)='eliminaTipoCuelloFT(c, i);'>\n                            <i class=\"icofont icofont-trash\"></i>\n                          </button>\n                        </td>\n                      </tr>\n                    </table>\n                  </div>\n                </span>\n            </div>\n          </app-card>\n<!--DETALLE TIPO CUELLO FICHA TECNICA-->\n            <app-card>\n              <div id=\"filaTipoCuelloFT{{i}}\">\n                  <span class=\"col-6 d-inline-block btn-group align-top\">\n                      <h4>Estampado</h4>\n                  <!-- DESCRIPCION TELA -->\n                      <form #formEstampadoFT=\"ngForm\"  *ngIf=\"tipoForm != 'ver' \">\n                        <div class=\"row\" >\n                          <div>\n                            <h5>Estampados</h5>\n                            <select class='form-control' name='estampadoFT{{i}}'\n                              (change)='estampadoFT = $event.target.value;'>\n                              <option [value]=''>[Seleccione...]</option>\n                              <option *ngFor='let item of listaEstampadoFT' [value]='item'>{{item}}</option>\n                            </select>\n                          </div>\n                          <div>\n                            <br>\n                            <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                              (click)=\"addEstampadoFT(c, formEstampadoFT);\">\n                              Guardar\n                            </button>\n                          </div>\n                        </div>\n                      </form>\n                      <div class=\"d-inline-block border\">\n                  <!--TITULO-->\n                        <table class=\"table table-hover\">\n                          <tr *ngIf=\"c.fichaTecnica.listaEstampado.length>0\">\n                            <th class=\"text-center\">#</th>\n                            <th class=\"text-center\">Estampado</th>\n                            <th>&nbsp;</th>\n                          </tr>\n                          <tr *ngFor=\"let item of c.fichaTecnica.listaEstampado; let i = index;\">\n                            <td class=\"text-center\">\n                              {{i + 1}}\n                            </td>\n                            <td class=\"text-left\">\n                              {{item}}\n                            </td>\n                            <td *ngIf=\"tipoForm != 'ver'\">\n                              <button type=\"button\" (click)='eliminaEstampadoFT(c, i);'>\n                                <i class=\"icofont icofont-trash\"></i>\n                              </button>\n                            </td>\n                          </tr>\n                        </table>\n                      </div>\n                    </span>\n              <span class=\"col-6 btn-group  d-inline-block align-top\">\n                  <h4>Terminación</h4>\n              <!-- DESCRIPCION TELA -->\n                  <form #formTerminacionFT=\"ngForm\" *ngIf=\"tipoForm != 'ver' \">\n                    <div class=\"row\" >\n                      <div>\n                        <h5>Terminaciones</h5>\n                        <select class='form-control' name='terminacionFT{{i}}'\n                          (change)='terminacionFT = $event.target.value;'>\n                          <option [value]=''>[Seleccione...]</option>\n                          <option *ngFor='let item of listaTerminacionFT' [value]='item'>{{item}}</option>\n                        </select>\n                      </div>\n                      <div>\n                        <br>\n                        <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                          (click)=\"addTerminacionFT(c, formTerminacionFT);\">\n                          Guardar\n                        </button>\n                      </div>\n                    </div>\n                  </form>\n                  <div class=\"d-inline-block border\">\n              <!--TITULO-->\n                    <table class=\"table table-hover\">\n                      <tr *ngIf=\"c.fichaTecnica.listaTerminacion.length>0\">\n                        <th class=\"text-center\">#</th>\n                        <th class=\"text-center\">Terminacion</th>\n                        <th>&nbsp;</th>\n                      </tr>\n                      <tr *ngFor=\"let item of c.fichaTecnica.listaTerminacion; let i = index;\">\n                        <td class=\"text-center\">\n                          {{i + 1}}\n                        </td>\n                        <td class=\"text-left\">\n                          {{item}}\n                        </td>\n                        <td *ngIf=\"tipoForm != 'ver'\">\n                          <button type=\"button\" (click)='eliminaTerminacionFT(c, i);'>\n                            <i class=\"icofont icofont-trash\"></i>\n                          </button>\n                        </td>\n                      </tr>\n                    </table>\n                  </div>\n                </span>\n\n            </div>\n          </app-card>\n       </div>\n       <div *ngIf=\"tipoForm === 'ver'; else crear\" class='form-group'>\n          <a class=\"btn btn-primary\" (click)=\"goBack()\">Volver</a>\n        </div>\n        <ng-template #crear>\n          <div class='form-group'>\n            <a class=\"btn btn-primary\" (click)=\"goBack()\">Cancelar</a>\n            <button (click)=\"onSubmit()\" class='btn btn-primary'>Guardar</button>\n          </div>\n        </ng-template>\n    </div>\n  </div>\n"
+module.exports = "<div class=\"row\" *ngIf='pedido'>\n    <div class=\"col-sm-12\">\n      <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>\n      <app-subir-archivos></app-subir-archivos>\n      <div *ngFor='let c of pedido.listaProductos; let i=index'>\n        <app-card>\n      <!--header fila-->\n          <div class=\"col-12 d-inline-block bg-primary\" id=\"header{{i}}\">\n            <h3>\n              Tipo jugador: {{c.tipoJugador}}\n              <!-- [#{{i+1}}]  -->\n            </h3>\n            {{c.descProducto}}\n            [{{c.descTipoProducto}}]\n          </div>\n\n<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->\n<!-- <div class=\"row col-12\" id=\"collapseExample\">\n\n  <app-card> -->\n\n          <div class=\"row col-12\" id=\"filaTipoProductoFT{{i}}\">\n            <span class=\"col-7 btn-group align-top\">\n              <h4>Producto</h4>\n        <!-- DESCRIPCION TELA -->\n              <form #formTipoProductoFT=\"ngForm\" *ngIf=\"tipoForm != 'ver' \">\n                <div class=\"row\" >\n                  <div class=\"col-3\">\n                    <h5>Desc. tela</h5>\n                    <input type='text' class='form-control' name='tipoProductoFTDescTela{{i}}'\n                    (change)='tipoProductoFT.descTela = $event.target.value;'>\n                  </div>\n                  <div class=\"col-3\">\n                    <h5>Color tela</h5>\n                    <select class='form-control' name='tipoProductoFTcolorTela{{i}}'\n                      (change)='tipoProductoFT.colorTela = $event.target.value;'>\n                      <option [value]=''>[Seleccione...]</option>\n                      <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>\n                    </select>\n                  </div>\n                  <div class=\"col-3\">\n                    <h5>Tipo tela</h5>\n                    <select class='form-control' name='tipoProductoFTtipoTela{{i}}'\n                      (change)='tipoProductoFT.tipoTela = $event.target.value;'>\n                      <option [value]=''>[Seleccione...]</option>\n                      <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>\n                    </select>\n                  </div>\n                    <div class=\"col-1\">\n                      <br>\n                      <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                        (click)=\"addTipoProductoFT(c, formTipoProductoFT);\">\n                        Guardar\n                      </button>\n                    </div>\n                  </div>\n                </form>\n\n                <div class=\"d-inline-block border\">\n        <!--TITULO-->\n                  <table class=\"table table-hover\">\n                    <tr *ngIf=\"c.fichaTecnica.listaTipoProducto.length>0\">\n                        <th class=\"text-center\">#</th>\n                        <th class=\"text-center\">Descripción</th>\n                        <th class=\"text-center\">Color</th>\n                        <th class=\"text-center\">Tipo tela</th>\n                        <th *ngIf=\"tipoForm != 'ver'\">&nbsp;</th>\n                    </tr>\n                    <!--LISTA DE MEDIOS DE PAGO-->\n                    <tr *ngFor=\"let item of c.fichaTecnica.listaTipoProducto; let i = index;\">\n                      <td class=\"text-center\">\n                          <h5>{{i + 1}}</h5>\n                      </td>\n                      <td class=\"text-left\">\n                          <h5>{{item.descTela}}</h5>\n                      </td>\n                      <td class=\"text-left\">\n                        <h5>{{item.colorTela}}</h5>\n                      </td>\n                      <td class=\"text-left\">\n                        <h5>{{item.tipoTela}}</h5>\n                      </td>\n                      <td *ngIf=\"tipoForm != 'ver'\">\n                        <button type=\"button\" (click)='eliminaTipoProductoFT(c, i);'>\n                          <i class=\"icofont icofont-trash\"></i>\n                        </button>\n                      </td>\n                    </tr>\n                  </table>\n                </div>\n              </span>\n              <span class=\"col-5 btn-group align-top\" >\n                  <h4>Tipo Cuello</h4>\n              <!-- DESCRIPCION TELA -->\n                  <form #formTipoCuelloFT=\"ngForm\"  *ngIf=\"tipoForm != 'ver' \">\n                    <div class=\"row\" >\n                      <div class=\"col-4\">\n                        <h5>Color tela</h5>\n                        <select class='form-control' name='tipoCuelloFTcolorTela{{i}}'\n                          (change)='tipoCuelloFT.colorTela = $event.target.value;'>\n                          <option [value]=''>[Seleccione...]</option>\n                          <option *ngFor='let color of listaColores' [value]='color.id'>{{color.desc}}</option>\n                        </select>\n                      </div>\n                      <div class=\"col-4\">\n                        <h5>Tipo tela</h5>\n                        <select class='form-control' name='tipoCuelloFTtipoTela{{i}}'\n                          (change)='tipoCuelloFT.tipoTela = $event.target.value;'>\n                          <option [value]=''>[Seleccione...]</option>\n                          <option *ngFor='let tela of listaTelas' [value]='tela'>{{tela}}</option>\n                        </select>\n                      </div>\n                      <div class=\"col-4\">\n                        <br>\n                        <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                          (click)=\"addTipoCuelloFT(c, formTipoCuelloFT);\">\n                          Guardar\n                        </button>\n                      </div>\n                    </div>\n                  </form>\n                  <div class=\"d-inline-block border\">\n              <!--TITULO-->\n                    <table class=\"table table-hover\">\n                      <tr *ngIf=\"c.fichaTecnica.listaTipoCuello.length>0\">\n                        <th class=\"text-center\">#</th>\n                        <th class=\"text-center\">Color</th>\n                        <th class=\"text-center\">Tipo tela</th>\n                        <th *ngIf=\"tipoForm != 'ver'\">&nbsp;</th>\n                      </tr>\n                      <tr *ngFor=\"let item of c.fichaTecnica.listaTipoCuello; let i = index;\">\n                        <td class=\"text-center\">\n                          {{i + 1}}\n                        </td>\n                        <td class=\"text-left\">\n                          {{item.colorTela}}\n                        </td>\n                        <td class=\"text-left\">\n                          {{item.tipoTela}}\n                        </td>\n                        <td *ngIf=\"tipoForm != 'ver'\">\n                            <button type=\"button\" (click)='eliminaTipoCuelloFT(c, i);'>\n                            <i class=\"icofont icofont-trash\"></i>\n                          </button>\n                        </td>\n                      </tr>\n                    </table>\n                  </div>\n                </span>\n            </div>\n          </app-card>\n<!--DETALLE TIPO CUELLO FICHA TECNICA-->\n            <app-card>\n              <div id=\"filaTipoCuelloFT{{i}}\">\n                  <span class=\"col-6 d-inline-block btn-group align-top\">\n                      <h4>Estampado</h4>\n                  <!-- DESCRIPCION TELA -->\n                      <form #formEstampadoFT=\"ngForm\"  *ngIf=\"tipoForm != 'ver' \">\n                        <div class=\"row\" >\n                          <div>\n                            <h5>Estampados</h5>\n                            <select class='form-control' name='estampadoFT{{i}}'\n                              (change)='estampadoFT = $event.target.value;'>\n                              <option [value]=''>[Seleccione...]</option>\n                              <option *ngFor='let item of listaEstampadoFT' [value]='item'>{{item}}</option>\n                            </select>\n                          </div>\n                          <div>\n                            <br>\n                            <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                              (click)=\"addEstampadoFT(c, formEstampadoFT);\">\n                              Guardar\n                            </button>\n                          </div>\n                        </div>\n                      </form>\n                      <div class=\"d-inline-block border\">\n                  <!--TITULO-->\n                        <table class=\"table table-hover\">\n                          <tr *ngIf=\"c.fichaTecnica.listaEstampado.length>0\">\n                            <th class=\"text-center\">#</th>\n                            <th class=\"text-center\">Estampado</th>\n                            <th>&nbsp;</th>\n                          </tr>\n                          <tr *ngFor=\"let item of c.fichaTecnica.listaEstampado; let i = index;\">\n                            <td class=\"text-center\">\n                              {{i + 1}}\n                            </td>\n                            <td class=\"text-left\">\n                              {{item}}\n                            </td>\n                            <td *ngIf=\"tipoForm != 'ver'\">\n                              <button type=\"button\" (click)='eliminaEstampadoFT(c, i);'>\n                                <i class=\"icofont icofont-trash\"></i>\n                              </button>\n                            </td>\n                          </tr>\n                        </table>\n                      </div>\n                    </span>\n              <span class=\"col-6 btn-group  d-inline-block align-top\">\n                  <h4>Terminación</h4>\n              <!-- DESCRIPCION TELA -->\n                  <form #formTerminacionFT=\"ngForm\" *ngIf=\"tipoForm != 'ver' \">\n                    <div class=\"row\" >\n                      <div>\n                        <h5>Terminaciones</h5>\n                        <select class='form-control' name='terminacionFT{{i}}'\n                          (change)='terminacionFT = $event.target.value;'>\n                          <option [value]=''>[Seleccione...]</option>\n                          <option *ngFor='let item of listaTerminacionFT' [value]='item'>{{item}}</option>\n                        </select>\n                      </div>\n                      <div>\n                        <br>\n                        <button type=\"button\" class=\"btn btn-primary btn-sm\"\n                          (click)=\"addTerminacionFT(c, formTerminacionFT);\">\n                          Guardar\n                        </button>\n                      </div>\n                    </div>\n                  </form>\n                  <div class=\"d-inline-block border\">\n              <!--TITULO-->\n                    <table class=\"table table-hover\">\n                      <tr *ngIf=\"c.fichaTecnica.listaTerminacion.length>0\">\n                        <th class=\"text-center\">#</th>\n                        <th class=\"text-center\">Terminacion</th>\n                        <th>&nbsp;</th>\n                      </tr>\n                      <tr *ngFor=\"let item of c.fichaTecnica.listaTerminacion; let i = index;\">\n                        <td class=\"text-center\">\n                          {{i + 1}}\n                        </td>\n                        <td class=\"text-left\">\n                          {{item}}\n                        </td>\n                        <td *ngIf=\"tipoForm != 'ver'\">\n                          <button type=\"button\" (click)='eliminaTerminacionFT(c, i);'>\n                            <i class=\"icofont icofont-trash\"></i>\n                          </button>\n                        </td>\n                      </tr>\n                    </table>\n                  </div>\n                </span>\n\n            </div>\n          </app-card>\n       </div>\n       <div *ngIf=\"tipoForm === 'ver'; else crear\" class='form-group'>\n          <a class=\"btn btn-primary\" (click)=\"goBack()\">Volver</a>\n        </div>\n        <ng-template #crear>\n          <div class='form-group'>\n            <a class=\"btn btn-primary\" (click)=\"goBack()\">Cancelar</a>\n            <button (click)=\"onSubmit()\" class='btn btn-primary'>Guardar</button>\n          </div>\n        </ng-template>\n    </div>\n  </div>\n"
 
 /***/ }),
 
@@ -1033,23 +1114,25 @@ var _a, _b, _c;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pedidosRoutes", function() { return pedidosRoutes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PedidosModule", function() { return PedidosModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__form_modulos_form_modulos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-modulos/form-modulos.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pedidos_router__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.router.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__form_pedido_form_pedido_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__file_upload_file_upload_component__ = __webpack_require__("../../../../../src/app/file-upload/file-upload.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__form_pedido_form_pedido_module__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__tallas_pedidos_tallas_pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/tallas-pedidos/tallas-pedidos.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ft_pedidos_ft_pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/ft-pedidos/ft-pedidos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_commons_service__ = __webpack_require__("../../../../../src/app/services/commons.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__commons_subir_archivos_subir_archivos_component__ = __webpack_require__("../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__form_modulos_form_modulos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-modulos/form-modulos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pedidos_router__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.router.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/pedidos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__form_pedido_form_pedido_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__file_upload_file_upload_component__ = __webpack_require__("../../../../../src/app/file-upload/file-upload.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__form_pedido_form_pedido_module__ = __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ng_bootstrap_ng_bootstrap__ = __webpack_require__("../../../../@ng-bootstrap/ng-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__tallas_pedidos_tallas_pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/tallas-pedidos/tallas-pedidos.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ft_pedidos_ft_pedidos_component__ = __webpack_require__("../../../../../src/app/pages/pedidos/ft-pedidos/ft-pedidos.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1073,19 +1156,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
 /* import {AccordionLinkDirective} from '../../shared/accordion/accordionlink.directive';
 import {AccordionDirective} from '../../shared/accordion/accordion.directive';
 import {AccordionAnchorDirective} from '../../shared/accordion/accordionanchor.directive';
  */
 var pedidosRoutes = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_9__pedidos_component__["a" /* PedidosComponent */] },
-    { path: 'formPedido/:tipoForm', component: __WEBPACK_IMPORTED_MODULE_11__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */] },
-    { path: 'formPedido/:tipoForm/:id', component: __WEBPACK_IMPORTED_MODULE_11__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */] },
-    { path: 'formTallas/:id', component: __WEBPACK_IMPORTED_MODULE_15__tallas_pedidos_tallas_pedidos_component__["a" /* TallasPedidosComponent */] },
-    { path: 'formTallas/:tipoForm/:id', component: __WEBPACK_IMPORTED_MODULE_15__tallas_pedidos_tallas_pedidos_component__["a" /* TallasPedidosComponent */] },
-    { path: 'formFichaTecnica/:id', component: __WEBPACK_IMPORTED_MODULE_16__ft_pedidos_ft_pedidos_component__["a" /* FtPedidosComponent */] },
-    { path: 'formFichaTecnica/:tipoForm/:id', component: __WEBPACK_IMPORTED_MODULE_16__ft_pedidos_ft_pedidos_component__["a" /* FtPedidosComponent */] },
-    { path: 'formModulos/:modulo/:id', component: __WEBPACK_IMPORTED_MODULE_0__form_modulos_form_modulos_component__["a" /* FormModulosComponent */] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_11__pedidos_component__["a" /* PedidosComponent */] },
+    { path: 'formPedido/:tipoForm', component: __WEBPACK_IMPORTED_MODULE_13__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */] },
+    { path: 'formPedido/:tipoForm/:id', component: __WEBPACK_IMPORTED_MODULE_13__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */] },
+    { path: 'formTallas/:id', component: __WEBPACK_IMPORTED_MODULE_17__tallas_pedidos_tallas_pedidos_component__["a" /* TallasPedidosComponent */] },
+    { path: 'formTallas/:tipoForm/:id', component: __WEBPACK_IMPORTED_MODULE_17__tallas_pedidos_tallas_pedidos_component__["a" /* TallasPedidosComponent */] },
+    { path: 'formFichaTecnica/:id', component: __WEBPACK_IMPORTED_MODULE_18__ft_pedidos_ft_pedidos_component__["a" /* FtPedidosComponent */] },
+    { path: 'formFichaTecnica/:tipoForm/:id', component: __WEBPACK_IMPORTED_MODULE_18__ft_pedidos_ft_pedidos_component__["a" /* FtPedidosComponent */] },
+    { path: 'formModulos/:modulo/:id', component: __WEBPACK_IMPORTED_MODULE_2__form_modulos_form_modulos_component__["a" /* FormModulosComponent */] },
 ];
 var PedidosModule = (function () {
     function PedidosModule() {
@@ -1093,29 +1178,35 @@ var PedidosModule = (function () {
     return PedidosModule;
 }());
 PedidosModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["NgModule"])({
+    Object(__WEBPACK_IMPORTED_MODULE_9__angular_core__["NgModule"])({
         imports: [
-            __WEBPACK_IMPORTED_MODULE_6__pedidos_router__["a" /* pedidosRouter */],
-            __WEBPACK_IMPORTED_MODULE_10__angular_router__["g" /* RouterModule */],
-            __WEBPACK_IMPORTED_MODULE_8__angular_common__["CommonModule"],
-            __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_3__shared_shared_module__["a" /* SharedModule */],
-            __WEBPACK_IMPORTED_MODULE_13__form_pedido_form_pedido_module__["a" /* FormPedidoModule */],
-            __WEBPACK_IMPORTED_MODULE_14__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
-            __WEBPACK_IMPORTED_MODULE_10__angular_router__["g" /* RouterModule */].forChild(pedidosRoutes),
+            __WEBPACK_IMPORTED_MODULE_8__pedidos_router__["a" /* pedidosRouter */],
+            __WEBPACK_IMPORTED_MODULE_12__angular_router__["g" /* RouterModule */],
+            __WEBPACK_IMPORTED_MODULE_10__angular_common__["CommonModule"],
+            __WEBPACK_IMPORTED_MODULE_7__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_6__angular_http__["b" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_5__shared_shared_module__["a" /* SharedModule */],
+            __WEBPACK_IMPORTED_MODULE_15__form_pedido_form_pedido_module__["a" /* FormPedidoModule */],
+            __WEBPACK_IMPORTED_MODULE_16__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
+            __WEBPACK_IMPORTED_MODULE_12__angular_router__["g" /* RouterModule */].forChild(pedidosRoutes),
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_2__services_pedidos_service__["a" /* PedidosService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_clientes_service__["a" /* ClientesService */]
+            __WEBPACK_IMPORTED_MODULE_4__services_pedidos_service__["a" /* PedidosService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_clientes_service__["a" /* ClientesService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_commons_service__["a" /* CommonsService */]
         ],
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_9__pedidos_component__["a" /* PedidosComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__file_upload_file_upload_component__["a" /* FileUploadComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__tallas_pedidos_tallas_pedidos_component__["a" /* TallasPedidosComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__ft_pedidos_ft_pedidos_component__["a" /* FtPedidosComponent */],
-            __WEBPACK_IMPORTED_MODULE_0__form_modulos_form_modulos_component__["a" /* FormModulosComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__pedidos_component__["a" /* PedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__form_pedido_form_pedido_component__["a" /* FormPedidoComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__file_upload_file_upload_component__["a" /* FileUploadComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__tallas_pedidos_tallas_pedidos_component__["a" /* TallasPedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__ft_pedidos_ft_pedidos_component__["a" /* FtPedidosComponent */],
+            __WEBPACK_IMPORTED_MODULE_2__form_modulos_form_modulos_component__["a" /* FormModulosComponent */],
+            __WEBPACK_IMPORTED_MODULE_1__commons_subir_archivos_subir_archivos_component__["a" /* SubirArchivosComponent */]
+            /*     AccordionAnchorDirective,
+                AccordionLinkDirective,
+                AccordionDirective,
+             */ 
         ]
     })
 ], PedidosModule);
@@ -1254,6 +1345,118 @@ TallasPedidosComponent = __decorate([
 
 var _a, _b, _c, _d, _e;
 //# sourceMappingURL=tallas-pedidos.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/commons.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CommonsService = (function () {
+    function CommonsService(http) {
+        this.http = http;
+        this.URL = 'http://localhost:3000';
+    }
+    CommonsService.prototype.subirArchivo = function (archivo) {
+        /*    var xhr = new XMLHttpRequest();
+            var formData = new FormData();
+            //xhr.onload = successfullyUploaded;
+            xhr.open("POST", "http://localhost:3000/upload", true);
+            xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
+            for(var file in files) {
+                formData.append("uploads", files[file].data);
+            }
+            xhr.send(formData);
+        
+        */
+        return new Promise(function (resolve, reject) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:3000/upload', true);
+            formData.append('file', archivo, archivo.name);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(xhr.response);
+                    }
+                    else {
+                        reject(xhr.response);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    };
+    CommonsService.prototype.putPedido = function (pedido) {
+        return this.http.put('/api/putPedido', pedido);
+    };
+    /*  public deletePedido(pedido: Pedido){
+       return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
+     } */
+    CommonsService.prototype.getEstadosPedido = function () {
+        return ['Creado', 'En proceso', 'Terminado', 'Eliminado'];
+    };
+    CommonsService.prototype.getDetallesAdicionales = function () {
+        return [
+            { id: 1, desc: 'Logos insignias sublimados', valor: 550 },
+            { id: 2, desc: 'Número sublimado', valor: 650 },
+            { id: 3, desc: 'Logos vinilos', valor: 550 },
+            { id: 4, desc: 'Números vinilos', valor: 750 },
+            { id: 5, desc: 'Subliflok insignia', valor: 750 },
+            { id: 6, desc: 'Cuello camisero tela', valor: 350 },
+            { id: 7, desc: 'Cuello camisero tejido', valor: 800 },
+            { id: 8, desc: 'Cierre polera', valor: 450 },
+            { id: 9, desc: 'Broches (3)', valor: 450 },
+            { id: 10, desc: 'Triángulo', valor: 550 },
+            { id: 11, desc: 'Costados', valor: 500 },
+            { id: 12, desc: 'Vivos', valor: 350 },
+            { id: 13, desc: 'Cuellos sublimados', valor: 150 },
+            { id: 14, desc: 'Cuello mao', valor: 350 },
+        ];
+    };
+    CommonsService.prototype.getColores = function () {
+        return [
+            { id: 1, desc: 'Azul', codigoHex: '#0000FF' },
+            { id: 2, desc: 'Verde', codigoHex: '#008000' },
+            { id: 3, desc: 'Amarillo', codigoHex: '#FFFF00' }
+        ];
+    };
+    CommonsService.prototype.getTelas = function () {
+        return ['boston', 'rugby', 'mesh', 'lycra', 'elasticada', 'franela', 'franela elasticada', 'dupont', 'otro'];
+    };
+    CommonsService.prototype.getTallas = function () {
+        return ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'];
+    };
+    CommonsService.prototype.getTipoDeporte = function () {
+        return ['Futbol', 'Rugby', 'Volleyball', 'Tenis'];
+    };
+    return CommonsService;
+}());
+CommonsService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], CommonsService);
+
+var _a;
+//# sourceMappingURL=commons.service.js.map
 
 /***/ })
 

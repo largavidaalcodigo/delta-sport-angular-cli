@@ -1,3 +1,5 @@
+import { CommonsService } from './../../services/commons.service';
+import { SubirArchivosComponent } from './../commons/subir-archivos/subir-archivos.component';
 import { FormModulosComponent } from './form-modulos/form-modulos.component';
 import { ClientesService } from '../../services/clientes.service';
 import { PedidosService } from '../../services/pedidos.service';
@@ -44,7 +46,8 @@ export const pedidosRoutes: Routes = [
   ],
   providers: [
     PedidosService,
-    ClientesService
+    ClientesService,
+    CommonsService
   ],
   declarations: [
     PedidosComponent,
@@ -53,6 +56,7 @@ export const pedidosRoutes: Routes = [
     TallasPedidosComponent,
     FtPedidosComponent,
     FormModulosComponent,
+    SubirArchivosComponent
 
 /*     AccordionAnchorDirective,
     AccordionLinkDirective,

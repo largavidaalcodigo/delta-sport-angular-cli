@@ -13,15 +13,48 @@ var fs = require('fs');
 
 var app = express();
 // Parsers
+//app.use(bodyParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
-
 app.use(cookieParser());
-app.use(bodyParser.json({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.json({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler());
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-//passport config
+//app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+
+app.get('/upload', function (req, res) {
+  res.end('file catcher example');
+});
+
+app.post('/upload', function (req, res) {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.end(err.toString());
+    }
+    res.end('File is uploaded');
+  });
+});
+//Upload files END
+
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use('/api', require('./server/routes/pedidos'));
+app.use('/api', require('./server/routes/clientes'));
+
+//Set Port
+const port = process.env.PORT || '3000';
+app.set('port', port);
+const server = http.createServer(app);
+server.listen(port, () => console.log('Running on localhost:'+port));
+
+// Conexion a Mongodb
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost:27017/erp-taller')
+  .then(() =>  console.log('Mongodb: Conexion exitosa.'))
+  .catch((err) => console.error(err));
+
+
+/*///passport config
 //app.set('view engine', 'ejs');
 //app.use(passport.initialize());
 //app.use(passport.session());
@@ -32,7 +65,6 @@ app.use(flash());
 //Upload files START
 var DIR = './uploads/';
 var upload = multer({dest: DIR});
-
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
   res.setHeader('Access-Control-Allow-Methods', 'POST');
@@ -40,6 +72,8 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
+
+
 
 /*
 app.use(
@@ -59,21 +93,6 @@ app.use(
   )
 );
 */
-
-app.get('/api', function (req, res) {
-  res.end('file catcher example');
-});
-
-app.post('/api', function (req, res) {
-  upload(req, res, function (err) {
-    if (err) {
-      return res.end(err.toString());
-    }
-
-    res.end('File is uploaded');
-  });
-});
-//Upload files END
 
 
 //const api = require('./server/routes/api');
@@ -102,20 +121,13 @@ app.get('/api/clientinfo', routes.client.info); */
 //app.use('/api', api);
 // Send all other requests to the Angular app
 //app.use(express.static(path.join(__dirname, 'dist')));
+
+
+
+// this 3 lines have to be before app.use(app.router)
+// https://stackoverflow.com/questions/21877098/upload-file-using-express-failed-cannot-read-property-of-undefined
+//app.use(express.multipart());
+//app.use(express.bodyParser({ keepExtensions: true, uploadDir: path.join(__dirname, 'public', 'uploads') }));
+//app.use(express.methodOverride());
+
 //app.use('/', routes);
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/api', require('./server/routes/pedidos'));
-app.use('/api', require('./server/routes/clientes'));
-
-//Set Port
-const port = process.env.PORT || '3000';
-app.set('port', port);
-const server = http.createServer(app);
-server.listen(port, () => console.log('Running on localhost:'+port));
-
-// Conexion a Mongodb
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/erp-taller')
-  .then(() =>  console.log('Mongodb: Conexion exitosa.'))
-  .catch((err) => console.error(err));
