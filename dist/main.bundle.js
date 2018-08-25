@@ -163,12 +163,14 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__layout_admin_title_title_component__ = __webpack_require__("../../../../../src/app/layout/admin/title/title.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__layout_auth_auth_component__ = __webpack_require__("../../../../../src/app/layout/auth/auth.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__layout_modulos_directive__ = __webpack_require__("../../../../../src/app/layout-modulos.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__node_modules_angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -210,8 +212,12 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_8_ng_click_outside__["ClickOutsideModule"],
             __WEBPACK_IMPORTED_MODULE_9__shared_shared_module__["a" /* SharedModule */]
         ],
-        providers: [],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]]
+        providers: [
+            { provide: __WEBPACK_IMPORTED_MODULE_15__node_modules_angular_common__["LocationStrategy"], useClass: __WEBPACK_IMPORTED_MODULE_15__node_modules_angular_common__["HashLocationStrategy"] }
+        ],
+        bootstrap: [
+            __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]
+        ]
     })
 ], AppModule);
 

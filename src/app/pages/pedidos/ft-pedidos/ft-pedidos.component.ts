@@ -1,14 +1,14 @@
 import { NgForm } from '@angular/forms';
-import { DetallePedido } from './../../../model/pedido/detallePedido.model';
-import { ImgFT } from './../../../model/producto/imgFT.model';
-import { TipoCuelloFT } from './../../../model/producto/tipoCuelloFT.model';
-import { TipoProductoFT } from './../../../model/producto/tipoProductoFT.model';
-import { FichaTecnica } from './../../../model/producto/fichaTecnica.model';
-import { Color } from './../../../model/producto/color.model';
-import { Pedido } from './../../../model/pedido/pedido.model';
-import { ClientesService } from './../../../services/clientes.service';
+import { DetallePedido } from '../../../model/pedido/detallePedido.model';
+import { ImgFT } from '../../../model/producto/imgFT.model';
+import { TipoCuelloFT } from '../../../model/producto/tipoCuelloFT.model';
+import { TipoProductoFT } from '../../../model/producto/tipoProductoFT.model';
+import { FichaTecnica } from '../../../model/producto/fichaTecnica.model';
+import { Color } from '../../../model/producto/color.model';
+import { Pedido } from '../../../model/pedido/pedido.model';
+import { ClientesService } from '../../../services/clientes.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PedidosService } from './../../../services/pedidos.service';
+import { PedidosService } from '../../../services/pedidos.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from "@angular/common";
 
@@ -59,7 +59,7 @@ export class FtPedidosComponent implements OnInit {
 
     //Obtiene pedido segun id
     this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
-      console.log('Editando ft->' + JSON.stringify(data));
+      //console.log('Editando ft->' + JSON.stringify(data));
       this.pedido = data;
       this.titulo += ' - Pedido nro[' + this.pedido.numeroPedido + ']';
     });

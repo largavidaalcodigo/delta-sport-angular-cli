@@ -1,4 +1,4 @@
-import { Pedido } from './../../../model/pedido/pedido.model';
+import { Pedido } from '../../../model/pedido/pedido.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

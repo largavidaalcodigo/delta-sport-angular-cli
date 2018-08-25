@@ -188,7 +188,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group row\">\n<!--     <form ref='uploadForm'\n    id='uploadForm'\n    action='http://localhost:3000/upload'\n    method='post'\n    (change)=\"subirImagen($event.target.files)\"\n\n    encType=\"multipart/form-data\">\n      <input type=\"file\" name=\"sampleFile\" />\n      <input type='submit' value='Upload!' />\n  </form>\n -->\n  <form method=\"POST\"\n  enctype=\"multipart/form-data\"\n  name=\"form\">\n    <label class=\"col-2 col-form-label\">Seleccione imagen</label>\n    <input type=\"file\"\n      class=\"col-6\"\n      (change)=\"subirImagen($event.target.files[0])\"\n      multiple=\"multiple\">\n  </form>\n</div>\n"
+module.exports = "<div class=\"form-group row\">\n<!--     <form ref='uploadForm'\n    id='uploadForm'\n    action='http://localhost:3000/upload'\n    method='post'\n    (change)=\"subirImagen($event.target.files)\"\n\n    encType=\"multipart/form-data\">\n      <input type=\"file\" name=\"sampleFile\" />\n      <input type='submit' value='Upload!' />\n  </form>\n -->\n  <form method=\"POST\"\n  enctype=\"multipart/form-data\"\n  name=\"form\">\n    <label class=\"col-2 col-form-label\">Seleccione imagen weon</label>\n    <input type=\"file\"\n      class=\"col-6\"\n      name='file'\n      (change)=\"subirImagen($event.target.files[0])\">\n    </form>\n</div>\n"
 
 /***/ }),
 
@@ -223,14 +223,11 @@ var SubirArchivosComponent = (function () {
             return;
         }
         return new Promise(function (resolve, reject) {
-            _this.commonsService.subirArchivos(archivo);
-            /* .then((resp: any) => {
-              resolve(resp);
-            })
-              .catch(error => {
+            _this.commonsService.subirArchivos(archivo).then(function (resp) {
+                resolve(resp);
+            }).catch(function (error) {
                 reject(error);
-              });
-          }); */
+            });
         });
     };
     return SubirArchivosComponent;
@@ -920,7 +917,7 @@ var FtPedidosComponent = (function () {
         this.tipoCuelloFT = new __WEBPACK_IMPORTED_MODULE_0__model_producto_tipoCuelloFT_model__["a" /* TipoCuelloFT */]();
         //Obtiene pedido segun id
         this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(function (data) {
-            console.log('Editando ft->' + JSON.stringify(data));
+            //console.log('Editando ft->' + JSON.stringify(data));
             _this.pedido = data;
             _this.titulo += ' - Pedido nro[' + _this.pedido.numeroPedido + ']';
         });
@@ -1257,7 +1254,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/pedidos/tallas-pedidos/tallas-pedidos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" rel=\"stylesheet\">\n -->\n <div class=\"row\" *ngIf='pedido'>\n  <div class=\"col-sm-12\">\n    <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>\n\n<!--LISTADO PRODUCTOS -->\n<div *ngFor='let c of pedido.listaProductos; let i=index'>\n    <app-card>\n      <!--header fila-->\n        <div class=\"col-12 d-inline-block bg-primary\" id=\"header{{i}}\">\n          <h3>\n            Tipo jugador: {{c.tipoJugador}}\n            <!-- [#{{i+1}}]  -->\n          </h3>\n          {{c.descProducto}}\n          [{{c.descTipoProducto}}]\n        </div>\n<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->\n        <div class=\"row col-12\" id=\"collapseExample\">\n          <form #tallasForm=\"ngForm\" class='form'>\n            <table class=\"table table-hover\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">#</th>\n                  <th class=\"text-center\">Talla</th>\n                  <th class=\"text-center\">Sexo prenda</th>\n                  <th class=\"text-center\">Numero jugador</th>\n                  <th class=\"text-center\">Nombre pecho</th>\n                  <th class=\"text-center\">Nombre espalda</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>\n                  <td class=\"text-center\" >{{ ii+1 }}\n                  </td>\n<!--TALLA-->\n                  <td style=\"width:90px;\">\n                    <span *ngIf=\"tipoForm === 'ver'; else crearTalla\">\n                      <div class='col-2 text-center'>\n                        {{d.talla}}\n                      </div>\n                    </span>\n                    <ng-template #crearTalla>\n                      <select class='form-control' name='listaTallas{{ii}}' [(ngModel)]='d.talla'>\n                        <option [value]=''>[Seleccione...]</option>\n                        <option *ngFor='let talla of listaTallas' [value]='talla'>{{talla}}</option>\n                      </select>\n                    </ng-template>\n                  </td>\n<!--SEXO PRENDA-->\n                  <td class=\"text-center\" style=\"width:170px;\">\n                    <span *ngIf=\"tipoForm === 'ver'; else crearGenero\">\n                      <div class='col-2 text-center'>\n                        <p *ngIf='d.generoPrenda === 0' >Hombre</p>\n                        <p *ngIf='d.generoPrenda === 1' >Mujer</p>\n                      </div>\n                    </span>\n                    <ng-template #crearGenero>\n                      <div class=\"btn-group btn-group-toggle\"\n                        ngbRadioGroup name='sexoPrenda{{ii}}' [(ngModel)]='d.generoPrenda'>\n\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\n                          <input class=\"form-control\" ngbButton type=\"radio\" [value]='0'>Hombre\n                        </label>\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\n                          <input class=\"form-control\" ngbButton type=\"radio\" [value]='1'>Mujer\n                        </label>\n                      </div>\n                    </ng-template>\n                </td>\n<!--NUMERO JUGADOR-->\n                <td style=\"width:90px;\">\n                  <span *ngIf=\"tipoForm === 'ver'; else crearNumeroJugador\">\n                    <div class='col-2'>\n                      {{d.numero}}\n                    </div>\n                  </span>\n                  <ng-template #crearNumeroJugador>\n                    <input type='number' class='form-control' name='numero{{ii}}'\n                    [(ngModel)]=\"d.numero\" placeholder='Numero jugador'>\n                  </ng-template>\n                </td>\n<!--NOMBRE PECHO-->\n                <td style=\"width:140px;\">\n                  <span *ngIf=\"tipoForm === 'ver'; else crearNombrePecho\">\n                    <div class='col-3'>\n                      {{d.nombrePecho}}\n                    </div>\n                  </span>\n                  <ng-template #crearNombrePecho>\n                    <input type='text' class='form-control' name='nombrePecho{{ii}}'\n                    [(ngModel)]=\"d.nombrePecho\" placeholder='Nombre pecho'>\n                  </ng-template>\n                </td>\n<!--NOMBRE ESPALDA-->\n                <td style=\"width:140px;\">\n                  <span *ngIf=\"tipoForm === 'ver'; else crearNombreEspalda\">\n                    <div class='col-3'>\n                      {{d.nombreEspalda}}\n                    </div>\n                  </span>\n                  <ng-template #crearNombreEspalda>\n                      <input type='text' class='form-control' name='nombreEspalda{{ii}}'\n                      [(ngModel)]=\"d.nombreEspalda\" placeholder='Nombre espalda'>\n                  </ng-template>\n                  <br>\n                </td>\n                </tr>\n              </tbody>\n            </table>\n          </form>\n        </div>\n        <div class=\"clearfix\">&nbsp;</div>\n    </app-card>\n  </div>\n  <div *ngIf=\"tipoForm === 'ver'; else crear\" class='form-group'>\n    <a class=\"btn btn-primary\" (click)=\"goBack()\">Volver</a>\n  </div>\n  <ng-template #crear>\n    <div class='form-group'>\n      <a class=\"btn btn-primary\" routerLink='/corte'>Cancelar</a>\n      <button (click)=\"onSubmit()\" class='btn btn-primary'>Guardar</button>\n    </div>\n  </ng-template>\n  </div>\n</div>\n"
+module.exports = "<!-- <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" rel=\"stylesheet\">\n -->\n <div class=\"row\" *ngIf='pedido'>\n  <div class=\"col-sm-12\">\n    <app-header-pedidos [pedido]=pedido [titulo]=titulo></app-header-pedidos>\n\n<!--LISTADO PRODUCTOS -->\n<div *ngFor='let c of pedido.listaProductos; let i=index'>\n    <app-card>\n      <!--header fila-->\n        <div class=\"col-12 d-inline-block bg-primary\" id=\"header{{i}}\">\n          <h3>\n            Tipo jugador: {{c.tipoJugador}}\n            <!-- [#{{i+1}}]  -->\n          </h3>\n          {{c.descProducto}}\n          [{{c.descTipoProducto}}]\n        </div>\n<!--DETALLE TIPO PRODUCTO FICHA TECNICA-->\n        <div class=\"row col-12\" id=\"collapseExample\">\n          <form #tallasForm=\"ngForm\" class='form'>\n            <table class=\"table table-hover\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">#</th>\n                  <th class=\"text-center\">Talla</th>\n                  <th class=\"text-center\">Sexo prenda</th>\n                  <th class=\"text-center\">Numero jugador</th>\n                  <th class=\"text-center\">Nombre pecho</th>\n                  <th class=\"text-center\">Nombre espalda</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor='let d of c.listaDetalleTallas; let ii=index'>\n                  <td class=\"text-center\" >{{ ii+1 }}\n                  </td>\n<!--TALLA-->\n                  <td style=\"width:90px;\">\n                    <span *ngIf=\"tipoForm === 'ver'; else crearTalla\">\n                      <div class='col-2 text-center'>\n                        {{d.talla}}\n                      </div>\n                    </span>\n                    <ng-template #crearTalla>\n                      <select class='form-control' name='listaTallas{{ii}}' [(ngModel)]='d.talla'>\n                        <option [value]=''>[Seleccione...]</option>\n                        <option *ngFor='let talla of listaTallas' [value]='talla'>{{talla}}</option>\n                      </select>\n                    </ng-template>\n                  </td>\n<!--SEXO PRENDA-->\n                  <td class=\"text-center\" style=\"width:170px;\">\n                    <span *ngIf=\"tipoForm === 'ver'; else crearGenero\">\n                      <div class='col-2 text-center'>\n                        <p *ngIf='d.generoPrenda === 0' >Hombre</p>\n                        <p *ngIf='d.generoPrenda === 1' >Mujer</p>\n                      </div>\n                    </span>\n                    <ng-template #crearGenero>\n                      <div class=\"btn-group btn-group-toggle\"\n                        ngbRadioGroup name='sexoPrenda{{ii}}' [(ngModel)]='d.generoPrenda'>\n\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\n                          <input class=\"form-control\" ngbButton type=\"radio\" [value]='0'>Hombre\n                        </label>\n                        <label ngbButtonLabel class=\"btn btn-outline-primary btn-sm\">\n                          <input class=\"form-control\" ngbButton type=\"radio\" [value]='1'>Mujer\n                        </label>\n                      </div>\n                    </ng-template>\n                </td>\n<!--NUMERO JUGADOR-->\n                <td style=\"width:90px;\">\n                  <span *ngIf=\"tipoForm === 'ver'; else crearNumeroJugador\">\n                    <div class='col-2'>\n                      {{d.numero}}\n                    </div>\n                  </span>\n                  <ng-template #crearNumeroJugador>\n                    <input type='number' class='form-control' name='numero{{ii}}'\n                    [(ngModel)]=\"d.numero\" placeholder='Numero jugador'>\n                  </ng-template>\n                </td>\n<!--NOMBRE PECHO-->\n                <td style=\"width:140px;\">\n                  <span *ngIf=\"tipoForm === 'ver'; else crearNombrePecho\">\n                    <div class='col-3'>\n                      {{d.nombrePecho}}\n                    </div>\n                  </span>\n                  <ng-template #crearNombrePecho>\n                    <input type='text' class='form-control' name='nombrePecho{{ii}}'\n                    [(ngModel)]=\"d.nombrePecho\" placeholder='Nombre pecho'>\n                  </ng-template>\n                </td>\n<!--NOMBRE ESPALDA-->\n                <td style=\"width:140px;\">\n                  <span *ngIf=\"tipoForm === 'ver'; else crearNombreEspalda\">\n                    <div class='col-3'>\n                      {{d.nombreEspalda}}\n                    </div>\n                  </span>\n                  <ng-template #crearNombreEspalda>\n                      <input type='text' class='form-control' name='nombreEspalda{{ii}}'\n                      [(ngModel)]=\"d.nombreEspalda\" placeholder='Nombre espalda'>\n                  </ng-template>\n                  <br>\n                </td>\n                </tr>\n              </tbody>\n            </table>\n          </form>\n        </div>\n        <div class=\"clearfix\">&nbsp;</div>\n    </app-card>\n  </div>\n  <div *ngIf=\"tipoForm === 'ver'; else crear\" class='form-group'>\n    <a class=\"btn btn-primary\" (click)=\"goBack()\">Volver</a>\n  </div>\n  <ng-template #crear>\n    <div class='form-group'>\n      <a class=\"btn btn-primary\" (click)=\"goBack()\">Cancelar</a>\n      <button (click)=\"onSubmit()\" class='btn btn-primary'>Guardar</button>\n    </div>\n  </ng-template>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1376,6 +1373,26 @@ var CommonsService = (function () {
         this.URL = 'http://localhost:3000';
     }
     CommonsService.prototype.subirArchivos = function (file) {
+        return new Promise(function (resolve, reject) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            console.log('service file->' + file.name);
+            formData.append('file', file);
+            xhr.send(formData);
+            xhr.onreadystatechange = function () {
+                console.log('xhr.status-> ' + xhr.status);
+                /*         if (xhr.readyState === 4) {
+                          if (xhr.status === 200) {
+                            resolve(xhr.response);
+                          } else {
+                            reject(xhr.response);
+                          }
+                        }
+                 */ 
+            };
+        });
         /*    var xhr = new XMLHttpRequest();
             var formData = new FormData();
             //xhr.onload = successfullyUploaded;
@@ -1387,25 +1404,17 @@ var CommonsService = (function () {
             xhr.send(formData);
         
         */
-        return new Promise(function (resolve, reject) {
-            var formData = new FormData();
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:3000/upload/', true);
-            console.log('service file->' + file.name);
-            formData.append('file', file);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            /*       xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                      if (xhr.status === 200) {
-                        resolve(xhr.response);
-                      } else {
-                        reject(xhr.response);
-                      }
-                    }
-                  };
-             */
-            xhr.send(formData);
-        });
+        /*
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                  if (xhr.status === 200) {
+                    resolve(xhr.response);
+                  } else {
+                    reject(xhr.response);
+                  }
+                }
+              };
+         */
         /*       for(let file in files) {
                 formData.append('uploads', file);
          */

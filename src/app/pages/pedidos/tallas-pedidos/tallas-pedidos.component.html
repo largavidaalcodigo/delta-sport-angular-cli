@@ -119,7 +119,7 @@
   </div>
   <ng-template #crear>
     <div class='form-group'>
-      <a class="btn btn-primary" routerLink='/corte'>Cancelar</a>
+      <a class="btn btn-primary" (click)="goBack()">Cancelar</a>
       <button (click)="onSubmit()" class='btn btn-primary'>Guardar</button>
     </div>
   </ng-template>

@@ -1,9 +1,9 @@
-import { DetalleTalla } from './../../../model/producto/detalleTalla.model';
+import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { Location } from "@angular/common";
-import { Pedido } from './../../../model/pedido/pedido.model';
-import { ClientesService } from './../../../services/clientes.service';
+import { Pedido } from '../../../model/pedido/pedido.model';
+import { ClientesService } from '../../../services/clientes.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PedidosService } from './../../../services/pedidos.service';
+import { PedidosService } from '../../../services/pedidos.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

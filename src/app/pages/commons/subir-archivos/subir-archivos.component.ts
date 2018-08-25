@@ -19,14 +19,11 @@ export class SubirArchivosComponent implements OnInit {
       return;
     }
     return new Promise((resolve, reject) => {
-      this.commonsService.subirArchivos(archivo);
-      /* .then((resp: any) => {
+      this.commonsService.subirArchivos(archivo).then((resp: any) => {
         resolve(resp);
-      })
-        .catch(error => {
+      }).catch(error => {
           reject(error);
-        });
-    }); */
+      });
   });
 
 }

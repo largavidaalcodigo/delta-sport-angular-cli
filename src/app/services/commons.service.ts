@@ -12,6 +12,26 @@ export class CommonsService {
   constructor(private http: HttpClient) {}
 
   subirArchivos(file: File) {
+      return new Promise((resolve, reject) => {
+       const formData = new FormData();
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/upload');
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      console.log('service file->' + file.name);
+      formData.append('file', file);
+      xhr.send(formData);
+
+      xhr.onreadystatechange = function () {
+        console.log('xhr.status-> ' + xhr.status);
+/*         if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.response);
+          }
+        }
+ */      };
+    });
 
 /*    var xhr = new XMLHttpRequest();
     var formData = new FormData();
@@ -24,15 +44,10 @@ export class CommonsService {
     xhr.send(formData);
 
 */
-      return new Promise((resolve, reject) => {
-       const formData = new FormData();
-      const xhr = new XMLHttpRequest();
 
-      xhr.open('POST', 'http://localhost:3000/upload/', true);
-      console.log('service file->'+ file.name);
-      formData.append('file', file);
-      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-/*       xhr.onreadystatechange = function () {
+
+/*
+      xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             resolve(xhr.response);
@@ -42,9 +57,6 @@ export class CommonsService {
         }
       };
  */
-      xhr.send(formData);
-    });
-
 /*       for(let file in files) {
         formData.append('uploads', file);
  */

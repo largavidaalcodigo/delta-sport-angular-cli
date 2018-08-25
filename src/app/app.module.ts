@@ -14,6 +14,7 @@ import {TitleComponent} from './layout/admin/title/title.component';
 import {AuthComponent} from './layout/auth/auth.component';
 import { LayoutModulosDirective } from './layout-modulos.directive';
 import { SubirArchivosComponent } from './pages/commons/subir-archivos/subir-archivos.component';
+import { LocationStrategy, HashLocationStrategy } from '../../node_modules/@angular/common';
 /* import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
  */
 @NgModule({
@@ -37,7 +38,11 @@ import { SubirArchivosComponent } from './pages/commons/subir-archivos/subir-arc
     ClickOutsideModule,
     SharedModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

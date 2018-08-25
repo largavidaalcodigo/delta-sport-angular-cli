@@ -8,36 +8,76 @@ const session = require('express-session');
 //const passport = require('passport');
 const routes = require('./server/routes');
 const flash = require('connect-flash');
-var multer = require('multer');
-var fs = require('fs');
+const formidable = require('express-formidable');
+var router = express.Router();
+
+//var fs = require('fs');
 
 var app = express();
-// Parsers
-//app.use(bodyParser());
+
+//app.use('/', express.static('./dist/index.html'));
+app.use(express.static(path.join(__dirname, 'dist')));
+//app.use('/', routes);
+// serve angular front end files from root path
+//router.use('/', express.static('app', { redirect: false }));
+
+// rewrite virtual urls to angular app to enable refreshing of internal pages
+/* router.get('/', function (req, res, next) {
+    res.sendFile(path.resolve('app/index.html'));
+});
+ */
+
+
+app.use('/api', require('./server/routes/pedidos'));
+app.use('/api', require('./server/routes/clientes'));
+app.use('/upload', require('./server/routes/upload'));
+
+app.use(formidable);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cookieParser());
+
+//create a cors middleware
+app.use(function(req, res, next) {
+  //set headers to allow cross origin request.
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+  });
+
+  app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// Parsers
+//app.use(bodyParser());
 //app.use(bodyParser.json({ extended: false }));
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler());
 //app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
 
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/api', require('./server/routes/pedidos'));
-app.use('/api', require('./server/routes/clientes'));
 
-app.get('/upload', function (req, res) {
+//const router = express.Router();
+
+/* app.get('/upload', function (req, res) {
   res.end('file catcher example');
 });
+ */
 
-app.post('/upload', function (req, res) {
+/* app.post('/upload', function (req, res) {
 console.log('req->' + JSON.stringify(req.file));
   if (!req.file)
   return res.status(400).send('Error: ningun archivo fue subido.');
 });
 
-// The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+ */
+
+ // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
 //let sampleFile = req.files.sampleFile;
 
 // Use the mv() method to place the file somewhere on your server
