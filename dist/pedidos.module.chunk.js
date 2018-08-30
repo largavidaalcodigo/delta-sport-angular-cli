@@ -188,7 +188,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group row\">\n<!--     <form ref='uploadForm'\n    id='uploadForm'\n    action='http://localhost:3000/upload'\n    method='post'\n    (change)=\"subirImagen($event.target.files)\"\n\n    encType=\"multipart/form-data\">\n      <input type=\"file\" name=\"sampleFile\" />\n      <input type='submit' value='Upload!' />\n  </form>\n -->\n  <form method=\"POST\"\n  enctype=\"multipart/form-data\"\n  name=\"form\">\n    <label class=\"col-2 col-form-label\">Seleccione imagen weon</label>\n    <input type=\"file\"\n      class=\"col-6\"\n      name='file'\n      (change)=\"subirImagen($event.target.files[0])\">\n    </form>\n</div>\n"
+module.exports = "<div class=\"form-group row\">\r\n<!--     <form ref='uploadForm'\r\n    id='uploadForm'\r\n    action='http://localhost:3000/upload'\r\n    method='post'\r\n    (change)=\"subirImagen($event.target.files)\"\r\n\r\n    encType=\"multipart/form-data\">\r\n      <input type=\"file\" name=\"sampleFile\" />\r\n      <input type='submit' value='Upload!' />\r\n  </form>\r\n  <!--(change)=\"subirImagen($event.target.files[0])\">-->\r\n\r\n  <form #myForm=\"ngForm\" method=\"POST\" enctype=\"multipart/form-data\" (ngSubmit)=\"subirImagen();\">\r\n    <label class=\"col-5 col-form-label\">Seleccione imagen</label>\r\n    <input type='text' class='form-control' name=\"titulo\" [(ngModel)]=\"titulo\" placeholder=\"Título imagen\">\r\n    <input type=\"file\" name=\"archivo\" [(ngModel)]='archivo' (change)=\"getFiles($event)\">\r\n    <input type='submit' value='Subir imagen'>\r\n  </form>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -197,8 +197,9 @@ module.exports = "<div class=\"form-group row\">\n<!--     <form ref='uploadForm
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubirArchivosComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_commons_service__ = __webpack_require__("../../../../../src/app/services/commons.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_commons_service__ = __webpack_require__("../../../../../src/app/services/commons.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -210,38 +211,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var SubirArchivosComponent = (function () {
     function SubirArchivosComponent(commonsService) {
         this.commonsService = commonsService;
     }
     SubirArchivosComponent.prototype.ngOnInit = function () {
     };
-    SubirArchivosComponent.prototype.subirImagen = function (archivo) {
+    SubirArchivosComponent.prototype.subirImagen = function () {
         var _this = this;
-        console.log(archivo.name);
-        if (!archivo) {
+        console.log(this.files.name);
+        if (!this.archivo) {
             return;
         }
         return new Promise(function (resolve, reject) {
-            _this.commonsService.subirArchivos(archivo).then(function (resp) {
+            _this.commonsService.subirArchivos(_this.files, _this.titulo).then(function (resp) {
                 resolve(resp);
             }).catch(function (error) {
                 reject(error);
             });
         });
     };
+    SubirArchivosComponent.prototype.getFiles = function (event) {
+        this.files = event.target.files[0];
+    };
     return SubirArchivosComponent;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["ViewChild"])('myForm'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_forms__["a" /* FormGroup */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_forms__["a" /* FormGroup */]) === "function" && _a || Object)
+], SubirArchivosComponent.prototype, "form", void 0);
 SubirArchivosComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
         selector: 'app-subir-archivos',
         template: __webpack_require__("../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.html"),
         styles: [__webpack_require__("../../../../../src/app/pages/commons/subir-archivos/subir-archivos.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__services_commons_service__["a" /* CommonsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_commons_service__["a" /* CommonsService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_commons_service__["a" /* CommonsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_commons_service__["a" /* CommonsService */]) === "function" && _b || Object])
 ], SubirArchivosComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=subir-archivos.component.js.map
 
 /***/ }),
@@ -819,8 +829,8 @@ FormPedidoModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__angular_common__["CommonModule"],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["e" /* ReactiveFormsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* ReactiveFormsModule */],
             __WEBPACK_IMPORTED_MODULE_5__angular_http__["b" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["g" /* RouterModule */].forChild(pedidosRoutes)
         ],
@@ -1181,7 +1191,7 @@ PedidosModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_8__pedidos_router__["a" /* pedidosRouter */],
             __WEBPACK_IMPORTED_MODULE_12__angular_router__["g" /* RouterModule */],
             __WEBPACK_IMPORTED_MODULE_10__angular_common__["CommonModule"],
-            __WEBPACK_IMPORTED_MODULE_7__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_7__angular_forms__["b" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_6__angular_http__["b" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_5__shared_shared_module__["a" /* SharedModule */],
             __WEBPACK_IMPORTED_MODULE_15__form_pedido_form_pedido_module__["a" /* FormPedidoModule */],
@@ -1372,14 +1382,16 @@ var CommonsService = (function () {
         this.http = http;
         this.URL = 'http://localhost:3000';
     }
-    CommonsService.prototype.subirArchivos = function (file) {
+    CommonsService.prototype.subirArchivos = function (file, titulo) {
         return new Promise(function (resolve, reject) {
             var formData = new FormData();
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/upload');
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             console.log('service file->' + file.name);
-            formData.append('file', file);
+            console.log('titulo->' + titulo);
+            formData.append('archivo', file);
+            formData.append('titulo', titulo);
             xhr.send(formData);
             xhr.onreadystatechange = function () {
                 console.log('xhr.status-> ' + xhr.status);

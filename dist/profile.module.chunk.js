@@ -232,7 +232,7 @@ ProfileModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
             __WEBPACK_IMPORTED_MODULE_3__angular_router__["g" /* RouterModule */].forChild(profileRoutes),
             __WEBPACK_IMPORTED_MODULE_4__shared_shared_module__["a" /* SharedModule */],
-            __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_5__angular_forms__["b" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_6_ngx_quill_editor__["a" /* QuillEditorModule */],
             __WEBPACK_IMPORTED_MODULE_7__angular_http__["b" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_8_angular2_datatable__["DataTableModule"],
@@ -20208,7 +20208,7 @@ QuillEditorComponent = QuillEditorComponent_1 = __decorate([
         template: "<div class=\"quill-editor\"></div>",
         styles: [__webpack_require__("../../../../ngx-quill-editor/quillEditor.component.css"), __webpack_require__("../../../../quill/dist/quill.core.css"), __webpack_require__("../../../../quill/dist/quill.snow.css"), __webpack_require__("../../../../quill/dist/quill.bubble.css")],
         providers: [{
-                provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* NG_VALUE_ACCESSOR */],
+                provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALUE_ACCESSOR */],
                 useExisting: Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return QuillEditorComponent_1; }),
                 multi: true
             }],

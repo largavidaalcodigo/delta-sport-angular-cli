@@ -90,7 +90,7 @@ CorteModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__corte_router__["a" /* corteRouter */],
             __WEBPACK_IMPORTED_MODULE_9__angular_router__["g" /* RouterModule */],
             __WEBPACK_IMPORTED_MODULE_7__angular_common__["CommonModule"],
-            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_2__shared_shared_module__["a" /* SharedModule */],
             __WEBPACK_IMPORTED_MODULE_9__angular_router__["g" /* RouterModule */].forChild(corteRoutes),

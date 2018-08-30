@@ -9,14 +9,12 @@
       <input type="file" name="sampleFile" />
       <input type='submit' value='Upload!' />
   </form>
- -->
-  <form method="POST"
-  enctype="multipart/form-data"
-  name="form">
-    <label class="col-2 col-form-label">Seleccione imagen weon</label>
-    <input type="file"
-      class="col-6"
-      name='file'
-      (change)="subirImagen($event.target.files[0])">
-    </form>
+  <!--(change)="subirImagen($event.target.files[0])">-->
+
+  <form #myForm="ngForm" method="POST" enctype="multipart/form-data" (ngSubmit)="subirImagen();">
+    <label class="col-5 col-form-label">Seleccione imagen</label>
+    <input type='text' class='form-control' name="titulo" [(ngModel)]="titulo" placeholder="Título imagen">
+    <input type="file" name="archivo" [(ngModel)]='archivo' (change)="getFiles($event)">
+    <input type='submit' value='Subir imagen'>
+  </form>
 </div>

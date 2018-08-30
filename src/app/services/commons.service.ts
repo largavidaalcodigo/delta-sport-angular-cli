@@ -11,14 +11,16 @@ export class CommonsService {
   URL: string = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  subirArchivos(file: File) {
+  subirArchivos(file: File, titulo: string) {
       return new Promise((resolve, reject) => {
        const formData = new FormData();
       const xhr = new XMLHttpRequest();
       xhr.open('POST', '/upload');
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       console.log('service file->' + file.name);
-      formData.append('file', file);
+      console.log('titulo->' + titulo);
+      formData.append('archivo', file);
+      formData.append('titulo', titulo);
       xhr.send(formData);
 
       xhr.onreadystatechange = function () {

@@ -41,11 +41,24 @@ app.use(cookieParser());
 //create a cors middleware
 app.use(function(req, res, next) {
   //set headers to allow cross origin request.
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      next();
-  });
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+const xssFilter = require('x-xss-protection')
+app.use(xssFilter())
+
+app.set('trust proxy', 1) // trust first proxy
+app.use( session({
+   secret : 's3Cur3',
+   name : 'sessionId',
+  })
+);
+
+
+
 
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
