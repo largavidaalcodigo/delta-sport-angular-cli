@@ -4,26 +4,51 @@ var Pedido = require('../model/pedido.model.js');
 
 /* FIND ALL */
 router.get('/', (req, res) => {
-  res.send('funciona la wea');
+  res.send();
 });
 
-router.get('/getPedidos', function(req, res, next) {
-  console.log('/getPedidos...');
-  Pedido.find(function (err, data) {
+  router.get('/pedidos/:tipo/:estado', function(req, res, next) {
+  console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado);
+
+  if (req.params.tipo === 'editar'){
+    Pedido.findOne({numeroPedido: req.params.estado}, function (err, data) {
+      if (err) return next(err);
+      res.json(data);
+    });
+  }else if (req.params.tipo === 'buscar'){
+    var query = {
+      'estado': req.params.estado
+    };
+
+    Pedido.find(query, function (err, data) {
+      if (err) return next(err);
+      res.json(data);
+    });
+  }
+});
+
+router.get('/pedidos/:tipo/:estado/:query', function(req, res, next) {
+  console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado + '/query->' + req.params.query);
+  var query = {
+    'estado': req.params.estado,
+    'cliente.nombresCliente': { $regex: req.params.query, $options: 'i'}
+  };
+
+  Pedido.find(query, function (err, data) {
     if (err) return next(err);
     res.json(data);
   });
 });
-
-router.get('/getPedido/:id', function(req, res, next) {
-  console.log('/getPedido/:id->'+req.params.id);
+/*
+router.get('/pedidos/:id', function(req, res, next) {
+  console.log('/pedidos/:id->'+req.params.id);
   Pedido.findOne({numeroPedido: req.params.id}, function (err, data) {
     if (err) return next(err);
     res.json(data);
     //console.log('pedido->'+data);
   });
 });
-
+ */
 router.get('/countPedidos', function(req, res, next) {
   console.log('/countPedidos...');
   Pedido.count({}, function(err, count){
@@ -32,21 +57,19 @@ router.get('/countPedidos', function(req, res, next) {
 });
 
 /* SAVE */
-router.post('/addPedido', function(req, res, next) {
+router.post('/pedidos', function(req, res, next) {
   Pedido.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-
-
-router.put('/putPedido', function(req, res, next) {
-  console.log('/putPedido/:id->'+req.body._id);
+router.put('/pedidos', function(req, res, next) {
+  //console.log('/pedidos/:_id->'+JSON.stringify(req.body) );
   Pedido.findByIdAndUpdate({'_id':req.body._id}, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
-    console.log('actualizado->'+post);
+    //console.log('actualizado->'+post);
   });
 });
 

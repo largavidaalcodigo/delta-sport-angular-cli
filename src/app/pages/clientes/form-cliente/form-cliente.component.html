@@ -1,6 +1,6 @@
-<app-card *ngIf="verForm==true">
+<app-card *ngIf='cliente'>
   <!--<form class="form-horizontal">-->
-    <form (ngSubmit)="onSubmit(cliente);" #clienteForm="ngForm" class="form-horizontal">
+    <form #clienteForm="ngForm" class="form-horizontal">
     <div class="form-group row">
       <div class="col-sm-3">
         <h2>{{tipoForm}} Cliente</h2>
@@ -47,9 +47,9 @@
       </div>
     </app-card>
   </div>
-  <div class="form-group">
-    <button (click)='emiteVolver()' type='reset' class='btn btn-default'>Cancelar</button>
-    <button (click)='guardarCliente();' class='btn btn-primary'>Crear</button>
+  <div class='form-group'>
+    <a class="btn btn-primary" routerLink='/clientes'>Cancelar</a>
+    <button (click)='guardarCliente();' class='btn btn-primary'>Guardar</button>
   </div>
   </form>
   {{cliente|json}}

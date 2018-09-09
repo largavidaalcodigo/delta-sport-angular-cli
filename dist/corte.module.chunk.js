@@ -78,6 +78,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var corteRoutes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_8__corte_component__["a" /* CorteComponent */] },
+    { path: ':id', component: __WEBPACK_IMPORTED_MODULE_8__corte_component__["a" /* CorteComponent */] },
 ];
 var CorteModule = (function () {
     function CorteModule() {

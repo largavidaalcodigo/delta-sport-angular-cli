@@ -24,8 +24,8 @@ var map = {
 	],
 	"./pages/corte/corte.module": [
 		"../../../../../src/app/pages/corte/corte.module.ts",
-		"corte.module",
-		"common"
+		"common",
+		"corte.module"
 	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
@@ -49,6 +49,11 @@ var map = {
 	"./pages/pedidos/pedidos.module": [
 		"../../../../../src/app/pages/pedidos/pedidos.module.ts",
 		"pedidos.module",
+		"common"
+	],
+	"./pages/productos/productos.module": [
+		"../../../../../src/app/pages/productos/productos.module.ts",
+		"productos.module",
 		"common"
 	],
 	"./pages/simple-page/simple-page.module": [
@@ -163,7 +168,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__layout_admin_title_title_component__ = __webpack_require__("../../../../../src/app/layout/admin/title/title.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__layout_auth_auth_component__ = __webpack_require__("../../../../../src/app/layout/auth/auth.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__layout_modulos_directive__ = __webpack_require__("../../../../../src/app/layout-modulos.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__node_modules_angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -186,6 +191,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+// import { ProductosComponent } from './pages/productos/productos.component';
 /* import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
  */
 var AppModule = (function () {
@@ -213,7 +219,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_9__shared_shared_module__["a" /* SharedModule */]
         ],
         providers: [
-            { provide: __WEBPACK_IMPORTED_MODULE_15__node_modules_angular_common__["LocationStrategy"], useClass: __WEBPACK_IMPORTED_MODULE_15__node_modules_angular_common__["HashLocationStrategy"] }
+            { provide: __WEBPACK_IMPORTED_MODULE_15__angular_common__["LocationStrategy"], useClass: __WEBPACK_IMPORTED_MODULE_15__angular_common__["HashLocationStrategy"] }
         ],
         bootstrap: [
             __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]
@@ -255,6 +261,9 @@ var AppRoutes = [
             }, {
                 path: 'clientes',
                 loadChildren: './pages/clientes/clientes.module#ClientesModule'
+            }, {
+                path: 'productos',
+                loadChildren: './pages/productos/productos.module#ProductosModule'
             }, {
                 path: 'corte',
                 loadChildren: './pages/corte/corte.module#CorteModule'
@@ -783,7 +792,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/commons/lista-pedidos/lista-pedidos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n  {{mensaje}}\n</div>\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <app-card [title]=titulo [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\n        <div class=\"table-responsive\">\n          <table class=\"table table-hover\">\n            <thead>\n            <tr>\n              <th class=\"text-center\">#</th>\n              <th>Nombre Cliente</th>\n              <th class=\"text-center\">Fecha pedido</th>\n              <th class=\"text-center\">Fecha Entrega</th>\n              <th class=\"text-center font-weight-bold text-danger\">prendas terminadas</th>\n              <th class=\"text-center font-weight-bold text-success\">% avance</th>\n              <th>Opciones</th>\n            </tr>\n            </thead>\n            <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\n              <tr>\n                <td class=\"text-center\">{{pedido.numeroPedido}}</td>\n                <td>{{pedido.cliente.nombresCliente}}</td>\n                <td class=\"text-center\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\n                <td class=\"text-center\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\n                <td class=\"font-weight-bold text-danger text-center\">\n                  <span *ngIf=\"modulo === 'corte'\">{{pedido.itemsTerminadosCorte}}</span>\n                  <span *ngIf=\"modulo === 'diseno'\">{{pedido.itemsTerminadosDiseno}}</span>\n                  <span *ngIf=\"modulo === 'confeccion'\">{{pedido.itemsTerminadosConfeccion}}</span>\n                  <span *ngIf=\"modulo === 'estampado'\">{{pedido.itemsTerminadosEstampado}}</span>\n                </td>\n                <td class=\"font-weight-bold text-success text-center\">\n                  <span *ngIf=\"modulo === 'corte'\">{{pedido.avanceCorte}}%</span>\n                  <span *ngIf=\"modulo === 'diseno'\">{{pedido.avanceDiseno}}%</span>\n                  <span *ngIf=\"modulo === 'confeccion'\">{{pedido.avanceConfeccion}}%</span>\n                  <span *ngIf=\"modulo === 'estampado'\">{{pedido.avanceEstampado}}%</span>\n                </td>\n                <td>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verAvance(pedido); $event.stopPropagation();\">Avances</button>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verTallas(pedido); $event.stopPropagation();\">Tallas</button>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verFichaTecnica(pedido); $event.stopPropagation();\">Ficha tecnica</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n      </app-card>\n    </div>\n  </div>\n"
+module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n  {{mensaje}}\n</div>\n  <div class=\"row\" *ngIf=\"modulo==='dashboard'; else otros\">\n    <div class=\"col-sm-12\">\n      <app-card [title]='Dashboard' [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\n        <div class=\"table-responsive\">\n          <table class=\"table table-hover\">\n            <thead>\n            <tr>\n              <th class=\"text-center\">#</th>\n              <th>Nombre Cliente</th>\n              <th class=\"text-center\">Fecha pedido</th>\n              <th class=\"text-center\">Fecha Entrega</th>\n              <th>Opciones</th>\n            </tr>\n            </thead>\n            <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\n              <tr (click)=\"verDetalle(pedido);\">\n                <td class=\"text-center\">{{pedido.numeroPedido}}</td>\n                <td>{{pedido.cliente.nombresCliente}}</td>\n                <td class=\"text-center\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\n                <td class=\"text-center\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\n                <td>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verAvance(pedido); $event.stopPropagation();\">Avances</button>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verTallas(pedido); $event.stopPropagation();\">Tallas</button>\n                  <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                  (click)=\"verFichaTecnica(pedido); $event.stopPropagation();\">Ficha tecnica</button>\n                </td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n      </app-card>\n    </div>\n  </div>\n\n  <ng-template #otros>\n      <div class=\"row\">\n          <div class=\"col-sm-12\">\n            <app-card [title]=titulo [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\n              <div class=\"table-responsive\">\n                <table class=\"table table-hover\">\n                  <thead>\n                  <tr>\n                    <th class=\"text-center\">#</th>\n                    <th>Nombre Cliente</th>\n                    <th class=\"text-center\">Fecha pedido</th>\n                    <th class=\"text-center\">Fecha Entrega</th>\n                    <th class=\"text-center font-weight-bold text-danger\">prendas terminadas</th>\n                    <th class=\"text-center font-weight-bold text-success\">% avance</th>\n                    <th>Opciones</th>\n                  </tr>\n                  </thead>\n                  <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\n                    <tr>\n                      <td class=\"text-center\">{{pedido.numeroPedido}}</td>\n                      <td>{{pedido.cliente.nombresCliente}}</td>\n                      <td class=\"text-center\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\n                      <td class=\"text-center\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\n                      <td class=\"font-weight-bold text-danger text-center\">\n                        <span *ngIf=\"modulo === 'corte'\">{{pedido.itemsTerminadosCorte}}</span>\n                        <span *ngIf=\"modulo === 'diseno'\">{{pedido.itemsTerminadosDiseno}}</span>\n                        <span *ngIf=\"modulo === 'confeccion'\">{{pedido.itemsTerminadosConfeccion}}</span>\n                        <span *ngIf=\"modulo === 'estampado'\">{{pedido.itemsTerminadosEstampado}}</span>\n                      </td>\n                      <td class=\"font-weight-bold text-success text-center\">\n                        <span *ngIf=\"modulo === 'corte'\">{{pedido.avanceCorte}}%</span>\n                        <span *ngIf=\"modulo === 'diseno'\">{{pedido.avanceDiseno}}%</span>\n                        <span *ngIf=\"modulo === 'confeccion'\">{{pedido.avanceConfeccion}}%</span>\n                        <span *ngIf=\"modulo === 'estampado'\">{{pedido.avanceEstampado}}%</span>\n                      </td>\n                      <td>\n                        <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                        (click)=\"verAvance(pedido); $event.stopPropagation();\">Avances</button>\n                        <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                        (click)=\"verTallas(pedido); $event.stopPropagation();\">Tallas</button>\n                        <button type=\"button\" class=\"btn btn-danger btn-sm\"\n                        (click)=\"verFichaTecnica(pedido); $event.stopPropagation();\">Ficha tecnica</button>\n                      </td>\n                    </tr>\n                  </tbody>\n                </table>\n              </div>\n            </app-card>\n          </div>\n        </div>\n\n  </ng-template>\n"
 
 /***/ }),
 
@@ -815,8 +824,8 @@ var ListaPedidosComponent = (function () {
     }
     ListaPedidosComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.pedidosService.getPedidos()
-            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos.filter(function (item) { return item.idEstado === 3; }); }, function (err) { return console.log(err); });
+        this.pedidosService.getPedidos('buscar', 'En proceso', '')
+            .subscribe(function (pedidos) { return _this.listaPedidos = pedidos; }, function (err) { return console.log(err); });
         this.titulo = this.modulo + ' Orden de trabajo';
     };
     ListaPedidosComponent.prototype.verAvance = function (pedido) {
@@ -833,6 +842,9 @@ var ListaPedidosComponent = (function () {
         else if (this.modulo === 'confeccion') {
             this.router.navigate(['/pedidos/formModulos/confeccion/', pedido.numeroPedido]);
         }
+        else if (this.modulo === 'dashboard') {
+            this.router.navigate(['/pedidos/formModulos/dashboard/']);
+        }
     };
     ListaPedidosComponent.prototype.verTallas = function (pedido) {
         console.log('ver tallas...');
@@ -841,6 +853,10 @@ var ListaPedidosComponent = (function () {
     ListaPedidosComponent.prototype.verFichaTecnica = function (pedido) {
         console.log('ver Ficha Tecnica...');
         this.router.navigate(['/pedidos/formFichaTecnica/ver/', pedido.numeroPedido]);
+    };
+    ListaPedidosComponent.prototype.verDetalle = function (pedido) {
+        console.log('ver Dashboard...');
+        this.router.navigate(['/dashboard/', pedido.numeroPedido]);
     };
     return ListaPedidosComponent;
 }());
@@ -891,13 +907,18 @@ var PedidosService = (function () {
     function PedidosService(http) {
         this.http = http;
     }
-    PedidosService.prototype.getPedidos = function () {
-        return this.http.get('/api/getPedidos')
-            .map(function (response) { return response; })
-            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
+    PedidosService.prototype.getPedidos = function (tipo, estado, query) {
+        if (query != null)
+            return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query);
+        else
+            return this.http.get('/api/pedidos/' + tipo + '/' + estado);
+        /*     return this.http.get('/api/pedidos')
+              .map(response => response as Pedido[])
+              .catch((error : any) => Observable.throw('Server error'));
+         */
     };
     PedidosService.prototype.getPedido = function (numeroPedido) {
-        return this.http.get('/api/getPedido/' + numeroPedido)
+        return this.http.get('/api/pedidos/editar/' + numeroPedido)
             .map(function (response) { return response; })
             .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
     };
@@ -905,10 +926,10 @@ var PedidosService = (function () {
         return this.http.get('/api/countPedidos');
     };
     PedidosService.prototype.addPedido = function (pedido) {
-        return this.http.post('/api/addPedido', pedido);
+        return this.http.post('/api/pedidos', pedido);
     };
     PedidosService.prototype.putPedido = function (pedido) {
-        return this.http.put('/api/putPedido', pedido);
+        return this.http.put('/api/pedidos', pedido);
     };
     /*  public deletePedido(pedido: Pedido){
        return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);

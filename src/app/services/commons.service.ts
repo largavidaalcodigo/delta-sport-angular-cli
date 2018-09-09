@@ -1,27 +1,26 @@
-import { Producto } from '../model/producto/producto.model';
+import { Productos } from './../model/producto/productos.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Pedido } from '../model/pedido/pedido.model';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CommonsService {
 
-  URL: string = 'http://localhost:3000';
+  URL = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
   subirArchivos(file: File, titulo: string) {
-      return new Promise((resolve, reject) => {
-       const formData = new FormData();
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/upload');
-      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      console.log('service file->' + file.name);
-      console.log('titulo->' + titulo);
-      formData.append('archivo', file);
-      formData.append('titulo', titulo);
-      xhr.send(formData);
+    return new Promise((resolve, reject) => {
+    const formData = new FormData();
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload');
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    console.log('service file->' + file.name);
+    console.log('titulo->' + titulo);
+    formData.append('archivo', file);
+    formData.append('titulo', titulo);
+    xhr.send(formData);
 
       xhr.onreadystatechange = function () {
         console.log('xhr.status-> ' + xhr.status);
@@ -68,13 +67,24 @@ export class CommonsService {
 
   }
 
-  public putPedido(pedido: Pedido): Observable<Pedido> {
+/*   public putPedido(pedido: Pedido): Observable<Pedido> {
     return this.http.put<Pedido>('/api/putPedido', pedido);
   }
-
+ */
  /*  public deletePedido(pedido: Pedido){
     return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
   } */
+
+  public getProductos(tipo: string){
+    console.log('service tipo->' + tipo);
+    return this.http.get('/api/productos/' + tipo);
+  }
+
+  public addProducto(produc: Productos) {
+    console.log('post->' + JSON.stringify(produc));
+    return this.http.post<Productos>('/api/productos', 'produc');
+  }
+
   public getEstadosPedido() {
     return ['Creado', 'En proceso', 'Terminado', 'Eliminado'];
   }
@@ -104,6 +114,10 @@ export class CommonsService {
       { id: 2, desc: 'Verde', codigoHex: '#008000' },
       { id: 3, desc: 'Amarillo', codigoHex: '#FFFF00' }
     ];
+  }
+
+  public getTipoMantenedor() {
+    return ['Categorias', 'Productos', 'Precios', 'Tipos de tela', 'Tallas', 'Tipo deporte'];
   }
 
   public getTelas() {

@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 const path = require('path');
 const http = require('http');
 const cookieParser = require('cookie-parser');
@@ -15,8 +15,14 @@ var router = express.Router();
 
 var app = express();
 
+app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(cookieParser());
+
 //app.use('/', express.static('./dist/index.html'));
 app.use(express.static(path.join(__dirname, 'dist')));
+//app.get('/', app.use(express.static(path.join(__dirname, 'dist'))));
+
 //app.use('/', routes);
 // serve angular front end files from root path
 //router.use('/', express.static('app', { redirect: false }));
@@ -30,13 +36,15 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api', require('./server/routes/pedidos'));
 app.use('/api', require('./server/routes/clientes'));
+app.use('/api', require('./server/routes/productos'));
 app.use('/upload', require('./server/routes/upload'));
 
 app.use(formidable);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
-app.use(cookieParser());
+// parse application/x-www-form-urlencoded
+
+// parse application/json
+//app.use(bodyParser.json())
 
 //create a cors middleware
 app.use(function(req, res, next) {
@@ -71,9 +79,26 @@ app.use( session({
 //app.use(bodyParser.json({ extended: false }));
 //app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler());
+
+//Set Port
+const port = process.env.PORT || '3000';
+app.set('port', port);
+const server = http.createServer(app);
+server.listen(port, () => console.log('Running on localhost:'+port));
+// Conexion a Mongodb
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost:27017/erp-taller')
+  .then(() =>  console.log('Mongodb: Conexion exitosa.'))
+  .catch((err) => console.error(err));
+
+
+console.log('******');
+console.log('******');
+console.log('******');
+console.log('******');
+
 //app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-
-
 
 //const router = express.Router();
 
@@ -109,20 +134,6 @@ console.log('req->' + JSON.stringify(req.file));
     res.end('File is uploaded');
   }); */
 //Upload files END
-
-//Set Port
-const port = process.env.PORT || '3000';
-app.set('port', port);
-const server = http.createServer(app);
-server.listen(port, () => console.log('Running on localhost:'+port));
-
-// Conexion a Mongodb
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/erp-taller')
-  .then(() =>  console.log('Mongodb: Conexion exitosa.'))
-  .catch((err) => console.error(err));
-
 
 /*///passport config
 //app.set('view engine', 'ejs');

@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 export const disenoRoutes: Routes = [
   {path: '', component: DisenoComponent},
+  {path: ':id', component: DisenoComponent},
 ];
 
 @NgModule({

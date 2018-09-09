@@ -1,3 +1,5 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { PedidosService } from './../../../services/pedidos.service';
 import { Component, OnInit } from '@angular/core';
 
 import '../../../../assets/charts/amchart/amcharts.js';
@@ -7,9 +9,12 @@ import '../../../../assets/charts/amchart/serial.js';
 import '../../../../assets/charts/amchart/light.js';
 import '../../../../assets/charts/amchart/ammap.js';
 import '../../../../assets/charts/amchart/worldLow.js';
+import { Pedido } from '../../../model/pedido/pedido.model';
+
 
 declare const AmCharts: any;
 declare const $: any;
+
 
 @Component({
   selector: 'app-dashboard-default',
@@ -20,7 +25,22 @@ declare const $: any;
 })
 export class DashboardDefaultComponent implements OnInit {
 
-  constructor() { }
+  pedido = new Pedido();
+  modulo = 'dashboard';
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private pedidosService: PedidosService) {
+
+    this.route.params.subscribe(params => {
+      console.log(params['id']);
+      if (params['id']!=null){
+        this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
+          this.pedido = data;
+        });
+      }
+    });
+
+  }
 
   ngOnInit() {
     AmCharts.makeChart('statistics-chart', {

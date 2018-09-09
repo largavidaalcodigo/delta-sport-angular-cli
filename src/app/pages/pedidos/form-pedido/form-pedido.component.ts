@@ -99,10 +99,7 @@ export class FormPedidoComponent implements OnInit {
     this.tipoForm = this.route.snapshot.params['tipoForm'];
     console.log('Se inicia form pedido->' + this.tipoForm);
 
-    //TALLAS
-    if (this.tipoForm === 'ft' || this.tipoForm === 'editar') {
-/*       this.listaTallas = this.pedidosService.getTallas(); */
-
+    if (this.tipoForm === 'editar') {
       this.pedidosService.getPedido(this.route.snapshot.params['id']).subscribe(data => {
         console.log('Editando tallas->' + JSON.stringify(data));
         this.pedido = data;
@@ -139,7 +136,8 @@ export class FormPedidoComponent implements OnInit {
       this.titulo = 'Listado Tallas';
 
     }
- */     if(this.tipoForm === 'ft'){
+ */
+/*     if(this.tipoForm === 'ft'){
       this.titulo = 'Ficha Tecnica productos';
       this.listaTelas = this.pedidosService.getTelas();
       this.detalleFichaTecnica = new FichaTecnica();
@@ -148,7 +146,7 @@ export class FormPedidoComponent implements OnInit {
       this.listaTipoCuelloFT = new Array();
       this.tipoCuelloFT = new TipoCuelloFT();
     }
-
+ */
 
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
@@ -156,7 +154,7 @@ export class FormPedidoComponent implements OnInit {
     this.listaTipoDeporte = this.pedidosService.getTipoDeporte();
 
     //lista de pedidos
-    this.clientesService.getClientes().subscribe(data => {
+    this.clientesService.getClientes('buscar', 'Activo', '').subscribe(data => {
       console.log('obteniendo lista clientes...');
       console.log(data);
       this.listaClientes = data;
@@ -183,7 +181,7 @@ export class FormPedidoComponent implements OnInit {
     //this.detallePedido.idProducto = productoId;
     this.listaTipoProducto = this.pedidosService.getTipoProductos()
       .filter(item => item.idProducto == productoId);
-    console.log('productoId-> ' + productoId);
+    console.log('categoria-> ' + productoId);
     //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
   }
 
@@ -191,15 +189,16 @@ export class FormPedidoComponent implements OnInit {
     //this.detallePedido.idTipoProducto = tipoProductoId;
     this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
       .filter(item => item.idTipoProducto == tipoProductoId);
-      console.log('onSelectTipoProducto tipoProductoId->' + tipoProductoId);
+      console.log('producto->' + tipoProductoId);
     }
 
   onSelectRangoPrecio(rangoPrecioId: number) {
+    console.log('rango precios->' + rangoPrecioId);
     this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
+    console.log('rangoPrecioProducto ->' + this.rangoPrecioProducto);
     //this.detallePedido.idRangoPrecio = this.rangoPrecioProducto.id;
     this.detallePedido.valor  = this.rangoPrecioProducto.valor;
     this.onChangeCalculaTotalDetalle();
-    console.log('onSelectRangoPrecio rangoPrecioId->' + rangoPrecioId);
   }
 
 /*   onSelectSinDiseno(llevaDiseño: number){
@@ -345,11 +344,11 @@ export class FormPedidoComponent implements OnInit {
         console.log('pedido actualizado->' + JSON.stringify(data));
         this.pedido = data;
       });
-      this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
+      this.router.navigate(['/pedidos', 'Pedido nro. [' + this.pedido.numeroPedido + '] actualizado exitosamente']);
 
     }else if (this.tipoForm === 'nuevo') {
 
-      //Contador de pedidos
+      // Contador de pedidos
       this.pedidosService.countPedidos().subscribe(countPedidos => {
         this.pedido.numeroPedido = countPedidos + 1;
         console.log('this.pedido.numeroPedido->' +  this.pedido.numeroPedido);
@@ -357,16 +356,16 @@ export class FormPedidoComponent implements OnInit {
         console.log('insertando pedido...');
         this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
           this.pedido = pedido;
-          console.log('nuevo  insertado->' + JSON.stringify(this.pedido));
-          this.router.navigate(['/pedidos', 'Pedido nro. ['+ this.pedido.numeroPedido + '] Creado exitosamente']);
+          console.log('nuevo  insertado->');
+          this.router.navigate(['/pedidos', 'Pedido nro. [' + this.pedido.numeroPedido + '] Creado exitosamente']);
         });
       });
     }
   }
 
-  eliminaProducto(id: number){
+  eliminaProducto(id: number) {
     this.pedido.listaProductos.splice(id, 1);
-    this.cantidadProductos=this.pedido.listaProductos.length;
+    this.cantidadProductos = this.pedido.listaProductos.length;
     this.onChangeCalculaTotal();
     console.log('eliminando producto->' + id);
   }

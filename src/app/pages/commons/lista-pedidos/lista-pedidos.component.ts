@@ -22,9 +22,9 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.pedidosService.getPedidos()
+     this.pedidosService.getPedidos('buscar', 'En proceso', '')
       .subscribe(
-        pedidos => this.listaPedidos = pedidos.filter(item => item.idEstado === 3),
+        pedidos => this.listaPedidos = pedidos,
         err => console.log(err),
     );
 
@@ -41,6 +41,8 @@ export class ListaPedidosComponent implements OnInit {
       this.router.navigate(['/pedidos/formModulos/estampado/', pedido.numeroPedido]);
     }else if (this.modulo === 'confeccion') {
       this.router.navigate(['/pedidos/formModulos/confeccion/', pedido.numeroPedido]);
+    }else if (this.modulo === 'dashboard') {
+      this.router.navigate(['/pedidos/formModulos/dashboard/']);
     }
   }
 
@@ -52,5 +54,10 @@ export class ListaPedidosComponent implements OnInit {
   verFichaTecnica(pedido: Pedido) {
     console.log('ver Ficha Tecnica...');
     this.router.navigate(['/pedidos/formFichaTecnica/ver/', pedido.numeroPedido]);
+  }
+
+  verDetalle(pedido: Pedido){
+    console.log('ver Dashboard...');
+    this.router.navigate(['/dashboard/', pedido.numeroPedido]);
   }
 }

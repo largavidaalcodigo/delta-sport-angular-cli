@@ -11,14 +11,20 @@ export class PedidosService {
 
   constructor(private http: HttpClient) {}
 
-  public getPedidos(): Observable<Pedido[]> {
-    return this.http.get('/api/getPedidos')
+  public getPedidos(tipo: string, estado: string, query: string): Observable<Pedido[]> {
+    if (query!=null)
+      return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query);
+    else
+      return this.http.get('/api/pedidos/' + tipo + '/' + estado);
+
+/*     return this.http.get('/api/pedidos')
       .map(response => response as Pedido[])
       .catch((error : any) => Observable.throw('Server error'));
+ */
   }
 
   public getPedido(numeroPedido: any): Observable<Pedido> {
-    return this.http.get('/api/getPedido/' + numeroPedido)
+    return this.http.get('/api/pedidos/editar/' + numeroPedido)
        .map(response => response as Pedido)
       .catch((error : any) => Observable.throw('Server error'));
   }
@@ -28,11 +34,11 @@ export class PedidosService {
   }
 
   public addPedido(pedido: Pedido): Observable<Pedido> {
-    return this.http.post<Pedido>('/api/addPedido', pedido);
+    return this.http.post<Pedido>('/api/pedidos', pedido);
   }
 
   public putPedido(pedido: Pedido): Observable<Pedido> {
-    return this.http.put<Pedido>('/api/putPedido', pedido);
+    return this.http.put<Pedido>('/api/pedidos', pedido);
   }
 
  /*  public deletePedido(pedido: Pedido){

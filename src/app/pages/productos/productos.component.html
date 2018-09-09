@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div class="list-group">
+        <a *ngFor="let tipo of listaTipoMantenedor" [routerLink]="['/productos', tipo]" class="list-group-item">{{tipo}}</a>
+      </div>
+    </div>
+    <div class="col-8">
+      <h4>{{tipoMantenedor}}</h4>
+      <form
+          #encabezadoPedidoForm='ngForm'
+          class='form-inline'
+          (ngSubmit)='submitBuscador();'>
+        <div class='form-group form-inline'>
+          Palabra clave:
+          <input type='text' size="20" class='form-control' name='query' [(ngModel)]='query'>
+
+          Estado
+          <select
+            class='form-control'
+            name='estado'
+            [(ngModel)]='estado'
+          >
+            <option *ngFor='let c of listaEstadosClientes' [value]='c'>{{c}}</option>
+          </select>
+          <button type="submit" class="btn btn-success">Buscar</button>
+          <button type="reset" class="btn btn-success">Limpiar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--
+<div *ngIf="mensaje" class="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{mensaje}}
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+      <a class="btn btn-primary" [routerLink]="['/clientes/formCliente', 'nuevo']">NUEVO</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <app-card>
+      <h4>Filtros de busqueda</h4>
+      <form
+          #encabezadoPedidoForm='ngForm'
+          class='form-inline'
+          (ngSubmit)='submitBuscador();'>
+        <div class='form-group form-inline'>
+          Palabra clave:
+          <input type='text' size="20" class='form-control' name='query' [(ngModel)]='query'>
+
+          Estado
+          <select
+            class='form-control'
+            name='estado'
+            [(ngModel)]='estado'
+          >
+            <option *ngFor='let c of listaEstadosClientes' [value]='c'>{{c}}</option>
+          </select>
+          <button type="submit" class="btn btn-success">Buscar</button>
+          <button type="reset" class="btn btn-success">Limpiar</button>
+        </div>
+      </form>
+    </app-card>
+
+    <app-card [title]="'Clientes'" [classHeader]="false" [blockClass]="'table-border-style'">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Rut </th>
+            <th>Razón Social</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Opciones</th>
+        </tr>
+          </thead>
+          <tbody *ngFor="let cliente of listaClientes">
+            <tr (click)="editarCliente(cliente)">
+              <td>{{cliente.numeroCliente}}</td>
+              <td>{{cliente.rutCliente}}</td>
+              <td>{{cliente.razonSocialCliente}}</td>
+              <td>{{cliente.apellidoPaternoCliente + ' ' + cliente.apellidoMaternoCliente + ' ' + cliente.nombresCliente}}</td>
+              <td>{{cliente.estado}}</td>
+              <td>
+                <button type="button" (click)='eliminaCliente(cliente);$event.stopPropagation();'>
+                  <i class="icofont icofont-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+{{estado}}
+-->

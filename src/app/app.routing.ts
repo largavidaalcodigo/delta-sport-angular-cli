@@ -24,6 +24,9 @@ export const AppRoutes: Routes = [
         path: 'clientes',
         loadChildren: './pages/clientes/clientes.module#ClientesModule'
       }, {
+        path: 'productos',
+        loadChildren: './pages/productos/productos.module#ProductosModule'
+      }, {
         path: 'corte',
         loadChildren: './pages/corte/corte.module#CorteModule'
       }, {

@@ -38,7 +38,7 @@ export class FormModulosComponent implements OnInit {
       console.log('pedido actualizado->' + JSON.stringify(data));
       this.pedido = data;
     });
-    this.router.navigate(['/', '<strong>Pedido nro. [' + this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
+    this.router.navigate(['/' + this.modulo, '<strong>Pedido nro. [' + this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
   }
 
   calculaAvance(){

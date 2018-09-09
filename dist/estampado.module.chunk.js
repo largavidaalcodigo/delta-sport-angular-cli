@@ -97,6 +97,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var estampadoRoutes = [
     { path: '', component: __WEBPACK_IMPORTED_MODULE_8__estampado_component__["a" /* EstampadoComponent */] },
+    { path: ':id', component: __WEBPACK_IMPORTED_MODULE_8__estampado_component__["a" /* EstampadoComponent */] },
 ];
 var EstampadoModule = (function () {
     function EstampadoModule() {

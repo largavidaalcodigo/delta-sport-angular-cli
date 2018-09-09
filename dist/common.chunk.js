@@ -1,12 +1,31 @@
 webpackJsonp(["common"],{
 
+/***/ "../../../../../src/app/model/pedido/pedido.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Pedido; });
+var Pedido = (function () {
+    function Pedido() {
+        this.totalMediosPago = 0;
+        this.totalPagoPendiente = 0;
+    }
+    return Pedido;
+}());
+
+//# sourceMappingURL=pedido.model.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/services/clientes.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClientesService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,29 +37,187 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ClientesService = (function () {
+    //baseUrl: string = 'http://localhost:8081';
     function ClientesService(http) {
         this.http = http;
-        this.baseUrl = 'http://localhost:8081';
     }
-    ClientesService.prototype.getClientes = function () {
-        return this.http.get('/api/getClientes');
+    ClientesService.prototype.getClientes = function (tipo, estado, query) {
+        if (query != null)
+            return this.http.get('/api/clientes/' + tipo + '/' + estado + '/' + query);
+        else
+            return this.http.get('/api/clientes/' + tipo + '/' + estado);
     };
     ClientesService.prototype.addCliente = function (cliente) {
-        return this.http.post('/api/addCliente', cliente);
+        return this.http.post('/api/clientes', cliente);
     };
     ClientesService.prototype.putCliente = function (cliente) {
-        return this.http.put(this.baseUrl + '/clientes', cliente);
+        return this.http.put('/api/clientes', cliente);
+    };
+    ClientesService.prototype.getCliente = function (numeroCliente) {
+        return this.http.get('/api/clientes/editar/' + numeroCliente)
+            .map(function (response) { return response; })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
+    };
+    ClientesService.prototype.countClientes = function () {
+        return this.http.get('/api/countClientes');
+    };
+    ClientesService.prototype.getEstadosCliente = function () {
+        return ['Activo', 'Inactivo'];
     };
     return ClientesService;
 }());
 ClientesService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
 ], ClientesService);
 
 var _a;
 //# sourceMappingURL=clientes.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/commons.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CommonsService = (function () {
+    function CommonsService(http) {
+        this.http = http;
+        this.URL = 'http://localhost:3000';
+    }
+    CommonsService.prototype.subirArchivos = function (file, titulo) {
+        return new Promise(function (resolve, reject) {
+            var formData = new FormData();
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            console.log('service file->' + file.name);
+            console.log('titulo->' + titulo);
+            formData.append('archivo', file);
+            formData.append('titulo', titulo);
+            xhr.send(formData);
+            xhr.onreadystatechange = function () {
+                console.log('xhr.status-> ' + xhr.status);
+                /*         if (xhr.readyState === 4) {
+                          if (xhr.status === 200) {
+                            resolve(xhr.response);
+                          } else {
+                            reject(xhr.response);
+                          }
+                        }
+                 */ 
+            };
+        });
+        /*    var xhr = new XMLHttpRequest();
+            var formData = new FormData();
+            //xhr.onload = successfullyUploaded;
+            xhr.open("POST", "http://localhost:3000/upload", true);
+            xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
+            for(var file in files) {
+                formData.append("uploads", files[file].data);
+            }
+            xhr.send(formData);
+        
+        */
+        /*
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                  if (xhr.status === 200) {
+                    resolve(xhr.response);
+                  } else {
+                    reject(xhr.response);
+                  }
+                }
+              };
+         */
+        /*       for(let file in files) {
+                formData.append('uploads', file);
+         */
+        //}
+    };
+    /*   public putPedido(pedido: Pedido): Observable<Pedido> {
+        return this.http.put<Pedido>('/api/putPedido', pedido);
+      }
+     */
+    /*  public deletePedido(pedido: Pedido){
+       return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
+     } */
+    CommonsService.prototype.getProductos = function (tipo) {
+        console.log('service tipo->' + tipo);
+        return this.http.get('/api/productos/' + tipo);
+    };
+    CommonsService.prototype.addProducto = function (produc) {
+        console.log('post->' + JSON.stringify(produc));
+        return this.http.post('/api/productos', 'produc');
+    };
+    CommonsService.prototype.getEstadosPedido = function () {
+        return ['Creado', 'En proceso', 'Terminado', 'Eliminado'];
+    };
+    CommonsService.prototype.getDetallesAdicionales = function () {
+        return [
+            { id: 1, desc: 'Logos insignias sublimados', valor: 550 },
+            { id: 2, desc: 'Número sublimado', valor: 650 },
+            { id: 3, desc: 'Logos vinilos', valor: 550 },
+            { id: 4, desc: 'Números vinilos', valor: 750 },
+            { id: 5, desc: 'Subliflok insignia', valor: 750 },
+            { id: 6, desc: 'Cuello camisero tela', valor: 350 },
+            { id: 7, desc: 'Cuello camisero tejido', valor: 800 },
+            { id: 8, desc: 'Cierre polera', valor: 450 },
+            { id: 9, desc: 'Broches (3)', valor: 450 },
+            { id: 10, desc: 'Triángulo', valor: 550 },
+            { id: 11, desc: 'Costados', valor: 500 },
+            { id: 12, desc: 'Vivos', valor: 350 },
+            { id: 13, desc: 'Cuellos sublimados', valor: 150 },
+            { id: 14, desc: 'Cuello mao', valor: 350 },
+        ];
+    };
+    CommonsService.prototype.getColores = function () {
+        return [
+            { id: 1, desc: 'Azul', codigoHex: '#0000FF' },
+            { id: 2, desc: 'Verde', codigoHex: '#008000' },
+            { id: 3, desc: 'Amarillo', codigoHex: '#FFFF00' }
+        ];
+    };
+    CommonsService.prototype.getTipoMantenedor = function () {
+        return ['Categorias', 'Productos', 'Precios', 'Tipos de tela', 'Tallas', 'Tipo deporte'];
+    };
+    CommonsService.prototype.getTelas = function () {
+        return ['boston', 'rugby', 'mesh', 'lycra', 'elasticada', 'franela', 'franela elasticada', 'dupont', 'otro'];
+    };
+    CommonsService.prototype.getTallas = function () {
+        return ['2', '4', '6', '8', '10', '12', '14', '16', 'S', 'M', 'L', 'XL', 'XXL'];
+    };
+    CommonsService.prototype.getTipoDeporte = function () {
+        return ['Futbol', 'Rugby', 'Volleyball', 'Tenis'];
+    };
+    return CommonsService;
+}());
+CommonsService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], CommonsService);
+
+var _a;
+//# sourceMappingURL=commons.service.js.map
 
 /***/ }),
 

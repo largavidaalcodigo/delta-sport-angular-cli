@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from '../../services/clientes.service';
 import { Cliente } from '../../model/cliente/cliente.model';
 import { Component, OnInit} from '@angular/core';
@@ -10,43 +11,50 @@ import { Component, OnInit} from '@angular/core';
 export class ClientesComponent implements OnInit {
   listaClientes: any;
   cliente: Cliente;
-  verLista: boolean = true;
-  verForm: boolean;
-  tipoForm: string;
+  mensaje: string;
+  listaEstadosClientes: any;
+  query = '';
+  estado: any;
+  fechaDesde: Date;
 
-  constructor(private clientesService: ClientesService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientesService: ClientesService
+  ) {
+
+    this.route.params.subscribe(params => {
+      this.mensaje = params['id'];
+    });
+  }
 
   ngOnInit() {
-    this.clientesService.getClientes().subscribe(data => {
-      console.log(data);
+    this.clientesService.getClientes('buscar','Activo', this.query).subscribe(data => {
+      console.log('observando lista...');
       this.listaClientes = data;
     });
-
+    this.listaEstadosClientes = this.clientesService.getEstadosCliente();
   }
 
-  //Cierre con boton Volver
-  public volver() {
-    this.verForm = false;
-    this.verLista = true;
-  }
-
-  //Nuevo Cliente
-  nuevo() {
-    this.verForm = true;
-    this.verLista = false;
-
-    this.cliente = new Cliente();
-    this.tipoForm = "Nuevo";
-    console.log("presiona nuevo..");
-  }
-
-  //Ver o Editar Cliente
+  // Ver o Editar Cliente
   editarCliente(cliente: Cliente) {
-    this.verForm = true;
-    this.verLista = false;
+    this.router.navigate(['/clientes/formCliente/editar/', cliente.numeroCliente]);
+  }
 
-    this.cliente=cliente;
-    this.tipoForm = "Ver";
-    console.log("Viendo " + cliente.rutCliente);
+  eliminaCliente(cliente: Cliente){
+    console.log('Elimina Cliente..');
+    // Cambia el estado del pedido
+    cliente.estado = 'Inactivo';
+    this.clientesService.putCliente(cliente).subscribe(data => {
+      console.log('cliente inactivo');
+      this.cliente = data;
+    });
+  }
+
+  submitBuscador(){
+    this.clientesService.getClientes('buscar', this.estado, this.query).subscribe(data => {
+      console.log('observando lista...');
+      this.listaClientes = data;
+    });
   }
 }

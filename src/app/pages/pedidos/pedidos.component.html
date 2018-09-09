@@ -5,41 +5,46 @@
   {{mensaje}}
 </div>
 
-<div class="row" *ngIf='verLista'>
+<div class="row">
   <div class="col-sm-12">
-    <!-- <app-card> -->
-      <!-- <a class="btn btn-primary" (click)="nuevoPedido()" routerLinkActive="active">Nuevo Pedido</a> -->
       <a class="btn btn-primary" [routerLink]="['/pedidos/formPedido', 'nuevo']">NUEVO</a>
-    <!-- </app-card> -->
   </div>
 </div>
 
-<!-- Formulario  -->
-<!-- <div class="container">
-  <app-form-pedido
-  [verForm]="!verLista"
-  [tipoForm]="tipoForm"
-  [pedido]="pedido"
-  (salir)="volver($event)"></app-form-pedido>
-</div> -->
-
 <!-- Lista  -->
-<div class="row" *ngIf='verLista'>
+<div class="row">
   <div class="col-sm-12">
     <app-card>
       <h4>Filtros de busqueda</h4>
-      <form #encabezadoPedidoForm='ngForm' class='form-inline'>
+      <form
+          #encabezadoPedidoForm='ngForm'
+          class='form-inline'
+          (ngSubmit)='submitBuscador();'>
         <div class='form-group form-inline'>
-          Cliente
-          <input type='text' size="40" class='form-control' name='queryClientes'>
+          Palabra clave:
+          <input type='text' size="20" class='form-control' name='query' [(ngModel)]='query'>
+
           Estado
-          <select class='form-control' name='queryEstado'>
-            <option [value]=''>[Producto]</option>
-            <option *ngFor='let c of listaEstadosPedido' [value]='c.id'>{{c.desc}}</option>
+          <select
+            class='form-control'
+            [(ngModel)]='estado'
+            name='estado'
+          >
+            <option *ngFor='let c of listaEstadosPedido' [value]='c'>{{c}}</option>
           </select>
+          <!--
           Fecha creación
-          <input class='form-control' name='fechaDesde' type="date" placeholder="Fecha desde">
-          <button type="reset" class="btn btn-primary">Quitar Filtro</button>
+          <input class='form-control'
+            name='fechaDesde'
+            size='3'
+            type="date"
+            [ngModel]="fechaDesde | date:'yyyy-MM-dd'"
+            (ngModelChange)="fechaDesde = $event"
+            placeholder="Fecha desde"
+          >
+        -->
+          <button type="submit" class="btn btn-success">Buscar</button>
+          <button type="reset" class="btn btn-success">Limpiar</button>
         </div>
       </form>
     </app-card>
@@ -54,6 +59,7 @@
             <th>Fecha pedido</th>
             <th>Fecha Entrega</th>
             <th>Monto Total</th>
+            <th>Saldo pdte.</th>
             <th>Estado</th>
             <th>Opciones</th>
           </tr>
@@ -65,6 +71,7 @@
               <td (click)="editarPedido(pedido)">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
               <td (click)="editarPedido(pedido)">${{pedido.total}}</td>
+              <td (click)="editarPedido(pedido)">${{pedido.totalPagoPendiente}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.estado}}</td>
               <td>
                 <button type="button" class="btn btn-danger btn-sm"

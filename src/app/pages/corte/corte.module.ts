@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 export const corteRoutes: Routes = [
   {path: '', component: CorteComponent},
+  {path: ':id', component: CorteComponent},
 ];
 
 @NgModule({

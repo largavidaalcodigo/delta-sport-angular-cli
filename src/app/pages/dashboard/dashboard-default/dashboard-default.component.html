@@ -5,7 +5,7 @@
       <div class="card-block-small">
         <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
         <span class="text-c-blue f-w-600">DISEÑO</span>
-        <h4>Avance: 50%</h4>
+        <h4>Avance: {{pedido.avanceDiseno}}%</h4>
         <div>
         <span class="f-left m-t-10 text-muted">
           <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Detalle
@@ -22,7 +22,7 @@
       <div class="card-block-small">
         <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
         <span class="text-c-pink f-w-600">ESTAMPADO</span>
-        <h4>Avance: 20%</h4>
+        <h4>Avance: {{pedido.avanceEstampado}}%</h4>
         <div>
           <span class="f-left m-t-10 text-muted">
           <i class="text-c-pink f-16 icofont icofont-warning m-r-10"></i>Detalle
@@ -39,7 +39,7 @@
       <div class="card-block-small">
         <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
         <span class="text-c-green f-w-600">CORTE</span>
-        <h4>Avance: 40%</h4>
+        <h4>Avance: {{pedido.avanceCorte}}%</h4>
         <div>
           <span class="f-left m-t-10 text-muted">
           <i class="text-c-green f-16 icofont icofont-warning m-r-10"></i>Detalle
@@ -56,7 +56,7 @@
       <div class="card-block-small">
         <i class="icofont icofont-social-twitter bg-c-yellow card1-icon"></i>
         <span class="text-c-yellow f-w-600">CONFECCION</span>
-        <h4>Avance: 70%</h4>
+        <h4>Avance: {{pedido.avanceConfeccion}}%</h4>
         <div>
           <span class="f-left m-t-10 text-muted">
           <i class="text-c-yellow f-16 icofont icofont-warning m-r-10"></i>Detalle
@@ -68,14 +68,5 @@
   </div>
   <!-- card4 end -->
 
-  <!-- Statistics Start -->
-<!--
-  <div class="col-md-12 col-xl-12">
-    <app-card [title]="'Statistics'">
-        <div id="line-example" class="line-example">
-          <div id="statistics-chart" style="height:300px;"></div>
-        </div>
-    </app-card>
-  </div>
--->
-<!-- <app-clientes></app-clientes> -->
+<!-- Lista  -->
+<app-lista-pedidos [modulo]=modulo></app-lista-pedidos>

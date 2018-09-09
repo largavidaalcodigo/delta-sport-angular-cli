@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 export const estampadoRoutes: Routes = [
   {path: '', component: EstampadoComponent},
+  {path: ':id', component: EstampadoComponent},
 ];
 
 @NgModule({

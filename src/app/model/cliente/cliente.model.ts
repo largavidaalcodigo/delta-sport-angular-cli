@@ -1,4 +1,5 @@
 export class Cliente {
+  public numeroCliente: number;
   public rutCliente: string;
   public razonSocialCliente: string;
   public nombresCliente: string;
@@ -9,6 +10,7 @@ export class Cliente {
   public fonoCliente: string;
   public emailCliente: string;
   public idEstado: number;
+  public estado: string;
 
   constructor() {
   }

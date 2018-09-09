@@ -1,8 +1,8 @@
 import { NgForm, FormGroup } from '@angular/forms';
 import { ViewChild } from '@angular/core';
-import { CommonsService } from './../../../services/commons.service';
+import { CommonsService } from '../../../services/commons.service';
 import { Component, OnInit } from '@angular/core';
-import { ThrowStmt } from '../../../../../node_modules/@angular/compiler';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-subir-archivos',

@@ -21,7 +21,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <!-- card1 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-pie-chart bg-c-blue card1-icon\"></i>\n        <span class=\"text-c-blue f-w-600\">DISEÑO</span>\n        <h4>Avance: 50%</h4>\n        <div>\n        <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-blue f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-blue f-16 icofont icofont-email m-r-10\"></i>mensaje\n        </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card1 end -->\n  <!-- card2 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-ui-home bg-c-pink card1-icon\"></i>\n        <span class=\"text-c-pink f-w-600\">ESTAMPADO</span>\n        <h4>Avance: 20%</h4>\n        <div>\n          <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-pink f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-pink f-16 icofont icofont-email m-r-10\"></i>mensaje\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card2 end -->\n  <!-- card3 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-warning-alt bg-c-green card1-icon\"></i>\n        <span class=\"text-c-green f-w-600\">CORTE</span>\n        <h4>Avance: 40%</h4>\n        <div>\n          <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-green f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-green f-16 icofont icofont-email m-r-10\"></i>mensaje\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card3 end -->\n  <!-- card4 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-social-twitter bg-c-yellow card1-icon\"></i>\n        <span class=\"text-c-yellow f-w-600\">CONFECCION</span>\n        <h4>Avance: 70%</h4>\n        <div>\n          <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-yellow f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-yellow f-16 icofont icofont-email m-r-10\"></i>mensaje\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card4 end -->\n\n  <!-- Statistics Start -->\n<!--\n  <div class=\"col-md-12 col-xl-12\">\n    <app-card [title]=\"'Statistics'\">\n        <div id=\"line-example\" class=\"line-example\">\n          <div id=\"statistics-chart\" style=\"height:300px;\"></div>\n        </div>\n    </app-card>\n  </div>\n-->\n<!-- <app-clientes></app-clientes> -->\n"
+module.exports = "<div class=\"row\">\n  <!-- card1 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-pie-chart bg-c-blue card1-icon\"></i>\n        <span class=\"text-c-blue f-w-600\">DISEÑO</span>\n        <h4>Avance: {{pedido.avanceDiseno}}%</h4>\n        <div>\n        <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-blue f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-blue f-16 icofont icofont-email m-r-10\"></i>mensaje\n        </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card1 end -->\n  <!-- card2 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-ui-home bg-c-pink card1-icon\"></i>\n        <span class=\"text-c-pink f-w-600\">ESTAMPADO</span>\n        <h4>Avance: {{pedido.avanceEstampado}}%</h4>\n        <div>\n          <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-pink f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-pink f-16 icofont icofont-email m-r-10\"></i>mensaje\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card2 end -->\n  <!-- card3 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-warning-alt bg-c-green card1-icon\"></i>\n        <span class=\"text-c-green f-w-600\">CORTE</span>\n        <h4>Avance: {{pedido.avanceCorte}}%</h4>\n        <div>\n          <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-green f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-green f-16 icofont icofont-email m-r-10\"></i>mensaje\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card3 end -->\n  <!-- card4 start -->\n  <div class=\"col-md-6 col-xl-3\">\n    <div class=\"card widget-card-1\">\n      <div class=\"card-block-small\">\n        <i class=\"icofont icofont-social-twitter bg-c-yellow card1-icon\"></i>\n        <span class=\"text-c-yellow f-w-600\">CONFECCION</span>\n        <h4>Avance: {{pedido.avanceConfeccion}}%</h4>\n        <div>\n          <span class=\"f-left m-t-10 text-muted\">\n          <i class=\"text-c-yellow f-16 icofont icofont-warning m-r-10\"></i>Detalle\n          <i class=\"text-c-yellow f-16 icofont icofont-email m-r-10\"></i>mensaje\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>\n  <!-- card4 end -->\n\n<!-- Lista  -->\n<app-lista-pedidos [modulo]=modulo></app-lista-pedidos>\n"
 
 /***/ }),
 
@@ -30,21 +30,24 @@ module.exports = "<div class=\"row\">\n  <!-- card1 start -->\n  <div class=\"co
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardDefaultComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_charts_amchart_amcharts_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/amcharts.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_charts_amchart_amcharts_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_charts_amchart_amcharts_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_charts_amchart_gauge_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/gauge.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_charts_amchart_gauge_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__assets_charts_amchart_gauge_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_charts_amchart_pie_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/pie.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_charts_amchart_pie_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_charts_amchart_pie_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_charts_amchart_serial_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/serial.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_charts_amchart_serial_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__assets_charts_amchart_serial_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_charts_amchart_light_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/light.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_charts_amchart_light_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__assets_charts_amchart_light_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_charts_amchart_ammap_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/ammap.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_charts_amchart_ammap_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__assets_charts_amchart_ammap_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__assets_charts_amchart_worldLow_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/worldLow.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__assets_charts_amchart_worldLow_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__assets_charts_amchart_worldLow_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_charts_amchart_amcharts_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/amcharts.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_charts_amchart_amcharts_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_charts_amchart_amcharts_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_charts_amchart_gauge_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/gauge.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_charts_amchart_gauge_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__assets_charts_amchart_gauge_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_charts_amchart_pie_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/pie.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_charts_amchart_pie_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__assets_charts_amchart_pie_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_charts_amchart_serial_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/serial.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_charts_amchart_serial_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__assets_charts_amchart_serial_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__assets_charts_amchart_light_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/light.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__assets_charts_amchart_light_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__assets_charts_amchart_light_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__assets_charts_amchart_ammap_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/ammap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__assets_charts_amchart_ammap_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__assets_charts_amchart_ammap_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__assets_charts_amchart_worldLow_js__ = __webpack_require__("../../../../../src/assets/charts/amchart/worldLow.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__assets_charts_amchart_worldLow_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__assets_charts_amchart_worldLow_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -62,8 +65,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var DashboardDefaultComponent = (function () {
-    function DashboardDefaultComponent() {
+    function DashboardDefaultComponent(route, router, pedidosService) {
+        var _this = this;
+        this.route = route;
+        this.router = router;
+        this.pedidosService = pedidosService;
+        this.pedido = new __WEBPACK_IMPORTED_MODULE_10__model_pedido_pedido_model__["a" /* Pedido */]();
+        this.modulo = 'dashboard';
+        this.route.params.subscribe(function (params) {
+            console.log(params['id']);
+            if (params['id'] != null) {
+                _this.pedidosService.getPedido(_this.route.snapshot.params['id']).subscribe(function (data) {
+                    _this.pedido = data;
+                });
+            }
+        });
     }
     DashboardDefaultComponent.prototype.ngOnInit = function () {
         AmCharts.makeChart('statistics-chart', {
@@ -145,12 +165,12 @@ var DashboardDefaultComponent = (function () {
     return DashboardDefaultComponent;
 }());
 DashboardDefaultComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
         selector: 'app-dashboard-default',
         template: __webpack_require__("../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.component.html"),
         styles: [__webpack_require__("../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object])
 ], DashboardDefaultComponent);
 
 function getRandomData() {
@@ -176,6 +196,7 @@ function getRandomData() {
     }
     return res;
 }
+var _a, _b, _c;
 //# sourceMappingURL=dashboard-default.component.js.map
 
 /***/ }),
@@ -194,12 +215,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular2_chartjs__ = __webpack_require__("../../../../angular2-chartjs/dist/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular2_chartjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angular2_chartjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -215,7 +238,8 @@ var DashboardDefaultRoutes = [
             icon: 'icofont-home bg-c-blue',
             status: false
         }
-    }
+    },
+    { path: ':id', component: __WEBPACK_IMPORTED_MODULE_2__dashboard_default_component__["a" /* DashboardDefaultComponent */] }
 ];
 var DashboardDefaultModule = (function () {
     function DashboardDefaultModule() {
@@ -229,6 +253,9 @@ DashboardDefaultModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__angular_router__["g" /* RouterModule */].forChild(DashboardDefaultRoutes),
             __WEBPACK_IMPORTED_MODULE_4__shared_shared_module__["a" /* SharedModule */],
             __WEBPACK_IMPORTED_MODULE_5_angular2_chartjs__["ChartModule"]
+        ],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_6__services_pedidos_service__["a" /* PedidosService */]
         ],
         declarations: [__WEBPACK_IMPORTED_MODULE_2__dashboard_default_component__["a" /* DashboardDefaultComponent */]]
     })

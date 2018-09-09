@@ -4,6 +4,8 @@ import { DashboardDefaultComponent } from './dashboard-default.component';
 import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../../../shared/shared.module';
 import {ChartModule} from 'angular2-chartjs';
+import { PedidosService } from '../../../services/pedidos.service';
+import { PedidosModule } from '../../pedidos/pedidos.module';
 
 export const DashboardDefaultRoutes: Routes = [
   {
@@ -14,7 +16,9 @@ export const DashboardDefaultRoutes: Routes = [
       icon: 'icofont-home bg-c-blue',
       status: false
     }
-  }
+  },
+  {path: ':id', component: DashboardDefaultComponent}
+
 ];
 
 @NgModule({
@@ -23,6 +27,9 @@ export const DashboardDefaultRoutes: Routes = [
     RouterModule.forChild(DashboardDefaultRoutes),
     SharedModule,
     ChartModule
+  ],
+  providers: [
+    PedidosService
   ],
   declarations: [DashboardDefaultComponent]
 })

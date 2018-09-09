@@ -1,5 +1,5 @@
-import { CommonsService } from './../../services/commons.service';
-import { SubirArchivosComponent } from './../commons/subir-archivos/subir-archivos.component';
+import { CommonsService } from '../../services/commons.service';
+import { SubirArchivosComponent } from '../commons/subir-archivos/subir-archivos.component';
 import { FormModulosComponent } from './form-modulos/form-modulos.component';
 import { ClientesService } from '../../services/clientes.service';
 import { PedidosService } from '../../services/pedidos.service';
@@ -17,10 +17,7 @@ import { FormPedidoModule } from './form-pedido/form-pedido.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { TallasPedidosComponent } from './tallas-pedidos/tallas-pedidos.component';
 import { FtPedidosComponent } from './ft-pedidos/ft-pedidos.component';
-/* import {AccordionLinkDirective} from '../../shared/accordion/accordionlink.directive';
-import {AccordionDirective} from '../../shared/accordion/accordion.directive';
-import {AccordionAnchorDirective} from '../../shared/accordion/accordionanchor.directive';
- */
+
 export const pedidosRoutes: Routes = [
   {path: '', component: PedidosComponent},
   {path: 'formPedido/:tipoForm', component: FormPedidoComponent},
@@ -57,11 +54,7 @@ export const pedidosRoutes: Routes = [
     FtPedidosComponent,
     FormModulosComponent,
     SubirArchivosComponent
-
-/*     AccordionAnchorDirective,
-    AccordionLinkDirective,
-    AccordionDirective,
- */]
+  ]
 })
 export class PedidosModule {}
 
