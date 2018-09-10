@@ -58,17 +58,18 @@
                               <div class="btn-group btn-group-toggle"
                                 ngbRadioGroup name='terminadoCorte{ii}}' [(ngModel)]='d.terminadoCorte'>
                                 <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
-                                  <input ngbButton type="radio" [value]="0">NO
+                                  <input ngbButton type="radio" [value]='0'>NO
                                 </label>
                                 <label ngbButtonLabel class="btn btn-outline-primary btn-sm">
-                                  <input ngbButton type="radio" [value]="1">SI
+                                  <input ngbButton type="radio" [value]='1'>SI
                                 </label>
                               </div>
                               <button type="button" class="btn btn-danger btn-sm"
                               (click)="$event.stopPropagation();">Notificar</button>
                             </span>
                             <ng-template #colAvanceCorte>
-                              {{d.terminadoCorte}}
+                             <label *ngIf='d.terminadoCorte==0'>-</label>
+                             <label *ngIf='d.terminadoCorte==1'>Si</label>
                             </ng-template>
                           </td>
                           <td>
@@ -87,7 +88,8 @@
                                 (click)="$event.stopPropagation();">Notificar</button>
                               </span>
                               <ng-template #colAvanceDiseno>
-                                {{d.terminadoDiseno}}
+                                <label *ngIf='d.terminadoDiseno==0'>-</label>
+                                <label *ngIf='d.terminadoDiseno==1'>Si</label>
                               </ng-template>
                             </td>
 <!--ESTAMPADO-->
@@ -106,7 +108,8 @@
                                 (click)="$event.stopPropagation();">Notificar</button>
                               </span>
                               <ng-template #colAvanceEstampado>
-                                {{d.terminadoEstampado}}
+                                <label *ngIf='d.terminadoEstampado==0'>-</label>
+                                <label *ngIf='d.terminadoEstampado==1'>Si</label>
                               </ng-template>
                           </td>
 <!--ESTAMPADO-->
@@ -125,8 +128,9 @@
                               (click)="$event.stopPropagation();">Notificar</button>
                             </span>
                             <ng-template #colAvanceConfeccion>
-                              {{d.terminadoConfeccion}}
-                            </ng-template>
+                              <label *ngIf='d.terminadoConfeccion==0'>-</label>
+                              <label *ngIf='d.terminadoConfeccion==1'>Si</label>
+                          </ng-template>
                           </td>
                         </tr>
                       </tbody>
@@ -149,5 +153,4 @@
 <ng-template #colTerminado>
     Terminado?
   </ng-template>
-<!-- {{pedido | json }}
- -->
+{{pedido | json }}

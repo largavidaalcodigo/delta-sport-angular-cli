@@ -65,13 +65,13 @@
                       <td class="text-center">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
                       <td class="font-weight-bold text-danger text-center">
                         <span *ngIf="modulo === 'corte'">{{pedido.itemsTerminadosCorte}}</span>
-                        <span *ngIf="modulo === 'diseno'">{{pedido.itemsTerminadosDiseno}}</span>
+                        <span *ngIf="modulo === 'diseño'">{{pedido.itemsTerminadosDiseno}}</span>
                         <span *ngIf="modulo === 'confeccion'">{{pedido.itemsTerminadosConfeccion}}</span>
                         <span *ngIf="modulo === 'estampado'">{{pedido.itemsTerminadosEstampado}}</span>
                       </td>
                       <td class="font-weight-bold text-success text-center">
                         <span *ngIf="modulo === 'corte'">{{pedido.avanceCorte}}%</span>
-                        <span *ngIf="modulo === 'diseno'">{{pedido.avanceDiseno}}%</span>
+                        <span *ngIf="modulo === 'diseño'">{{pedido.avanceDiseno}}%</span>
                         <span *ngIf="modulo === 'confeccion'">{{pedido.avanceConfeccion}}%</span>
                         <span *ngIf="modulo === 'estampado'">{{pedido.avanceEstampado}}%</span>
                       </td>
