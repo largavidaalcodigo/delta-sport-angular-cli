@@ -15,6 +15,9 @@ export class PedidosComponent implements OnInit {
   pedido: Pedido;
   query = '';
   estado: any;
+  checkSaldoPendiente: any;
+  fechaDesde = new Date(Date.now());
+  fechaHasta = new Date(Date.now());
 
   //verLista: boolean = true;
   tipoForm: string; // USADO PARA DEFINIR LAS TALLAS
@@ -33,7 +36,7 @@ export class PedidosComponent implements OnInit {
 /*     this.verLista = true;
  */
     //lista de pedidos
-    this.pedidosService.getPedidos('buscar', 'Creado', '')
+      this.pedidosService.getPedidos('buscar', 'Creado', '', this.fechaDesde, this.fechaHasta)
       .subscribe(
         pedidos => this.listaPedidos = pedidos,
         err => console.log(err)
@@ -76,9 +79,18 @@ export class PedidosComponent implements OnInit {
   }
 
   submitBuscador(){
-    this.pedidosService.getPedidos('buscar', this.estado, this.query).subscribe(data => {
+    console.log('checkSaldoPendiente->' + this.checkSaldoPendiente);
+    this.pedidosService.getPedidos('buscar',
+    this.estado,
+    this.query,
+    this.fechaDesde,
+    this.fechaHasta).subscribe(data => {
       console.log('observando lista pedidos...');
-      this.listaPedidos = data;
+      if (this.checkSaldoPendiente){
+        this.listaPedidos = data.filter(item => item.totalPagoPendiente > 0);
+      }else{
+        this.listaPedidos = data;
+      }
     });
   }
 

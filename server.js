@@ -1,7 +1,6 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
-const http = require('http');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('errorhandler');
 const session = require('express-session');
@@ -65,13 +64,33 @@ app.use( session({
   })
 );
 
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 
+//Socket.io
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
-  app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+io.on('connection', (socket) => {
+  // Log whenever a user connects
+  console.log('user connected');
+
+  // Log whenever a client disconnects from our websocket server
+  socket.on('disconnect', function(){
+      console.log('user disconnected');
+  });
+
+  // When we receive a 'message' event from our client, print out
+  // the contents of that message and then echo it back to our client
+  // using `io.emit()`
+  socket.on('message', (message) => {
+      console.log("Message Received: " + message);
+      io.emit('message', {type:'new-message', text: message});
+  });
 });
 
 // Parsers
@@ -83,8 +102,8 @@ app.use(errorHandler());
 //Set Port
 const port = process.env.PORT || '3000';
 app.set('port', port);
-const server = http.createServer(app);
-server.listen(port, () => console.log('Running on localhost:'+port));
+http.listen(port, () => console.log('Running on localhost:'+port));
+
 // Conexion a Mongodb
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -93,10 +112,7 @@ mongoose.connect('mongodb://localhost:27017/erp-taller')
   .catch((err) => console.error(err));
 
 
-console.log('******');
-console.log('******');
-console.log('******');
-console.log('******');
+console.log('*************************************************************');
 
 //app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 

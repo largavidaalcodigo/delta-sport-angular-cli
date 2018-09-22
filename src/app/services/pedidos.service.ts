@@ -7,16 +7,18 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PedidosService {
-  //baseUrl: string = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {}
 
-  public getPedidos(tipo: string, estado: string, query: string): Observable<Pedido[]> {
-    if (query!=null)
-      return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query);
-    else
+  public getPedidos(tipo: string, estado: string, query: string, fDesde: Date, fHasta: Date): Observable<Pedido[]> {
+    //if (query != '') {
+    //console.log('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/'+ fDesde.toString() + '/'+ fHasta.toString());
+    return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/'+ fDesde.toString() + '/'+ fHasta.toString());
+    //return this.http.get('/api/pedidos/buscar/En%20proceso/tomas/2018-08-01/2018-09-14');
+/*     }else {
       return this.http.get('/api/pedidos/' + tipo + '/' + estado);
-
+    }
+ */
 /*     return this.http.get('/api/pedidos')
       .map(response => response as Pedido[])
       .catch((error : any) => Observable.throw('Server error'));

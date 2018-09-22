@@ -14,6 +14,8 @@ export class ListaPedidosComponent implements OnInit {
   pedido: Pedido;
   mensaje: string;
   titulo: string;
+  fechaDesde = new Date(Date.now());
+  fechaHasta = new Date(Date.now());
   @Input() modulo: string;
 
   constructor(private route: ActivatedRoute,
@@ -22,7 +24,7 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.pedidosService.getPedidos('buscar', 'En proceso', '')
+     this.pedidosService.getPedidos('buscar', 'En proceso', '', this.fechaDesde, this.fechaHasta)
       .subscribe(
         pedidos => this.listaPedidos = pedidos,
         err => console.log(err),

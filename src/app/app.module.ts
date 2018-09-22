@@ -1,3 +1,5 @@
+import { WebsocketService } from './services/websocket.service';
+import { ChatService } from './services/chat.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
@@ -26,11 +28,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     TitleComponent,
     AuthComponent,
     LayoutModulosDirective,
-    //ProductosComponent,
-/*     FileSelectDirective,
-    FileDropDirective,
-    FileUploader
- */  ],
+  ],
   imports: [
     HttpClientModule,
     FormsModule,
@@ -41,6 +39,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     SharedModule
   ],
   providers: [
+    ChatService,
+    WebsocketService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [

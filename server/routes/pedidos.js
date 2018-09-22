@@ -26,13 +26,36 @@ router.get('/', (req, res) => {
     });
   }
 });
-
 router.get('/pedidos/:tipo/:estado/:query', function(req, res, next) {
   console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado + '/query->' + req.params.query);
   var query = {
     'estado': req.params.estado,
     'cliente.nombresCliente': { $regex: req.params.query, $options: 'i'}
   };
+
+  Pedido.find(query, function (err, data) {
+    if (err) return next(err);
+    res.json(data);
+  });
+});
+
+router.get('/pedidos/:tipo/:estado/:query?*/:fDesde/:fHasta', function(req, res, next) {
+
+  if (req.params.query != undefined){
+    console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado + '/query->' + req.params.query
+    + '/fecha desde->' + req.params.fDesde +  '/ fecha hasta->' + req.params.fHasta);
+    var query = {
+      'estado': req.params.estado,
+      'cliente.nombresCliente': { $regex: req.params.query, $options: 'i'},
+      'fechaEntrega' : { $gte: req.params.fDesde, $lte: req.params.fHasta }
+    };
+  }else{
+    console.log('sin query');
+    var query = {
+      'estado': req.params.estado,
+      'fechaEntrega' : { $gte: req.params.fDesde, $lte: req.params.fHasta }
+    };
+  }
 
   Pedido.find(query, function (err, data) {
     if (err) return next(err);

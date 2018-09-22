@@ -24,8 +24,8 @@ var map = {
 	],
 	"./pages/corte/corte.module": [
 		"../../../../../src/app/pages/corte/corte.module.ts",
-		"common",
-		"corte.module"
+		"corte.module",
+		"common"
 	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
@@ -121,28 +121,45 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_chat_service__ = __webpack_require__("../../../../../src/app/services/chat.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(chat) {
+        this.chat = chat;
         this.title = 'app';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.chat.sendMsg('Test de prueba');
+        this.chat.messages.subscribe(function (msg) {
+            console.log(msg);
+        });
+    };
+    AppComponent.prototype.sendMessage = function () {
+        this.chat.sendMsg('Test de prueba');
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
         selector: 'app-root',
         template: '<router-outlet><app-spinner></app-spinner></router-outlet>',
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
-    })
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_chat_service__["a" /* ChatService */]) === "function" && _a || Object])
 ], AppComponent);
 
+var _a;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -152,29 +169,33 @@ AppComponent = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_routing__ = __webpack_require__("../../../../../src/app/app.routing.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__layout_admin_admin_component__ = __webpack_require__("../../../../../src/app/layout/admin/admin.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng_click_outside__ = __webpack_require__("../../../../ng-click-outside/lib/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng_click_outside___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_ng_click_outside__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__layout_admin_breadcrumbs_breadcrumbs_component__ = __webpack_require__("../../../../../src/app/layout/admin/breadcrumbs/breadcrumbs.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__layout_admin_title_title_component__ = __webpack_require__("../../../../../src/app/layout/admin/title/title.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__layout_auth_auth_component__ = __webpack_require__("../../../../../src/app/layout/auth/auth.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__layout_modulos_directive__ = __webpack_require__("../../../../../src/app/layout-modulos.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_websocket_service__ = __webpack_require__("../../../../../src/app/services/websocket.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__("../../../../../src/app/services/chat.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_routing__ = __webpack_require__("../../../../../src/app/app.routing.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__layout_admin_admin_component__ = __webpack_require__("../../../../../src/app/layout/admin/admin.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng_click_outside__ = __webpack_require__("../../../../ng-click-outside/lib/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ng_click_outside___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_ng_click_outside__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__shared_shared_module__ = __webpack_require__("../../../../../src/app/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__layout_admin_breadcrumbs_breadcrumbs_component__ = __webpack_require__("../../../../../src/app/layout/admin/breadcrumbs/breadcrumbs.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__layout_admin_title_title_component__ = __webpack_require__("../../../../../src/app/layout/admin/title/title.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__layout_auth_auth_component__ = __webpack_require__("../../../../../src/app/layout/auth/auth.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__layout_modulos_directive__ = __webpack_require__("../../../../../src/app/layout-modulos.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -200,29 +221,31 @@ var AppModule = (function () {
     return AppModule;
 }());
 AppModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
+    Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_7__layout_admin_admin_component__["a" /* AdminComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__layout_admin_breadcrumbs_breadcrumbs_component__["a" /* BreadcrumbsComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__layout_admin_title_title_component__["a" /* TitleComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__layout_auth_auth_component__["a" /* AuthComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__layout_modulos_directive__["a" /* LayoutModulosDirective */],
+            __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__layout_admin_admin_component__["a" /* AdminComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__layout_admin_breadcrumbs_breadcrumbs_component__["a" /* BreadcrumbsComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__layout_admin_title_title_component__["a" /* TitleComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__layout_auth_auth_component__["a" /* AuthComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__layout_modulos_directive__["a" /* LayoutModulosDirective */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["b" /* HttpClientModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_router__["g" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_5__app_routing__["a" /* AppRoutes */]),
-            __WEBPACK_IMPORTED_MODULE_8_ng_click_outside__["ClickOutsideModule"],
-            __WEBPACK_IMPORTED_MODULE_9__shared_shared_module__["a" /* SharedModule */]
+            __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClientModule */],
+            __WEBPACK_IMPORTED_MODULE_5__angular_forms__["b" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_12__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["g" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_routing__["a" /* AppRoutes */]),
+            __WEBPACK_IMPORTED_MODULE_10_ng_click_outside__["ClickOutsideModule"],
+            __WEBPACK_IMPORTED_MODULE_11__shared_shared_module__["a" /* SharedModule */]
         ],
         providers: [
-            { provide: __WEBPACK_IMPORTED_MODULE_15__angular_common__["LocationStrategy"], useClass: __WEBPACK_IMPORTED_MODULE_15__angular_common__["HashLocationStrategy"] }
+            __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_websocket_service__["a" /* WebsocketService */],
+            { provide: __WEBPACK_IMPORTED_MODULE_17__angular_common__["LocationStrategy"], useClass: __WEBPACK_IMPORTED_MODULE_17__angular_common__["HashLocationStrategy"] }
         ],
         bootstrap: [
-            __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* AppComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]
         ]
     })
 ], AppModule);
@@ -343,7 +366,7 @@ LayoutModulosDirective = __decorate([
 /***/ "../../../../../src/app/layout/admin/admin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"pcoded\"\n     [attr.nav-type]=\"navType\"\n     [attr.theme-layout]=\"themeLayout\"\n     [attr.layout-type]=\"layoutType\"\n     [attr.vertical-placement]=\"verticalPlacement\"\n     [attr.vertical-layout]=\"verticalLayout\"\n     [attr.pcoded-device-type]=\"deviceType\"\n     [attr.vertical-nav-type]=\"verticalNavType\"\n     [attr.vertical-effect]=\"verticalEffect\"\n     [attr.vnavigation-view]=\"vNavigationView\"\n     (window:resize)=\"onResize($event)\">\n  <div class=\"pcoded-overlay-box\"></div>\n  <div class=\"pcoded-container navbar-wrapper\">\n    <nav class=\"navbar header-navbar pcoded-header\" [attr.pcoded-header-position]=\"pcodedHeaderPosition\" [attr.header-theme]=\"headerTheme\">\n      <div class=\"navbar-wrapper\">\n        <div class=\"navbar-logo\" [attr.logo-theme]=\"logoTheme\">\n          <a class=\"mobile-menu\" id=\"mobile-collapse\" href=\"javascript:;\" (click)=\"toggleOpened()\" [exclude]=\"'#main_navbar'\" (clickOutside)=\"onClickedOutside($event)\">\n            <i class=\"ti-menu\"></i>\n          </a>\n          <a [routerLink]=\"['/']\">\n            <img class=\"img-fluid\" src=\"assets/images/logo.png\" alt=\"Theme-Logo\"/>\n          </a>\n          <a (click)=\"onMobileMenu()\" class=\"mobile-options\">\n            <i class=\"ti-more\"></i>\n          </a>\n        </div>\n\n        <div class=\"navbar-container\">\n          <div>\n            <ul class=\"nav-left\">\n              <li>\n                <div class=\"sidebar_toggle\"><a href=\"javascript:;\" (click)=\"toggleOpened()\"><i class=\"ti-menu f-18\"></i></a></div>\n              </li>\n              <li>\n                <a href=\"javascript:;\" appToggleFullscreen>\n                  <i class=\"ti-fullscreen\"></i>\n                </a>\n              </li>\n              <li class=\"mega-menu-top\">\n<!--\n                <a href=\"javascript:;\">\n                  Mega\n                  <i class=\"ti-angle-down\"></i>\n                </a>\n-->\n                <ul class=\"show-notification row\">\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Popular Links</h6>\n                    <ul class=\"mega-menu-links\">\n                      <li><a [routerLink]=\"['/basic/button']\">Buttons</a></li>\n                      <li><a [routerLink]=\"['/map']\">Maps</a></li>\n                      <li><a [routerLink]=\"['/user/profile']\">User Information</a></li>\n                    </ul>\n                  </li>\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Mailbox</h6>\n                    <ul class=\"mega-mailbox\">\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-folder\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Data Backup</h5>\n                            <small class=\"text-muted\">Store your data</small>\n                          </div>\n                        </a>\n                      </li>\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-headphone-alt\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Support</h5>\n                            <small class=\"text-muted\">24-hour support</small>\n                          </div>\n                        </a>\n                      </li>\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-dropbox\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Drop-box</h5>\n                            <small class=\"text-muted\">Store large amount of data in one-box only\n                            </small>\n                          </div>\n                        </a>\n                      </li>\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-location-pin\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Location</h5>\n                            <small class=\"text-muted\">Find Your Location with ease of use</small>\n                          </div>\n                        </a>\n                      </li>\n                    </ul>\n                  </li>\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Gallery</h6>\n                    <div class=\"row m-b-20\">\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/01.jpg\" alt=\"Gallery-1\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/02.jpg\" alt=\"Gallery-2\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/01.jpg\" alt=\"Gallery-3\">\n                      </div>\n                    </div>\n                    <div class=\"row m-b-20\">\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/02.jpg\" alt=\"Gallery-4\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/01.jpg\" alt=\"Gallery-5\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/02.jpg\" alt=\"Gallery-6\">\n                      </div>\n                    </div>\n                    <button class=\"btn btn-primary btn-sm btn-block\">Browse Gallery</button>\n                  </li>\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Contact Us</h6>\n                    <div class=\"mega-menu-contact\">\n                      <div class=\"form-group row\">\n                        <label for=\"example-text-input\" class=\"col-3 col-form-label\">Name</label>\n                        <div class=\"col-9\">\n                          <input class=\"form-control\" type=\"text\" placeholder=\"Artisanal kale\" id=\"example-text-input\">\n                        </div>\n                      </div>\n                      <div class=\"form-group row\">\n                        <label for=\"example-search-input-email\" class=\"col-3 col-form-label\">Email</label>\n                        <div class=\"col-9\">\n                          <input class=\"form-control\" type=\"email\" placeholder=\"Enter your E-mail Id\" id=\"example-search-input-email\">\n                        </div>\n                      </div>\n                      <div class=\"form-group row\">\n                        <label for=\"example-search-input-content\" class=\"col-3 col-form-label\">Contact</label>\n                        <div class=\"col-9\">\n                          <input class=\"form-control\" type=\"number\" placeholder=\"+91-9898989898\" id=\"example-search-input-content\">\n                        </div>\n                      </div>\n                      <div class=\"form-group row\">\n                        <label for=\"exampleTextarea\" class=\"col-3 col-form-label\">Message</label>\n                        <div class=\"col-9\">\n                          <textarea class=\"form-control\" id=\"exampleTextarea\" rows=\"3\"></textarea>\n                        </div>\n                      </div>\n                    </div>\n                  </li>\n                </ul>\n              </li>\n            </ul>\n            <ul [@mobileMenuTop]=\"isCollapsedMobile\" class=\"nav-right\" [ngClass]=\"isCollapsedMobile\">\n<!--\n              <li class=\"header-notification lng-dropdown\">\n                <a href=\"javascript:;\" id=\"dropdown-active-item\">\n                  <img src=\"assets/images/flags/ENGLISH.jpg\" alt=\"\"> English\n                </a>\n                <ul class=\"show-notification\">\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"en\">\n                      <img src=\"assets/images/flags/ENGLISH.jpg\" alt=\"\"> English\n                    </a>\n                  </li>\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"es\">\n                      <img src=\"assets/images/flags/SPAIN.jpg\" alt=\"\"> Spanish\n                    </a>\n                  </li>\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"pt\">\n                      <img src=\"assets/images/flags/PORTO.jpg\" alt=\"\"> Portuguese\n                    </a>\n                  </li>\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"fr\">\n                      <img src=\"assets/images/flags/FRANCE.jpg\" alt=\"\"> French\n                    </a>\n                  </li>\n                </ul>\n              </li>\n              <li class=\"header-notification\">\n                <a href=\"javascript:;\">\n                  <i class=\"ti-bell\"></i>\n                  <span class=\"badge bg-c-pink\"></span>\n                </a>\n                <ul class=\"show-notification\">\n                  <li>\n                    <h6>Notifications</h6>\n                    <label class=\"label label-danger\">New</label>\n                  </li>\n                  <li>\n                    <div class=\"media\">\n                      <img class=\"d-flex align-self-center img-radius\" src=\"assets/images/avatar-2.jpg\" alt=\"Generic placeholder image\">\n                      <div class=\"media-body\">\n                        <h5 class=\"notification-user\">John Doe</h5>\n                        <p class=\"notification-msg\">Lorem ipsum dolor sit amet, consectetuer elit.</p>\n                        <span class=\"notification-time\">30 minutes ago</span>\n                      </div>\n                    </div>\n                  </li>\n                  <li>\n                    <div class=\"media\">\n                      <img class=\"d-flex align-self-center img-radius\" src=\"assets/images/avatar-3.jpg\" alt=\"Generic placeholder image\">\n                      <div class=\"media-body\">\n                        <h5 class=\"notification-user\">Joseph William</h5>\n                        <p class=\"notification-msg\">Lorem ipsum dolor sit amet, consectetuer elit.</p>\n                        <span class=\"notification-time\">30 minutes ago</span>\n                      </div>\n                    </div>\n                  </li>\n                  <li>\n                    <div class=\"media\">\n                      <img class=\"d-flex align-self-center img-radius\" src=\"assets/images/avatar-5.jpg\" alt=\"Generic placeholder image\">\n                      <div class=\"media-body\">\n                        <h5 class=\"notification-user\">Sara Soudein</h5>\n                        <p class=\"notification-msg\">Lorem ipsum dolor sit amet, consectetuer elit.</p>\n                        <span class=\"notification-time\">30 minutes ago</span>\n                      </div>\n                    </div>\n                  </li>\n                </ul>\n              </li>\n-->\n<!-----\nPERFIL USUARIO\n------>\n              <li class=\"user-profile header-notification\">\n                <a [routerLink]=\"['/']\">\n                  <img src=\"assets/images/avatar-4.jpg\" class=\"img-radius\" alt=\"User-Profile-Image\">\n                  <span>Tomas Gonzalez</span>\n                  <i class=\"ti-angle-down\"></i>\n                </a>\n                <ul class=\"show-notification profile-notification\">\n                  <li>\n                    <a href=\"javascript:;\">\n                      <i class=\"ti-settings\"></i> Configuraciones\n                    </a>\n                  </li>\n                  <li>\n                    <a [routerLink]=\"['/user']\">\n                      <i class=\"ti-user\"></i> Perfil\n                    </a>\n                  </li>\n                  <li>\n                    <a [routerLink]=\"['/notifications']\">\n                      <i class=\"ti-email\"></i> Mensajes\n                    </a>\n                  </li>\n                  <li>\n                    <a [routerLink]=\"['/authentication/login']\">\n                      <i class=\"ti-layout-sidebar-left\"></i> Cerrar Sesión\n                    </a>\n                  </li>\n                </ul>\n              </li>\n<!-----\nPERFIL USUARIO\n------>\n             </ul>\n          </div>\n        </div>\n      </div>\n    </nav>\n\n    <div class=\"pcoded-main-container\" [style.margin-top]=\"headerFixedMargin\">\n      <div class=\"pcoded-wrapper\">\n        <nav id=\"main_navbar\" class=\" pcoded-navbar\" (clickOutside)=\"onClickedOutside($event)\" [exclude]=\"'#mobile-collapse'\" [attr.pcoded-header-position]=\"pcodedHeaderPosition\" [attr.navbar-theme]=\"navBarTheme\" [attr.active-item-theme]=\"activeItemTheme\" sub-item-theme=\"theme2\" active-item-style=\"style0\" [attr.pcoded-navbar-position]=\"pcodedSidebarPosition\">\n          <div class=\"sidebar_toggle\"><a href=\"javascript:;\"><i class=\"icon-close icons\"></i></a></div>\n          <div class=\"pcoded-inner-navbar main-menu\" appAccordion>\n            <div class=\"\">\n              <div class=\"main-menu-header\">\n                <img class=\"img-40 img-radius\" src=\"assets/images/avatar-4.jpg\" alt=\"User-Profile-Image\">\n                <div class=\"user-details\">\n                  <span>John Doe</span>\n                  <span id=\"more-details\" (click)=\"toggleOpenedSidebar()\">UX Designer<i class=\"ti-angle-down\"></i></span>\n                </div>\n              </div>\n              <div class=\"main-menu-content\">\n                <ul>\n                  <li [@mobileMenuTop]=\"isCollapsedSideBar\" class=\"more-details\" [ngClass]=\"isCollapsedSideBar\">\n                    <a [routerLink]=\"['/user/profile']\"><i class=\"ti-user\"></i>View Profile</a>\n                    <a [routerLink]=\"['/crm-contact']\"><i class=\"ti-settings\"></i>Settings</a>\n                    <a [routerLink]=\"['/authentication/login/with-bg-image']\"><i class=\"ti-layout-sidebar-left\"></i>Logout</a>\n                  </li>\n                </ul>\n              </div>\n            </div>\n            <div class=\"pcoded-search\">\n              <span class=\"searchbar-toggle\">  </span>\n              <div class=\"pcoded-search-box \">\n                <input type=\"text\" placeholder=\"Search\">\n                <span class=\"search-icon\"><i class=\"ti-search\" aria-hidden=\"true\"></i></span>\n              </div>\n            </div>\n            <div slimScroll width=\"100%\" height=\"calc(100% - 80px)\" size=\"4px\" color=\"#fff\" opacity=\"0.3\" allowPageScroll=\"false\">\n              <div *ngFor=\"let asideItems of menuItems.getAll()\" class=\"d-color\">\n                <div class=\"pcoded-navigatio-lavel\" [attr.menu-title-theme]=\"menuTitleTheme\">{{asideItems.label}}</div>\n                <ul class=\"pcoded-item pcoded-left-item\" [attr.item-border]=\"itemBorder\" [attr.item-border-style]=\"itemBorderStyle\" [attr.subitem-border]=\"subItemBorder\" *ngFor=\"let asideItem of asideItems.main\" appAccordionLink group=\"{{asideItem.state}}\">\n                  <li [routerLinkActive]=\"['active']\" *ngIf=\"asideItem.type === 'external'\" appAccordionLink group=\"{{asideItem.state}}\">\n                    <a href=\"{{asideItem.external}}\" target=\"{{asideItem.target ? '_blank' : '_self'}}\" appAccordionToggle>\n                      <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                      <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                      <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                      <span class=\"pcoded-mcaret\"></span>\n                    </a>\n                  </li>\n\n                  <li [routerLinkActive]=\"['active']\" *ngIf=\"asideItem.type === 'link'\" appAccordionLink group=\"{{asideItem.state}}\">\n                    <a [routerLink]=\"['/', asideItem.main_state, asideItem.state]\" target=\"{{asideItem.target ? '_blank' : '_self'}}\" appAccordionToggle *ngIf=\"asideItem.main_state; else mainContent\">\n                      <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                      <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                      <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                      <span class=\"pcoded-mcaret\"></span>\n                    </a>\n                    <ng-template #mainContent>\n                      <a [routerLink]=\"['/', asideItem.state]\" target=\"{{asideItem.target ? '_blank' : '_self'}}\" appAccordionToggle>\n                        <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                        <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                        <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                        <span class=\"pcoded-mcaret\"></span>\n                      </a>\n                    </ng-template>\n                  </li>\n                  <li [routerLinkActive]=\"['active']\" *ngIf=\"asideItem.type === 'sub'\" class=\"pcoded-hasmenu\" [attr.dropdown-icon]=\"dropDownIcon\" [attr.subitem-icon]=\"subItemIcon\" appAccordionLink group=\"{{asideItem.state}}\">\n                    <a [routerLinkActive]=\"['active']\" href=\"javascript:;\" appAccordionToggle>\n                      <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                      <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                      <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                      <span class=\"pcoded-mcaret\"></span>\n                    </a>\n                    <ul class=\"pcoded-submenu\">\n                      <ng-template ngFor let-asideChildren [ngForOf]=\"asideItem.children\">\n                        <li [routerLinkActive]=\"['active']\" *ngIf=\"asideChildren.type !== 'sub'\">\n                          <a [routerLink]=\"['/', asideItem.state, asideChildren.state]\" target=\"{{asideChildren.target ? '_blank' : '_self'}}\">\n                            <span class=\"pcoded-micon\"><i class=\"ti-angle-right\"></i></span>\n                            <span class=\"pcoded-mtext\">{{ asideChildren.name }} </span>\n                            <span *ngFor=\"let asideChildrenBadge of asideChildren.badge\" class=\"pcoded-badge label label-{{ asideChildrenBadge.type }}\">{{asideChildrenBadge.value}}</span>\n                            <span class=\"pcoded-mcaret\"></span>\n                          </a>\n                        </li>\n\n                        <li [routerLinkActive]=\"['active']\" class=\"pcoded-hasmenu\" [attr.dropdown-icon]=\"dropDownIcon\" [attr.subitem-icon]=\"subItemIcon\" *ngIf=\"asideChildren.type === 'sub'\" appAccordionLink group=\"sub-toggled\">\n                          <a href=\"javascript:;\" appAccordionToggle>\n                            <span class=\"pcoded-micon\"><i class=\"ti-direction-alt\"></i></span>\n                            <span class=\"pcoded-mtext\">{{ asideChildren.name }}</span>\n                            <span *ngFor=\"let asideChildrenBadge of asideChildren.badge\" class=\"pcoded-badge label label-{{ asideChildrenBadge.type }}\">{{asideChildrenBadge.value}}</span>\n                            <span class=\"pcoded-mcaret\"></span>\n                          </a>\n                          <ul class=\"pcoded-submenu\">\n                            <ng-template ngFor let-asideChildrenSub [ngForOf]=\"asideChildren.children\">\n                              <li [routerLinkActive]=\"['active']\">\n                                <a [routerLink]=\"['/', asideItem.state, asideChildren.state, asideChildrenSub.state]\" target=\"{{asideChildrenSub.target ? '_blank' : '_self'}}\">\n                                  <span class=\"pcoded-micon\"><i class=\"ti-angle-right\"></i></span>\n                                  <span class=\"pcoded-mtext\">{{ asideChildrenSub.name }}</span>\n                                  <span *ngFor=\"let asideChildrenSubBadge of asideChildrenSub.badge\" class=\"pcoded-badge label label-{{ asideChildrenSubBadge.type }}\">{{asideChildrenSubBadge.value}}</span>\n                                  <span class=\"pcoded-mcaret\"></span>\n                                </a>\n                              </li>\n                            </ng-template>\n                          </ul>\n                        </li>\n                      </ng-template>\n                    </ul>\n                  </li>\n                </ul>\n              </div>\n            </div>\n          </div>\n        </nav>\n        <div class=\"pcoded-content\">\n          <div class=\"pcoded-inner-content\">\n            <div class=\"main-body\">\n              <div class=\"page-wrapper\">\n                <app-title></app-title>\n                <!--<app-breadcrumbs></app-breadcrumbs>-->\n                <div class=\"page-body\">\n                  <router-outlet>\n                    <app-spinner></app-spinner>\n                  </router-outlet>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"pcoded\"\n     [attr.nav-type]=\"navType\"\n     [attr.theme-layout]=\"themeLayout\"\n     [attr.layout-type]=\"layoutType\"\n     [attr.vertical-placement]=\"verticalPlacement\"\n     [attr.vertical-layout]=\"verticalLayout\"\n     [attr.pcoded-device-type]=\"deviceType\"\n     [attr.vertical-nav-type]=\"verticalNavType\"\n     [attr.vertical-effect]=\"verticalEffect\"\n     [attr.vnavigation-view]=\"vNavigationView\"\n     (window:resize)=\"onResize($event)\">\n  <div class=\"pcoded-overlay-box\"></div>\n  <div class=\"pcoded-container navbar-wrapper\">\n    <nav class=\"navbar header-navbar pcoded-header\" [attr.pcoded-header-position]=\"pcodedHeaderPosition\" [attr.header-theme]=\"headerTheme\">\n      <div class=\"navbar-wrapper\">\n        <div class=\"navbar-logo\" [attr.logo-theme]=\"logoTheme\">\n          <a class=\"mobile-menu\" id=\"mobile-collapse\" href=\"javascript:;\" (click)=\"toggleOpened()\" [exclude]=\"'#main_navbar'\" (clickOutside)=\"onClickedOutside($event)\">\n            <i class=\"ti-menu\"></i>\n          </a>\n          <a [routerLink]=\"['/']\">\n            <img class=\"img-fluid\" src=\"assets/images/logo.png\" alt=\"Theme-Logo\"/>\n          </a>\n          <a (click)=\"onMobileMenu()\" class=\"mensajes-options\">\n              <i class=\"ti-email\"></i>\n          </a>\n          <a (click)=\"onMobileMenu()\" class=\"mobile-options\">\n            <i class=\"ti-more\"></i>\n          </a>\n        </div>\n\n        <div class=\"navbar-container\">\n          <div>\n            <ul class=\"nav-left\">\n              <li>\n                <div class=\"sidebar_toggle\"><a href=\"javascript:;\" (click)=\"toggleOpened()\"><i class=\"ti-menu f-18\"></i></a></div>\n                <div>Mensajes</div>\n              </li>\n              <li>\n                <a href=\"javascript:;\" appToggleFullscreen>\n                  <i class=\"ti-fullscreen\"></i>\n                </a>\n              </li>\n              <li class=\"mega-menu-top\">\n                <ul class=\"show-notification row\">\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Popular Links</h6>\n                    <ul class=\"mega-menu-links\">\n                      <li><a [routerLink]=\"['/basic/button']\">Buttons</a></li>\n                      <li><a [routerLink]=\"['/map']\">Maps</a></li>\n                      <li><a [routerLink]=\"['/user/profile']\">User Information</a></li>\n                    </ul>\n                  </li>\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Mailbox</h6>\n                    <ul class=\"mega-mailbox\">\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-folder\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Data Backup</h5>\n                            <small class=\"text-muted\">Store your data</small>\n                          </div>\n                        </a>\n                      </li>\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-headphone-alt\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Support</h5>\n                            <small class=\"text-muted\">24-hour support</small>\n                          </div>\n                        </a>\n                      </li>\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-dropbox\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Drop-box</h5>\n                            <small class=\"text-muted\">Store large amount of data in one-box only\n                            </small>\n                          </div>\n                        </a>\n                      </li>\n                      <li>\n                        <a href=\"javascript:;\" class=\"media\">\n                          <div class=\"media-left\">\n                            <i class=\"ti-location-pin\"></i>\n                          </div>\n                          <div class=\"media-body\">\n                            <h5>Location</h5>\n                            <small class=\"text-muted\">Find Your Location with ease of use</small>\n                          </div>\n                        </a>\n                      </li>\n                    </ul>\n                  </li>\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Gallery</h6>\n                    <div class=\"row m-b-20\">\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/01.jpg\" alt=\"Gallery-1\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/02.jpg\" alt=\"Gallery-2\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/01.jpg\" alt=\"Gallery-3\">\n                      </div>\n                    </div>\n                    <div class=\"row m-b-20\">\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/02.jpg\" alt=\"Gallery-4\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/01.jpg\" alt=\"Gallery-5\">\n                      </div>\n                      <div class=\"col-sm-4\"><img class=\"img-fluid img-thumbnail\" src=\"assets/images/mega-menu/02.jpg\" alt=\"Gallery-6\">\n                      </div>\n                    </div>\n                    <button class=\"btn btn-primary btn-sm btn-block\">Browse Gallery</button>\n                  </li>\n                  <li class=\"col-sm-3\">\n                    <h6 class=\"mega-menu-title\">Contact Us</h6>\n                    <div class=\"mega-menu-contact\">\n                      <div class=\"form-group row\">\n                        <label for=\"example-text-input\" class=\"col-3 col-form-label\">Name</label>\n                        <div class=\"col-9\">\n                          <input class=\"form-control\" type=\"text\" placeholder=\"Artisanal kale\" id=\"example-text-input\">\n                        </div>\n                      </div>\n                      <div class=\"form-group row\">\n                        <label for=\"example-search-input-email\" class=\"col-3 col-form-label\">Email</label>\n                        <div class=\"col-9\">\n                          <input class=\"form-control\" type=\"email\" placeholder=\"Enter your E-mail Id\" id=\"example-search-input-email\">\n                        </div>\n                      </div>\n                      <div class=\"form-group row\">\n                        <label for=\"example-search-input-content\" class=\"col-3 col-form-label\">Contact</label>\n                        <div class=\"col-9\">\n                          <input class=\"form-control\" type=\"number\" placeholder=\"+91-9898989898\" id=\"example-search-input-content\">\n                        </div>\n                      </div>\n                      <div class=\"form-group row\">\n                        <label for=\"exampleTextarea\" class=\"col-3 col-form-label\">Message</label>\n                        <div class=\"col-9\">\n                          <textarea class=\"form-control\" id=\"exampleTextarea\" rows=\"3\"></textarea>\n                        </div>\n                      </div>\n                    </div>\n                  </li>\n                </ul>\n              </li>\n            </ul>\n            <ul [@mobileMenuTop]=\"isCollapsedMobile\" class=\"nav-right\" [ngClass]=\"isCollapsedMobile\">\n<!--\n              <li class=\"header-notification lng-dropdown\">\n                <a href=\"javascript:;\" id=\"dropdown-active-item\">\n                  <img src=\"assets/images/flags/ENGLISH.jpg\" alt=\"\"> English\n                </a>\n                <ul class=\"show-notification\">\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"en\">\n                      <img src=\"assets/images/flags/ENGLISH.jpg\" alt=\"\"> English\n                    </a>\n                  </li>\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"es\">\n                      <img src=\"assets/images/flags/SPAIN.jpg\" alt=\"\"> Spanish\n                    </a>\n                  </li>\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"pt\">\n                      <img src=\"assets/images/flags/PORTO.jpg\" alt=\"\"> Portuguese\n                    </a>\n                  </li>\n                  <li>\n                    <a href=\"javascript:;\" data-lng=\"fr\">\n                      <img src=\"assets/images/flags/FRANCE.jpg\" alt=\"\"> French\n                    </a>\n                  </li>\n                </ul>\n              </li>\n              <li class=\"header-notification\">\n                <a href=\"javascript:;\">\n                  <i class=\"ti-bell\"></i>\n                  <span class=\"badge bg-c-pink\"></span>\n                </a>\n                <ul class=\"show-notification\">\n                  <li>\n                    <h6>Notifications</h6>\n                    <label class=\"label label-danger\">New</label>\n                  </li>\n                  <li>\n                    <div class=\"media\">\n                      <img class=\"d-flex align-self-center img-radius\" src=\"assets/images/avatar-2.jpg\" alt=\"Generic placeholder image\">\n                      <div class=\"media-body\">\n                        <h5 class=\"notification-user\">John Doe</h5>\n                        <p class=\"notification-msg\">Lorem ipsum dolor sit amet, consectetuer elit.</p>\n                        <span class=\"notification-time\">30 minutes ago</span>\n                      </div>\n                    </div>\n                  </li>\n                  <li>\n                    <div class=\"media\">\n                      <img class=\"d-flex align-self-center img-radius\" src=\"assets/images/avatar-3.jpg\" alt=\"Generic placeholder image\">\n                      <div class=\"media-body\">\n                        <h5 class=\"notification-user\">Joseph William</h5>\n                        <p class=\"notification-msg\">Lorem ipsum dolor sit amet, consectetuer elit.</p>\n                        <span class=\"notification-time\">30 minutes ago</span>\n                      </div>\n                    </div>\n                  </li>\n                  <li>\n                    <div class=\"media\">\n                      <img class=\"d-flex align-self-center img-radius\" src=\"assets/images/avatar-5.jpg\" alt=\"Generic placeholder image\">\n                      <div class=\"media-body\">\n                        <h5 class=\"notification-user\">Sara Soudein</h5>\n                        <p class=\"notification-msg\">Lorem ipsum dolor sit amet, consectetuer elit.</p>\n                        <span class=\"notification-time\">30 minutes ago</span>\n                      </div>\n                    </div>\n                  </li>\n                </ul>\n              </li>\n-->\n<!-----\nPERFIL USUARIO\n------>\n              <li class=\"user-profile header-notification\">\n                <a [routerLink]=\"['/']\">\n<!--                   <img src=\"assets/images/avatar-4.jpg\" class=\"img-radius\" alt=\"User-Profile-Image\">\n -->\n                  <span>\n                      Tomas Gonzalez\n                  </span>\n                  <i class=\"ti-angle-down\"></i>\n                </a>\n                <ul class=\"show-notification profile-notification\">\n<!--                   <li>\n                    <a href=\"javascript:;\">\n                      <i class=\"ti-settings\"></i> Configuraciones\n                    </a>\n                  </li>\n                  <li>\n                    <a [routerLink]=\"['/user']\">\n                      <i class=\"ti-user\"></i> Perfil\n                    </a>\n                  </li>\n                  <li>\n                    <a [routerLink]=\"['/notifications']\">\n                      <i class=\"ti-email\"></i> Mensajes\n                    </a>\n                  </li>\n -->                  <li>\n                    <a [routerLink]=\"['/authentication/login']\">\n                      <i class=\"ti-layout-sidebar-left\"></i> Cerrar Sesión\n                    </a>\n                  </li>\n                </ul>\n              </li>\n<!-----\nPERFIL USUARIO\n------>\n             </ul>\n          </div>\n        </div>\n      </div>\n    </nav>\n\n    <div class=\"pcoded-main-container\" [style.margin-top]=\"headerFixedMargin\">\n      <div class=\"pcoded-wrapper\">\n        <nav id=\"main_navbar\" class=\" pcoded-navbar\" (clickOutside)=\"onClickedOutside($event)\" [exclude]=\"'#mobile-collapse'\" [attr.pcoded-header-position]=\"pcodedHeaderPosition\" [attr.navbar-theme]=\"navBarTheme\" [attr.active-item-theme]=\"activeItemTheme\" sub-item-theme=\"theme2\" active-item-style=\"style0\" [attr.pcoded-navbar-position]=\"pcodedSidebarPosition\">\n          <div class=\"sidebar_toggle\"><a href=\"javascript:;\"><i class=\"icon-close icons\"></i></a></div>\n          <div class=\"pcoded-inner-navbar main-menu\" appAccordion>\n<!--             <div class=\"\">\n              <div class=\"main-menu-header\">\n                <img class=\"img-40 img-radius\" src=\"assets/images/avatar-4.jpg\" alt=\"User-Profile-Image\">\n                <div class=\"user-details\">\n                  <span>John Doe</span>\n                  <span id=\"more-details\" (click)=\"toggleOpenedSidebar()\">UX Designer<i class=\"ti-angle-down\"></i></span>\n                </div>\n              </div>\n              <div class=\"main-menu-content\">\n                <ul>\n                  <li [@mobileMenuTop]=\"isCollapsedSideBar\" class=\"more-details\" [ngClass]=\"isCollapsedSideBar\">\n                    <a [routerLink]=\"['/user/profile']\"><i class=\"ti-user\"></i>View Profile</a>\n                    <a [routerLink]=\"['/crm-contact']\"><i class=\"ti-settings\"></i>Settings</a>\n                    <a [routerLink]=\"['/authentication/login/with-bg-image']\"><i class=\"ti-layout-sidebar-left\"></i>Logout</a>\n                  </li>\n                </ul>\n              </div>\n            </div>\n --><!--             <div class=\"pcoded-search\">\n              <span class=\"searchbar-toggle\">  </span>\n              <div class=\"pcoded-search-box \">\n                <input type=\"text\" placeholder=\"Search\">\n                <span class=\"search-icon\"><i class=\"ti-search\" aria-hidden=\"true\"></i></span>\n              </div>\n            </div>\n -->            <div slimScroll width=\"100%\" height=\"calc(100% - 80px)\" size=\"4px\" color=\"#fff\" opacity=\"0.3\" allowPageScroll=\"false\">\n              <div *ngFor=\"let asideItems of menuItems.getAll()\" class=\"d-color\">\n                <div class=\"pcoded-navigatio-lavel\" [attr.menu-title-theme]=\"menuTitleTheme\">{{asideItems.label}}</div>\n                <ul class=\"pcoded-item pcoded-left-item\" [attr.item-border]=\"itemBorder\" [attr.item-border-style]=\"itemBorderStyle\" [attr.subitem-border]=\"subItemBorder\" *ngFor=\"let asideItem of asideItems.main\" appAccordionLink group=\"{{asideItem.state}}\">\n                  <li [routerLinkActive]=\"['active']\" *ngIf=\"asideItem.type === 'external'\" appAccordionLink group=\"{{asideItem.state}}\">\n                    <a href=\"{{asideItem.external}}\" target=\"{{asideItem.target ? '_blank' : '_self'}}\" appAccordionToggle>\n                      <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                      <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                      <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                      <span class=\"pcoded-mcaret\"></span>\n                    </a>\n                  </li>\n\n                  <li [routerLinkActive]=\"['active']\" *ngIf=\"asideItem.type === 'link'\" appAccordionLink group=\"{{asideItem.state}}\">\n                    <a [routerLink]=\"['/', asideItem.main_state, asideItem.state]\" target=\"{{asideItem.target ? '_blank' : '_self'}}\" appAccordionToggle *ngIf=\"asideItem.main_state; else mainContent\">\n                      <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                      <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                      <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                      <span class=\"pcoded-mcaret\"></span>\n                    </a>\n                    <ng-template #mainContent>\n                      <a [routerLink]=\"['/', asideItem.state]\" target=\"{{asideItem.target ? '_blank' : '_self'}}\" appAccordionToggle>\n                        <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                        <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                        <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                        <span class=\"pcoded-mcaret\"></span>\n                      </a>\n                    </ng-template>\n                  </li>\n                  <li [routerLinkActive]=\"['active']\" *ngIf=\"asideItem.type === 'sub'\" class=\"pcoded-hasmenu\" [attr.dropdown-icon]=\"dropDownIcon\" [attr.subitem-icon]=\"subItemIcon\" appAccordionLink group=\"{{asideItem.state}}\">\n                    <a [routerLinkActive]=\"['active']\" href=\"javascript:;\" appAccordionToggle>\n                      <span class=\"pcoded-micon\"><i class=\"{{ asideItem.icon }}\"></i><b>{{ asideItem.short_label }}</b></span>\n                      <span class=\"pcoded-mtext\">{{ asideItem.name }}</span>\n                      <span *ngFor=\"let asideBadge of asideItem.badge\" class=\"pcoded-badge label label-{{ asideBadge.type }}\">{{asideBadge.value}}</span>\n                      <span class=\"pcoded-mcaret\"></span>\n                    </a>\n                    <ul class=\"pcoded-submenu\">\n                      <ng-template ngFor let-asideChildren [ngForOf]=\"asideItem.children\">\n                        <li [routerLinkActive]=\"['active']\" *ngIf=\"asideChildren.type !== 'sub'\">\n                          <a [routerLink]=\"['/', asideItem.state, asideChildren.state]\" target=\"{{asideChildren.target ? '_blank' : '_self'}}\">\n                            <span class=\"pcoded-micon\"><i class=\"ti-angle-right\"></i></span>\n                            <span class=\"pcoded-mtext\">{{ asideChildren.name }} </span>\n                            <span *ngFor=\"let asideChildrenBadge of asideChildren.badge\" class=\"pcoded-badge label label-{{ asideChildrenBadge.type }}\">{{asideChildrenBadge.value}}</span>\n                            <span class=\"pcoded-mcaret\"></span>\n                          </a>\n                        </li>\n\n                        <li [routerLinkActive]=\"['active']\" class=\"pcoded-hasmenu\" [attr.dropdown-icon]=\"dropDownIcon\" [attr.subitem-icon]=\"subItemIcon\" *ngIf=\"asideChildren.type === 'sub'\" appAccordionLink group=\"sub-toggled\">\n                          <a href=\"javascript:;\" appAccordionToggle>\n                            <span class=\"pcoded-micon\"><i class=\"ti-direction-alt\"></i></span>\n                            <span class=\"pcoded-mtext\">{{ asideChildren.name }}</span>\n                            <span *ngFor=\"let asideChildrenBadge of asideChildren.badge\" class=\"pcoded-badge label label-{{ asideChildrenBadge.type }}\">{{asideChildrenBadge.value}}</span>\n                            <span class=\"pcoded-mcaret\"></span>\n                          </a>\n                          <ul class=\"pcoded-submenu\">\n                            <ng-template ngFor let-asideChildrenSub [ngForOf]=\"asideChildren.children\">\n                              <li [routerLinkActive]=\"['active']\">\n                                <a [routerLink]=\"['/', asideItem.state, asideChildren.state, asideChildrenSub.state]\" target=\"{{asideChildrenSub.target ? '_blank' : '_self'}}\">\n                                  <span class=\"pcoded-micon\"><i class=\"ti-angle-right\"></i></span>\n                                  <span class=\"pcoded-mtext\">{{ asideChildrenSub.name }}</span>\n                                  <span *ngFor=\"let asideChildrenSubBadge of asideChildrenSub.badge\" class=\"pcoded-badge label label-{{ asideChildrenSubBadge.type }}\">{{asideChildrenSubBadge.value}}</span>\n                                  <span class=\"pcoded-mcaret\"></span>\n                                </a>\n                              </li>\n                            </ng-template>\n                          </ul>\n                        </li>\n                      </ng-template>\n                    </ul>\n                  </li>\n                </ul>\n              </div>\n            </div>\n          </div>\n        </nav>\n        <div class=\"pcoded-content\">\n          <div class=\"pcoded-inner-content\">\n            <div class=\"main-body\">\n              <div class=\"page-wrapper\">\n                <app-title></app-title>\n                <!--<app-breadcrumbs></app-breadcrumbs>-->\n                <div class=\"page-body\">\n                  <router-outlet>\n                    <app-spinner></app-spinner>\n                  </router-outlet>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -821,10 +844,12 @@ var ListaPedidosComponent = (function () {
         this.route = route;
         this.router = router;
         this.pedidosService = pedidosService;
+        this.fechaDesde = new Date(Date.now());
+        this.fechaHasta = new Date(Date.now());
     }
     ListaPedidosComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.pedidosService.getPedidos('buscar', 'En proceso', '')
+        this.pedidosService.getPedidos('buscar', 'En proceso', '', this.fechaDesde, this.fechaHasta)
             .subscribe(function (pedidos) { return _this.listaPedidos = pedidos; }, function (err) { return console.log(err); });
         this.titulo = this.modulo + ' Orden de trabajo';
     };
@@ -878,6 +903,51 @@ var _a, _b, _c;
 
 /***/ }),
 
+/***/ "../../../../../src/app/services/chat.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__websocket_service__ = __webpack_require__("../../../../../src/app/services/websocket.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ChatService = (function () {
+    // Our constructor calls our wsService connect method
+    function ChatService(wsService) {
+        this.wsService = wsService;
+        this.messages = wsService
+            .connect()
+            .map(function (response) {
+            return response;
+        });
+    }
+    // Our simplified interface for sending
+    // messages back to our socket.io server
+    ChatService.prototype.sendMsg = function (msg) {
+        this.messages.next(msg);
+    };
+    return ChatService;
+}());
+ChatService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__websocket_service__["a" /* WebsocketService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__websocket_service__["a" /* WebsocketService */]) === "function" && _a || Object])
+], ChatService);
+
+var _a;
+//# sourceMappingURL=chat.service.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/services/pedidos.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -903,15 +973,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var PedidosService = (function () {
-    //baseUrl: string = 'http://localhost:8081';
     function PedidosService(http) {
         this.http = http;
     }
-    PedidosService.prototype.getPedidos = function (tipo, estado, query) {
-        if (query != null)
-            return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query);
-        else
-            return this.http.get('/api/pedidos/' + tipo + '/' + estado);
+    PedidosService.prototype.getPedidos = function (tipo, estado, query, fDesde, fHasta) {
+        //if (query != '') {
+        //console.log('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/'+ fDesde.toString() + '/'+ fHasta.toString());
+        return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/' + fDesde.toString() + '/' + fHasta.toString());
+        //return this.http.get('/api/pedidos/buscar/En%20proceso/tomas/2018-08-01/2018-09-14');
+        /*     }else {
+              return this.http.get('/api/pedidos/' + tipo + '/' + estado);
+            }
+         */
         /*     return this.http.get('/api/pedidos')
               .map(response => response as Pedido[])
               .catch((error : any) => Observable.throw('Server error'));
@@ -1048,6 +1121,73 @@ PedidosService = __decorate([
 
 var _a;
 //# sourceMappingURL=pedidos.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/websocket.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsocketService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client__ = __webpack_require__("../../../../socket.io-client/lib/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_socket_io_client__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var WebsocketService = (function () {
+    function WebsocketService() {
+    }
+    WebsocketService.prototype.connect = function () {
+        var _this = this;
+        // If you aren't familiar with environment variables then
+        // you can hard code `environment.ws_url` as `http://localhost:5000`
+        this.socket = __WEBPACK_IMPORTED_MODULE_1_socket_io_client__('http://localhost:3000');
+        // We define our observable which will observe any incoming messages
+        // from our socket.io server.
+        var observable = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
+            _this.socket.on('message', function (data) {
+                console.log('Received message from Websocket Server');
+                observer.next(data);
+            });
+            return function () {
+                _this.socket.disconnect();
+            };
+        });
+        // We define our Observer which will listen to messages
+        // from our other components and send messages back to our
+        // socket server whenever the `next()` method is called.
+        var observer = {
+            next: function (data) {
+                _this.socket.emit('message', JSON.stringify(data));
+            },
+        };
+        // we return our Rx.Subject which is a combination
+        // of both an observer and observable.
+        return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Subject"].create(observer, observable);
+    };
+    return WebsocketService;
+}());
+WebsocketService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [])
+], WebsocketService);
+
+//# sourceMappingURL=websocket.service.js.map
 
 /***/ }),
 
@@ -2308,6 +2448,13 @@ Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* pl
 
 module.exports = __webpack_require__("../../../../../src/main.ts");
 
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

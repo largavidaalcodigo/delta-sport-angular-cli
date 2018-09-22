@@ -7543,7 +7543,8 @@ $col:#FF5370,#E53935,#f07178,#FF5370,#F78C6C,#F76D47,#FFCB6B,#FFB62C,#C3E88D,#91
 }
 
 .header-navbar .navbar-wrapper .navbar-logo .mobile-search,
-.header-navbar .navbar-wrapper .navbar-logo .mobile-options {
+.header-navbar .navbar-wrapper .navbar-logo .mensajes-options,
+  .header-navbar .navbar-wrapper .navbar-logo .mobile-options{
   display: none;
 }
 
@@ -19421,10 +19422,17 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     top: 30px;
   }
 
+  .header-navbar .navbar-wrapper .navbar-logo .mensajes-options{
+    right: 60px;
+  }
+  .header-navbar .navbar-wrapper .navbar-logo .mobile-options {
+    right: 30px;
+  }
+
+  .header-navbar .navbar-wrapper .navbar-logo .mensajes-options,
   .header-navbar .navbar-wrapper .navbar-logo .mobile-options {
     display: block;
     position: absolute;
-    right: 30px;
   }
 
   .header-navbar .navbar-container .nav-left {
@@ -19520,6 +19528,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
     display: inline-block;
   }
 
+  .header-navbar .navbar-wrapper .navbar-logo .mensajes-options,
   .header-navbar .navbar-wrapper .navbar-logo .mobile-options {
     top: 30px;
   }
