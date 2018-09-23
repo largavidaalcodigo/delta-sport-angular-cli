@@ -72,7 +72,7 @@ app.use(function(req, res, next) {
 
 
 //Socket.io
-const http = require('http').Server(app);
+const server = require('http').createServer(app);
 
 // Parsers
 //app.use(bodyParser());
@@ -83,8 +83,8 @@ app.use(errorHandler());
 //Set Port
 const port = process.env.PORT || '3000';
 app.set('port', port);
-http.listen(port, () => console.log('Running on localhost:'+port));
-var io = require('socket.io').listen(http);
+server.listen(port, () => console.log('Running on localhost:'+port));
+var io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   // Log whenever a user connects
