@@ -73,7 +73,18 @@ app.use(function(req, res, next) {
 
 //Socket.io
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+
+// Parsers
+//app.use(bodyParser());
+//app.use(bodyParser.json({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(errorHandler());
+
+//Set Port
+const port = process.env.PORT || '3000';
+app.set('port', port);
+http.listen(port, () => console.log('Running on localhost:'+port));
+var io = require('socket.io').listen(http);
 
 io.on('connection', (socket) => {
   // Log whenever a user connects
@@ -92,17 +103,6 @@ io.on('connection', (socket) => {
       io.emit('message', {type:'new-message', text: message});
   });
 });
-
-// Parsers
-//app.use(bodyParser());
-//app.use(bodyParser.json({ extended: false }));
-//app.use(bodyParser.urlencoded({ extended: false }));
-app.use(errorHandler());
-
-//Set Port
-const port = process.env.PORT || '3000';
-app.set('port', port);
-http.listen(port, () => console.log('Running on localhost:'+port));
 
 // Conexion a Mongodb
 var mongoose = require('mongoose');
