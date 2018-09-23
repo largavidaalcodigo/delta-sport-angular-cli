@@ -1200,7 +1200,7 @@ var WebsocketService = (function () {
         var _this = this;
         // If you aren't familiar with environment variables then
         // you can hard code `environment.ws_url` as `http://localhost:5000`
-        this.socket = __WEBPACK_IMPORTED_MODULE_1_socket_io_client__('http://localhost:3000');
+        this.socket = __WEBPACK_IMPORTED_MODULE_1_socket_io_client__();
         // We define our observable which will observe any incoming messages
         // from our socket.io server.
         var observable = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {

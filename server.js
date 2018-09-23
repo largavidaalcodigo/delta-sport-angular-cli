@@ -83,7 +83,7 @@ app.use(errorHandler());
 //Set Port
 const port = process.env.PORT || '3000';
 app.set('port', port);
-server.listen(port, () => console.log('Running on localhost:'+port));
+server.listen(port, () => console.log('Running on localhost:' + port));
 var io = require('socket.io')(server);
 
 io.on('connection', (socket) => {

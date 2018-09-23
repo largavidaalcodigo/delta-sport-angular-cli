@@ -18,8 +18,7 @@ export class ChatService {
       .map((response: any): any => {
         return response;
       });
-
-   }
+  }
 
   // Our simplified interface for sending
   // messages back to our socket.io server
