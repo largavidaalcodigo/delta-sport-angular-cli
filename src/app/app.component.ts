@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import { ChatService } from './services/chat.service';
 import { Component } from '@angular/core';
@@ -14,14 +15,23 @@ export class AppComponent implements OnInit {
   constructor(private chat: ChatService) {}
 
   ngOnInit () {
-    this.chat.sendMsg('Test de prueba');
+    Observable.interval(6000).subscribe(() => this.sendMessage());
+
 
     this.chat.messages.subscribe(msg => {
-        console.log(msg);
+      console.log('mensaje recibido por el servidor->' + JSON.stringify(msg));
+      this.chat.success(msg.text, 'Nuevo mensaje');
     });
   }
 
   sendMessage() {
-    this.chat.sendMsg('Test de prueba');
+    const mensaje = new Date().getTime();
+    this.chat.sendMsg(mensaje);
+
   }
+
+  success() {
+    this.chat.success('Prueba exitosa');
+  }
+
 }
