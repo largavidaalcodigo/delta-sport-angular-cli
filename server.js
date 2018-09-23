@@ -7,7 +7,7 @@ const session = require('express-session');
 //const passport = require('passport');
 const routes = require('./server/routes');
 const flash = require('connect-flash');
-const formidable = require('express-formidable');
+//const formidable = require('express-formidable');
 var router = express.Router();
 
 //var fs = require('fs');
@@ -38,7 +38,7 @@ app.use('/api', require('./server/routes/clientes'));
 app.use('/api', require('./server/routes/productos'));
 app.use('/upload', require('./server/routes/upload'));
 
-app.use(formidable);
+//app.use(formidable);
 
 // parse application/x-www-form-urlencoded
 
@@ -110,9 +110,6 @@ mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/erp-taller')
   .then(() =>  console.log('Mongodb: Conexion exitosa.'))
   .catch((err) => console.error(err));
-
-
-console.log('*************************************************************');
 
 //app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 

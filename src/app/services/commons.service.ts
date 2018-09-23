@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CommonsService {
 
-  URL = 'http://localhost:3000';
+  //URL = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
   subirArchivos(file: File, titulo: string) {

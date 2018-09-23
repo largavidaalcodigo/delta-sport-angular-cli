@@ -100,9 +100,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var CommonsService = (function () {
+    //URL = 'http://localhost:3000';
     function CommonsService(http) {
         this.http = http;
-        this.URL = 'http://localhost:3000';
     }
     CommonsService.prototype.subirArchivos = function (file, titulo) {
         return new Promise(function (resolve, reject) {
