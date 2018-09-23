@@ -146,12 +146,13 @@ var AppComponent = (function () {
         var _this = this;
         __WEBPACK_IMPORTED_MODULE_0_rxjs__["Observable"].interval(6000).subscribe(function () { return _this.sendMessage(); });
         this.chat.messages.subscribe(function (msg) {
+            // TODO debe mostrar mensajes solo a los usuarios pertinentes
             console.log('mensaje recibido por el servidor->' + JSON.stringify(msg));
             _this.chat.success(msg.text, 'Nuevo mensaje');
         });
     };
     AppComponent.prototype.sendMessage = function () {
-        var mensaje = new Date().getTime();
+        var mensaje = new Date().toISOString();
         this.chat.sendMsg(mensaje);
     };
     AppComponent.prototype.success = function () {

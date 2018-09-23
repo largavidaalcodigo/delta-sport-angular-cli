@@ -19,15 +19,17 @@ export class AppComponent implements OnInit {
 
 
     this.chat.messages.subscribe(msg => {
+
+      // TODO debe mostrar mensajes solo a los usuarios pertinentes
+
       console.log('mensaje recibido por el servidor->' + JSON.stringify(msg));
       this.chat.success(msg.text, 'Nuevo mensaje');
     });
   }
 
   sendMessage() {
-    const mensaje = new Date().getTime();
+    const mensaje = new Date().toISOString();
     this.chat.sendMsg(mensaje);
-
   }
 
   success() {
