@@ -7,7 +7,14 @@ router.get('/', (req, res) => {
   res.send();
 });
 
-  router.get('/pedidos/:tipo/:estado', function(req, res, next) {
+router.get('/pedidos/', function(req, res, next) {
+  Pedido(query, function (err, data) {
+    if (err) return next(err);
+    res.json(data);
+  });
+});
+
+router.get('/pedidos/:tipo/:estado', function(req, res, next) {
   console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado);
 
   if (req.params.tipo === 'editar'){
@@ -26,6 +33,7 @@ router.get('/', (req, res) => {
     });
   }
 });
+
 router.get('/pedidos/:tipo/:estado/:query', function(req, res, next) {
   console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado + '/query->' + req.params.query);
   var query = {
@@ -39,20 +47,28 @@ router.get('/pedidos/:tipo/:estado/:query', function(req, res, next) {
   });
 });
 
-router.get('/pedidos/:tipo/:estado/:query?*/:fDesde/:fHasta', function(req, res, next) {
+router.get('/pedidos/:tipo/:estado/:query?/:fDesde/:fHasta', function(req, res, next) {
 
-  if (req.params.query != undefined){
-    console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado + '/query->' + req.params.query
-    + '/fecha desde->' + req.params.fDesde +  '/ fecha hasta->' + req.params.fHasta);
+  console.log('/tipo->'+req.params.tipo + '/estado->'+ req.params.estado + '/query->' + req.params.query
+  + '/fecha desde->' + req.params.fDesde +  '/ fecha hasta->' + req.params.fHasta);
+
+ if ((req.params.query === 'undefined') || (req.params.estado === 'undefined')){
+    console.log('sin query');
+
+    if (req.params.estado === 'undefined') {
+      var query = {
+        'fechaEntrega' : { $gte: req.params.fDesde, $lte: req.params.fHasta }
+      };
+    }else {
+      var query = {
+        'estado': req.params.estado,
+        'fechaEntrega' : { $gte: req.params.fDesde, $lte: req.params.fHasta }
+      };
+    }
+  }else{
     var query = {
       'estado': req.params.estado,
       'cliente.nombresCliente': { $regex: req.params.query, $options: 'i'},
-      'fechaEntrega' : { $gte: req.params.fDesde, $lte: req.params.fHasta }
-    };
-  }else{
-    console.log('sin query');
-    var query = {
-      'estado': req.params.estado,
       'fechaEntrega' : { $gte: req.params.fDesde, $lte: req.params.fHasta }
     };
   }
@@ -61,6 +77,18 @@ router.get('/pedidos/:tipo/:estado/:query?*/:fDesde/:fHasta', function(req, res,
     if (err) return next(err);
     res.json(data);
   });
+
+  Pedido.aggregate([
+    {$match: query},
+    {$group: {
+        _id: null,
+        total: {$sum: '$total'},
+        totalSaldoPendiente: {$sum: '$totalPagoPendiente'},
+        totalMediosPago: {$sum: '$totalMediosPago'}
+      }
+    }
+  ]);
+
 });
 /*
 router.get('/pedidos/:id', function(req, res, next) {

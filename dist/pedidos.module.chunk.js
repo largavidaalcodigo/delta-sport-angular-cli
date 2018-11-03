@@ -269,12 +269,14 @@ module.exports = "<div class=\"container\" *ngIf=\"pedido.listaProductos\">\n   
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormModulosComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_mensajes_model__ = __webpack_require__("../../../../../src/app/model/mensajes.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__("../../../../../src/app/services/chat.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -290,14 +292,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var FormModulosComponent = (function () {
-    function FormModulosComponent(route, router, location, pedidosService, clientesService) {
+    function FormModulosComponent(chatService, route, router, location, pedidosService, clientesService) {
+        this.chatService = chatService;
         this.route = route;
         this.router = router;
         this.location = location;
         this.pedidosService = pedidosService;
         this.clientesService = clientesService;
-        this.pedido = new __WEBPACK_IMPORTED_MODULE_3__model_pedido_pedido_model__["a" /* Pedido */]();
+        this.pedido = new __WEBPACK_IMPORTED_MODULE_5__model_pedido_pedido_model__["a" /* Pedido */]();
         this.titulo = 'Avances orden de trabajo';
     }
     FormModulosComponent.prototype.ngOnInit = function () {
@@ -316,7 +321,36 @@ var FormModulosComponent = (function () {
             console.log('pedido actualizado->' + JSON.stringify(data));
             _this.pedido = data;
         });
-        this.router.navigate(['/' + this.modulo, '<strong>Pedido nro. [' + this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
+        var contadorMensaje;
+        this.router.navigate(['/' + this.modulo]);
+        switch (this.modulo) {
+            case 'corte':
+                contadorMensaje = this.pedido.avanceCorte;
+                break;
+            case 'confeccion':
+                contadorMensaje = this.pedido.avanceConfeccion;
+                break;
+            case 'estampado':
+                contadorMensaje = this.pedido.avanceEstampado;
+                break;
+            case 'diseño':
+                contadorMensaje = this.pedido.avanceDiseno;
+                break;
+            default:
+                break;
+        }
+        var mensaje = '[' + this.modulo + '] Nuevo avance [' + contadorMensaje + ']%';
+        var titulo = 'Pedido [' + this.pedido.numeroPedido + '] / ' +
+            (this.pedido.cliente.razonSocialCliente != null ? this.pedido.cliente.razonSocialCliente : this.pedido.cliente.nombresCliente);
+        // mensaje notificacion cambios
+        var msg = new __WEBPACK_IMPORTED_MODULE_0__model_mensajes_model__["a" /* Mensajes */]();
+        msg.fecha = new Date();
+        msg.usuarioOrigen = 'usuario origen';
+        msg.usuarioDestino = 'usuario destino';
+        msg.mensaje = mensaje;
+        msg.titulo = titulo;
+        msg.url = this.router.url;
+        this.chatService.sendMsg(msg);
     };
     FormModulosComponent.prototype.calculaAvance = function () {
         var contadorCorte = 0; //sumo solo los items que esten terminados
@@ -359,15 +393,15 @@ var FormModulosComponent = (function () {
     return FormModulosComponent;
 }());
 FormModulosComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["Component"])({
+    Object(__WEBPACK_IMPORTED_MODULE_6__angular_core__["Component"])({
         selector: 'app-form-modulos',
         template: __webpack_require__("../../../../../src/app/pages/pedidos/form-modulos/form-modulos.component.html"),
         styles: [__webpack_require__("../../../../../src/app/pages/pedidos/form-modulos/form-modulos.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__angular_common__["Location"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_common__["Location"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_pedidos_service__["a" /* PedidosService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_clientes_service__["a" /* ClientesService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_chat_service__["a" /* ChatService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["f" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__angular_common__["Location"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_common__["Location"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_pedidos_service__["a" /* PedidosService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_clientes_service__["a" /* ClientesService */]) === "function" && _f || Object])
 ], FormModulosComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=form-modulos.component.js.map
 
 /***/ }),
@@ -422,16 +456,19 @@ module.exports = "  <div class=\"container\">\r\n<!--     <app-file-upload></app
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FormPedidoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_producto_fichaTecnica_model__ = __webpack_require__("../../../../../src/app/model/producto/fichaTecnica.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_producto_detalleTalla_model__ = __webpack_require__("../../../../../src/app/model/producto/detalleTalla.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_pedido_detallePedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/detallePedido.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_pedido_medioPago_model__ = __webpack_require__("../../../../../src/app/model/pedido/medioPago.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_producto_rangoPrecioProducto_model__ = __webpack_require__("../../../../../src/app/model/producto/rangoPrecioProducto.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_productos_service__ = __webpack_require__("../../../../../src/app/services/productos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_mensajes_model__ = __webpack_require__("../../../../../src/app/model/mensajes.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_chat_service__ = __webpack_require__("../../../../../src/app/services/chat.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_producto_fichaTecnica_model__ = __webpack_require__("../../../../../src/app/model/producto/fichaTecnica.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__model_producto_detalleTalla_model__ = __webpack_require__("../../../../../src/app/model/producto/detalleTalla.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_pedido_detallePedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/detallePedido.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__model_pedido_medioPago_model__ = __webpack_require__("../../../../../src/app/model/pedido/medioPago.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__model_producto_rangoPrecioProducto_model__ = __webpack_require__("../../../../../src/app/model/producto/rangoPrecioProducto.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__model_pedido_pedido_model__ = __webpack_require__("../../../../../src/app/model/pedido/pedido.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -452,11 +489,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var FormPedidoComponent = (function () {
-    function FormPedidoComponent(route, router, pedidosService, clientesService) {
+    function FormPedidoComponent(chatService, route, router, pedidosService, productosService, clientesService) {
+        this.chatService = chatService;
         this.route = route;
         this.router = router;
         this.pedidosService = pedidosService;
+        this.productosService = productosService;
         this.clientesService = clientesService;
         this.nombreBoton = "Guardar";
         this.listaDetallesAdicionales = new Array();
@@ -483,7 +525,7 @@ var FormPedidoComponent = (function () {
         //NUEVO
         if (this.pedido == null) {
             this.titulo = 'Nuevo Pedido';
-            this.pedido = new __WEBPACK_IMPORTED_MODULE_5__model_pedido_pedido_model__["a" /* Pedido */]();
+            this.pedido = new __WEBPACK_IMPORTED_MODULE_8__model_pedido_pedido_model__["a" /* Pedido */]();
             this.pedido.idEstado = 1; //creado
             this.pedido.estado = 'Creado';
             this.pedido.fechaCreacion = new Date();
@@ -504,21 +546,6 @@ var FormPedidoComponent = (function () {
         if (this.tipoForm === 'editar') {
             this.titulo = 'Editando Pedido';
         }
-        /*     if(this.tipoForm === 'tallas'){
-              this.titulo = 'Listado Tallas';
-        
-            }
-         */
-        /*     if(this.tipoForm === 'ft'){
-              this.titulo = 'Ficha Tecnica productos';
-              this.listaTelas = this.pedidosService.getTelas();
-              this.detalleFichaTecnica = new FichaTecnica();
-              this.tipoProductoFT = new TipoProductoFT();
-              this.listaTipoProductoFT = new Array();
-              this.listaTipoCuelloFT = new Array();
-              this.tipoCuelloFT = new TipoCuelloFT();
-            }
-         */
         this.listaColores = this.pedidosService.getColores();
         this.listaMediosPago = this.pedidosService.getMediosPago();
         this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
@@ -529,12 +556,12 @@ var FormPedidoComponent = (function () {
             console.log(data);
             _this.listaClientes = data;
         });
-        this.listaProductos = this.pedidosService.getProductos();
-        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_2__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
-        this.medioPago = new __WEBPACK_IMPORTED_MODULE_3__model_pedido_medioPago_model__["a" /* MedioPago */]();
+        this.listaProductos = this.productosService.getProductos();
+        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_5__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.medioPago = new __WEBPACK_IMPORTED_MODULE_6__model_pedido_medioPago_model__["a" /* MedioPago */]();
         this.detallePedido.listaAdicionales = new Array();
         this.detallePedido.listaDetalleTallas = new Array();
-        this.rangoPrecioProducto = new __WEBPACK_IMPORTED_MODULE_4__model_producto_rangoPrecioProducto_model__["a" /* RangoPrecioProducto */]();
+        this.rangoPrecioProducto = new __WEBPACK_IMPORTED_MODULE_7__model_producto_rangoPrecioProducto_model__["a" /* RangoPrecioProducto */]();
     };
     FormPedidoComponent.prototype.getListaCliente = function (cadena) {
         /* = this.clientesService.getClientes()
@@ -545,20 +572,20 @@ var FormPedidoComponent = (function () {
     };
     FormPedidoComponent.prototype.onSelectProducto = function (productoId) {
         //this.detallePedido.idProducto = productoId;
-        this.listaTipoProducto = this.pedidosService.getTipoProductos()
-            .filter(function (item) { return item.idProducto == productoId; });
+        /* this.listaTipoProducto = this.pedidosService.getTipoProductos()
+          .filter(item => item.idProducto == productoId); */
         console.log('categoria-> ' + productoId);
         //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
     };
     FormPedidoComponent.prototype.onSelectTipoProducto = function (tipoProductoId) {
         //this.detallePedido.idTipoProducto = tipoProductoId;
-        this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
-            .filter(function (item) { return item.idTipoProducto == tipoProductoId; });
+        //this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
+        //.filter(item => item.idTipoProducto == tipoProductoId);
         console.log('producto->' + tipoProductoId);
     };
     FormPedidoComponent.prototype.onSelectRangoPrecio = function (rangoPrecioId) {
         console.log('rango precios->' + rangoPrecioId);
-        this.rangoPrecioProducto = this.listaRangoPrecios.find(function (item) { return item.id == rangoPrecioId; });
+        //this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
         console.log('rangoPrecioProducto ->' + this.rangoPrecioProducto);
         //this.detallePedido.idRangoPrecio = this.rangoPrecioProducto.id;
         this.detallePedido.valor = this.rangoPrecioProducto.valor;
@@ -567,13 +594,7 @@ var FormPedidoComponent = (function () {
     /*   onSelectSinDiseno(llevaDiseño: number){
           console.log('llevaDiseño->'+llevaDiseño);
       } */
-    FormPedidoComponent.prototype.emiteVolver = function () {
-        //this.pedidoForm.reset();
-        //this.salir.emit();
-        //this.router.navigate(['/pedidos', 'Pedido creado']);
-    };
     FormPedidoComponent.prototype.onSubmitDetalle = function () {
-        var _this = this;
         if (this.editando) {
             this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(function (item) { return item.checked; });
         }
@@ -582,27 +603,28 @@ var FormPedidoComponent = (function () {
             //setea Correlativo nro item
             this.detallePedido.id = this.pedido.listaProductos.length + 1;
             // SETEA NOMBRE DE CATEGORIA/PRODUCTO/RANGO PRECIO
-            var producto = this.listaProductos.find(function (item) { return item.idProducto == _this.detallePedido.idProducto; });
-            this.detallePedido.descProducto = producto.desc;
-            this.detallePedido.descTipoProducto = this.listaTipoProducto.find(function (item) { return item.id == _this.detallePedido.idTipoProducto; }).desc;
-            this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(function (item) { return item.id == _this.detallePedido.idRangoPrecio; }).desc;
-            this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(function (item) { return item.checked; });
+            /*       const producto: Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
+                  this.detallePedido.descProducto = producto.desc;
+                  this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
+                  this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
+                  this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
+             */
             this.addTallasProducto();
             this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
             console.log("nuevo item->" + JSON.stringify(this.detallePedido));
-            this.detallePedido = new __WEBPACK_IMPORTED_MODULE_2__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+            this.detallePedido = new __WEBPACK_IMPORTED_MODULE_5__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
         }
         //Calcula el total
         this.onChangeCalculaTotal();
         //this.pedido.listaProductos = this.listaDetallePedido;
-        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_2__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_5__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
         this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
     };
     FormPedidoComponent.prototype.addTallasProducto = function () {
         //TALLAS
         this.listaDetallesTallas = new Array();
         for (var c = 0; c < this.detallePedido.cantidad; c++) {
-            this.detalleTallas = new __WEBPACK_IMPORTED_MODULE_1__model_producto_detalleTalla_model__["a" /* DetalleTalla */]();
+            this.detalleTallas = new __WEBPACK_IMPORTED_MODULE_4__model_producto_detalleTalla_model__["a" /* DetalleTalla */]();
             this.detalleTallas.numero = '';
             this.detalleTallas.nombrePecho = '';
             this.detalleTallas.nombreEspalda = '';
@@ -614,10 +636,10 @@ var FormPedidoComponent = (function () {
             this.listaDetallesTallas.push(this.detalleTallas);
         }
         this.detallePedido.listaDetalleTallas = this.listaDetallesTallas;
-        this.detallePedido.fichaTecnica = new __WEBPACK_IMPORTED_MODULE_0__model_producto_fichaTecnica_model__["a" /* FichaTecnica */]();
+        this.detallePedido.fichaTecnica = new __WEBPACK_IMPORTED_MODULE_3__model_producto_fichaTecnica_model__["a" /* FichaTecnica */]();
     };
     FormPedidoComponent.prototype.nuevoDetalle = function () {
-        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_2__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
+        this.detallePedido = new __WEBPACK_IMPORTED_MODULE_5__model_pedido_detallePedido_model__["a" /* DetallePedido */]();
         this.listaDetallesAdicionales = this.pedidosService.getDetallesAdicionales();
         this.editando = false;
     };
@@ -691,7 +713,17 @@ var FormPedidoComponent = (function () {
                 console.log('pedido actualizado->' + JSON.stringify(data));
                 _this.pedido = data;
             });
-            this.router.navigate(['/pedidos', 'Pedido nro. [' + this.pedido.numeroPedido + '] actualizado exitosamente']);
+            this.router.navigate(['/pedidos']);
+            //this.chatService.sendMsg('Pedido nro. [' + this.pedido.numeroPedido + '] actualizado exitosamente');
+            //Emite mensaje
+            var msg = new __WEBPACK_IMPORTED_MODULE_1__model_mensajes_model__["a" /* Mensajes */]();
+            msg.fecha = new Date();
+            msg.usuarioOrigen = 'usuario origen';
+            msg.usuarioDestino = 'usuario destino';
+            msg.mensaje = 'El pedido ha sido actualizado exitosamente.';
+            msg.titulo = 'Pedido # ' + this.pedido.numeroPedido;
+            msg.url = window.location.href;
+            this.chatService.sendMsg(msg);
         }
         else if (this.tipoForm === 'nuevo') {
             // Contador de pedidos
@@ -702,7 +734,17 @@ var FormPedidoComponent = (function () {
                 _this.pedidosService.addPedido(_this.pedido).subscribe(function (pedido) {
                     _this.pedido = pedido;
                     console.log('nuevo  insertado->');
-                    _this.router.navigate(['/pedidos', 'Pedido nro. [' + _this.pedido.numeroPedido + '] Creado exitosamente']);
+                    _this.router.navigate(['/pedidos']);
+                    //this.chatService.sendMsg('Pedido nro. [' + this.pedido.numeroPedido + '] creado exitosamente');
+                    //Emite mensaje
+                    var msg = new __WEBPACK_IMPORTED_MODULE_1__model_mensajes_model__["a" /* Mensajes */]();
+                    msg.fecha = new Date();
+                    msg.usuarioOrigen = 'usuario origen';
+                    msg.usuarioDestino = 'usuario destino';
+                    msg.mensaje = 'El pedido ha sido creado exitosamente.';
+                    msg.titulo = 'Pedido # ' + _this.pedido.numeroPedido;
+                    msg.url = window.location.href;
+                    _this.chatService.sendMsg(msg);
                 });
             });
         }
@@ -715,7 +757,7 @@ var FormPedidoComponent = (function () {
     };
     /* MEDIOS DE PAGO */
     FormPedidoComponent.prototype.nuevoMedioPago = function () {
-        this.medioPago = new __WEBPACK_IMPORTED_MODULE_3__model_pedido_medioPago_model__["a" /* MedioPago */]();
+        this.medioPago = new __WEBPACK_IMPORTED_MODULE_6__model_pedido_medioPago_model__["a" /* MedioPago */]();
         this.medioPago.fechaPago = new Date();
     };
     FormPedidoComponent.prototype.addMedioPago = function () {
@@ -755,14 +797,14 @@ var FormPedidoComponent = (function () {
     return FormPedidoComponent;
 }());
 FormPedidoComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_9__angular_core__["Component"])({
+    Object(__WEBPACK_IMPORTED_MODULE_12__angular_core__["Component"])({
         selector: 'app-form-pedido',
         template: __webpack_require__("../../../../../src/app/pages/pedidos/form-pedido/form-pedido.component.html")
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_8__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_clientes_service__["a" /* ClientesService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_chat_service__["a" /* ChatService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_11__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_11__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__angular_router__["f" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_10__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__services_pedidos_service__["a" /* PedidosService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__services_productos_service__["a" /* ProductosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_productos_service__["a" /* ProductosService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_9__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_clientes_service__["a" /* ClientesService */]) === "function" && _f || Object])
 ], FormPedidoComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=form-pedido.component.js.map
 
 /***/ }),
@@ -989,7 +1031,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "tfoot {\r\n    display: table-footer-group;\r\n    vertical-align: middle;\r\n    border-color: inherit;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1002,7 +1044,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/pedidos/pedidos.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n  {{mensaje}}\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n      <a class=\"btn btn-primary\" [routerLink]=\"['/pedidos/formPedido', 'nuevo']\">NUEVO</a>\r\n  </div>\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <h4>Filtros de busqueda</h4>\r\n      <form\r\n          #encabezadoPedidoForm='ngForm'\r\n          class='form-inline'\r\n          (ngSubmit)='submitBuscador();'>\r\n        <div class='form-group form-inline'>\r\n          Palabra clave:\r\n          <input type='text' size=\"20\" class='form-control' name='query' [(ngModel)]='query'>\r\n\r\n          Estado\r\n          <select\r\n            class='form-control'\r\n            [(ngModel)]='estado'\r\n            name='estado'\r\n          >\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c'>{{c}}</option>\r\n          </select>\r\n          <div class=\"form-check\">\r\n            <input type=\"checkbox\" class=\"form-check-input\"\r\n            [(ngModel)]='checkSaldoPendiente'\r\n            name=\"checkSaldoPendiente\">\r\n            <label class=\"form-check-label\" for=\"exampleCheck1\">Pagos Pendientes</label>\r\n          </div>\r\n\r\n           <br>\r\n          Fecha Desde\r\n          <input class='form-control'\r\n            name='fechaDesde'\r\n            size='3'\r\n            type=\"date\"\r\n            [ngModel]=\"fechaDesde | date:'yyyy-MM-dd'\"\r\n            (ngModelChange)=\"fechaDesde = $event\"\r\n            placeholder=\"Fecha desde\"\r\n          >\r\n          Fecha Hasta\r\n          <input class='form-control'\r\n            name='fechaHasta'\r\n            size='3'\r\n            type=\"date\"\r\n            [ngModel]=\"fechaHasta | date:'yyyy-MM-dd'\"\r\n            (ngModelChange)=\"fechaHasta = $event\"\r\n            placeholder=\"Fecha Hasta\"\r\n          >\r\n\r\n          <button type=\"submit\" class=\"btn btn-success\">Buscar</button>\r\n          <button type=\"reset\" class=\"btn btn-success\">Limpiar</button>\r\n        </div>\r\n      </form>\r\n    </app-card>\r\n\r\n    <app-card [title]=\"'Pedidos'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>Monto Total</th>\r\n            <th>Saldo pdte.</th>\r\n            <th>Estado</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.numeroPedido}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.cliente.nombresCliente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.total}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.totalPagoPendiente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.estado}}</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addTallas(pedido); $event.stopPropagation();\">Tallas</button>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addFichaTecnica(pedido); $event.stopPropagation();\">Ficha tecnica</button>\r\n<!--BORRAR PEDIDO-->\r\n                <button type=\"button\" (click)='eliminaPedido(pedido);$event.stopPropagation();'>\r\n                  <i class=\"icofont icofont-trash\"></i>\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div *ngIf=\"mensaje\" class=\"alert alert-success\" role=\"alert\">\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n  {{mensaje}}\r\n</div>\r\n\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n      <a class=\"btn btn-primary\" [routerLink]=\"['/pedidos/formPedido', 'nuevo']\">NUEVO</a>\r\n  </div>\r\n</div>\r\n\r\n<!-- Lista  -->\r\n<div class=\"row\">\r\n  <div class=\"col-sm-12\">\r\n    <app-card>\r\n      <h4>Filtros de busqueda</h4>\r\n      <form\r\n          #encabezadoPedidoForm='ngForm'\r\n          class='form-inline'\r\n          (ngSubmit)='submitBuscador();'>\r\n        <div class='form-group form-inline'>\r\n          Palabra clave:\r\n          <input type='text' size=\"20\" class='form-control' name='query' [(ngModel)]='query'>\r\n\r\n          Estado\r\n          <select\r\n            class='form-control'\r\n            [(ngModel)]='estado'\r\n            name='estado'\r\n          >\r\n            <option [value]=undefined>Seleccione</option>\r\n            <option *ngFor='let c of listaEstadosPedido' [value]='c'>{{c}}</option>\r\n          </select>\r\n          <div class=\"form-check\">\r\n            <input type=\"checkbox\" class=\"form-check-input\"\r\n            [(ngModel)]='checkSaldoPendiente'\r\n            name=\"checkSaldoPendiente\">\r\n            <label class=\"form-check-label\" for=\"exampleCheck1\">Pagos Pendientes</label>\r\n          </div>\r\n\r\n           <br>\r\n          Fecha Desde\r\n          <input class='form-control'\r\n            name='fechaDesde'\r\n            size='3'\r\n            type=\"date\"\r\n            [ngModel]=\"fechaDesde | date:'yyyy-MM-dd'\"\r\n            (ngModelChange)=\"fechaDesde = $event\"\r\n            placeholder=\"Fecha desde\"\r\n          >\r\n          Fecha Hasta\r\n          <input class='form-control'\r\n            name='fechaHasta'\r\n            size='3'\r\n            type=\"date\"\r\n            [ngModel]=\"fechaHasta | date:'yyyy-MM-dd'\"\r\n            (ngModelChange)=\"fechaHasta = $event\"\r\n            placeholder=\"Fecha Hasta\"\r\n          >\r\n\r\n          <button type=\"submit\" class=\"btn btn-success\">Buscar</button>\r\n          <button type=\"reset\" class=\"btn btn-success\">Limpiar</button>\r\n        </div>\r\n      </form>\r\n    </app-card>\r\n\r\n    <app-card [title]=\"'Pedidos'\" [classHeader]=\"false\" [blockClass]=\"'table-border-style'\">\r\n      <div class=\"table-responsive\">\r\n        <table class=\"table table-hover\">\r\n          <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th>Nombre Cliente</th>\r\n            <th>Fecha pedido</th>\r\n            <th>Fecha Entrega</th>\r\n            <th>Monto Total</th>\r\n            <th>Saldo pdte.</th>\r\n            <th>Estado</th>\r\n            <th>Opciones</th>\r\n          </tr>\r\n          </thead>\r\n          <tbody *ngFor=\"let pedido of listaPedidos;let i = index\">\r\n            <tr>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.numeroPedido}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.cliente.nombresCliente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaCreacion | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.total}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">${{pedido.totalPagoPendiente}}</td>\r\n              <td (click)=\"editarPedido(pedido)\">{{pedido.estado}}</td>\r\n              <td>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addTallas(pedido); $event.stopPropagation();\">Tallas</button>\r\n                <button type=\"button\" class=\"btn btn-danger btn-sm\"\r\n                (click)=\"addFichaTecnica(pedido); $event.stopPropagation();\">Ficha tecnica</button>\r\n<!--BORRAR PEDIDO-->\r\n                <button type=\"button\" (click)='eliminaPedido(pedido);$event.stopPropagation();'>\r\n                  <i class=\"icofont icofont-trash\"></i>\r\n                </button>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <tfoot>\r\n            <tr>\r\n              <td colspan=\"4\"></td>\r\n              <td>\r\n                <b>${{this.total}}</b>\r\n              </td>\r\n              <td>\r\n                <b>${{totalPendientes}}</b>\r\n              </td>\r\n              <td colspan=\"4\"></td>\r\n              </tr>\r\n          </tfoot>\r\n\r\n        </table>\r\n      </div>\r\n    </app-card>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1033,40 +1075,30 @@ var PedidosComponent = (function () {
         this.router = router;
         this.pedidosService = pedidosService;
         this.query = '';
-        this.fechaDesde = new Date(Date.now());
-        this.fechaHasta = new Date(Date.now());
+        this.estado = '';
         this.route.params.subscribe(function (params) {
             _this.mensaje = params['id'];
         });
     }
     PedidosComponent.prototype.ngOnInit = function () {
         var _this = this;
-        /*     this.verLista = true;
-         */
         //lista de pedidos
-        this.pedidosService.getPedidos('buscar', 'Creado', '', this.fechaDesde, this.fechaHasta)
+        this.fechaDesde = new Date(Date.now());
+        //console.log('this.fechaDesde->' + this.fechaDesde);
+        this.fechaDesde.setDate(this.fechaDesde.getDate() - 30);
+        this.fechaHasta = new Date(Date.now());
+        this.pedidosService.getPedidos('buscar', undefined, undefined, this.fechaDesde, this.fechaHasta)
             .subscribe(function (pedidos) { return _this.listaPedidos = pedidos; }, function (err) { return console.log(err); });
         this.listaEstadosPedido = this.pedidosService.getEstadosPedido();
     };
-    /*
-      //Cierre con boton Volver
-      public volver() {
-        //this.verForm = false;
-        this.toggleLista();
-      }
-      public toggleLista(){
-        this.verLista = !this.verLista;
-        console.log('this.verLista ->'+ this.verLista);
-      }
-     */
-    //Ver o Editar Cliente
+    // Ver o Editar Cliente
     PedidosComponent.prototype.editarPedido = function (pedido) {
         this.router.navigate(['/pedidos/formPedido/editar/', pedido.numeroPedido]);
     };
     PedidosComponent.prototype.eliminaPedido = function (pedido) {
         var _this = this;
         console.log('Elimina Pedido..');
-        //Cambia el estado del pedido
+        // Cambia el estado del pedido
         pedido.estado = 'Eliminado';
         this.pedidosService.putPedido(pedido).subscribe(function (data) {
             console.log('pedido eliminado->' + JSON.stringify(data));
@@ -1084,7 +1116,7 @@ var PedidosComponent = (function () {
     PedidosComponent.prototype.submitBuscador = function () {
         var _this = this;
         console.log('checkSaldoPendiente->' + this.checkSaldoPendiente);
-        this.pedidosService.getPedidos('buscar', this.estado, this.query, this.fechaDesde, this.fechaHasta).subscribe(function (data) {
+        this.pedidosService.getPedidos('buscar', (this.estado.length === 0) ? undefined : this.estado, (this.query.length === 0) ? undefined : this.query, this.fechaDesde, this.fechaHasta).subscribe(function (data) {
             console.log('observando lista pedidos...');
             if (_this.checkSaldoPendiente) {
                 _this.listaPedidos = data.filter(function (item) { return item.totalPagoPendiente > 0; });
@@ -1092,6 +1124,13 @@ var PedidosComponent = (function () {
             else {
                 _this.listaPedidos = data;
             }
+            _this.total = 0;
+            _this.totalPendientes = 0;
+            data.forEach(function (item) {
+                _this.total += item.total;
+                _this.totalPendientes += item.totalPagoPendiente;
+            });
+            console.log('this.total->' + _this.total + ' / this.totalPendientes->' + _this.totalPendientes);
         });
     };
     return PedidosComponent;
@@ -1257,11 +1296,12 @@ module.exports = "<!-- <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TallasPedidosComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_clientes_service__ = __webpack_require__("../../../../../src/app/services/clientes.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_chat_service__ = __webpack_require__("../../../../../src/app/services/chat.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_mensajes_model__ = __webpack_require__("../../../../../src/app/model/mensajes.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_pedidos_service__ = __webpack_require__("../../../../../src/app/services/pedidos.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1276,13 +1316,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var TallasPedidosComponent = (function () {
-    function TallasPedidosComponent(route, router, pedidosService, location, clientesService) {
+    function TallasPedidosComponent(route, router, pedidosService, location, chatService) {
         this.route = route;
         this.router = router;
         this.pedidosService = pedidosService;
         this.location = location;
-        this.clientesService = clientesService;
+        this.chatService = chatService;
         this.listaDetallesTallas = new Array();
         this.listaTallas = new Array();
         this.titulo = 'Listado Tallas';
@@ -1306,8 +1347,18 @@ var TallasPedidosComponent = (function () {
         this.pedidosService.putPedido(this.pedido).subscribe(function (data) {
             console.log('pedido actualizado->' + JSON.stringify(data));
             _this.pedido = data;
+            _this.router.navigate(['/pedidos']);
+            //Emite mensaje
+            var msg = new __WEBPACK_IMPORTED_MODULE_1__model_mensajes_model__["a" /* Mensajes */]();
+            msg.fecha = new Date();
+            msg.usuarioOrigen = 'usuario origen';
+            msg.usuarioDestino = 'usuario destino';
+            msg.mensaje = 'El pedido ha sido actualizado exitosamente.';
+            msg.titulo = 'Pedido # ' + _this.pedido.numeroPedido + ' - Tallas';
+            msg.url = window.location.href;
+            _this.chatService.sendMsg(msg);
+            console.log('url->' + JSON.stringify(_this.route));
         });
-        this.router.navigate(['/pedidos', '<strong>Pedido nro. [' + this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
     };
     TallasPedidosComponent.prototype.calculaTotalItem = function () {
         var contadorTotalitemsProductos = 0; //sumo todos los items que encuentre
@@ -1327,12 +1378,12 @@ var TallasPedidosComponent = (function () {
     return TallasPedidosComponent;
 }());
 TallasPedidosComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["Component"])({
+    Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["Component"])({
         selector: 'app-tallas-pedidos',
         template: __webpack_require__("../../../../../src/app/pages/pedidos/tallas-pedidos/tallas-pedidos.component.html"),
         styles: [__webpack_require__("../../../../../src/app/pages/pedidos/tallas-pedidos/tallas-pedidos.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common__["Location"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common__["Location"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__services_clientes_service__["a" /* ClientesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_clientes_service__["a" /* ClientesService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["f" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["f" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__services_pedidos_service__["a" /* PedidosService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_pedidos_service__["a" /* PedidosService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common__["Location"]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_chat_service__["a" /* ChatService */]) === "function" && _e || Object])
 ], TallasPedidosComponent);
 
 var _a, _b, _c, _d, _e;

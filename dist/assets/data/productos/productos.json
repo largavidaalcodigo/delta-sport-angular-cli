@@ -1,9 +1,7 @@
-[
-  { idProducto: 1, desc: "Polera Tela color cire" },
-  { idProducto: 2, desc: "Polera sublimacion 100% cire" },
-  { idProducto: 3, desc: "Polera sublimacion 100% rugby" },
-  { idProducto: 4, desc: "Polera sublimacion 100% elasticada" },
-  { idProducto: 5, desc: "Calzas" },
-  { idProducto: 6, desc: "Pantalon buzo" },
-  { idProducto: 7, desc: "Polerón con cierre" }
-]
+   { "idProducto": 1, "desc": "Polera Tela color cire" },
+  { "idProducto": 2, "desc": "Polera sublimacion 100% cire" },
+  { "idProducto": 3, "desc": "Polera sublimacion 100% rugby" },
+  { "idProducto": 4, "desc": "Polera sublimacion 100% elasticada" },
+  { "idProducto": 5, "desc": "Calzas" },
+  { "idProducto": 6, "desc": "Pantalon buzo" },
+  { "idProducto": 7, "desc": "Polerón con cierre" }

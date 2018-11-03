@@ -24,7 +24,8 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.pedidosService.getPedidos('buscar', 'En proceso', '', this.fechaDesde, this.fechaHasta)
+    this.fechaDesde.setDate(this.fechaDesde.getDate() - 30);
+    this.pedidosService.getPedidos('buscar', 'En proceso', undefined, this.fechaDesde, this.fechaHasta)
       .subscribe(
         pedidos => this.listaPedidos = pedidos,
         err => console.log(err),

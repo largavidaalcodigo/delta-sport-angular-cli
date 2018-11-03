@@ -1,10 +1,12 @@
+import { Mensajes } from '../../../model/mensajes.model';
+import { ChatService } from '../../../services/chat.service';
 import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { ClientesService } from '../../../services/clientes.service';
 import { PedidosService } from '../../../services/pedidos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pedido } from '../../../model/pedido/pedido.model';
 import { Component, OnInit } from '@angular/core';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-form-modulos',
@@ -17,7 +19,8 @@ export class FormModulosComponent implements OnInit {
   modulo: string;
   titulo = 'Avances orden de trabajo';
 
-  constructor(private route: ActivatedRoute,
+  constructor(private chatService: ChatService,
+    private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private pedidosService: PedidosService,
@@ -38,7 +41,38 @@ export class FormModulosComponent implements OnInit {
       console.log('pedido actualizado->' + JSON.stringify(data));
       this.pedido = data;
     });
-    this.router.navigate(['/' + this.modulo, '<strong>Pedido nro. [' + this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
+    let contadorMensaje: number;
+    this.router.navigate(['/' + this.modulo]);
+    switch (this.modulo) {
+      case 'corte':
+        contadorMensaje = this.pedido.avanceCorte;
+        break;
+      case 'confeccion':
+        contadorMensaje = this.pedido.avanceConfeccion;
+      break;
+      case 'estampado':
+        contadorMensaje = this.pedido.avanceEstampado;
+        break;
+      case 'diseño':
+        contadorMensaje = this.pedido.avanceDiseno;
+        break;
+      default:
+        break;
+    }
+
+    const mensaje = '[' + this.modulo + '] Nuevo avance [' + contadorMensaje + ']%';
+    const titulo = 'Pedido [' + this.pedido.numeroPedido + '] / ' +
+    (this.pedido.cliente.razonSocialCliente != null ? this.pedido.cliente.razonSocialCliente : this.pedido.cliente.nombresCliente);
+
+    // mensaje notificacion cambios
+    const msg = new Mensajes();
+    msg.fecha = new Date();
+    msg.usuarioOrigen = 'usuario origen';
+    msg.usuarioDestino = 'usuario destino';
+    msg.mensaje = mensaje;
+    msg.titulo = titulo;
+    msg.url = this.router.url;
+    this.chatService.sendMsg(msg);
   }
 
   calculaAvance(){

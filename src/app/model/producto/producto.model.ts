@@ -1,6 +1,8 @@
+import { TipoProducto } from './tipoProducto.model';
 export class Producto {
-  public idProducto: number;
   public desc: string;
+  public estado: string;
+  public tipoProducto: TipoProducto[];
   constructor() {
   }
 }

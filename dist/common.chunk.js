@@ -161,9 +161,8 @@ var CommonsService = (function () {
     /*  public deletePedido(pedido: Pedido){
        return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
      } */
-    CommonsService.prototype.getProductos = function (tipo) {
-        console.log('service tipo->' + tipo);
-        return this.http.get('/api/productos/' + tipo);
+    CommonsService.prototype.getProductos = function () {
+        return this.http.get('/api/productos/');
     };
     CommonsService.prototype.addProducto = function (produc) {
         console.log('post->' + JSON.stringify(produc));
@@ -198,7 +197,7 @@ var CommonsService = (function () {
         ];
     };
     CommonsService.prototype.getTipoMantenedor = function () {
-        return ['Categorias', 'Productos', 'Precios', 'Tipos de tela', 'Tallas', 'Tipo deporte'];
+        return ['Categorias', 'producto', 'Precios', 'Tipos de tela', 'Tallas', 'Tipo deporte'];
     };
     CommonsService.prototype.getTelas = function () {
         return ['boston', 'rugby', 'mesh', 'lycra', 'elasticada', 'franela', 'franela elasticada', 'dupont', 'otro'];
@@ -218,6 +217,52 @@ CommonsService = __decorate([
 
 var _a;
 //# sourceMappingURL=commons.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/productos.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProductosService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ProductosService = (function () {
+    function ProductosService(http) {
+        this.http = http;
+    }
+    ProductosService.prototype.getProductos = function () {
+        return this.http.get('/api/productos/');
+    };
+    ProductosService.prototype.postProducto = function (producto) {
+        return this.http.post('/api/productos', producto);
+    };
+    ProductosService.prototype.putProducto = function (producto) {
+        return this.http.put('/api/productos/', producto);
+    };
+    return ProductosService;
+}());
+ProductosService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
+], ProductosService);
+
+var _a;
+//# sourceMappingURL=productos.service.js.map
 
 /***/ }),
 

@@ -24,8 +24,8 @@ var map = {
 	],
 	"./pages/corte/corte.module": [
 		"../../../../../src/app/pages/corte/corte.module.ts",
-		"corte.module",
-		"common"
+		"common",
+		"corte.module"
 	],
 	"./pages/dashboard/dashboard-default/dashboard-default.module": [
 		"../../../../../src/app/pages/dashboard/dashboard-default/dashboard-default.module.ts",
@@ -121,8 +121,7 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_mensajes_model__ = __webpack_require__("../../../../../src/app/model/mensajes.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chat_service__ = __webpack_require__("../../../../../src/app/services/chat.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -138,25 +137,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AppComponent = (function () {
-    function AppComponent(chat) {
-        this.chat = chat;
+    function AppComponent(chatService) {
+        this.chatService = chatService;
         this.title = 'app';
     }
     AppComponent.prototype.ngOnInit = function () {
+        //Observable.interval(6000).subscribe(() => this.sendMessage());
         var _this = this;
-        __WEBPACK_IMPORTED_MODULE_0_rxjs__["Observable"].interval(6000).subscribe(function () { return _this.sendMessage(); });
-        this.chat.messages.subscribe(function (msg) {
+        //AQUI SE MUESTRAN TODAS LAS NOTIFICACIONES ENTRANTES
+        this.chatService.messages.subscribe(function (mensa) {
             // TODO debe mostrar mensajes solo a los usuarios pertinentes
-            console.log('mensaje recibido por el servidor->' + JSON.stringify(msg));
-            _this.chat.success(msg.text, 'Nuevo mensaje');
+            console.log('mensaje recibido por el servidor->' + JSON.stringify(mensa));
+            //let msg = ;
+            console.log('mensa.text ->' + JSON.stringify(mensa.text));
+            var mensaje = mensa.text;
+            var datos = '<a href=\'' + mensaje.url + '\'>' + mensaje.mensaje + '</a>';
+            _this.chatService.success(datos, mensaje.titulo);
         });
     };
-    AppComponent.prototype.sendMessage = function () {
-        var mensaje = new Date().toISOString();
-        this.chat.sendMsg(mensaje);
+    AppComponent.prototype.sendMessage = function (usuarioOrigen, usuarioDestino, titulo, mensaje, url) {
+        //const mensaje = new Date().toLocaleString('es-CL', {timeZone: 'America/Santiago'});
+        // mensaje notificacion cambios
+        var msg = new __WEBPACK_IMPORTED_MODULE_0__model_mensajes_model__["a" /* Mensajes */]();
+        msg.fecha = new Date();
+        msg.usuarioOrigen = 'usuario origen';
+        msg.usuarioDestino = 'usuario destino';
+        msg.mensaje = new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+        msg.titulo = titulo;
+        msg.url = url;
+        this.chatService.sendMsg(msg);
     };
     AppComponent.prototype.success = function () {
-        this.chat.success('Prueba exitosa');
+        this.chatService.success('Prueba exitosa');
     };
     return AppComponent;
 }());
@@ -735,6 +747,21 @@ AuthComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/model/mensajes.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Mensajes; });
+var Mensajes = (function () {
+    function Mensajes() {
+    }
+    return Mensajes;
+}());
+
+//# sourceMappingURL=mensajes.model.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/pages/commons/header-pedidos/header-pedidos.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -859,7 +886,8 @@ var ListaPedidosComponent = (function () {
     }
     ListaPedidosComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.pedidosService.getPedidos('buscar', 'En proceso', '', this.fechaDesde, this.fechaHasta)
+        this.fechaDesde.setDate(this.fechaDesde.getDate() - 30);
+        this.pedidosService.getPedidos('buscar', 'En proceso', undefined, this.fechaDesde, this.fechaHasta)
             .subscribe(function (pedidos) { return _this.listaPedidos = pedidos; }, function (err) { return console.log(err); });
         this.titulo = this.modulo + ' Orden de trabajo';
     };
@@ -948,7 +976,7 @@ var ChatService = (function () {
         this.messages.next(msg);
     };
     ChatService.prototype.success = function (title, message) {
-        toastr.success(title, message);
+        toastr.info(title, message);
     };
     /*   Warning(title: string, message?: string) {
         toastr.warning(title, message);
@@ -965,15 +993,15 @@ var ChatService = (function () {
     ChatService.prototype.settings = function () {
         toastr.options = {
             'closeButton': true,
-            'debug': false,
+            'debug': true,
             'newestOnTop': false,
-            'progressBar': true,
+            'progressBar': false,
             'positionClass': 'toast-top-right',
-            'preventDuplicates': true,
+            'preventDuplicates': false,
             'showDuration': '300',
             'hideDuration': '1000',
-            'timeOut': '10000',
-            'extendedTimeOut': '1000',
+            'timeOut': '30000',
+            'extendedTimeOut': '15000',
             'showEasing': 'swing',
             'hideEasing': 'linear',
             'showMethod': 'fadeIn',
@@ -1021,18 +1049,21 @@ var PedidosService = (function () {
         this.http = http;
     }
     PedidosService.prototype.getPedidos = function (tipo, estado, query, fDesde, fHasta) {
-        //if (query != '') {
-        //console.log('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/'+ fDesde.toString() + '/'+ fHasta.toString());
-        return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/' + fDesde.toString() + '/' + fHasta.toString());
-        //return this.http.get('/api/pedidos/buscar/En%20proceso/tomas/2018-08-01/2018-09-14');
-        /*     }else {
-              return this.http.get('/api/pedidos/' + tipo + '/' + estado);
-            }
+        /*     console.log('get pedidos-> ' + '/api/pedidos/'
+            + tipo + '/'
+            + estado + '/'
+            + query + '/'
+            + fDesde + '/'
+            + fHasta );
          */
-        /*     return this.http.get('/api/pedidos')
-              .map(response => response as Pedido[])
-              .catch((error : any) => Observable.throw('Server error'));
-         */
+        return this.http.get('/api/pedidos/'
+            + tipo + '/'
+            + estado + '/'
+            + query + '/'
+            + fDesde + '/'
+            + fHasta)
+            .map(function (response) { return response; })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_1_rxjs__["Observable"].throw('Server error'); });
     };
     PedidosService.prototype.getPedido = function (numeroPedido) {
         return this.http.get('/api/pedidos/editar/' + numeroPedido)
@@ -1101,19 +1132,6 @@ var PedidosService = (function () {
             { id: 3, desc: 'Cheque' }
         ];
     };
-    //   public getProductos():Observable<Producto[]> {
-    PedidosService.prototype.getProductos = function () {
-        //return this.http.get('./assets/data/productos/productos.json');
-        return [
-            { idProducto: 1, desc: 'Polera Tela color cire' },
-            { idProducto: 2, desc: 'Polera sublimacion 100% cire' },
-            { idProducto: 3, desc: 'Polera sublimacion 100% rugby' },
-            { idProducto: 4, desc: 'Polera sublimacion 100% elasticada' },
-            { idProducto: 5, desc: 'Calzas' },
-            { idProducto: 6, desc: 'Pantalon buzo' },
-            { idProducto: 7, desc: 'Polerón con cierre' }
-        ];
-    };
     PedidosService.prototype.getTipoProductos = function () {
         //return this.http.get('./assets/data/productos/tipos-productos.json');
         return [
@@ -1178,8 +1196,8 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_socket_io_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1198,14 +1216,12 @@ var WebsocketService = (function () {
     }
     WebsocketService.prototype.connect = function () {
         var _this = this;
-        // If you aren't familiar with environment variables then
-        // you can hard code `environment.ws_url` as `http://localhost:5000`
         this.socket = __WEBPACK_IMPORTED_MODULE_1_socket_io_client__();
         // We define our observable which will observe any incoming messages
         // from our socket.io server.
         var observable = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"](function (observer) {
             _this.socket.on('message', function (data) {
-                console.log('Received message from Websocket Server');
+                //console.log('Received message from Websocket Server')
                 observer.next(data);
             });
             return function () {
@@ -1217,12 +1233,13 @@ var WebsocketService = (function () {
         // socket server whenever the `next()` method is called.
         var observer = {
             next: function (data) {
-                _this.socket.emit('message', JSON.stringify(data));
+                //this.socket.emit('message', JSON.stringify(data));
+                _this.socket.emit('message', data);
             },
         };
         // we return our Rx.Subject which is a combination
         // of both an observer and observable.
-        return __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Subject"].create(observer, observable);
+        return __WEBPACK_IMPORTED_MODULE_3_rxjs__["Subject"].create(observer, observable);
     };
     return WebsocketService;
 }());
@@ -2495,7 +2512,7 @@ module.exports = __webpack_require__("../../../../../src/main.ts");
 
 /***/ }),
 
-/***/ 3:
+/***/ 1:
 /***/ (function(module, exports) {
 
 /* (ignored) */

@@ -2,10 +2,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var productoSchema = new Schema({
-  listaTipoProducto: [{
-    descripcion: String,
-    tipoProducto: [{
-      descripcion: String
+  desc: String,
+  estado: String,
+  tipoProducto: [{
+    desc: String,
+    estado: String,
+    rangoPrecio: [{
+      desc: String,
+      valor: String,
+      estado: String
     }]
   }]
 });

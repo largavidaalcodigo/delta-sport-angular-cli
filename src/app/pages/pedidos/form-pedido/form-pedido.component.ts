@@ -1,3 +1,6 @@
+import { ProductosService } from './../../../services/productos.service';
+import { Mensajes } from '../../../model/mensajes.model';
+import { ChatService } from '../../../services/chat.service';
 import { ImgFT } from '../../../model/producto/imgFT.model';
 import { TipoCuelloFT } from '../../../model/producto/tipoCuelloFT.model';
 import { TipoProductoFT } from '../../../model/producto/tipoProductoFT.model';
@@ -68,7 +71,7 @@ export class FormPedidoComponent implements OnInit {
   rangoPrecioProducto: RangoPrecioProducto;
 
   //Listas
-  listaProductos: Producto[];
+  listaProductos: Observable<Producto[]>;
   listaTipoProducto: TipoProducto[];
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
@@ -90,9 +93,11 @@ export class FormPedidoComponent implements OnInit {
   editando: boolean = false;
   id: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private chatService: ChatService,
+    private route: ActivatedRoute,
     private router: Router,
     private pedidosService: PedidosService,
+    private productosService: ProductosService,
     private clientesService: ClientesService) {}
 
   ngOnInit() {
@@ -109,7 +114,7 @@ export class FormPedidoComponent implements OnInit {
 
     //NUEVO
     if (this.pedido == null) {
-      this.titulo='Nuevo Pedido';
+      this.titulo = 'Nuevo Pedido';
       this.pedido = new Pedido();
       this.pedido.idEstado = 1; //creado
       this.pedido.estado = 'Creado';
@@ -132,21 +137,6 @@ export class FormPedidoComponent implements OnInit {
       this.titulo = 'Editando Pedido';
 
     }
-/*     if(this.tipoForm === 'tallas'){
-      this.titulo = 'Listado Tallas';
-
-    }
- */
-/*     if(this.tipoForm === 'ft'){
-      this.titulo = 'Ficha Tecnica productos';
-      this.listaTelas = this.pedidosService.getTelas();
-      this.detalleFichaTecnica = new FichaTecnica();
-      this.tipoProductoFT = new TipoProductoFT();
-      this.listaTipoProductoFT = new Array();
-      this.listaTipoCuelloFT = new Array();
-      this.tipoCuelloFT = new TipoCuelloFT();
-    }
- */
 
     this.listaColores = this.pedidosService.getColores();
     this.listaMediosPago = this.pedidosService.getMediosPago();
@@ -160,7 +150,7 @@ export class FormPedidoComponent implements OnInit {
       this.listaClientes = data;
     });
 
-    this.listaProductos = this.pedidosService.getProductos();
+    this.listaProductos = this.productosService.getProductos();
 
     this.detallePedido = new DetallePedido();
     this.medioPago = new MedioPago();
@@ -179,22 +169,22 @@ export class FormPedidoComponent implements OnInit {
 
   onSelectProducto(productoId: number) {
     //this.detallePedido.idProducto = productoId;
-    this.listaTipoProducto = this.pedidosService.getTipoProductos()
-      .filter(item => item.idProducto == productoId);
+    /* this.listaTipoProducto = this.pedidosService.getTipoProductos()
+      .filter(item => item.idProducto == productoId); */
     console.log('categoria-> ' + productoId);
     //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
   }
 
   onSelectTipoProducto(tipoProductoId: number) {
     //this.detallePedido.idTipoProducto = tipoProductoId;
-    this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
-      .filter(item => item.idTipoProducto == tipoProductoId);
+    //this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
+      //.filter(item => item.idTipoProducto == tipoProductoId);
       console.log('producto->' + tipoProductoId);
     }
 
   onSelectRangoPrecio(rangoPrecioId: number) {
     console.log('rango precios->' + rangoPrecioId);
-    this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
+    //this.rangoPrecioProducto = this.listaRangoPrecios.find(item => item.id == rangoPrecioId);
     console.log('rangoPrecioProducto ->' + this.rangoPrecioProducto);
     //this.detallePedido.idRangoPrecio = this.rangoPrecioProducto.id;
     this.detallePedido.valor  = this.rangoPrecioProducto.valor;
@@ -204,14 +194,6 @@ export class FormPedidoComponent implements OnInit {
 /*   onSelectSinDiseno(llevaDiseño: number){
       console.log('llevaDiseño->'+llevaDiseño);
   } */
-
-  emiteVolver() {
-    //this.pedidoForm.reset();
-    //this.salir.emit();
-    //this.router.navigate(['/pedidos', 'Pedido creado']);
-
-  }
-
 
   onSubmitDetalle() {
     if (this.editando){
@@ -224,12 +206,12 @@ export class FormPedidoComponent implements OnInit {
       this.detallePedido.id = this.pedido.listaProductos.length + 1;
 
       // SETEA NOMBRE DE CATEGORIA/PRODUCTO/RANGO PRECIO
-      const producto: Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
+/*       const producto: Producto = this.listaProductos.find(item => item.idProducto == this.detallePedido.idProducto);
       this.detallePedido.descProducto = producto.desc;
       this.detallePedido.descTipoProducto = this.listaTipoProducto.find(item => item.id == this.detallePedido.idTipoProducto).desc;
       this.detallePedido.descRangoPrecio = this.listaRangoPrecios.find(item => item.id == this.detallePedido.idRangoPrecio).desc;
       this.detallePedido.listaAdicionales = this.listaDetallesAdicionales.filter(item => item.checked);
-
+ */
       this.addTallasProducto();
       this.cantidadProductos = this.pedido.listaProductos.push(this.detallePedido);
 
@@ -337,14 +319,28 @@ export class FormPedidoComponent implements OnInit {
     //console.log('this.detallePedido.totalAdicionales-> ' + this.detallePedido.totalAdicionales);
   }
 
-  guardarPedido(){
+  guardarPedido() {
     this.calculaTotalItem();
     if (this.tipoForm === 'editar') {
-      this.pedidosService.putPedido(this.pedido).subscribe(data => {
-        console.log('pedido actualizado->' + JSON.stringify(data));
-        this.pedido = data;
-      });
-      this.router.navigate(['/pedidos', 'Pedido nro. [' + this.pedido.numeroPedido + '] actualizado exitosamente']);
+        this.pedidosService.putPedido(this.pedido).subscribe(data => {
+          console.log('pedido actualizado->' + JSON.stringify(data));
+          this.pedido = data;
+        });
+      this.router.navigate(['/pedidos']);
+      //this.chatService.sendMsg('Pedido nro. [' + this.pedido.numeroPedido + '] actualizado exitosamente');
+
+      //Emite mensaje
+      const msg = new Mensajes();
+      msg.fecha = new Date();
+      msg.usuarioOrigen = 'usuario origen';
+      msg.usuarioDestino = 'usuario destino';
+      msg.mensaje = 'El pedido ha sido actualizado exitosamente.';
+      msg.titulo = 'Pedido # ' + this.pedido.numeroPedido;
+      msg.url = window.location.href;
+      this.chatService.sendMsg(msg);
+
+
+
 
     }else if (this.tipoForm === 'nuevo') {
 
@@ -357,7 +353,19 @@ export class FormPedidoComponent implements OnInit {
         this.pedidosService.addPedido(this.pedido).subscribe(pedido => {
           this.pedido = pedido;
           console.log('nuevo  insertado->');
-          this.router.navigate(['/pedidos', 'Pedido nro. [' + this.pedido.numeroPedido + '] Creado exitosamente']);
+          this.router.navigate(['/pedidos']);
+          //this.chatService.sendMsg('Pedido nro. [' + this.pedido.numeroPedido + '] creado exitosamente');
+
+          //Emite mensaje
+          const msg = new Mensajes();
+          msg.fecha = new Date();
+          msg.usuarioOrigen = 'usuario origen';
+          msg.usuarioDestino = 'usuario destino';
+          msg.mensaje = 'El pedido ha sido creado exitosamente.';
+          msg.titulo = 'Pedido # ' + this.pedido.numeroPedido;
+          msg.url = window.location.href;
+          this.chatService.sendMsg(msg);
+
         });
       });
     }

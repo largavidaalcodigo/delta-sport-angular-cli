@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebsocketService } from './websocket.service';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs';
 declare var toastr: any;
 
 @Injectable()
@@ -27,7 +27,7 @@ export class ChatService {
   }
 
   success(title: string, message?: string) {
-    toastr.success(title, message);
+    toastr.info(title, message);
   }
 
 /*   Warning(title: string, message?: string) {
@@ -45,15 +45,15 @@ export class ChatService {
   settings() {
     toastr.options = {
       'closeButton': true,
-      'debug': false,
+      'debug': true,
       'newestOnTop': false,
-      'progressBar': true,
+      'progressBar': false,
       'positionClass': 'toast-top-right',
-      'preventDuplicates': true,
+      'preventDuplicates': false,
       'showDuration': '300',
       'hideDuration': '1000',
-      'timeOut': '10000',
-      'extendedTimeOut': '1000',
+      'timeOut': '30000',
+      'extendedTimeOut': '15000',
       'showEasing': 'swing',
       'hideEasing': 'linear',
       'showMethod': 'fadeIn',

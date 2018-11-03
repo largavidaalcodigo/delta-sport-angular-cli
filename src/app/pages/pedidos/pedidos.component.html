@@ -30,6 +30,7 @@
             [(ngModel)]='estado'
             name='estado'
           >
+            <option [value]=undefined>Seleccione</option>
             <option *ngFor='let c of listaEstadosPedido' [value]='c'>{{c}}</option>
           </select>
           <div class="form-check">
@@ -101,6 +102,19 @@
               </td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4"></td>
+              <td>
+                <b>${{this.total}}</b>
+              </td>
+              <td>
+                <b>${{totalPendientes}}</b>
+              </td>
+              <td colspan="4"></td>
+              </tr>
+          </tfoot>
+
         </table>
       </div>
     </app-card>

@@ -3,21 +3,12 @@ const router = express.Router();
 var Productos = require('../model/producto.model.js');
 
 /* FIND ALL */
-router.get('/', (req, res) => {
-  res.send();
+router.get('/productos', (req, res) => {
+  Productos.find(function (err, data) {
+    if (err) return next(err);
+    res.json(data);
+  });
 });
-
-/* router.get('/productos/:tipo', function(req, res, next) {
-  console.log('express tipo->'+req.params.tipo);
-    var query = {
-      'descripcion': req.params.tipo
-    };
-
-    Productos.find(query, function (err, data) {
-      if (err) return next(err);
-      res.json(data);
-    });
-}); */
 
 /* SAVE */
 router.post('/productos', function(req, res, next) {
@@ -27,5 +18,15 @@ router.post('/productos', function(req, res, next) {
     res.json(post);
   });
 });
+
+
+router.put('/productos', function(req, res, next) {
+  Productos.findByIdAndUpdate({'_id':req.body._id}, req.body, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+    //console.log('actualizado->'+post);
+  });
+});
+
 
 module.exports = router;

@@ -11,18 +11,23 @@ export class PedidosService {
   constructor(private http: HttpClient) {}
 
   public getPedidos(tipo: string, estado: string, query: string, fDesde: Date, fHasta: Date): Observable<Pedido[]> {
-    //if (query != '') {
-    //console.log('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/'+ fDesde.toString() + '/'+ fHasta.toString());
-    return this.http.get('/api/pedidos/' + tipo + '/' + estado + '/' + query + '/'+ fDesde.toString() + '/'+ fHasta.toString());
-    //return this.http.get('/api/pedidos/buscar/En%20proceso/tomas/2018-08-01/2018-09-14');
-/*     }else {
-      return this.http.get('/api/pedidos/' + tipo + '/' + estado);
-    }
+/*     console.log('get pedidos-> ' + '/api/pedidos/'
+    + tipo + '/'
+    + estado + '/'
+    + query + '/'
+    + fDesde + '/'
+    + fHasta );
  */
-/*     return this.http.get('/api/pedidos')
-      .map(response => response as Pedido[])
-      .catch((error : any) => Observable.throw('Server error'));
- */
+    return this.http.get(
+      '/api/pedidos/'
+      + tipo + '/'
+      + estado + '/'
+      + query + '/'
+      + fDesde + '/'
+      + fHasta
+    )
+    .map(response => response as Pedido[])
+    .catch((error: any) => Observable.throw('Server error'));
   }
 
   public getPedido(numeroPedido: any): Observable<Pedido> {
@@ -102,19 +107,6 @@ export class PedidosService {
       { id: 1, desc: 'Efectivo'},
       { id: 2, desc: 'Transferencia'},
       { id: 3, desc: 'Cheque'}
-    ];
-  }
-  //   public getProductos():Observable<Producto[]> {
-  public getProductos(): Producto[] {
-    //return this.http.get('./assets/data/productos/productos.json');
-    return [
-      { idProducto: 1, desc: 'Polera Tela color cire' },
-      { idProducto: 2, desc: 'Polera sublimacion 100% cire' },
-      { idProducto: 3, desc: 'Polera sublimacion 100% rugby' },
-      { idProducto: 4, desc: 'Polera sublimacion 100% elasticada' },
-      { idProducto: 5, desc: 'Calzas' },
-      { idProducto: 6, desc: 'Pantalon buzo' },
-      { idProducto: 7, desc: 'Polerón con cierre' }
     ];
   }
   public getTipoProductos() {

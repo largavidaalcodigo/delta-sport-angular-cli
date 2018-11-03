@@ -1,0 +1,49 @@
+<!-- <div> -->
+  <app-card [title]="'Tipo Producto'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <div class="container">
+      <div class="row">
+        <button (click)="nuevo()" class="btn btn-primary btn-sm">Nuevo</button>
+          <form *ngIf="verformProducto==true">
+          <div>
+            <input type='text' class='form-control' name='descripcionTipoProducto'
+            [(ngModel)]='tipoProducto.desc' placeholder='Descripción Tipo Producto'>
+          </div>
+          <div class="col-sm">
+            <select class='form-control' name='estado' *ngIf="!addProducto"
+            [(ngModel)]='tipoProducto.estado'>
+              <option [value]="'activo'">Activo</option>
+              <option [value]="'inactivo'">Inactivo</option>
+            </select>
+            <button type="button" (click)="cancelar()" class="btn btn-warn btn-sm">Cancelar</button>
+            <button type="button" (click)="guardar()" class="btn btn-primary btn-sm">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Descripcion</th>
+        <th>Estado</th>
+        <!-- <th>Opciones</th> -->
+      </tr>
+      </thead>
+      <tbody *ngFor="let producto of listaTipoProducto;let i = index">
+        <tr (click)="verProducto(producto);">
+          <td>{{i+1}}</td>
+          <td>{{producto.desc}}</td>
+          <td>{{producto.estado}}</td>
+<!--             <td>
+            <button type="button" class="btn btn-primary"
+            (click)='addProductos(producto._id);$event.stopPropagation();'>
+              Agregar Productos
+            </button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </app-card>
+<!-- </div>
+{{ producto | json }}
+ -->

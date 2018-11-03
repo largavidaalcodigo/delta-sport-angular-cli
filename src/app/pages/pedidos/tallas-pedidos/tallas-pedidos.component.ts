@@ -1,3 +1,5 @@
+import { ChatService } from './../../../services/chat.service';
+import { Mensajes } from './../../../model/mensajes.model';
 import { DetalleTalla } from '../../../model/producto/detalleTalla.model';
 import { Location } from "@angular/common";
 import { Pedido } from '../../../model/pedido/pedido.model';
@@ -24,7 +26,7 @@ export class TallasPedidosComponent implements OnInit {
     private router: Router,
     private pedidosService: PedidosService,
     private location: Location,
-    private clientesService: ClientesService) {}
+    private chatService: ChatService) {}
 
   ngOnInit() {
     this.listaTallas = this.pedidosService.getTallas();
@@ -45,8 +47,19 @@ export class TallasPedidosComponent implements OnInit {
     this.pedidosService.putPedido(this.pedido).subscribe(data => {
       console.log('pedido actualizado->' + JSON.stringify(data));
       this.pedido = data;
+
+      this.router.navigate(['/pedidos']);
+      //Emite mensaje
+      const msg = new Mensajes();
+      msg.fecha = new Date();
+      msg.usuarioOrigen = 'usuario origen';
+      msg.usuarioDestino = 'usuario destino';
+      msg.mensaje = 'El pedido ha sido actualizado exitosamente.';
+      msg.titulo = 'Pedido # ' + this.pedido.numeroPedido + ' - Tallas';
+      msg.url = window.location.href;
+      this.chatService.sendMsg(msg);
+      console.log('url->' + JSON.stringify(this.route));
     });
-    this.router.navigate(['/pedidos', '<strong>Pedido nro. ['+ this.pedido.numeroPedido + ']</strong> Actualizado exitosamente']);
   }
 
   calculaTotalItem(){

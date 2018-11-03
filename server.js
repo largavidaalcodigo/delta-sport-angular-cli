@@ -19,8 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 
 //app.use('/', express.static('./dist/index.html'));
-app.use(express.static(path.join(__dirname, 'dist')));
-//app.get('/', app.use(express.static(path.join(__dirname, 'dist'))));
+//app.use(express.static(path.join(__dirname, 'dist')));
+app.get('/', app.use(express.static(path.join(__dirname, 'dist'))));
 
 //app.use('/', routes);
 // serve angular front end files from root path
@@ -31,7 +31,6 @@ app.use(express.static(path.join(__dirname, 'dist')));
     res.sendFile(path.resolve('app/index.html'));
 });
  */
-
 
 app.use('/api', require('./server/routes/pedidos'));
 app.use('/api', require('./server/routes/clientes'));
@@ -70,6 +69,10 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+router.get('/', function (req, res) {
+  res.render('index', { user : req.user });
+});
+
 
 //Socket.io
 const server = require('http').createServer(app);
@@ -84,13 +87,12 @@ app.use(errorHandler());
 const port = process.env.PORT || '3000';
 app.set('port', port);
 server.listen(port, () => console.log('Running on localhost:' + port));
-var io = require('socket.io')(server);
 
+
+var io = require('socket.io')(server);
 io.on('connection', (socket) => {
-  // Log whenever a user connects
   console.log('user connected');
 
-  // Log whenever a client disconnects from our websocket server
   socket.on('disconnect', function(){
       console.log('user disconnected');
   });
@@ -225,3 +227,4 @@ app.get('/api/clientinfo', routes.client.info); */
 //app.use(express.methodOverride());
 
 //app.use('/', routes);
+

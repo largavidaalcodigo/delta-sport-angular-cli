@@ -1,4 +1,7 @@
-import { PedidosService } from './../../services/pedidos.service';
+import { FormRangoPrecioComponent } from './form-rango-precio/form-rango-precio.component';
+import { FormTipoProductoComponent } from './form-tipo-producto/form-tipo-producto.component';
+import { ProductosService } from './../../services/productos.service';
+import { PedidosService } from '../../services/pedidos.service';
 import { CommonsService } from '../../services/commons.service';
 import { productosRouter } from './productos.router';
 import { ProductosComponent } from './productos.component';
@@ -11,9 +14,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { ClientesService } from '../../services/clientes.service';
 import { HttpModule } from '@angular/http';
+import { FormProductoComponent } from './form-producto/form-producto.component';
 
 export const productosRoutes: Routes = [
-  {path: '', component: ProductosComponent},
+  {
+    path: '', component: ProductosComponent,
+    children: [ // rutas hijas, se verán dentro del componente padre
+      {
+        path: 'producto', // la ruta real es movimientos/nuevo
+        component: FormProductoComponent
+      },
+/*       {
+        path: 'categoria/:id', // la ruta real es movimientos/nuevo
+        component: CategoriaComponent
+      } */
+    ]
+  },
   {path: ':id', component: ProductosComponent},
 ];
 
@@ -29,10 +45,14 @@ export const productosRoutes: Routes = [
   ],
   providers: [
     CommonsService,
-    PedidosService
+    PedidosService,
+    ProductosService
   ],
   declarations: [
-    ProductosComponent
+    ProductosComponent,
+    FormProductoComponent,
+    FormTipoProductoComponent,
+    FormRangoPrecioComponent
   ]
 })
 export class ProductosModule {}

@@ -1,4 +1,5 @@
-import { Productos } from './../model/producto/productos.model';
+import { Producto } from '../model/producto/producto.model';
+import { Productos } from '../model/producto/productos.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -75,9 +76,8 @@ export class CommonsService {
     return this.http.delete<Pedido>('/api/deletePedido/' + pedido.numeroPedido);
   } */
 
-  public getProductos(tipo: string){
-    console.log('service tipo->' + tipo);
-    return this.http.get('/api/productos/' + tipo);
+  public getProductos(): Observable<Producto[]>{
+    return this.http.get<Producto[]>('/api/productos/');
   }
 
   public addProducto(produc: Productos) {
@@ -117,7 +117,7 @@ export class CommonsService {
   }
 
   public getTipoMantenedor() {
-    return ['Categorias', 'Productos', 'Precios', 'Tipos de tela', 'Tallas', 'Tipo deporte'];
+    return ['Categorias', 'producto', 'Precios', 'Tipos de tela', 'Tallas', 'Tipo deporte'];
   }
 
   public getTelas() {

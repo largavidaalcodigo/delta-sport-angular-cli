@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { PedidosService } from './../../../services/pedidos.service';
+import { PedidosService } from '../../../services/pedidos.service';
 import { Component, OnInit } from '@angular/core';
 
 import '../../../../assets/charts/amchart/amcharts.js';

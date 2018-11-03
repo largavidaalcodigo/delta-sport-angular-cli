@@ -1,22 +1,16 @@
-import { DetalleTipoProducto } from '../../model/producto/detalleTipoProducto.model';
-import { PedidosService } from '../../services/pedidos.service';
-import { Productos } from '../../model/producto/productos.model';
-import { CommonsService } from '../../services/commons.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ClientesService } from '../../services/clientes.service';
-import { Cliente } from '../../model/cliente/cliente.model';
-import { Component, OnInit} from '@angular/core';
-import { Producto } from '../../model/producto/producto.model';
-import { ProductosService } from '../../services/productos.service';
-import { TipoProducto } from '../../model/producto/tipoProducto.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ProductosService } from './../../../services/productos.service';
+import { CommonsService } from './../../../services/commons.service';
+import { OnInit, Component } from '@angular/core';
+import { Producto } from '../../../model/producto/producto.model';
 declare var toastr: any;
 
 @Component({
-  selector: 'app-productos',
-  templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
+  selector: 'app-form-producto',
+  templateUrl: 'form-producto.component.html',
+  styleUrls: ['form-producto.component.css']
 })
-export class ProductosComponent implements OnInit {
+export class FormProductoComponent implements OnInit {
 
   addProducto: any;
   verformProducto: any;
@@ -30,21 +24,18 @@ export class ProductosComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private pedidosService: PedidosService,
     private productoService: ProductosService,
     private commonsService: CommonsService) {
-
-     this.route.params.subscribe(params => {
-      //console.log(params['id']);
-      this.tipoMantenedor = params['id'];
-      console.log('leyendo id->'+ this.tipoMantenedor);
-
-
-    });
   }
 
   ngOnInit() {
-    this.listaTipoMantenedor = this.commonsService.getTipoMantenedor();
+    this.commonsService.getProductos().subscribe(
+      productos => {
+        this.listaProductos = productos;
+        console.log('productos->' + JSON.stringify(productos));
+      },
+      err => {console.log(err)
+    });
   }
 
   nuevoProducto(){
@@ -93,6 +84,18 @@ export class ProductosComponent implements OnInit {
       });
 
     }
+  }
+
+  updateProducto(producto: Producto) {
+    this.producto = producto;
+    this.productoService.putProducto(this.producto).subscribe(data => {
+      console.log('producto actualizado->' + JSON.stringify(data));
+      this.producto = data;
+
+        //Emite mensaje
+        toastr.info('El producto se ha actualizado exitosamente', this.producto.desc);
+        this.cancelarProducto();
+    });
   }
 
   addProductos(id) {

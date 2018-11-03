@@ -672,7 +672,7 @@ module.exports = __webpack_require__.p + "themify.a1ecc3b826d01251eddd.woff";
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__("../../../../bootstrap/dist/css/bootstrap.min.css");
@@ -683,5 +683,5 @@ module.exports = __webpack_require__("../../../../../src/styles.css");
 
 /***/ })
 
-},[2]);
+},[3]);
 //# sourceMappingURL=styles.bundle.js.map
