@@ -1,9 +1,18 @@
+import { RangoPrecioProducto } from './../../../model/producto/rangoPrecioProducto.model';
 import { TipoProducto } from './../../../model/producto/tipoProducto.model';
 import { Producto } from '../../../model/producto/producto.model';
 import { CommonsService } from '../../../services/commons.service';
 import { ProductosService } from '../../../services/productos.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges
+} from '@angular/core';
 
 @Component({
   selector: 'app-form-tipo-producto',
@@ -11,8 +20,10 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChange
   styleUrls: ['./form-tipo-producto.component.css']
 })
 export class FormTipoProductoComponent implements OnInit, OnChanges {
-  @Input() producto: Producto;
-  @Output() emite = new EventEmitter<Producto>();
+  @Input()
+  producto: Producto;
+  @Output()
+  emite = new EventEmitter<Producto>();
 
   addProducto: any;
   verformProducto: any;
@@ -28,13 +39,8 @@ export class FormTipoProductoComponent implements OnInit, OnChanges {
 
   //Nivel: Categoria->producto->rango precio
   ngOnInit() {
-    /*     this.commonsService.getProductos().subscribe(
-      productos => {
-        this.listaProductos = productos;
-        console.log('productos->' + JSON.stringify(productos));
-      },
-      err => {console.log(err);
-      }); */
+    this.tipoProducto = new TipoProducto();
+    this.tipoProducto.estado = 'activo';
   }
 
   nuevo() {
@@ -53,31 +59,37 @@ export class FormTipoProductoComponent implements OnInit, OnChanges {
   }
 
   guardar() {
-
     if (this.addProducto === true) {
-
-      if (this.producto.tipoProducto==null){
+      if (this.producto.tipoProducto == null) {
         this.producto.tipoProducto = new Array();
       }
       console.log('this.tipoProducto: ', this.tipoProducto);
+      this.tipoProducto.id = this.listaTipoProducto.length + 1;
       this.producto.tipoProducto.push(this.tipoProducto);
       console.log('this.producto: ', JSON.stringify(this.producto));
 
       this.emite.emit(this.producto);
-
-/*       this.productoService.putProducto(this.producto).subscribe(data => {
-        console.log('producto actualizado->' + JSON.stringify(data));
-        this.producto = data;
-
-        //Emite mensaje
-        toastr.info(
-          'El producto se ha actualizado exitosamente',
-          this.producto.desc
-        );
-        this.cancelarProducto();
-      });
- */
-
+    } else {
+      this.emite.emit(this.producto);
     }
+  }
+
+  updateTipoProducto(tipoProducto: TipoProducto) {
+    //this.tipoProducto = tipoProducto;
+    this.emite.emit(this.producto);
+  }
+
+  verTipoProducto(item: TipoProducto) {
+    this.verformProducto = false;
+    this.tipoProducto = item;
+    this.tipoProducto.desc = item.desc;
+    this.tipoProducto.estado = item.estado;
+    //console.log('this.tipoProducto: ', this.tipoProducto);
+  }
+
+  cancelar() {
+    this.verformProducto = false;
+    this.tipoProducto = new TipoProducto();
+    this.tipoProducto.estado = 'Activo';
   }
 }

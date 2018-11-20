@@ -1,13 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col-md">
-      <app-card [title]="'Producto'" [classHeader]="false" [blockClass]="'table-border-style'">
+    <div class="col-md-4">
+        <h6>Producto:</h6>
+        <app-card [title]="producto!=null?producto.desc:''" [classHeader]="false" [blockClass]="'table-border-style'">
 <!--         <button (click)="nuevoProducto()" class="btn btn-primary btn-sm">Nuevo</button>
  -->
 <!--         <div class="container">
           <div class="row"> -->
             <div>
               <button *ngIf="!verformProducto" (click)="nuevoProducto()" class="btn btn-primary btn-sm">Nuevo</button>
+              <button *ngIf="!verformProducto && producto!=null" (click)="verformProducto=true;" class="btn btn-primary btn-sm">Editar</button>
               <form *ngIf="verformProducto==true">
               <div>
                 <input type='text' class='form-control' name='descripcionProducto' [(ngModel)]='descripcionProducto'
@@ -31,10 +33,11 @@
                   <!-- <th>Opciones</th> -->
                 </tr>
               </thead>
-              <tbody *ngFor="let producto of listaProductos;let i = index">
+              <tbody *ngFor="let producto of listaProductos | paginate: { itemsPerPage: 5, currentPage: p,
+                totalItems: total };let i = index">
                 <tr (click)="verProducto(producto);">
                   <td>{{i+1}}</td>
-                  <td>{{producto.desc}}</td>
+                  <td>{{producto.desc}} ({{producto.tipoProducto.length}})</td>
                   <td>{{producto.estado}}</td>
                   <!--             <td>
               <button type="button" class="btn btn-primary"
@@ -45,17 +48,21 @@
                 </tr>
               </tbody>
             </table>
+            <pagination-controls
+              previousLabel="Atrás"
+              nextLabel="Siguiente"
+              (pageChange)="p = $event">
+            </pagination-controls>
+
           </div>
 <!--         </div>
       </div> -->
       </app-card>
     </div>
-    <div class="col-md">
+    <div class="col-md-8">
       <app-form-tipo-producto (emite)="updateProducto($event)" [producto]=producto></app-form-tipo-producto>
     </div>
-    <div class="col-md">
-      <app-form-tipo-producto [producto]=producto></app-form-tipo-producto>
-    </div>
+
       {{ producto | json }}
   </div>
 </div>

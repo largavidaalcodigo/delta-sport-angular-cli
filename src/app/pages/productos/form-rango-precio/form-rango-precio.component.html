@@ -1,49 +1,52 @@
-<!-- <div> -->
-    <app-card [title]="'Rango de Precio'" [classHeader]="false" [blockClass]="'table-border-style'">
-        <button (click)="nuevoProducto()" class="btn btn-primary btn-sm">Nuevo</button>
-      <div class="container">
-        <div class="row">
-          <form *ngIf="verformProducto==true">
-            <div class="col-sm-4">
-              <input type='text' class='form-control' name='descripcionProducto'
-              [(ngModel)]='descripcionProducto' placeholder='Descripción'>
-            </div>
-            <div class="col-sm">
-              <select class='form-control' name='estadoProducto' *ngIf="!addProducto"
-              [(ngModel)]='estadoProducto'>
-                <option [value]="'activo'">Activo</option>
-                <option [value]="'inactivo'">Inactivo</option>
-              </select>
-              <button type="button" (click)="cancelarProducto()" class="btn btn-warn btn-sm">Cancelar</button>
-              <button type="button" (click)="guardarProducto()" class="btn btn-primary btn-sm">Guardar</button>
-            </div>
-          </form>
+<h6>Rango de Precio:</h6>
+<app-card [title]='rangoPrecio.desc' [classHeader]="false" [blockClass]="'table-border-style'">
+  <div class="container">
+    <div class="row">
+      <button (click)="nuevo()" class="btn btn-primary btn-sm">Nuevo</button>
+      <button *ngIf="rangoPrecio.desc!=null" (click)="verformProducto=true;" class="btn btn-primary btn-sm">Editar</button>
+      <form *ngIf="verformProducto==true">
+        <div>
+          <input type='text' class='form-control' name='desc' [(ngModel)]='rangoPrecio.desc' placeholder='Rango de tallas'>
+
+          <input type='number' class='form-control' name='valor' [(ngModel)]='rangoPrecio.valor' placeholder='Valor'>
         </div>
-      </div>
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Descripcion</th>
-          <th>Estado</th>
-          <!-- <th>Opciones</th> -->
-        </tr>
-        </thead>
-        <tbody *ngFor="let producto of listaProductos;let i = index">
-          <tr (click)="verProducto(producto);">
-            <td>{{i+1}}</td>
-            <td>{{producto.desc}}</td>
-            <td>{{producto.estado}}</td>
-  <!--             <td>
-              <button type="button" class="btn btn-primary"
-              (click)='addProductos(producto._id);$event.stopPropagation();'>
-                Agregar Productos
-              </button>
-            </td> -->
-          </tr>
-        </tbody>
-      </table>
-    </app-card>
-  <!-- </div>
-  {{ producto | json }}
-   -->
+        <div class="col-sm">
+          <select class='form-control' name='estado' *ngIf="!addProducto" [(ngModel)]='rangoPrecio.estado'>
+            <option [value]="'activo'">Activo</option>
+            <option [value]="'inactivo'">Inactivo</option>
+          </select>
+          <button type="button" (click)="cancelar()" class="btn btn-warn btn-sm">Cancelar</button>
+          <button type="button" (click)="guardar()" class="btn btn-primary btn-sm">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Descripcion</th>
+        <th>Valor</th>
+        <th>Estado</th>
+        <!-- <th>Opciones</th> -->
+      </tr>
+    </thead>
+    <tbody *ngFor="let producto of listaRangoPrecioProducto | paginate: { itemsPerPage: 5, currentPage: p,
+      totalItems: total };let i = index">
+      <tr (click)="verRangoPrecio(producto);">
+        <td>{{i+1}}</td>
+        <td>{{producto.desc}}</td>
+        <td>{{producto.valor}}</td>
+        <td>{{producto.estado}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+  previousLabel="Atrás"
+  nextLabel="Siguiente"
+  (pageChange)="p = $event">
+</pagination-controls>
+
+</app-card>
+<!-- {{ tipoProducto | json }}
+--------------------------- -->

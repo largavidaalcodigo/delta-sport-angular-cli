@@ -81,7 +81,7 @@
             <th>Opciones</th>
           </tr>
           </thead>
-          <tbody *ngFor="let pedido of listaPedidos;let i = index">
+          <tbody *ngFor="let pedido of listaPedidos | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
             <tr>
               <td (click)="editarPedido(pedido)">{{pedido.numeroPedido}}</td>
               <td (click)="editarPedido(pedido)">{{pedido.cliente.nombresCliente}}</td>
@@ -116,6 +116,12 @@
           </tfoot>
 
         </table>
+        <pagination-controls *ngIf="listaPedidos!=null"
+        previousLabel="Atrás"
+        nextLabel="Siguiente"
+        (pageChange)="p = $event">
+      </pagination-controls>
+
       </div>
     </app-card>
   </div>

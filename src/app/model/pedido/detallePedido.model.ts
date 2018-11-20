@@ -1,14 +1,17 @@
+import { Producto } from './../producto/producto.model';
 import { FichaTecnica } from '../producto/fichaTecnica.model';
 import { DetalleTalla } from '../producto/detalleTalla.model';
 import { DetalleAdicional } from '../producto/detalleAdicional.model';
 export class DetallePedido {
   public id: number;
-  public idProducto: number;
+  public producto: Producto;
+/*   public idProducto: number;
   public descProducto: string;
   public idTipoProducto: number;
   public descTipoProducto: string;
   public idRangoPrecio: number;
   public descRangoPrecio: string;
+ */
   public cantidad: number = 1;
   public valor: number;
   public subTotal: number;

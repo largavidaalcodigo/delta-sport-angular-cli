@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FormRangoPrecioComponent } from './form-rango-precio/form-rango-precio.component';
 import { FormTipoProductoComponent } from './form-tipo-producto/form-tipo-producto.component';
 import { ProductosService } from './../../services/productos.service';
@@ -18,7 +19,7 @@ import { FormProductoComponent } from './form-producto/form-producto.component';
 
 export const productosRoutes: Routes = [
   {
-    path: '', component: ProductosComponent,
+    path: '', component: FormProductoComponent,
     children: [ // rutas hijas, se verán dentro del componente padre
       {
         path: 'producto', // la ruta real es movimientos/nuevo
@@ -41,6 +42,7 @@ export const productosRoutes: Routes = [
     SharedModule,
     HttpModule,
     NgbModule,
+    NgxPaginationModule,
     RouterModule.forChild(productosRoutes)
   ],
   providers: [

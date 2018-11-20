@@ -77,9 +77,9 @@
               <table class="form-table-bordered">
                 <thead class="thead-light">
                   <tr>
-                    <td>Categoria</td>
                     <td>Producto</td>
-                    <td>Talla</td>
+                    <td>Tipo Producto</td>
+                    <td>Rango Talla</td>
                     <td>Cantidad</td>
                     <td>Valor</td>
                     <td><b>SubTotal</b></td>
@@ -90,29 +90,30 @@
                   <tr>
   <!--CATEGORIA-->
                     <td class="col-xs-1" style="width:140px;">
-                      <select class='form-control' name='producto' [(ngModel)]='detallePedido.idProducto'
-                      (change)='onSelectProducto($event.target.value)'>
+                      <select class='form-control' name='producto'
+                        [(ngModel)]='producto'
+                        (change)='onSelectProducto()'>
                         <option [value]=''>[Producto]</option>
-                        <option *ngFor='let producto of listaProductos' [value]='producto.idProducto'>{{producto.desc}}</option>
+                        <option *ngFor='let item of listaProductos' [ngValue]='item'>{{item.desc}}</option>
                       </select>
                     </td>
   <!--PRODUCTO-->
                     <td style="width:140px;">
                       <select class='form-control' name='tipoProducto'
-                      [(ngModel)]='detallePedido.idTipoProducto'
-                      (change)='onSelectTipoProducto($event.target.value)'
+                      [(ngModel)]='tipoProducto'
+                      (change)='onSelectTipoProducto()'
                       placeholder="[Tipo Producto]">
                         <option [value]=''>[Tipo Producto]</option>
-                        <option *ngFor='let tipoProducto of listaTipoProducto' [value]='tipoProducto.id'>{{tipoProducto.desc}}</option>
+                        <option *ngFor='let item of producto.tipoProducto' [value]="item">{{item.desc}}</option>
                       </select>
                     </td>
   <!--RANGO PRECIO-->
                     <td style="width:90px;">
                       <select class='form-control' name='rangoPrecio'
-                      [(ngModel)]='detallePedido.idRangoPrecio'
+                      [(ngModel)]='rangoPrecio'
                       (change)='onSelectRangoPrecio($event.target.value)'>
                         <option [value]=''>[Talla]</option>
-                        <option *ngFor='let rangoPrecio of listaRangoPrecios' [value]='rangoPrecio.id'>{{rangoPrecio.desc}}</option>
+                        <option *ngFor='let item of listaRangoPrecios' [value]='item.id'>{{item.desc}}</option>
                       </select>
                     </td>
   <!--CANTIDAD-->
@@ -140,6 +141,7 @@
                     </td>
                   </tr>
                   </tbody>
+
                 <tfoot>
                   <tr>
                     <td colspan="4">
@@ -162,7 +164,7 @@
                   </tr>
                 </tfoot>
               </table>
-        <!-- {{detallePedido | json}} -->
+        {{listaTipoProducto | json}}
             </form>
   <!--COLLAPSE DETALLES ADICIONALES-->
             <div id="detallesAdicionales" [ngbCollapse]="!isCollapsed">
@@ -488,4 +490,6 @@
     <a class="btn btn-primary" routerLink='/pedidos'>Cancelar</a>
     <button (click)='guardarPedido();' class='btn btn-primary'>{{nombreBoton}}</button>
   </div>
- {{pedido|json}}
+<!--  {{pedido|json}}
+ -->
+{{ producto | json }}

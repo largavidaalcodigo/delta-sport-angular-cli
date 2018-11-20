@@ -1,3 +1,5 @@
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductosService } from './../../services/productos.service';
 import { CommonsService } from '../../services/commons.service';
 import { SubirArchivosComponent } from '../commons/subir-archivos/subir-archivos.component';
 import { FormModulosComponent } from './form-modulos/form-modulos.component';
@@ -39,12 +41,14 @@ export const pedidosRoutes: Routes = [
     SharedModule,
     FormPedidoModule,
     NgbModule,
+    NgxPaginationModule,
     RouterModule.forChild(pedidosRoutes),
   ],
   providers: [
     PedidosService,
     ClientesService,
-    CommonsService
+    CommonsService,
+    ProductosService
   ],
   declarations: [
     PedidosComponent,

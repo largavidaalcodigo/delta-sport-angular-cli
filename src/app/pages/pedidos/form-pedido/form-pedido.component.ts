@@ -1,3 +1,5 @@
+import { RangoPrecioProducto } from './../../../model/producto/rangoPrecioProducto.model';
+import { Producto } from './../../../model/producto/producto.model';
 import { ProductosService } from './../../../services/productos.service';
 import { Mensajes } from '../../../model/mensajes.model';
 import { ChatService } from '../../../services/chat.service';
@@ -13,7 +15,6 @@ import { Observable } from 'rxjs';
 import { Cliente } from '../../../model/cliente/cliente.model';
 import { Color } from '../../../model/producto/color.model';
 import { TipoProducto } from '../../../model/producto/tipoProducto.model';
-import { RangoPrecioProducto } from '../../../model/producto/rangoPrecioProducto.model';
 import { Pedido } from '../../../model/pedido/pedido.model';
 
 import { ClientesService } from '../../../services/clientes.service';
@@ -31,7 +32,6 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { Producto } from '../../../model/producto/producto.model';
 import { Comentario } from '../../../model/pedido/comentario.model';
 
 @Component({
@@ -49,6 +49,9 @@ export class FormPedidoComponent implements OnInit {
   @Output() public salir = new EventEmitter(); */
   titulo: string;
   pedido: Pedido;
+  producto: Producto;
+  tipoProducto: TipoProducto;
+  rangoPrecio: RangoPrecioProducto;
   cliente: Cliente;
   tipoForm: string;
   //Lista Detalle pedido
@@ -71,7 +74,7 @@ export class FormPedidoComponent implements OnInit {
   rangoPrecioProducto: RangoPrecioProducto;
 
   //Listas
-  listaProductos: Observable<Producto[]>;
+  listaProductos: Producto[];
   listaTipoProducto: TipoProducto[];
   listaRangoPrecios: RangoPrecioProducto[];
   listaColores: Color[];
@@ -101,6 +104,11 @@ export class FormPedidoComponent implements OnInit {
     private clientesService: ClientesService) {}
 
   ngOnInit() {
+    this.producto = new Producto();
+    this.tipoProducto = new TipoProducto();
+    this.rangoPrecio = new RangoPrecioProducto();
+
+
     this.tipoForm = this.route.snapshot.params['tipoForm'];
     console.log('Se inicia form pedido->' + this.tipoForm);
 
@@ -150,7 +158,10 @@ export class FormPedidoComponent implements OnInit {
       this.listaClientes = data;
     });
 
-    this.listaProductos = this.productosService.getProductos();
+    this.productosService.getProductos().subscribe(data => {
+      console.log('this.listaProductos: ', this.listaProductos);
+      this.listaProductos = data;
+    });
 
     this.detallePedido = new DetallePedido();
     this.medioPago = new MedioPago();
@@ -167,19 +178,29 @@ export class FormPedidoComponent implements OnInit {
     //https://codeburst.io/create-a-search-pipe-to-dynamically-filter-results-with-angular-4-21fd3a5bec5c
   }
 
-  onSelectProducto(productoId: number) {
+  onSelectProducto() {
+    this.listaTipoProducto = this.producto.tipoProducto;
     //this.detallePedido.idProducto = productoId;
+    //this.listaTipoProducto = producto.tipoProducto;
+    //console.log('this.producto.desc: ', this.producto.desc);
+
+
+    //console.log('this.listaTipoProducto: ' + JSON.stringify(this.listaTipoProducto));
     /* this.listaTipoProducto = this.pedidosService.getTipoProductos()
-      .filter(item => item.idProducto == productoId); */
+      .filter(item => item.idProducto == productoId);
+
     console.log('categoria-> ' + productoId);
     //console.log('tipos de producto->' + JSON.stringify(this.listaTipoProducto));
+    */
   }
 
-  onSelectTipoProducto(tipoProductoId: number) {
+  onSelectTipoProducto() {
+    //this.listaRangoPrecios = this.tipoProducto.rangoPrecio;
+    //this.listaRangoPrecios = this.tipoProducto.rangoPrecio;
     //this.detallePedido.idTipoProducto = tipoProductoId;
     //this.listaRangoPrecios = this.pedidosService.getRangoPrecios()
       //.filter(item => item.idTipoProducto == tipoProductoId);
-      console.log('producto->' + tipoProductoId);
+      //console.log('producto->' + tipoProductoId);
     }
 
   onSelectRangoPrecio(rangoPrecioId: number) {
@@ -256,8 +277,8 @@ export class FormPedidoComponent implements OnInit {
     this.editando = true;
     const detalle: DetallePedido = detallePedido;
     this.detallePedido = detalle;
-    this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
-    this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio);
+    /* this.onSelectTipoProducto(this.detallePedido.idTipoProducto);
+    this.onSelectRangoPrecio(this.detallePedido.idRangoPrecio); */
 
     //this.listaDetallesAdicionales = detallePedido.listaAdicionales;
     for (let c of this.listaDetallesAdicionales) {

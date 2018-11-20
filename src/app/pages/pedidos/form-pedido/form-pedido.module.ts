@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { PedidosService } from '../../../services/pedidos.service';
 import { ClientesService } from '../../../services/clientes.service';
 import { FilterDataPipe } from './filterdata.pipe';
+import { ProductosService } from '../../../services/productos.service';
 
 export const pedidosRoutes: Routes = [
   {path: ':id', component: PedidosComponent},
@@ -23,7 +24,8 @@ export const pedidosRoutes: Routes = [
   ],
   providers: [
     PedidosService,
-    ClientesService
+    ClientesService,
+    /* ProductosService */
   ],
   declarations: [
     FilterDataPipe

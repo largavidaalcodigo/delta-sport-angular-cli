@@ -6,13 +6,16 @@ var pedidoSchema = new Schema({
   fechaCreacion: Date,
   fechaEntrega: Date,
   listaProductos: [{
-    id: Number,
+/*     id: Number,
     idProducto: Number,
     descProducto: String,
     idTipoProducto: Number,
     descTipoProducto: String,
     idRangoPrecio: Number,
     descRangoPrecio: String,
+ */
+    //producto: Producto;
+
     cantidad: Number,
     valor: Number,
     subTotal: Number,

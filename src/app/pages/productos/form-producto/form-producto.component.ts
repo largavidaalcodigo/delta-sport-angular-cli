@@ -1,3 +1,4 @@
+import { TipoProducto } from './../../../model/producto/tipoProducto.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductosService } from './../../../services/productos.service';
 import { CommonsService } from './../../../services/commons.service';
@@ -29,6 +30,8 @@ export class FormProductoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.producto = new Producto();
+
     this.commonsService.getProductos().subscribe(
       productos => {
         this.listaProductos = productos;
@@ -45,11 +48,14 @@ export class FormProductoComponent implements OnInit {
     this.producto.estado = 'activo';
   }
 
+  editarProducto(){
+    this.verformProducto = true;
+  }
+
   verProducto(item: Producto) {
     this.producto = item;
     this.descripcionProducto = item.desc;
     this.estadoProducto = item.estado;
-    this.verformProducto = true;
     console.log('producto->' + JSON.stringify(item) + ' / this.verformProducto->' + this.verformProducto);
   }
 
@@ -63,6 +69,7 @@ export class FormProductoComponent implements OnInit {
     this.producto.desc = this.descripcionProducto;
 
     if (this.addProducto === true) {
+      this.producto.id = this.listaProductos.length + 1;
       this.productoService.postProducto(this.producto).subscribe(data => {
         console.log('producto actualizado->' + JSON.stringify(data));
         this.producto = data;
@@ -96,6 +103,12 @@ export class FormProductoComponent implements OnInit {
         toastr.info('El producto se ha actualizado exitosamente', this.producto.desc);
         this.cancelarProducto();
     });
+  }
+
+  updateTipoProducto(tipoProducto: TipoProducto) {
+    /* this.tipoProducto = tipoProducto;
+    this.producto.tipoProducto
+    this.updateProducto(this.producto); */
   }
 
   addProductos(id) {

@@ -64,6 +64,7 @@
     "ngx-bootstrap": "^1.9.3",
     "ngx-color-picker": "^4.4.0",
     "ngx-echarts": "^1.2.4",
+    "ngx-pagination": "^3.2.1",
     "ngx-quill-editor": "^2.2.2",
     "oauth2orize": "^1.11.0",
     "passport": "^0.4.0",
